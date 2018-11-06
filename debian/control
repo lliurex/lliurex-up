@@ -1,0 +1,52 @@
+Source: lliurex-up
+Section: admin
+Priority: optional
+Maintainer: LliureX Team <lliurex@gva.es>
+Build-Depends: debhelper (>=9),
+               llxsrchelper, 
+               zero-dev,
+               dh-python,
+               python-all,
+               python-setuptools
+Standards-Version: 3.9.6
+Homepage: http://lliurex.net
+X-Python-Version: >= 2.6
+
+Package: python-lliurexup
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, dpkgunlocker-cli
+Description: Python library for lliurex-up; pre-actions and postactions
+ Library for lliurex-up
+
+
+Package: lliurex-up-core
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-lliurexup (= ${binary:Version})
+Description: Python library for lliurex-up; pre-actions and postactions
+ Library for lliurex-up
+
+Package: lliurex-up
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version})
+Recommends: lliurex-up-indicator (= ${binary:Version})
+Description: Graphical interface to update system
+ Interface to update system.
+
+Package: lliurex-up-cli
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, lliurex-up-core (= ${binary:Version}), python, python-clint
+Description: Command line interface to update system
+ CLI Interface to update system.
+
+Package: lliurex-up-indicator
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python, python-aptdaemon, lliurex-up (= ${binary:Version})
+Description: Menu indicator to show new updates availables and remote executions of lliureX-Up
+ Menu Indicator.
+
+Package: lliurex-up-pool-tools
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-minimal, python3-debian
+Description: Needed tools to install on repository server
+ This package build Changelog and other folders for lliurex-up work fine.
+
