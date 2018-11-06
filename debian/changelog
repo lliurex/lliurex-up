@@ -1,3 +1,9 @@
+lliurex-up (19.04.1) bionic; urgency=medium
+
+  * Inital release for bionic
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 06 Nov 2018 17:39:01 +0100
+
 lliurex-up (16.04.31) xenial; urgency=medium
 
   * New alert when blockages are detected but there is some process running
