@@ -45,7 +45,6 @@ TERMINAL_CONFIG=BASE_DIR+"terminal_config"
 
 class Package:
 
-	#def __init__(self,name,version,size,desktop_file,changelog_file):
 	def __init__(self,installed,name,version,size):
 		self.name=name
 		self.version=version
@@ -81,22 +80,6 @@ class Package:
 			
 	#def parse_desktop
 
-	'''
-	def parse_changelog(self,changelog_file):
-		
-		try:
-			
-			f=open(changelog_file,"r")
-			self.changelog=f.readlines()
-			f.close()
-						
-		except Exception as e:
-			
-			self.changelog="Changelog not found"
-
-	#def parse_changelog
-	'''
-	
 	def parse_installed_icon(self, icon_file):
 		
 			image=Gtk.Image()
@@ -123,7 +106,6 @@ class LliurexUp:
 
 	def __init__(self):
 		
-		#self.free_space_check()
 		self.llxup_connect=LliurexUpConnect.LliurexUpConnect()
 		self.check_root()
 		self.isLliurexUpLocked()
@@ -306,24 +288,6 @@ class LliurexUp:
 		
 	#def check_root
 
-	'''
-	def free_space_check(self):
-		
-		if ((os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)) < 2: #less than 2GB available?
-			return False
-			
-			md = Gtk.MessageDialog(None, 0,Gtk.MessageType.ERROR, Gtk.ButtonsType.CANCEL," Lliurex UP")
-			md.format_secondary_text(_("There's not enough space on disk to upgrade (2 GB needed)"))
-			md.run()
-			md.destroy()
-			sys.exit(1)
-			
-		else:
-			return True	
-
-	# def free_space_check
-	'''
-			
 	def start_gui(self):
 		
 		builder=Gtk.Builder()
@@ -484,10 +448,6 @@ class LliurexUp:
 		column.add_attribute(cell,"markup",3)
 		self.packages_tv.append_column(column)		
 
-
-		# done_icon=Gtk.Image()
-		# done_icon.set_from_file(CACHED_ICON)
-		# pixbuf=done_icon.get_pixbuf()
 		column=Gtk.TreeViewColumn(_("State"))
 		cell=Gtk.CellRendererPixbuf()
 		column.pack_start(cell,True)
@@ -543,7 +503,6 @@ class LliurexUp:
 		self.check_lliurexup_t.daemon=True
 		self.install_lliurexup_t.daemon=True
 		self.check_mirror_t.daemon=True
-		#self.wait_response_t.daemon=True
 		self.execute_lliurexmirror_t.daemon=True
 		self.get_lliurexversionlocal_t.daemon=True
 		self.get_lliurexversionnet_t.daemon=True
@@ -558,7 +517,6 @@ class LliurexUp:
 		self.check_lliurexup_t.done=False
 		self.install_lliurexup_t.done=False
 		self.check_mirror_t.done=False
-		#self.wait_response_t.done=False
 		self.execute_lliurexmirror_t.done=False
 		self.get_lliurexversionlocal_t.done=False
 		self.get_lliurexversionnet_t.done=False
@@ -573,7 +531,6 @@ class LliurexUp:
 		self.check_lliurexup_t.launched=False
 		self.install_lliurexup_t.launched=False
 		self.check_mirror_t.launched=False
-		#self.wait_response_t.launched=False
 		self.execute_lliurexmirror_t.launched=False
 		self.get_lliurexversionlocal_t.launched=False
 		self.get_lliurexversionnet_t.launched=False
@@ -607,7 +564,7 @@ class LliurexUp:
 
 		#BUTTON_LABEL{
 			color:white;
-			font: Roboto 10;
+			font: 10pt Roboto;
 		}
 
 		#DISABLED_BUTTON_OVER{
@@ -639,7 +596,7 @@ class LliurexUp:
 
 		#UPDATE_BUTTON_LABEL{
 			color:white;
-			font: Roboto 11;
+			font: 11pt Roboto;
 		}
 		
 		#UPDATE_CORRECT_BUTTON_COLOR {
@@ -676,31 +633,31 @@ class LliurexUp:
 		
 		#BLUE_FONT {
 			color: #3366cc;
-			font: Roboto Bold 11;
+			font: 11pt Roboto Bold;
 			
 		}	
 		
 
 		#CHANGELOG_FONT {
 			color: #3366cc;
-			font: Roboto 11;
+			font: 11pt Roboto;
 			
 		}
 
 		#LABEL_OPTION{
 		
 			color: #808080;
-			font: Roboto 11;
+			font: 11pt Roboto;
 		}
 
 		#ERROR_FONT {
 			color: #CC0000;
-			font: Roboto Bold 11; 
+			font: 11pt Roboto Bold; 
 		}
 
 		#CORRECT_FONT {
 			color: #43a047;
-			font: Roboto Bold 11;
+			font: 11pt Roboto Bold;
 
 		}
 		
@@ -758,25 +715,17 @@ class LliurexUp:
 
 	def pulsate_checksystem(self):
 
-		#self.pbar.pulse()
-
 		abort=False
 		if not self.initactions_process_t.launched:
 			print "  [Lliurex-Up]: Checking system: connection to lliurex.net and init-actions"
 			self.initactions_process_t.start()
 			self.initactions_process_t.launched=True
 			self.show_number_process_executing(1,"")
-		# if not self.check_lliurexup_t.launched:
-		# 	print "[Lliurex-Up]: Checking Lliurex-up version"
-		# 	self.check_lliurexup_t.start()
-		# 	self.check_lliurexup_t.launched=True
-		# 	self.show_number_process_executing(1,"")
-
+		
 		if self.initactions_process_t.done:
 			if self.free_space:
 				if self.statusN4d:
 					if self.can_connect:
-						#is_mirror_running_inserver=self.llxup_connect.clientCheckingMirrorIsRunning()
 						if self.is_mirror_running_inserver==False:
 
 							if  not self.check_lliurexup_t.is_alive() and not self.check_lliurexup_t.launched:
@@ -801,15 +750,9 @@ class LliurexUp:
 									else:
 										if self.install_lliurexup_t.done:
 											print "  [Lliurex-Up]: Reboot Lliurex-Up"
-											#msg_gather="<span><b>"+_("Lliurex-up is now updated and will be reboot")+"</b></span>"
-											#self.pbar.hide()
-											#self.gather_label.set_markup(msg_gather)
-											#self.t=threading.Thread(target=self.reboot_lliurexup)
 											self.pbar_label.hide()
 											self.msg_wait="<span><b>"+_("LliureX Up is now updated and will be reboot in %s seconds...")+"</b></span>"
 											GLib.timeout_add(10,self.wait_to_reboot)
-											#self.t.daemon=True
-											#self.t.start()
 											return False
 								else:
 									if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
@@ -819,9 +762,7 @@ class LliurexUp:
 										self.check_mirror_t.start()
 										self.check_mirror_t.launched=True
 										self.show_number_process_executing(4,"")
-
-
-									
+								
 									if 	self.check_mirror_t.done:
 										is_mirror_running=self.llxup_connect.lliurexMirrorIsRunning()
 
@@ -832,10 +773,8 @@ class LliurexUp:
 												self.no_button_box.show()
 												self.pbar.hide()
 												self.pbar_label.hide()
-												#self.spinner.stop()
 												msg_gather="<span><b>"+_("Your mirror is not update. Do you want to update it?")+"</b></span>"
 												self.gather_label.set_markup(msg_gather)
-												#GLib.timeout_add(100,self.pulsate_wait_response)
 												return False
 
 											else:
@@ -853,13 +792,6 @@ class LliurexUp:
 					
 						else:
 							abort=True
-							'''
-							self.spinner.stop()
-							self.pbar.hide()
-							self.pbar_label.hide()
-							self.cancel_button_box.show()
-							self.gather_label.set_name("ERROR_FONT")
-							'''
 							if self.is_mirror_running_inserver:
 								msg_gather="<span><b>"+_("Mirror is being updated in server. Unable to update the system")+"</b></span>"
 								print "  [Lliurex-Up]: Mirror is being updated in server"
@@ -867,38 +799,15 @@ class LliurexUp:
 								msg_gather="<span><b>"+_("Unable to connect with server")+"</b></span>"
 								print "  [Lliurex-Up]: Unable to connect with server"
 
-
-							#self.gather_label.set_markup(msg_gather)
-							#return False
-
-
 					else:
 						abort=True
-						'''
-						self.spinner.stop()
-						self.pbar.hide()
-						self.pbar_label.hide()
-						self.cancel_button_box.show()
-						self.gather_label.set_name("ERROR_FONT")
-						'''
 						msg_gather="<span><b>"+_("Unable to connect to lliurex.net")+"</b></span>"
-						#self.gather_label.set_markup(msg_gather)
 						print "  [Lliurex-Up]: Unable to connect to lliurex.net"
-						#return False
 
 				else:
 					abort=True
-					'''
-					self.spinner.stop()
-					self.pbar.hide()
-					self.pbar_label.hide()
-					self.cancel_button_box.show()
-					self.gather_label.set_name("ERROR_FONT")
-					'''
 					msg_gather="<span><b>"+_('N4d is not working. Restart the service and try againg')+"</b></span>"
-					#self.gather_label.set_markup(msg_gather)
 					print "  [Lliurex-Up]: N4d is not working"
-					#return False
 			else:
 				abort=True
 				msg_gather="<span><b>"+_("There's not enough space on disk to upgrade (2 GB needed)")+"</b></span>"
@@ -1003,19 +912,14 @@ class LliurexUp:
 		
 	def yes_button_clicked(self,widget,event):
 	
-		#self.response=1
 		self.pbar.show()
 		self.pbar_label.show()
 		print "[Lliurex-Up]: Updating mirror"
 		self.updated_percentage(0)
-		#self.spinner.start()
 		self.yes_button_box.hide()
 		self.no_button_box.hide()
-		#msg_gather="<span><b>"+_("Mirror is being updated. The process may take several minutes")+"</b></span>"
-		#self.gather_label.set_markup(msg_gather)
 		self.execute_lliurexmirror_t.start()
 		self.mirror_running_msg()
-		#GLib.timeout_add(1000,self.pulsate_updating_mirror)
 		log_msg="Update lliurex-mirror: Yes"
 		print log_msg
 		self.llxup_connect.log(log_msg)
@@ -1032,8 +936,6 @@ class LliurexUp:
 			return True
 		
 		else:
-			#self.spinner.stop()
-			#self.pbar_label.hide()
 			GLib.timeout_add(100,self.pulsate_get_info)
 			return False	
 
@@ -1160,7 +1062,6 @@ class LliurexUp:
 								self.gather_label.set_name("ERROR_FONT")
 								msg_gather="<span><b>"+_("Updated abort for incorrect metapackages detected in update")+"</b></span>"
 								self.gather_label.set_markup(msg_gather)
-								#self.pbar.hide()
 								log_msg="Updated abort for incorrect metapackages detected in update"
 								self.llxup_connect.log(log_msg)
 								print "  [Lliurex-Up]: Update abort. Detect incorrect metapackages in new updates"
@@ -1203,13 +1104,6 @@ class LliurexUp:
 		self.targetMetapackage=self.llxup_connect.targetMetapackage
 
 		if self.targetMetapackage == None:
-			# self.flavourToInstall=self.llxup_connect.requiresInstallFlavour()
-			# if self.flavourToInstall != None:
-			# 	print self.flavourToInstall
-			# 	print "  [Lliurex-Up]: Installation of flavour is required"
-			# 	self.is_flavour_installed=self.llxup_connect.installInitialFlavour(self.flavourToInstall)	
-			# 	self.checkInitialFlavourToInstall_t.done=True	
-			# else:
 			print "  [Lliurex-Up]: Installation of metapackage is not required"
 			self.checkInitialFlavourToInstall_t.done=True	
 
@@ -1232,7 +1126,6 @@ class LliurexUp:
 
 	def get_update_summary(self):
 
-		#self.version_available=self.llxup_connect.getLliurexVersionNet()
 		if self.version_update["installed"]==None:
 			msg_current_version_info=_("Not available")
 
@@ -1306,11 +1199,8 @@ class LliurexUp:
 	def populate_packages_tv(self):
 		
 		for package in self.package_list:
-			#self.packages_store.append((package.icon,"<span font='Roboto'><b>"+package.name+"</b></span>\n"+"<span font='Roboto' size='small'>"+package.version+"</span>","<span font='Roboto' size='large'><b>"+package.size+"</b></span>",package.installed))
 			self.packages_store.append((package.type,package.icon,"<span font='Roboto'><b>"+package.name+"</b></span>\n"+"<span font='Roboto' size='small'>"+package.version+"</span>","<span font='Roboto' size='small'>"+package.size+"</span>", package.installed))
 			
-		#print len(self.packages_store)	
-		
 	#def populate_packages_tv
 	
 	def parse_packages_updated(self):
@@ -1333,7 +1223,6 @@ class LliurexUp:
 		model,iter=selection.get_selected()
 		self.changelog_textview.get_buffer().set_text("".join(default_text))
 
-		#name=self.packages_store.get_value(iter,1)
 		name=model[iter][2]
 		name=name[name.find("<b>")+3:name.find("</b>")]
 		changelog=self.llxup_connect.getPackageChangelog(name)
@@ -1350,17 +1239,12 @@ class LliurexUp:
 		if not self.preactions_process_t.launched:
 			self.number_process=4
 			self.pbar.show()
-			#self.pbar.pulse()
 			self.viewport.show()
 			self.terminal_scrolled.show()
 			self.terminal_label.show()
 			self.msg_terminal=_("Update process details")
 			self.terminal_label.set_markup(self.msg_terminal)
 			GLib.timeout_add(100,self.dist_upgrade)
-
-			# self.preactions_process_t.start()
-			# self.preactions_process_t.launched=True
-
 
 		else:
 			if not self.postactions_process_t.done:
@@ -1431,8 +1315,7 @@ class LliurexUp:
 								self.msg_upgrade_running="<span><b>" + _("The updated process has ended with errors") + "</b></span>"
 								self.update_button_label.set_text(_("Update error"))
 								self.update_button_box.set_name("UPDATE_ERROR_BUTTON_COLOR")
-				  				#self.update_button_box.set_name("UPDATE_BUTTON_END_COLOR")
-							  			
+	
 							
 							self.terminal_label.set_markup(self.msg_upgrade_running)
 					 		return False	
@@ -1481,7 +1364,6 @@ class LliurexUp:
 	def preactions_process(self):
 
 		self.command=self.llxup_connect.preActionsScript()
-		#self.command=self.llxup_connect.preActionsScript() + ' | tee ' + TMP_FILE + ';rm ' + TMP_FILE +'\n'
 		length=len(self.command)
 		self.vterminal.feed_child(self.command, length)
 
@@ -1489,7 +1371,6 @@ class LliurexUp:
 	
 	def update_process(self):
 		 
-		#self.command='apt-get dist-upgrade -sV | tee '+ TMP_FILE + ';rm ' + TMP_FILE +'\n'
 	 	self.command=self.llxup_connect.distUpgradeProcess()
 	 	length=len(self.command)
 	 	self.vterminal.feed_child(self.command, length)
@@ -1500,7 +1381,6 @@ class LliurexUp:
 	def postactions_process(self):
 
 		self.command=self.llxup_connect.postActionsScript()
-		#self.command=self.llxup_connect.preActionsScript() + ' | tee ' + TMP_FILE + ';rm ' + TMP_FILE +'\n'
 		length=len(self.command)
 		self.vterminal.feed_child(self.command, length)
 

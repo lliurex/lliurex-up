@@ -1,0 +1,7 @@
+[net.lliurex.lliurex-up]
+Identity=unix-group:adm;unix-groups:admins
+Action=net.lliurex.lliurex-up.pkexec.lliurexup
+ResultAny=auth_self_keep
+ResultInactive=auth_self_keep
+ResultActive=auth_self_keep
+

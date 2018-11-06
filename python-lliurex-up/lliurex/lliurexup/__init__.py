@@ -15,8 +15,8 @@ class LliurexUpCore(object):
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
 		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil"] 
-		self.defaultMirror = 'llx16'
-		self.defaultVersion = 'xenial'
+		self.defaultMirror = 'llx19'
+		self.defaultVersion = 'bionic'
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
@@ -251,7 +251,6 @@ class LliurexUpCore(object):
 		
 	def updateFlavoursList(self):
 		
-		#self.flavours = [ x.strip() for x in self.n4d.lliurex_version('','LliurexVersion','-v')[1].split(',') ]
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 		result=p.communicate()
@@ -312,15 +311,10 @@ class LliurexUpCore(object):
 		if not os.path.exists(self.changelogsPath):
 			os.mkdir(self.changelogsPath)
 
-		#self.writeDefaultSourceslist()
-		#self.writeDefaultSourceslistMirror()
-
 	#def prepareEnvironment	
 
 	def addSourcesListLliurex(self,args=None):
 		
-		#sourcesrefmirror=os.path.join(self.processSourceslist, 'default_mirror')
-
 		newsourcesfile=os.path.join(self.sourcesListPath,'sources.list')
 		extrasources=[]
 		client=False
@@ -334,11 +328,9 @@ class LliurexUpCore(object):
 				sourcesref=os.path.join(self.processSourceslist, 'default_all')
 
 			else:
-				#textsearch="/mirror/"+str(self.defaultMirror)
 				sourcesref=os.path.join(self.processSourceslist, 'default_mirror')
 
 		else:
-			#textsearch="/lliurex.net/"+str(self.defaultVersion)
 			sourcesref=os.path.join(self.processSourceslist, 'default')	
 
 		if os.path.exists(self.origsourcesfile):
@@ -552,12 +544,10 @@ class LliurexUpCore(object):
 		targetMetapackage = None
 		if 'None' in self.flavours:
 			# get last flavour
-			#result = self.n4d.lliurex_version('','LliurexVersion','--history')
 			cmd='lliurex-version --history'
 			p=subprocess.Popen(cmd,shell=True, stdout=subprocess.PIPE)
 			result=p.communicate()
 			if result[0]:
-				#history = [ x.strip().split('\t')[0].strip() for x in result[1].split('\n') ]
 				history = [ x.strip().split('\t')[0].strip() for x in result[0].split('\n') ]
 				history = [ x for x in history if not 'lliurex-meta-live' in x ]
 				for x in reversed(history):
@@ -574,15 +564,6 @@ class LliurexUpCore(object):
 	def canConnectToLliurexNet(self):
 		'''
 			return Boolean
-		'''
-		'''
-		s =  socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		host = socket.gethostbyname('lliurex.net')
-		result = s.connect_ex((host, 80))
-		s.close()
-		if result:
-		 	return False
-		return True
 		'''
 		try:
 			req=urllib2.Request("http://lliurex.net/xenial")
@@ -631,38 +612,8 @@ class LliurexUpCore(object):
 		
 		return 'run-parts --arg="postActions" ' + self.postActionsPath
 
-	'''	
+		
 	#def postActionsScript
-
-	def requiresInstallFlavour(self):
-		
-		flavourToInstall=None
-		
-		if not 'None' in self.previuosFlavours:
-			if self.previuosFlavours !=self.flavours:
-				flavourToInstall=self.parseFlavourToInstall(self.previousFlavours)
-										
-		else:
-			
-			if self.metapackageRef != self.flavours:
-				flavourToInstall=self.parseFlavourToInstall(self.metapackageRef)
-							
-
-		return flavourToInstall			 		
-
-		
-	def parseFlavourToInstall(self,flavours):
-	
-		parse_flavour=""
-
-		for item in flavours:
-			if item != "edu":
-				parse_flavour=parse_flavour + " " + "lliurex-meta-" + item
-
-		return parse_flavour
-			
-	#def parseFlavourToInstall
-	'''
 
 	def installInitialFlavour(self,flavourToInstall,options=""):
 		'''
@@ -723,9 +674,7 @@ class LliurexUpCore(object):
 				self.packageInfo[package]['install'] = None
 				self.packageInfo[package]['candidate'] = raw[0][1:]
 			self.packageInfo[package].pop('raw')
-			#packageInfo[package]['changelog'] = os.path.join(self.changelogsPath,package)
-			#os.system('LANG=C LANGUAGE=en apt-get changelog %s > %s%s'%(package,self.changelogsPath,package))
-			#packageInfo[package]['icon'] = 
+		
 		return self.packageInfo
 
 	#def getPackagesToUpdate
@@ -804,8 +753,7 @@ class LliurexUpCore(object):
 				
 					if len(lines)>0:
 						error=True
-						#log_msg="Dist-upgrade process ending with errors"
-						#self.log(log_msg)
+						
 					else:
 						j=0
 						cmd='apt-get dist-upgrade -sV >' + self.finalupgrade_token
@@ -829,21 +777,6 @@ class LliurexUpCore(object):
 		return error	
 
 	#def checkErrorDistUpgrade	
-
-	'''	
-	def checkFinalFlavour(self):
-		
-		flavourToInstall=None
-		
-		self.targetMetapackage=self.checkFlavour()
-		if self.targetMetapackage!=None:
-			#flavourToInstall=self.requiresInstallFlavour()
-		#else:
-			flavourToInstall=self.targetMetapackage 	
-
-		return flavourToInstall	
-	'''		
-
 
 	def installFinalFlavour(self,flavourToInstall):
 
