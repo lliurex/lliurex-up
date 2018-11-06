@@ -1,0 +1,3 @@
+#!/bin/bash
+echo " ************ Update-initramfs diverted by lliurex-up **************"
+exit 0

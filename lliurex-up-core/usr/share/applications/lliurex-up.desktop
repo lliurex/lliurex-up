@@ -1,0 +1,23 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=lliurex-up
+Name[en]=LliureX Upgrader
+Name[es]=Actualizador de LliureX
+Name[qcv]=Actualitzador de LliureX
+Name[ca_ES]=Actualitzador de LliureX
+Name[ca_ES.UTF-8@valencia]=Actualitzador de LliureX
+Name[ca_ES@valencia]=Actualitzador de LliureX
+Comment=LliureX Upgrader
+Comment[es]=Actualizacion de la versión Lliurex 16
+Comment[qcv]=Actualitzador de la versió del LliureX 16
+Comment[ca_ES]=Actualitzador de la versió del LliureX 16
+Comment[ca_ES.UTF-8@valencia]=Actualitzador de la versió del LliureX 16
+Comment[ca_ES@valencia]=Actualitzador de la versió del LliureX 16
+Exec=gksu lliurex-up
+Terminal=false
+Icon=lliurex-up
+Type=Application
+GenericName=lliurex-up
+NoDisplay=false
+Categories=LliureX-Administration;

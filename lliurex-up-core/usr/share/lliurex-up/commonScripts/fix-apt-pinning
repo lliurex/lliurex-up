@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# APT PINNING FILE
+PINNING_FILE="/usr/share/lliurex-up/lliurex-pinning.cfg"
+PINNING_DEST="/etc/apt/preferences.d/lliurex-pinning"
+ACTION="$1"
+
+case "$ACTION" in 
+	initActions)
+		#[ -f "$PINNING_DEST" ] || cp -f "$PINNING_FILE" "$PINNING_DEST"
+		 cp -f "$PINNING_FILE" "$PINNING_DEST"
+	;;
+	initActionsSai)
+		if [ -f "$PINNING_DEST" ]; then
+			rm -f "$PINNING_DEST"
+		fi
+	;;
+esac

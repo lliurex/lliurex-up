@@ -1,0 +1,11 @@
+#!/bin/bash
+ACTION="$1"
+case "$ACTION" in 
+	preActions)
+		ORIG="/usr/share/lliurex-up/includes/"
+		DEST="/"
+		rsync -ax "$ORIG" "$DEST"
+	;;
+	postActions)
+	;;
+esac

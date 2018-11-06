@@ -1,0 +1,70 @@
+#!/bin/bash
+POOLPATH=$1
+CHANGELOGSFOLDER="changelogs" 
+DEBSPATH="${POOLPATH}/pool" # /srv/mirror/prueba-changelog/pool
+TEMPFOLDERDEB=$(mktemp -d)
+UNCOMPRESSEDDEB="${TEMPFOLDERDEB}/deb/" #/tmp/temp654/deb
+
+function buildChangelog(){
+	DESTPATH="$1"
+	PACKAGESOURCENAME="$2"
+	
+
+	CHANGELOGFILE=$(find ${UNCOMPRESSEDDEB} -name changelog.Debian.gz)
+	test -e "${CHANGELOGFILE}" || CHANGELOGFILE=$(find ${UNCOMPRESSEDDEB} -name changelog.gz)
+	if [ -e "${CHANGELOGFILE}" ]; then
+		mkdir -p "${DESTPATH}"
+		gunzip "${CHANGELOGFILE}" || echo "${CHANGELOGFILE}"
+		cp "${CHANGELOGFILE%*.gz}" "${DESTPATH}/changelog"
+		mkdir -p "${DESTPATH}/token/"
+		touch "${DESTPATH}/token/${PACKAGESOURCENAME}.changelog"
+	else
+		PACKAGE="$(basename $DESTPATH)"
+		echo "Fail on $PACKAGE"
+	fi
+}
+
+function buildDesktopInfo(){
+	DESTPATH="$1"
+	PACKAGENAME="$2"
+	DESKTOPFILES=$(find ${UNCOMPRESSEDDEB} -name *.desktop)
+	if [ -e "${DESTPATH}/icons" ]; then
+		sed -i -e "/^$PACKAGENAME :/d" ${DESTPATH}/icons
+	fi
+	ICONS=""
+	for x in ${DESKTOPFILES}; do
+		AUX="$(rgrep -i 'Icon=' $x | sed -e '')"
+		if [ "$AUX" != "" ]; then
+			mkdir -p "${DESTPATH}"
+			echo "${PACKAGENAME} : $AUX" >> ${DESTPATH}/icons
+		fi
+	done
+	mkdir -p "${DESTPATH}/token/"
+	touch "${DESTPATH}/token/${PACKAGENAME}.icons"
+}
+
+
+for x in $(find $DEBSPATH -type f -printf "%P\n"); do # 
+	rc=0
+	echo "$x" | grep -E -q "\.deb$" || rc=1 
+	if [ "$rc" != "0" ]; then
+		continue
+	fi
+	#FOLDERDEB=$(echo $x | sed -E -e "s/_all.deb$|_i386.deb$|_amd64.deb$//g")
+	FOLDERDEB=$(dirname $x)
+	PACKAGESOURCENAME=$(getinfofromdeb ${DEBSPATH}/$x '${Source}_${VersionWithoutEra}')
+	PACKAGENAME=$(getinfofromdeb ${DEBSPATH}/$x '${Package}')
+	if [ "${PACKAGESOURCENAME}" = "" ]; then
+		echo "Falla"
+		continue
+	fi
+	DESTPATH="${POOLPATH}/${CHANGELOGSFOLDER}/pool/${FOLDERDEB}/${PACKAGESOURCENAME}"
+	if [ ! -e "${DESTPATH}/token/${PACKAGESOURCENAME}.changelog" -o ! -e "${DESTPATH}/token/${PACKAGENAME}.icons" ] ; then
+		mkdir "${UNCOMPRESSEDDEB}"
+		dpkg -x "${DEBSPATH}/${x}" "${UNCOMPRESSEDDEB}"
+		[ -e "${DESTPATH}/token/${PACKAGESOURCENAME}.changelog" ] || buildChangelog $DESTPATH $PACKAGESOURCENAME
+		[ -e "${DESTPATH}/token/${PACKAGENAME}.icons" ] || buildDesktopInfo $DESTPATH $PACKAGENAME
+		rm -r ${UNCOMPRESSEDDEB}
+	fi
+done
+

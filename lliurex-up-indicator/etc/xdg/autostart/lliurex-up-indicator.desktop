@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=LliureX-Up Indicator
+Comment=LliureX-Up Indicator
+Exec=/usr/bin/lliurex-up-indicator
+Terminal=false
+Type=Application

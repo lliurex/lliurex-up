@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+exec /usr/sbin/lliurex-up
+
+exit 0
+
+
+
+

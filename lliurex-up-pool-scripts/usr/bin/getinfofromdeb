@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import debian.debfile
+import sys
+import os.path
+from string import Template
+if not os.path.exists(sys.argv[1]):
+	print('')
+	sys.exit(1)
+printstring = Template(sys.argv[2])
+debfileraw = debian.debfile.DebFile(sys.argv[1])
+debfilecontrol = [ x.decode('utf-8') for x in debfileraw.control.get_file('control').readlines() ]
+debinfo = {}
+key = None
+for x in debfilecontrol:
+	raw = x.split(":")
+	if len(raw) > 1:
+		key = raw[0].strip()
+		debinfo[key] = x.replace(raw[0]+":",'').strip()
+	else:
+		debinfo[key] = debinfo[key] + "\n" + x.strip()
+if not 'Source' in debinfo:
+	debinfo['Source']= debinfo['Package']
+versionlist = debinfo['Version'].split(":")
+if len(versionlist) > 1:
+	debinfo['VersionWithoutEra'] = ":".join(versionlist[1:])
+else:
+	debinfo['VersionWithoutEra'] = debinfo['Version']
+print(printstring.safe_substitute(debinfo))

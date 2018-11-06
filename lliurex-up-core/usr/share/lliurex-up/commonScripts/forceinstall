@@ -1,0 +1,7 @@
+#!/bin/bash
+ACTION="$1"
+case "$ACTION" in 
+	initActions|initActionsSai|preActions|postActions)
+		apt-get install -f -y --allow-downgrades --allow-remove-essential --allow-change-held-packages
+	;;
+esac

@@ -1,0 +1,7 @@
+#!/bin/bash
+ACTION="$1"
+case "$ACTION" in 
+	postActions)
+		update-initramfs -u || true
+	;;
+esac
