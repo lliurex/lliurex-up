@@ -15,7 +15,7 @@ X-Python-Version: >= 2.6
 
 Package: python-lliurexup
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, dpkgunlocker-cli
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, dpkgunlocker-cli,python-psutil
 Description: Python library for lliurex-up; pre-actions and postactions
  Library for lliurex-up
 
