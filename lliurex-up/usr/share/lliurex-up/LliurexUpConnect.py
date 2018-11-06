@@ -23,20 +23,14 @@ class LliurexUpConnect():
 		self.llxUpCore=LliurexUpCore.LliurexUpCore()
 		GObject.threads_init()
 
-		#self.saveTargetMetapackagePath=os.path.join(self.llxUpCore.processPath,"targetMetapackage")
 		self.preactions_token=os.path.join(self.llxUpCore.processPath,'preactions_token')
 		self.upgrade_token=os.path.join(self.llxUpCore.processPath,'upgrade_token')
 		self.installflavour_token=os.path.join(self.llxUpCore.processPath,'installflavour_token')
 		self.postactions_token=os.path.join(self.llxUpCore.processPath,'postactions_token')
-		#self.errorpostaction_token=os.path.join(self.llxUpCore.processPath,'errorpostaction_token')
 		self.errorpostaction_token=self.llxUpCore.errorpostaction_token
 		self.errorupgrade_token=self.llxUpCore.errorupgrade_token
 		self.errorfinalmetapackage_token=self.llxUpCore.errorfinalmetapackage_token
 		self.finalupgrade_token=self.llxUpCore.finalupgrade_token
-		#self.errorupgrade_token=os.path.join(self.llxUpCore.processPath,'errorupgrade_token')
-		#self.finalupgrade_token=os.path.join(self.llxUpCore.processPath,'finalupgrade_token')
-		#self.checkInitialFlavour()
-
 
 	#def __init__	
 
@@ -311,7 +305,6 @@ class LliurexUpConnect():
 			self.log(log_msg)
 			log_msg="Get LliurexVersion candidate from Local repository: " + str(self.lliurexVersionLocal["candidate"])
 			self.log(log_msg)
-			#self.lliurexVersionLocal=self.lliurexVersionLocal["candidate"]
 
 		except Exception as e:
 			log_msg="Get LliurexVersion from Local repository. Error: " + str(e)
@@ -359,10 +352,8 @@ class LliurexUpConnect():
 
 	def getPackagesToUpdate(self):
 		
-		#ref_flavour=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil"] 
 		packages_parse=[]
 		self.total_size=0
-		#self.incorrect_flavours=[]
 		
 		try:
 			packages=self.llxUpCore.getPackagesToUpdate()
@@ -435,7 +426,6 @@ class LliurexUpConnect():
 		changelog="Changelog not found"
 
 		if not os.path.exists(changelog_file):
-			#os.system('LANG=C LANGUAGE=en apt-get changelog %s > %s'%(package,changelog_file))
 			cmd='LANG=C LANGUAGE=en apt-get changelog %s > %s'%(package,changelog_file)
 			p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			poutput,perror=p.communicate()

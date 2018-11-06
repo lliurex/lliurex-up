@@ -153,7 +153,6 @@ class UpgradeIndicator:
 
 	def get_user_group(self):
 		
-		#check if the user is in the enabled group, otherwise the indicator is closed
 		user=os.environ["USER"]
 		group_found=False
 		
@@ -184,7 +183,6 @@ class UpgradeIndicator:
 			label_item=_("Update the system now")
 			item.set_label(label_item)
 			img=Gtk.Image()
-			#img.set_from_stock(Gtk.STOCK_PREFERENCES,Gtk.IconSize.MENU)
 			img.set_from_icon_name("software-properties",Gtk.IconSize.MENU)
 			item.set_image(img)
 			item.set_always_show_image(True)
@@ -282,7 +280,6 @@ class UpgradeIndicator:
 
 	def is_alive(self):
 
-		#if os.path.exists(TARGET_FILE):
 		self.is_working=True
 
 		self.checkRemote=self.remote_execute()
@@ -311,7 +308,6 @@ class UpgradeIndicator:
 				self.spinner_sync()
 				for item in self.menu.get_children():
 					if item.remote:
-					#item=self.menu.get_children()[0]
 						item.set_image(self.sp_img)
 						self.sp_cont=self.sp_cont+1	
 			return True
@@ -454,7 +450,7 @@ class UpgradeIndicator:
 		if not os.path.exists(TARGET_FILE):
 			self.app_indicator.set_status(appindicator.IndicatorStatus.PASSIVE)
 			#self.notify.close()
-			cmd='gksu lliurex-up' + "&"
+			cmd='pkexec lliurex-up'
 			os.system(cmd)
 
 	#def open_gui		
