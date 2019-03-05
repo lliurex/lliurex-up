@@ -15,4 +15,4 @@ Category=System
 ScriptPath=lliurex-up.zmd
 Service=False
 Using=pkexec
-Groups=adm;admins
+Groups=sudo;admins
