@@ -1,6 +1,6 @@
-[net.lliurex.lliurex-up]
+[net.lliurex.lliurex-upgrade]
 Identity=unix-group:sudo;unix-groups:admins
-Action=net.lliurex.lliurex-up.pkexec.lliurexup
+Action=net.lliurex.lliurex-upgrade.pkexec.lliurexupgrade
 ResultAny=auth_self_keep
 ResultInactive=auth_self_keep
 ResultActive=auth_self_keep
