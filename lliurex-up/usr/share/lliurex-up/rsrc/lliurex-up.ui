@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkBox" id="gather_box">
@@ -192,6 +192,9 @@
     <property name="opacity">0.98039215686274506</property>
     <property name="window_position">center</property>
     <child>
+      <placeholder/>
+    </child>
+    <child>
       <object class="GtkBox" id="box5">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -360,8 +363,9 @@
                               <object class="GtkSwitch" id="indicator_switch">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="valign">center</property>
+                                <property name="margin_left">10</property>
                                 <property name="active">True</property>
-                                <property name="state">True</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -537,10 +541,11 @@
       </packing>
     </child>
     <child>
-      <object class="GtkBox" id="box">
+      <object class="GtkBox" id="box_buttons">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
+        <property name="margin_left">15</property>
+        <property name="margin_right">15</property>
         <child>
           <object class="GtkBox" id="return_arrow_box">
             <property name="visible">True</property>
@@ -574,6 +579,42 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="return_update_box">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">center</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkEventBox" id="return_update_eventbox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkImage" id="return_update_image">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_right">30</property>
+                    <property name="margin_top">10</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="pixbuf">update.png</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

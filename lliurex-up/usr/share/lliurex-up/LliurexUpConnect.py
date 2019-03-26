@@ -206,7 +206,32 @@ class LliurexUpConnect():
 		return is_mirror_running_inserver['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
+
+
+	def clientCheckingMirrorExists(self):
+
+		is_mirror_exists_inserver=self.llxUpCore.clientCheckingMirrorExists()
 		
+		if is_mirror_exists_inserver['ismirroravailable'] ==None:
+			log_msg="Checking if mirror exists in server. Error: " + str(is_mirror_exists_inserver['exception'])
+			self.log(log_msg)
+
+		else:
+			if not is_mirror_exists_inserver['ismirroravailable']:
+				log_msg="Mirror not detected on the server"
+				self.log(log_msg)
+				
+		
+		return is_mirror_exists_inserver['ismirroravailable']
+
+	#def clientCheckingMirrorIsRunning
+
+	def addSourcesListLliurex(self,args):
+
+		self.llxUpCore.addSourcesListLliurex(args)
+
+	#def addSourcesListLliurex	
+
 	def isLliurexUpIsUpdated(self):
 
 		try:
