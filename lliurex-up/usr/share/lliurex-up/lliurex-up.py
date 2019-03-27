@@ -399,7 +399,7 @@ class LliurexUp:
 		font_terminal = Pango.FontDescription("monospace normal 10")
 		self.vterminal.set_font(font_terminal)
 		self.vterminal.set_scrollback_lines(-1)
-		self.vterminal.set_sensitive(True)
+		self.vterminal.set_sensitive(False)
 		self.terminal_scrolled.add(self.vterminal)
 		
 
