@@ -373,7 +373,7 @@ class LliurexUp:
 		self.update_button_box=builder.get_object("update_button_box")
 		self.update_button_eb=builder.get_object("update_button_eventbox")
 		self.update_button_eb.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
-		self.update_button_eb.connect("button-release-event", self.upgrade_process)
+		self.update_button_eb.connect("button-release-event", self.upgrade_process,"Update")
 		self.update_button_eb.connect("motion-notify-event", self.mouse_over_update_button)
 		self.update_button_eb.connect("leave-notify-event", self.mouse_exit_update_button)
 
@@ -399,7 +399,7 @@ class LliurexUp:
 		font_terminal = Pango.FontDescription("monospace normal 10")
 		self.vterminal.set_font(font_terminal)
 		self.vterminal.set_scrollback_lines(-1)
-		self.vterminal.set_sensitive(False)
+		self.vterminal.set_sensitive(True)
 		self.terminal_scrolled.add(self.vterminal)
 		
 
@@ -410,13 +410,15 @@ class LliurexUp:
 		self.return_arrow_eb.connect("button-release-event", self.arrow_clicked)
 		self.return_arrow_eb.connect("motion-notify-event",self.mouse_over_return_arrow)
 		self.return_arrow_eb.connect("leave-notify-event",self.mouse_exit_return_arrow)
-		
+		self.return_arrow_label=builder.get_object("return_arrow_label")
+
 		self.return_update_box=builder.get_object("return_update_box")
 		self.return_update_eb=builder.get_object("return_update_eventbox")
 		self.return_update_eb.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
-		self.return_update_eb.connect("button-release-event", self.return_update_clicked)
-		self.return_update_eb.connect("motion-notify-event",self.mouse_over_return_arrow)
-		self.return_update_eb.connect("leave-notify-event",self.mouse_exit_return_arrow)
+		self.return_update_eb.connect("button-release-event", self.upgrade_process,"Return")
+		self.return_update_eb.connect("motion-notify-event",self.mouse_over_return_update)
+		self.return_update_eb.connect("leave-notify-event",self.mouse_exit_return_update)
+		self.return_update_label=builder.get_object("return_update_label")
 
 		self.packages_label=builder.get_object("packages_label")
 		self.packages_tv=builder.get_object("packages_treeview")
@@ -727,7 +729,9 @@ class LliurexUp:
 		#self.changelog_label.set_name("LABEL_OPTION")
 		self.changelog_texview.set_name("CHANGELOG_FONT")
 		self.return_arrow_box.set_name("BUTTON_COLOR")
+		self.return_arrow_label.set_name("BUTTON_LABEL")
 		self.return_update_box.set_name("BUTTON_COLOR")
+		self.return_update_label.set_name("BUTTON_LABEL")
 		
 	#def set_css_info	
 
@@ -1313,13 +1317,17 @@ class LliurexUp:
 	
 	#def package_clicked			
 
-	def upgrade_process(self,widget, event=None):
+	def upgrade_process(self,widget,event,option):
 
 		
 		self.msg_upgrade_running=_("The update process is running. Wait a moment please")
 
 		if not self.preactions_process_t.launched:
+			if option=="Return":
+				self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
+				self.stack.set_visible_child_name("update")	
 			self.return_update_eb.set_sensitive(False)
+			self.return_update_box.set_name("UPDATE_BUTTON_LAUNCHED_COLOR")
 			self.number_process=4
 			self.pbar.show()
 			self.viewport.show()
@@ -1392,12 +1400,14 @@ class LliurexUp:
 								self.msg_upgrade_running="<span><b>" + _("The system is now update") + "</b></span>"
 								self.update_button_label.set_text(_("Update successfully"))
 								self.update_button_box.set_name("UPDATE_CORRECT_BUTTON_COLOR")
+								self.return_update_box.set_name("UPDATE_CORRECT_BUTTON_COLOR")
 
 							else:
 								self.terminal_label.set_name("ERROR_FONT")
 								self.msg_upgrade_running="<span><b>" + _("The updated process has ended with errors") + "</b></span>"
 								self.update_button_label.set_text(_("Update error"))
 								self.update_button_box.set_name("UPDATE_ERROR_BUTTON_COLOR")
+								self.return_update_box.set_name("UPDATE_ERROR_BUTTON_COLOR")
 	
 							
 							self.terminal_label.set_markup(self.msg_upgrade_running)
@@ -1512,12 +1522,6 @@ class LliurexUp:
 		
 	#def arrow_clicked
 
-	def return_update_clicked(self,widget,event):
-	
-		self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
-		self.stack.set_visible_child_name("update")	
-		
-	#def arrow_clicked
 
 	def update_installed_icon(self):
 	
@@ -1622,6 +1626,18 @@ class LliurexUp:
 	def mouse_exit_return_arrow(self,widget,event):
 
 		self.return_arrow_box.set_name("BUTTON_COLOR")		
+
+	#def mouse_exit_return_arrow	
+
+	def mouse_over_return_update(self,widget,event):
+
+		self.return_update_box.set_name("BUTTON_OVER_COLOR")	
+
+	#def mouse_over_return_arrow	
+
+	def mouse_exit_return_update(self,widget,event):
+
+		self.return_update_box.set_name("BUTTON_COLOR")		
 
 	#def mouse_exit_return_arrow	
 
