@@ -1,3 +1,10 @@
+lliurex-up (19.04.2) bionic; urgency=medium
+
+  * Adding new button to update
+  * Check if mirror exists in server when updated client
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 29 Mar 2019 12:42:46 +0100
+
 lliurex-up (19.04.1) bionic; urgency=medium
 
   * Inital release for bionic
