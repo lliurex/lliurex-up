@@ -174,7 +174,7 @@ class LliurexUpConnect():
 
 		#self.checkInitialFlavour()
 		arg="initActions"
-		command="DEBIAN_FRONTEND=gnome DEBIAN_PRIORITY=high " + self.llxUpCore.initActionsScript(arg)
+		command="DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high " + self.llxUpCore.initActionsScript(arg)
 		
 		try:
 		 	os.system(command)
@@ -206,7 +206,32 @@ class LliurexUpConnect():
 		return is_mirror_running_inserver['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
+
+
+	def clientCheckingMirrorExists(self):
+
+		is_mirror_exists_inserver=self.llxUpCore.clientCheckingMirrorExists()
 		
+		if is_mirror_exists_inserver['ismirroravailable'] ==None:
+			log_msg="Checking if mirror exists in server. Error: " + str(is_mirror_exists_inserver['exception'])
+			self.log(log_msg)
+
+		else:
+			if not is_mirror_exists_inserver['ismirroravailable']:
+				log_msg="Mirror not detected on the server"
+				self.log(log_msg)
+				
+		
+		return is_mirror_exists_inserver['ismirroravailable']
+
+	#def clientCheckingMirrorIsRunning
+
+	def addSourcesListLliurex(self,args):
+
+		self.llxUpCore.addSourcesListLliurex(args)
+
+	#def addSourcesListLliurex	
+
 	def isLliurexUpIsUpdated(self):
 
 		try:
@@ -450,7 +475,7 @@ class LliurexUpConnect():
 	def preActionsScript(self):
 
 		self.preActions=self.llxUpCore.preActionsScript()
-		self.preActions='DEBIAN_FRONTEND=gnome DEBIAN_PRIORITY=high ' +self.preActions + ' ;touch ' + self.preactions_token + '\n'
+		self.preActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.preActions + ' ;touch ' + self.preactions_token + '\n'
 		log_msg="Exec Pre-Actions"
 		self.log(log_msg)
 		return self.preActions
@@ -460,7 +485,7 @@ class LliurexUpConnect():
 	def distUpgradeProcess(self):
 		
 		self.distupgrade=self.llxUpCore.distUpgradeProcess()	
-		self.distupgrade='DEBIAN_FRONTEND=gnome DEBIAN_PRIORITY=high ' +self.distupgrade + ' ;touch ' + self.upgrade_token + '\n'
+		self.distupgrade='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.distupgrade + ' ;touch ' + self.upgrade_token + '\n'
 		log_msg="Exec Dist-uggrade"
 		self.log(log_msg)
 		return self.distupgrade
@@ -533,7 +558,7 @@ class LliurexUpConnect():
 	def installFinalFlavour(self,flavourToInstall):
 
 		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=gnome DEBIAN_PRIORITY=high ' +self.command + ' 2> >(tee ' + self.errorfinalmetapackage_token + ');touch ' + self.installflavour_token + ' ; exit'+' \n'
+		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.command + ' 2> >(tee ' + self.errorfinalmetapackage_token + ');touch ' + self.installflavour_token + ' ; exit'+' \n'
 		log_msg="Install final metapackage"
 		self.log(log_msg)
 		return self.command
@@ -543,7 +568,7 @@ class LliurexUpConnect():
 	def postActionsScript(self):
 
 		self.postActions=self.llxUpCore.postActionsScript()
-		self.postActions='DEBIAN_FRONTEND=gnome DEBIAN_PRIORITY=high '+self.postActions + ' 2> >(tee ' + self.errorpostaction_token + ') ;touch ' + self.postactions_token + ' \n'
+		self.postActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high '+self.postActions + ' 2> >(tee ' + self.errorpostaction_token + ') ;touch ' + self.postactions_token + ' \n'
 		#self.postActions=self.postActions + ' ;touch ' + self.postactions_token + ' \n'
 
 		log_msg="Exec Post-Actions"

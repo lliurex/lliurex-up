@@ -77,12 +77,12 @@ class LliurexUpCli(object):
 
 	def checkInitialFlavour(self,extra_args=None):
 
-		self.allRepos=False
-
+		#self.allRepos=False
+		'''
 		if 	extra_args["repositories"]:
 			self.allRepos=True 
-
-		self.targetMetapackage=self.lliurexcore.checkInitialFlavour(self.allRepos)
+		'''
+		self.targetMetapackage=self.lliurexcore.checkInitialFlavour()
 		log_msg="Initial check metapackage. Metapackage to install: " + str(self.targetMetapackage)
 		self.log(log_msg)
 		log_msg="Get initial flavours: " + str(self.lliurexcore.previousFlavours)
@@ -117,7 +117,37 @@ class LliurexUpCli(object):
 			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
 			return True
 				
-	#def canConnectToLliurexNet			
+	#def canConnectToLliurexNet		
+
+	def clientCheckingMirrorExists(self,extra_args=None):
+
+		self.allRepos=False
+
+		if not extra_args["unattendend_upgrade"]:
+			if not extra_args["repositories"]:
+				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+				is_mirror_exists=self.lliurexcore.clientCheckingMirrorExists()
+				if is_mirror_exists["ismirroravailable"]==None:
+					log_msg="Checking if mirror exists in server. Error: "+str(is_mirror_exists['exception'])
+					self.log(log_msg)
+				else:
+					if not is_mirror_exists["ismirroravailable"]:
+						log_msg="Mirror not detected in server"
+						self.log(log_msg)
+						response=raw_input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
+						if response.startswith('y'):
+							self.allRepos=True
+							log_msg="Adding the repositories of lliurex.net on client: Yes"
+						else:
+							log_msg="Adding the repositories of lliurex.net on client : No"	
+						self.log(log_msg)	
+
+			else:
+				self.allRepos=True
+
+		self.lliurexcore.addSourcesListLliurex(self.allRepos)						
+	
+	#def clientCheckingMirrorExists
 				
 	def clientCheckingMirrorIsRunning(self):
 		
@@ -138,7 +168,7 @@ class LliurexUpCli(object):
 	
 	def initActionsScript(self,extra_args=None):
 
-		print("  [Lliurex-Up]: Checking system")
+		print("  [Lliurex-Up]: Executing init actions")
 
 		if extra_args["unattendend_upgrade"]:
 			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.initActionsScript(self.initActionsArg)
@@ -152,7 +182,7 @@ class LliurexUpCli(object):
 			output=p.communicate()
 			error=self.readErrorOutput(output[1])
 			if error:
-				print("  [Lliurex-Up]: Checking system. Error: " +'\n'+str(output[1]))
+				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output[1]))
 				log_msg="Exec Init-Actions. Error: %s"%output[1]
 			else:
 				log_msg="Exec Init-Actions. OK"
@@ -715,7 +745,7 @@ class LliurexUpCli(object):
 		self.isAptLocked(extra_args)
 		self.isDpkgLocked(extra_args)
 		self.startLliurexUp(mode)
-		self.checkInitialFlavour(extra_args)
+		self.checkInitialFlavour()
 
 		'''
 		if mode=="sai":
@@ -740,6 +770,8 @@ class LliurexUpCli(object):
 			'''
 			return 1
 			
+		self.clientCheckingMirrorExists(extra_args)	
+
 		clientCheckingMirror=self.clientCheckingMirrorIsRunning()
 		
 		if clientCheckingMirror!=False:

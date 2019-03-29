@@ -373,7 +373,7 @@ class LliurexUp:
 		self.update_button_box=builder.get_object("update_button_box")
 		self.update_button_eb=builder.get_object("update_button_eventbox")
 		self.update_button_eb.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
-		self.update_button_eb.connect("button-release-event", self.upgrade_process)
+		self.update_button_eb.connect("button-release-event", self.upgrade_process,"Update")
 		self.update_button_eb.connect("motion-notify-event", self.mouse_over_update_button)
 		self.update_button_eb.connect("leave-notify-event", self.mouse_exit_update_button)
 
@@ -410,6 +410,16 @@ class LliurexUp:
 		self.return_arrow_eb.connect("button-release-event", self.arrow_clicked)
 		self.return_arrow_eb.connect("motion-notify-event",self.mouse_over_return_arrow)
 		self.return_arrow_eb.connect("leave-notify-event",self.mouse_exit_return_arrow)
+		self.return_arrow_label=builder.get_object("return_arrow_label")
+
+		self.return_update_box=builder.get_object("return_update_box")
+		self.return_update_eb=builder.get_object("return_update_eventbox")
+		self.return_update_eb.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
+		self.return_update_eb.connect("button-release-event", self.upgrade_process,"Return")
+		self.return_update_eb.connect("motion-notify-event",self.mouse_over_return_update)
+		self.return_update_eb.connect("leave-notify-event",self.mouse_exit_return_update)
+		self.return_update_label=builder.get_object("return_update_label")
+
 		self.packages_label=builder.get_object("packages_label")
 		self.packages_tv=builder.get_object("packages_treeview")
 		self.changelog_texview=builder.get_object("changelog_textview")
@@ -478,13 +488,27 @@ class LliurexUp:
 		
 		self.window.connect("destroy",self.quit)
 		
+		self.init_threads()
 		self.set_css_info()
+
+		self.spinner.start()
+		self.package_list=[]
+		self.max_seconds=5.0
+		self.current_second=0
+		self.number_process=9
 
 		msg_gather="<span><b>"+_("Checking system")+"</b></span>"
 		self.gather_label.set_markup(msg_gather)
 		GLib.timeout_add(100,self.pulsate_checksystem)
 
-		self.initactions_process_t=threading.Thread(target=self.initActions_process)
+		Gtk.main()
+
+	#def start_gui
+
+	def init_threads(self):
+
+		self.check_system_t=threading.Thread(target=self.checksystem_process)
+		self.init_actions_t=threading.Thread(target=self.initactions_process)
 		self.check_lliurexup_t=threading.Thread(target=self.check_lliurexup_version)
 		self.install_lliurexup_t=threading.Thread(target=self.install_lliurexup)
 		self.check_mirror_t=threading.Thread(target=self.check_mirror)
@@ -499,7 +523,8 @@ class LliurexUp:
 		self.checkFinalFlavourToInstall_t=threading.Thread(target=self.checkFinalFlavourToInstall)
 		self.postactions_process_t=threading.Thread(target=self.postactions_process)
 
-		self.initactions_process_t.daemon=True
+		self.check_system_t.daemon=True
+		self.init_actions_t.daemon=True
 		self.check_lliurexup_t.daemon=True
 		self.install_lliurexup_t.daemon=True
 		self.check_mirror_t.daemon=True
@@ -513,7 +538,8 @@ class LliurexUp:
 		self.checkFinalFlavourToInstall_t.daemon=True
 		self.postactions_process_t.daemon=True
 
-		self.initactions_process_t.done=False
+		self.check_system_t.done=False
+		self.init_actions_t.done=False
 		self.check_lliurexup_t.done=False
 		self.install_lliurexup_t.done=False
 		self.check_mirror_t.done=False
@@ -527,7 +553,8 @@ class LliurexUp:
 		self.checkFinalFlavourToInstall_t.done=False
 		self.postactions_process_t.done=False
 		
-		self.initactions_process_t.launched=False
+		self.check_system_t.launched=False
+		self.init_actions_t.launched=False
 		self.check_lliurexup_t.launched=False
 		self.install_lliurexup_t.launched=False
 		self.check_mirror_t.launched=False
@@ -540,17 +567,10 @@ class LliurexUp:
 		self.update_process_t.launched=False
 		self.checkFinalFlavourToInstall_t.launched=False
 		self.postactions_process_t.launched=False
-		
-		self.spinner.start()
-		self.package_list=[]
-		self.max_seconds=5.0
-		self.current_second=0
-		self.number_process=8
 
 		GObject.threads_init()
-		Gtk.main()
 
-	#def start_gui
+	#def init_threads	
 	
 	def set_css_info(self):
 	
@@ -709,87 +729,44 @@ class LliurexUp:
 		#self.changelog_label.set_name("LABEL_OPTION")
 		self.changelog_texview.set_name("CHANGELOG_FONT")
 		self.return_arrow_box.set_name("BUTTON_COLOR")
+		self.return_arrow_label.set_name("BUTTON_LABEL")
+		self.return_update_box.set_name("BUTTON_COLOR")
+		self.return_update_label.set_name("BUTTON_LABEL")
 		
 	#def set_css_info	
+
 
 
 	def pulsate_checksystem(self):
 
 		abort=False
-		if not self.initactions_process_t.launched:
-			print "  [Lliurex-Up]: Checking system: connection to lliurex.net and init-actions"
-			self.initactions_process_t.start()
-			self.initactions_process_t.launched=True
+		if not self.check_system_t.launched:
+			print "  [Lliurex-Up]: Checking system: connection to lliurex.net, n4d status..."
+			self.check_system_t.start()
+			self.check_system_t.launched=True
 			self.show_number_process_executing(1,"")
 		
-		if self.initactions_process_t.done:
+		if self.check_system_t.done:
 			if self.free_space:
 				if self.statusN4d:
 					if self.can_connect:
 						if self.is_mirror_running_inserver==False:
 
-							if  not self.check_lliurexup_t.is_alive() and not self.check_lliurexup_t.launched:
-								print "  [Lliurex-Up]: Checking Lliurex-Up version"
-							 	msg_gather="<span><b>"+_("Looking for new version of LliureX Up")+"</b></span>"
+							if not self.is_mirror_exists_inserver:
+								self.clicked_action="repository"
+								print "  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist"
+								self.yes_button_box.show()
+								self.no_button_box.show()
+								self.pbar.hide()
+								self.pbar_label.hide()
+								msg_gather="<span><b>"+_("Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")+"</b></span>"
 								self.gather_label.set_markup(msg_gather)
-							 	self.check_lliurexup_t.start()
-						 		self.check_lliurexup_t.launched=True
-						 		self.show_number_process_executing(2,"")
+								return False
+							else:
+								self.llxup_connect.addSourcesListLliurex(False)
+								GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
+								return False
 
-
-						 	if  self.check_lliurexup_t.done:
-								if not self.is_lliurexup_updated:
-									if  not self.install_lliurexup_t.is_alive() and not self.install_lliurexup_t.launched:
-										print "  [Lliurex-Up]: Updating Lliurex-Up"
-										msg_gather="<span><b>"+_("Updating LliureX Up")+"</b></span>"
-										self.gather_label.set_markup(msg_gather)
-										self.install_lliurexup_t.start()
-										self.install_lliurexup_t.launched=True
-										self.show_number_process_executing(3,"")
-
-									else:
-										if self.install_lliurexup_t.done:
-											print "  [Lliurex-Up]: Reboot Lliurex-Up"
-											self.pbar_label.hide()
-											self.msg_wait="<span><b>"+_("LliureX Up is now updated and will be reboot in %s seconds...")+"</b></span>"
-											GLib.timeout_add(10,self.wait_to_reboot)
-											return False
-								else:
-									if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
-										print "  [Lliurex-Up]: Checking if mirror exist"
-										msg_gather="<span><b>"+_("Checking if mirror exist and there is updated")+"</b></span>"
-										self.gather_label.set_markup(msg_gather)
-										self.check_mirror_t.start()
-										self.check_mirror_t.launched=True
-										self.show_number_process_executing(4,"")
-								
-									if 	self.check_mirror_t.done:
-										is_mirror_running=self.llxup_connect.lliurexMirrorIsRunning()
-
-										if not self.is_mirror_updated:
-											if not is_mirror_running:
-												print "  [Lliurex-Up]: Asking if mirror will be update"
-												self.yes_button_box.show()
-												self.no_button_box.show()
-												self.pbar.hide()
-												self.pbar_label.hide()
-												msg_gather="<span><b>"+_("Your mirror is not update. Do you want to update it?")+"</b></span>"
-												self.gather_label.set_markup(msg_gather)
-												return False
-
-											else:
-												self.mirror_running_msg()
-												return False
-
-										else:	
-											if is_mirror_running:
-												self.mirror_running_msg()
-												return False
-											else:	
-												print "  [Lliurex-Up]: Nothing to do with mirror"
-												GLib.timeout_add(100,self.pulsate_get_info)
-												return False
-					
 						else:
 							abort=True
 							if self.is_mirror_running_inserver:
@@ -824,8 +801,108 @@ class LliurexUp:
 			return False
 		
 				
-		if self.initactions_process_t.is_alive():
-			return True					
+		if self.check_system_t.is_alive():
+			return True		
+
+	#def pulsate_checksystem							
+
+	def checksystem_process(self):
+		
+		time.sleep(5)
+		self.free_space=self.llxup_connect.free_space_check()
+		if self.free_space:
+			self.statusN4d=self.llxup_connect.checkInitialN4dStatus()
+			if self.statusN4d:
+				self.llxup_connect.checkInitialFlavour()
+				self.can_connect=self.llxup_connect.canConnectToLliurexNet()
+				if self.can_connect:
+					self.is_mirror_exists_inserver=self.llxup_connect.clientCheckingMirrorExists()
+					self.is_mirror_running_inserver=self.llxup_connect.clientCheckingMirrorIsRunning()
+	
+		self.check_system_t.done=True		
+
+	#def checksystem_process
+		
+	def pulsate_check_llxup_mirror(self):
+		
+		abort=False							
+
+		if not self.init_actions_t.launched:
+			print "  [Lliurex-Up]: Executing init-actions"
+			msg_gather="<span><b>"+_("Executing init-actions")+"</b></span>"
+			self.gather_label.set_markup(msg_gather)
+			self.init_actions_t.start()
+			self.init_actions_t.launched=True
+			self.show_number_process_executing(3,"")
+
+		if self.init_actions_t.done:	
+
+			if  not self.check_lliurexup_t.is_alive() and not self.check_lliurexup_t.launched:
+				print "  [Lliurex-Up]: Checking Lliurex-Up version"
+			 	msg_gather="<span><b>"+_("Looking for new version of LliureX Up")+"</b></span>"
+				self.gather_label.set_markup(msg_gather)
+			 	self.check_lliurexup_t.start()
+				self.check_lliurexup_t.launched=True
+				self.show_number_process_executing(4,"")
+
+
+			if  self.check_lliurexup_t.done:
+				if not self.is_lliurexup_updated:
+					if  not self.install_lliurexup_t.is_alive() and not self.install_lliurexup_t.launched:
+						print "  [Lliurex-Up]: Updating Lliurex-Up"
+						msg_gather="<span><b>"+_("Updating LliureX Up")+"</b></span>"
+						self.gather_label.set_markup(msg_gather)
+						self.install_lliurexup_t.start()
+						self.install_lliurexup_t.launched=True
+						self.show_number_process_executing(5,"")
+					else:
+						if self.install_lliurexup_t.done:
+							print "  [Lliurex-Up]: Reboot Lliurex-Up"
+							self.pbar_label.hide()
+							self.msg_wait="<span><b>"+_("LliureX Up is now updated and will be reboot in %s seconds...")+"</b></span>"
+							GLib.timeout_add(10,self.wait_to_reboot)
+							return False
+				else:
+					if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
+						print "  [Lliurex-Up]: Checking if mirror exist"
+						msg_gather="<span><b>"+_("Checking if mirror exist and there is updated")+"</b></span>"
+						self.gather_label.set_markup(msg_gather)
+						self.check_mirror_t.start()
+						self.check_mirror_t.launched=True
+						self.show_number_process_executing(5,"")
+											
+					if 	self.check_mirror_t.done:
+						is_mirror_running=self.llxup_connect.lliurexMirrorIsRunning()
+						if not self.is_mirror_updated:
+							if not is_mirror_running:
+								self.clicked_action="mirror"
+								print "  [Lliurex-Up]: Asking if mirror will be update"
+								self.yes_button_box.show()
+								self.no_button_box.show()
+								self.pbar.hide()
+								self.pbar_label.hide()
+								msg_gather="<span><b>"+_("Your mirror is not update. Do you want to update it?")+"</b></span>"
+								self.gather_label.set_markup(msg_gather)
+								return False
+
+							else:
+								self.mirror_running_msg()
+								return False
+
+						else:	
+							if is_mirror_running:
+								self.mirror_running_msg()
+								return False
+							else:	
+								print "  [Lliurex-Up]: Nothing to do with mirror"
+								GLib.timeout_add(100,self.pulsate_get_info)
+								return False
+					
+								
+
+		if self.init_actions_t.launched:
+			if self.init_actions_t.is_alive():
+				return True
 
 		if  self.check_lliurexup_t.launched:
 			if self.check_lliurexup_t.is_alive():
@@ -840,7 +917,15 @@ class LliurexUp:
 		 		return True
 
 		
-	#def pulsate_checksystem	
+	#def pulsate_check_llxup_mirror	
+
+	def initactions_process(self):
+
+		self.llxup_connect.initActionsScript()
+		self.init_actions_t.done=True
+
+	#def self.initactions_process
+
 
 	def wait_to_reboot(self):
 
@@ -859,20 +944,6 @@ class LliurexUp:
 
 	#def wait_to_reboot
 
-	
-	def initActions_process(self):
-		time.sleep(5)
-		self.free_space=self.llxup_connect.free_space_check()
-		if self.free_space:
-			self.statusN4d=self.llxup_connect.checkInitialN4dStatus()
-			if self.statusN4d:
-				self.llxup_connect.checkInitialFlavour()
-				self.can_connect=self.llxup_connect.canConnectToLliurexNet()
-				if self.can_connect:
-					self.is_mirror_running_inserver=self.llxup_connect.clientCheckingMirrorIsRunning()
-					self.llxup_connect.initActionsScript()
-
-		self.initactions_process_t.done=True
 	
 	def check_lliurexup_version(self):
 
@@ -899,30 +970,45 @@ class LliurexUp:
 
 	def no_button_clicked(self,widget,event):
 		
-		#self.response=0
 		self.pbar.show()
-		self.pbar_label.show()	
-		GLib.timeout_add(100,self.pulsate_get_info)
+		self.pbar_label.show()
 		self.yes_button_box.hide()
 		self.no_button_box.hide()
-		log_msg="Update lliurex-mirror: No"
-		self.llxup_connect.log(log_msg)
+
+		if self.clicked_action=="mirror":
+			#self.response=0
+			GLib.timeout_add(100,self.pulsate_get_info)
+			log_msg="Update lliurex-mirror: No"
+			self.llxup_connect.log(log_msg)
+		else:
+			log_msg="Adding the repositories of lliurex.net on client: No"
+			print "[Lliurex-Up]: "+log_msg
+			self.llxup_connect.log(log_msg)
+			self.llxup_connect.addSourcesListLliurex(False)	
+			GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
 
 	#def def no_button_clicked
 		
 	def yes_button_clicked(self,widget,event):
-	
-		self.pbar.show()
-		self.pbar_label.show()
-		print "[Lliurex-Up]: Updating mirror"
-		self.updated_percentage(0)
+
 		self.yes_button_box.hide()
 		self.no_button_box.hide()
-		self.execute_lliurexmirror_t.start()
-		self.mirror_running_msg()
-		log_msg="Update lliurex-mirror: Yes"
-		print log_msg
-		self.llxup_connect.log(log_msg)
+		self.pbar.show()
+		self.pbar_label.show()
+		if self.clicked_action=="mirror":
+			print "[Lliurex-Up]: Updating mirror"
+			self.updated_percentage(0)
+			self.execute_lliurexmirror_t.start()
+			self.mirror_running_msg()
+			log_msg="Update lliurex-mirror: Yes"
+			self.llxup_connect.log(log_msg)
+			self.llxup_connect.log(log_msg)
+		else:
+			log_msg="Adding the repositories of lliurex.net on client: Yes"
+			print "[Lliurex-Up]: "+log_msg
+			self.llxup_connect.log(log_msg)
+			self.llxup_connect.addSourcesListLliurex(True)	
+			GLib.timeout_add(10,self.pulsate_check_llxup_mirror)
 
 	#def yes_button_clicked
 
@@ -967,7 +1053,7 @@ class LliurexUp:
 			self.gather_label.set_markup(msg_gather)
 			self.get_lliurexversionlocal_t.start()
 			self.get_lliurexversionlocal_t.launched=True
-			self.show_number_process_executing(5,"")
+			self.show_number_process_executing(6,"")
 
 
 
@@ -978,7 +1064,7 @@ class LliurexUp:
 				self.gather_label.set_markup(msg_gather)
 				self.get_lliurexversionnet_t.start()	
 				self.get_lliurexversionnet_t.launched=True
-				self.show_number_process_executing(6,"")
+				self.show_number_process_executing(7,"")
 
 
 
@@ -990,7 +1076,7 @@ class LliurexUp:
 					self.gather_label.set_markup(msg_gather)
 					self.checkInitialFlavourToInstall_t.start()
 					self.checkInitialFlavourToInstall_t.launched=True
-					self.show_number_process_executing(7,"")
+					self.show_number_process_executing(8,"")
 
 
 
@@ -1002,7 +1088,7 @@ class LliurexUp:
 						self.gather_label.set_markup(msg_gather)
 						self.gather_packages_t.start()
 						self.gather_packages_t.launched=True
-						self.show_number_process_executing(8,"")
+						self.show_number_process_executing(9,"")
 
 
 					if self.gather_packages_t.done:
@@ -1231,12 +1317,17 @@ class LliurexUp:
 	
 	#def package_clicked			
 
-	def upgrade_process(self,widget, event=None):
+	def upgrade_process(self,widget,event,option):
 
 		
 		self.msg_upgrade_running=_("The update process is running. Wait a moment please")
 
 		if not self.preactions_process_t.launched:
+			if option=="Return":
+				self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
+				self.stack.set_visible_child_name("update")	
+			self.return_update_eb.set_sensitive(False)
+			self.return_update_box.set_name("UPDATE_BUTTON_LAUNCHED_COLOR")
 			self.number_process=4
 			self.pbar.show()
 			self.viewport.show()
@@ -1309,12 +1400,14 @@ class LliurexUp:
 								self.msg_upgrade_running="<span><b>" + _("The system is now update") + "</b></span>"
 								self.update_button_label.set_text(_("Update successfully"))
 								self.update_button_box.set_name("UPDATE_CORRECT_BUTTON_COLOR")
+								self.return_update_box.set_name("UPDATE_CORRECT_BUTTON_COLOR")
 
 							else:
 								self.terminal_label.set_name("ERROR_FONT")
 								self.msg_upgrade_running="<span><b>" + _("The updated process has ended with errors") + "</b></span>"
 								self.update_button_label.set_text(_("Update error"))
 								self.update_button_box.set_name("UPDATE_ERROR_BUTTON_COLOR")
+								self.return_update_box.set_name("UPDATE_ERROR_BUTTON_COLOR")
 	
 							
 							self.terminal_label.set_markup(self.msg_upgrade_running)
@@ -1429,6 +1522,7 @@ class LliurexUp:
 		
 	#def arrow_clicked
 
+
 	def update_installed_icon(self):
 	
 		imagok=Gtk.Image()
@@ -1532,6 +1626,18 @@ class LliurexUp:
 	def mouse_exit_return_arrow(self,widget,event):
 
 		self.return_arrow_box.set_name("BUTTON_COLOR")		
+
+	#def mouse_exit_return_arrow	
+
+	def mouse_over_return_update(self,widget,event):
+
+		self.return_update_box.set_name("BUTTON_OVER_COLOR")	
+
+	#def mouse_over_return_arrow	
+
+	def mouse_exit_return_update(self,widget,event):
+
+		self.return_update_box.set_name("BUTTON_COLOR")		
 
 	#def mouse_exit_return_arrow	
 

@@ -521,6 +521,23 @@ class LliurexUpCore(object):
 
 	#def clientCheckingMirrorIsRunning	
 
+	def clientCheckingMirrorExists(self):
+
+		if self.targetMetapackage=="lliurex-meta-client" or "client" in self.previousFlavours or "client" in self.metapackageRef:
+			
+			try:
+				client=xmlrpclib.ServerProxy('https://server:9779')
+				result=client.is_mirror_available('','MirrorManager')
+				return {'ismirroravailable':result['status'],'exception':False}
+			
+			except Exception as e:
+				return {'ismirroravailable':None,'exception':str(e)}	
+
+		return {'ismirroravailable':True,'exception':False}	
+
+	#def clientCheckingMirrorExists	
+
+
 	def getPercentageLliurexMirror(self):
 		'''
 			return int | None
