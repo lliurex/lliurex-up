@@ -1,3 +1,9 @@
+lliurex-up (19.04.4) bionic; urgency=medium
+
+  * Fixed creation of lliurex-up sources.list
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 17 Apr 2019 11:32:41 +0200
+
 lliurex-up (19.04.3) bionic; urgency=medium
 
   * Fixed depends to use kde as DEBIAN_FRONTEND
