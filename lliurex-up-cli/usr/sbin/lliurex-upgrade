@@ -54,7 +54,7 @@ class LliurexUpCli(object):
 			self.initActionsArg="initActions"	
 
 
-		print("  [Lliurex-Up]: Checking n4d service status")
+		print("  [Lliurex-Up]: Checking n4d service status...")
 		self.checkInitialN4dStatus()
 
 
@@ -93,7 +93,7 @@ class LliurexUpCli(object):
 
 	def canConnectToLliurexNet(self):
 
-		print("  [Lliurex-Up]: Checking connection to lliurex.net")
+		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
 
 		can_connect=self.lliurexcore.canConnectToLliurexNet()
 		if can_connect:
@@ -125,7 +125,7 @@ class LliurexUpCli(object):
 
 		if not extra_args["unattendend_upgrade"]:
 			if not extra_args["repositories"]:
-				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+				print("  [Lliurex-Up]: Checking if mirror exists in server...")
 				is_mirror_exists=self.lliurexcore.clientCheckingMirrorExists()
 				if is_mirror_exists["ismirroravailable"]==None:
 					log_msg="Checking if mirror exists in server. Error: "+str(is_mirror_exists['exception'])
@@ -168,7 +168,7 @@ class LliurexUpCli(object):
 	
 	def initActionsScript(self,extra_args=None):
 
-		print("  [Lliurex-Up]: Executing init actions")
+		print("  [Lliurex-Up]: Executing init actions...")
 
 		if extra_args["unattendend_upgrade"]:
 			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.initActionsScript(self.initActionsArg)
@@ -198,18 +198,18 @@ class LliurexUpCli(object):
 	
 	def checkLliurexUp(self):
 
-		print("  [Lliurex-Up]: Looking for new version of Lliurex Up")
+		print("  [Lliurex-Up]: Looking for new version of Lliurex Up...")
 
 
 		is_lliurexup_updated=self.lliurexcore.isLliurexUpIsUpdated(self.allRepos)
 
 
 		if not is_lliurexup_updated:
-			print ("  [Lliurex-Up]: Updating Lliurex-Up")
+			print ("  [Lliurex-Up]: Updating Lliurex-Up...")
 			is_lliurexup_installed=self.lliurexcore.installLliurexUp()
 			log_msg="Installing Lliurex-Up. Returncode: " + str(is_lliurexup_installed['returncode']) + ". Error: " + str(is_lliurexup_installed['stderrs'])
 			self.log(log_msg)
-			print ("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now" )
+			print ("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
 			time.sleep(3)
 			self.lliurexcore.cleanLliurexUpLock()
 			os.execv("/usr/sbin/lliurex-upgrade",sys.argv)	
@@ -223,7 +223,7 @@ class LliurexUpCli(object):
 
 	def checkMirror(self,extra_args=None):
 
-		print("  [Lliurex-Up]: Checking if mirror is updated")
+		print("  [Lliurex-Up]: Checking if mirror is updated...")
 
 		try:
 			is_mirror_updated=self.lliurexcore.lliurexMirrorIsUpdated()
@@ -279,7 +279,7 @@ class LliurexUpCli(object):
 
 	def getLliurexVersionLocal(self):
 
-		print("  [Lliurex-Up]: Looking for LliurexVersion from local repository")
+		print("  [Lliurex-Up]: Looking for LliurexVersion from local repository...")
 		
 		self.version_update=self.lliurexcore.getLliurexVersionLocal()
 		log_msg="Get LliurexVersion installed: " + str(self.version_update["installed"])
@@ -292,7 +292,7 @@ class LliurexUpCli(object):
 
 	def getLliurexVersionLliurexNet(self):
 	
-		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net")
+		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
 
 		self.version_available=self.lliurexcore.getLliurexVersionLliurexNet()
 		log_msg="Get LliurexVersion candidate from Lliurex Net: " + str(self.version_available["candidate"])
@@ -302,7 +302,7 @@ class LliurexUpCli(object):
 
 	def checkingInitialFlavourToInstall(self):
 
-		print("  [Lliurex-Up]: Checking if installation of metapackage is required")
+		print("  [Lliurex-Up]: Checking if installation of metapackage is required...")
 
 		self.returncode_initflavour=0
 
@@ -323,7 +323,7 @@ class LliurexUpCli(object):
 	
 	def getPackagesToUpdate(self):
 
-		print("  [Lliurex-Up]: Looking for new updates")
+		print("  [Lliurex-Up]: Looking for new updates...")
 		packages=self.lliurexcore.getPackagesToUpdate()
 		log_msg="Get packages to update. Number of packages: "+ str(len(packages))
 		self.log(log_msg)
@@ -370,7 +370,7 @@ class LliurexUpCli(object):
 
 	def preActionsScript(self,extra_args):
 
-		print("  [Lliurex-Up]: Preparing system to update")
+		print("  [Lliurex-Up]: Preparing system to update...")
 
 		if extra_args["unattendend_upgrade"]:
 			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.preActionsScript()
@@ -399,7 +399,7 @@ class LliurexUpCli(object):
 
 	def distUpgrade(self,extra_args):
 
-		print("  [Lliurex-Up]: Downloading and installing packages")
+		print("  [Lliurex-Up]: Downloading and installing packages...")
 
 		if extra_args["unattendend_upgrade"]:
 			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.distUpgradeProcess()
@@ -427,7 +427,7 @@ class LliurexUpCli(object):
 
 	def postActionsScript(self,extra_args):
 
-		print("  [Lliurex-Up]: Ending the update")
+		print("  [Lliurex-Up]: Ending the update...")
 
 		self.errorpostaction=False
 
@@ -475,7 +475,7 @@ class LliurexUpCli(object):
 
 	def checkFinalN4dStatus(self):
 
-		print("  [Lliurex-Up]: Checking N4d status")
+		print("  [Lliurex-Up]: Checking N4d status...")
 
 		self.lliurexcore.checkN4dStatus()
 		
@@ -487,7 +487,7 @@ class LliurexUpCli(object):
 
 	def checkingFinalFlavourToInstall(self):
 		
-		print("  [Lliurex-Up]: Checking final metapackage")
+		print("  [Lliurex-Up]: Checking final metapackage...")
 		self.errorfinalmetapackage=False
 		#self.flavourToInstall=self.lliurexcore.checkFinalFlavour()
 		self.checkFinalN4dStatus()
@@ -543,7 +543,7 @@ class LliurexUpCli(object):
 	def checkFinalUpgrade(self):
 
 
-		print("  [Lliurex-Up]: Checking Dist-upgrade ")
+		print("  [Lliurex-Up]: Checking Dist-upgrade...")
 		error=self.lliurexcore.checkErrorDistUpgrade()
 
 		if error or self.errorfinalmetapackage or self.errorpostaction :
