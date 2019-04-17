@@ -243,7 +243,7 @@ class LliurexUpCore(object):
 		self.writeDefaultSourceslistMirror()
 		self.writeDefaultSourceslistAll()
 
-		self.addSourcesListLliurex(args)
+		#self.addSourcesListLliurex(args)
 
 		return self.targetMetapackage
 
@@ -533,7 +533,8 @@ class LliurexUpCore(object):
 			except Exception as e:
 				return {'ismirroravailable':None,'exception':str(e)}	
 
-		return {'ismirroravailable':True,'exception':False}	
+		else:
+			return {'ismirroravailable':True,'exception':False}	
 
 	#def clientCheckingMirrorExists	
 
