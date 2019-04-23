@@ -14,7 +14,8 @@ OUR_PACKAGE="lliurex-up"
 case $1 in 
 
      configure)
-     	if dpkg-divert --package lliurex-up --rename --quiet --add --divert ${SYSTEM_CONFIG_SCRIPT}.real ${SYSTEM_CONFIG_SCRIPT} ; then
+     	:<<-!
+	if dpkg-divert --package lliurex-up --rename --quiet --add --divert ${SYSTEM_CONFIG_SCRIPT}.real ${SYSTEM_CONFIG_SCRIPT} ; then
         	ln -fs ${OUR_BINARY} ${SYSTEM_CONFIG_SCRIPT}
         else
         	echo "Unable to divert file \"$SYSTEM_CONFIG_SCRIPT\"" >&2
@@ -25,7 +26,7 @@ case $1 in
 	else
 		echo "Unable to divert file \"$SYSTEM_AUTOSTART_SCRIPT\"" >&2
 	fi
-
+	!
 	if dpkg --compare-versions "$2" lt 16.04.11; then
 
 		F="/usr/share/lliurex-up/includes/etc/apt/preferences.d/lliurex-pinning"
