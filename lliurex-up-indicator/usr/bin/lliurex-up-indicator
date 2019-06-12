@@ -440,7 +440,7 @@ class UpgradeIndicator:
 	def show_message(self,message):
 
 		
-		self.notify=Notify.Notification.new(_("Lliurex-Up"),message, "lliurex-up")
+		self.notify=Notify.Notification.new(_("Lliurex-Up"),message, "lliurex-up-indicator")
 		self.notify.set_hint("transient", GLib.Variant.new_boolean(True))
 		self.notify.show()
 
@@ -467,6 +467,6 @@ class UpgradeIndicator:
 if __name__=="__main__":
 
 
-	lliurexup=UpgradeIndicator("lliurex-up")
+	lliurexup=UpgradeIndicator("lliurex-up-indicator")
 	GObject.threads_init()
 	Gtk.main()
