@@ -61,8 +61,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="-57.974295"
-     inkscape:cy="87.489578"
+     inkscape:cx="157.43646"
+     inkscape:cy="127.89568"
      inkscape:document-units="px"
      inkscape:current-layer="g962"
      showgrid="false"
@@ -71,10 +71,10 @@
      inkscape:guide-bbox="true"
      inkscape:snap-intersection-paths="false"
      inkscape:snap-midpoints="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="839"
+     inkscape:window-width="1360"
+     inkscape:window-height="584"
      inkscape:window-x="0"
-     inkscape:window-y="30"
+     inkscape:window-y="36"
      inkscape:window-maximized="1">
     <sodipodi:guide
        position="128.92857,237.85714"
@@ -275,7 +275,7 @@
            d="M 134.564,127.825 C 126.64,120.568 119.677,110.427 116.578,99.714 108.48,94.707 98.875,93.279 90.097,96.686 73.986,102.94 66.376,123.09 73.596,141.69 80.205,158.716 99,172.107 114,175.341 c 0,16.524 0,33.659 0,50.659 0,3 4,3 4,0 0,-16 0,-33.746 0,-50.077 0,0.018 0.475,0.042 0.632,0.057 13.786,-5.351 19.183,-29.609 15.932,-48.155 z"
            id="XMLID_777_"
            inkscape:connector-curvature="0"
-           style="fill:#ffff00" />
+           style="fill:#00ff00;fill-opacity:1" />
         <g
            id="XMLID_272_"
            style="opacity:0.5">
