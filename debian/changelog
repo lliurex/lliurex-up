@@ -1,3 +1,9 @@
+lliurex-up (19.04.6) bionic; urgency=medium
+
+  * Included new icons
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 13 Jun 2019 08:48:43 +0200
+
 lliurex-up (19.04.5) bionic; urgency=medium
 
   * Removed update-manager diversion
