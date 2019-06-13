@@ -184,7 +184,7 @@ class UpgradeIndicator:
 			label_item=_("Update the system now")
 			item.set_label(label_item)
 			img=Gtk.Image()
-			img.set_from_icon_name("update-high",Gtk.IconSize.MENU)
+			img.set_from_icon_name("update-low",Gtk.IconSize.MENU)
 			item.set_image(img)
 			item.set_always_show_image(True)
 			item.connect("activate",self.open_gui)
