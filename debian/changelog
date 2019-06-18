@@ -1,3 +1,9 @@
+lliurex-up (19.04.10) bionic; urgency=medium
+
+  * Fixed po files
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 18 Jun 2019 13:36:31 +0200
+
 lliurex-up (19.04.9) bionic; urgency=medium
 
   * Fixed spanish translations
