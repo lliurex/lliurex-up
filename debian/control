@@ -35,7 +35,7 @@ Description: Graphical interface to update system
 
 Package: lliurex-up-cli
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, lliurex-up-core (= ${binary:Version}), python, python-clint
+Depends: lliurex-up-core (= ${binary:Version}), python, python-clint
 Description: Command line interface to update system
  CLI Interface to update system.
 
