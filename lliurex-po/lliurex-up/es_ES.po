@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-27 13:41+0100\n"
-"PO-Revision-Date: 2019-06-18 13:34+0200\n"
+"POT-Creation-Date: 2019-07-19 09:08+0200\n"
+"PO-Revision-Date: 2019-07-19 09:08+0200\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -51,6 +51,7 @@ msgstr ""
 "Algún proceso esta siendo ejecutado. Espere un momento y pruebe otra vez"
 
 #: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:285
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:39
 msgid "You need administration privileges to run this application."
 msgstr "Necesitas permisos de administrador para ejecutar la aplicación"
 
