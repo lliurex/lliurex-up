@@ -1,0 +1,25 @@
+[
+    {
+        "prefix": "net.lliurex.lliurex-up",
+        "cmd": "/usr/sbin/lliurex-up",
+        "nameaction": "gui",
+        "icon": "lliurex-up",
+        "default_auth": {
+            "any": "no",
+            "inactive": "no",
+            "active": "no"
+        },
+        "auths": [
+            {
+                "type": "group",
+                "members": [
+                    "sudo",
+                    "admins"
+                ],
+                "any": "yes",
+                "inactive": "yes",
+                "active": "yes"
+            }
+        ]
+    }
+]
