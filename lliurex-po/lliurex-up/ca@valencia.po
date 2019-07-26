@@ -1,0 +1,324 @@
+# Catalan translations for PACKAGE package
+# Traduccions al català del paquet «PACKAGE».
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# lliurex <lliurex@gva.es>, 2017.
+# Jose A. Murcia <joamruan@gmail.com>, 2017.
+# Pilar Embid Giner <embid_mar@gva.es>, 2017, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-19 09:08+0200\n"
+"PO-Revision-Date: 2019-07-19 09:09+0200\n"
+"Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
+"Language-Team: LliureX\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:172
+msgid " is now running. Wait a moment and try again"
+msgstr " està en execució. Espereu un moment i torneu-ho a provar."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:174
+msgid ""
+" seems blocked by a failed previous execution.\n"
+"Lliurex-Up can not continue if this block is maintained.\n"
+"Do you want to try to unlock it? "
+msgstr ""
+" sembla bloquejat a causa d'una execució anterior que ha fallat.\n"
+"El Lliurex-Up no pot continuar si aquest bloqueig es manté.\n"
+"Voleu provar de desbloquejar-lo? "
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:176
+msgid "Apt is now running. Wait a moment and try again"
+msgstr "Apt està en execució. Espereu un moment i torneu-ho a provar."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:220
+msgid "The unlocking process is running. Wait a moment..."
+msgstr "El procés de desbloqueig està en execució. Espereu un moment."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:247
+msgid "The unlocking process has failed"
+msgstr "El procés de desbloqueig ha fallat."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:250
+msgid "Some process are running. Wait a moment and try again"
+msgstr "Algun procés està execució. Espereu un moment i torneu-ho a provar."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:285
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:39
+msgid "You need administration privileges to run this application."
+msgstr ""
+"Necessiteu privilegis d'administració per a executar aquesta aplicació."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:381
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:607
+msgid "Update now"
+msgstr "Actualitza ara"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:444
+msgid "Package"
+msgstr "Paquet"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:454
+msgid "Size"
+msgstr "Grandària"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:461
+msgid "State"
+msgstr "Estat"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:500
+msgid "Checking system"
+msgstr "S'està comprovant el sistema"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:762
+msgid ""
+"Mirror not detected on the server.\n"
+"Do you want to add the repositories of lliurex.net?"
+msgstr ""
+"No se ha detectar una rèplica en el servidor.\n"
+"Voleu afegir els repositoris de lliurex.net?"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:773
+msgid "Mirror is being updated in server. Unable to update the system"
+msgstr ""
+"S'està actualitzant la rèplica al servidor. No es pot actualitzar el sistema"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:776
+msgid "Unable to connect with server"
+msgstr "No es pot connectar amb el servidor."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:781
+msgid "Unable to connect to lliurex.net"
+msgstr "No es pot connectar amb lliurex.net"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:786
+msgid "N4d is not working. Restart the service and try againg"
+msgstr "N4d no funciona. Reinicieu el servei i torneu-ho a provar"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:790
+msgid "There's not enough space on disk to upgrade (2 GB needed)"
+msgstr ""
+"No hi ha prou espai al disc per a fer l'actualització (es necessiten 2 GB)"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:832
+msgid "Executing init-actions"
+msgstr "S'estàn executant les accions d'inici"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:842
+msgid "Looking for new version of LliureX Up"
+msgstr "S'està buscant una nova versió del LliureX Up"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:853
+msgid "Updating LliureX Up"
+msgstr "S'està actualitzant el LliureX Up"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:862
+#, python-format
+msgid "LliureX Up is now updated and will be reboot in %s seconds..."
+msgstr "LliureX Up està ara actualitzat i es reiniciará en %s segons..."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:868
+msgid "Checking if mirror exist and there is updated"
+msgstr "S'està comprovant si la rèplica existeix i hi ha actualitzacions"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:884
+msgid "Your mirror is not update. Do you want to update it?"
+msgstr "La vostra rèplica no està actualitzada. Voleu actualitzar-la?"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1039
+msgid "Mirror is being updated. The process may take several minutes"
+msgstr "La rèplica s'està actualitzant. El procés pot tardar uns minuts."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1052
+msgid "Looking for new version to update"
+msgstr "S'està buscant una nova versió per a actualitzar"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1063
+msgid "Looking for new version available"
+msgstr "S'està buscant una nova versió disponible"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1075
+msgid "Checking if installation of metapackage is required"
+msgstr "S'està comprovant si cal una instal·lació del metapaquet"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1087
+msgid "Looking for new updates"
+msgstr "S'estan buscant noves actualitzacions"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1119
+msgid "Updated abort. An error occurred in the search for updates"
+msgstr ""
+"L'actualització s'ha interromput. S'ha produït un error en la cerca "
+"d'actualitzacions."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1127
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1391
+msgid "Close"
+msgstr "Tanca"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1128
+msgid "Your system is update"
+msgstr "El vostre sistema està actualitzat."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1149
+msgid "Updated abort for incorrect metapackages detected in update"
+msgstr ""
+"L'actualització s'ha interromput perquè s'han detectat metapaquets "
+"incorrectes en l'actualització."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1216
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1235
+msgid "Not available"
+msgstr "No està disponible."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1224
+msgid "Not available for clients"
+msgstr "No està disponible per als clients."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1228
+msgid "Not available. Check conexion to lliurex.net"
+msgstr "No està disponible. Comproveu la connexió a lliurex.net."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1244
+msgid " new)"
+msgstr " nou)"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1276
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1278
+msgid "Executing process: "
+msgstr "S'està executant el procés: "
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1276
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1278
+msgid " of "
+msgstr " de "
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1323
+msgid "The update process is running. Wait a moment please"
+msgstr "L'actualització és en curs. Espereu un moment."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1336
+msgid "Update process details"
+msgstr "Detalls del procés d'actualització"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1357
+msgid "Preparing system to the update"
+msgstr "S'està preparant el sistema per a l'actualització"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1358
+msgid "Updating"
+msgstr "S'està actualitzant..."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1368
+msgid "Downloading and installing packages"
+msgstr "S'estan descarregant i instal·lant paquets"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1376
+msgid "Ending the update"
+msgstr "Està finalitzant l'actualització"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1385
+msgid "Checking metapackage"
+msgstr "S'està comprovant el metapaquet"
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1400
+msgid "The system is now update"
+msgstr "El sistema està ara actualitzat."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1401
+msgid "Update successfully"
+msgstr "S'ha actualitzat correctament."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1407
+msgid "The updated process has ended with errors"
+msgstr "El procés d'actualització ha finalitzat amb errors."
+
+#: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:1408
+msgid "Update error"
+msgstr "Error d'actualització"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:79
+msgid "Yes"
+msgstr "Sí"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:115
+msgid "No"
+msgstr "No"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:193
+msgid "LliureX-Up"
+msgstr "Lliurex-Up"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:331
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:359
+msgid "Show notifications for available updates:"
+msgstr "Mostra notificacions d'actualitzacions disponibles"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:434
+msgid "Packages to update or install"
+msgstr "Paquets per actualitzar o instal·lar"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:504
+msgid "Changelog"
+msgstr "Registre de canvis"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:572
+msgid "Back"
+msgstr "Arrere"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:660
+msgid "Size of update (aprox):"
+msgstr "Grandària de l'actualització (aprox.): "
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:686
+msgid "Number of packages: "
+msgstr "Nombre de paquets: "
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:733
+msgid "View packages"
+msgstr "Visualitza els paquets"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:776
+msgid "Version to update: "
+msgstr "Versió per actualitzar: "
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:805
+msgid "Version available: "
+msgstr "Versió disponible: "
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:820
+msgid "Current version: "
+msgstr "Versió actual: "
+
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:173
+msgid "LliureX-Up is being executed"
+msgstr "El LliureX-Up està en execució."
+
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:184
+msgid "Update the system now"
+msgstr "Actualitza el sistema ara"
+
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:323
+msgid "The upgrade process has ended"
+msgstr "El procés d'actualització ha finalitzat."
+
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:429
+msgid "There are new packages ready to be updated or installed"
+msgstr "Hi ha nous paquets preparats per a actualitzar-los i/o instal·lar-los."
+
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:443
+msgid "Lliurex-Up"
+msgstr "Lliurex-Up"
+
+#~ msgid "Lliurex Up is now running."
+#~ msgstr "S'està executant el LliureX Up."
