@@ -17,6 +17,7 @@ class LliurexUpCore(object):
 		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil"] 
 		self.defaultMirror = 'llx19'
 		self.defaultVersion = 'bionic'
+		self.defaultUrltoCheck="http://lliurex.net/bionic"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
@@ -584,7 +585,7 @@ class LliurexUpCore(object):
 			return Boolean
 		'''
 		try:
-			req=urllib2.Request("http://lliurex.net/xenial")
+			req=urllib2.Request(self.defaultUrltoCheck)
 			res=urllib2.urlopen(req)
 			return True
 		except:
