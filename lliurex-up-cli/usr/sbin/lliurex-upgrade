@@ -233,7 +233,7 @@ class LliurexUpCli(object):
 					is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
 					if is_mirror_running:
 						print("  [Lliurex-Up]: Updating mirror. Wait a moment please")
-						command='lliurex-mirror update llx16'
+						command='lliurex-mirror update llx19'
 						#os.system(command)
 						subprocess.Popen(command,shell=True).communicate()
 
@@ -251,7 +251,7 @@ class LliurexUpCli(object):
 									log_msg="Update lliurex-mirror: Yes"
 									self.log(log_msg)
 									print("  [Lliurex-Up]: Updating mirror. Wait a moment please")
-									command='lliurex-mirror update llx16'
+									command='lliurex-mirror update llx19'
 									#os.system(command)
 									subprocess.Popen(command,shell=True).communicate()
 
