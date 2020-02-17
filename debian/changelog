@@ -1,3 +1,9 @@
+lliurex-up (19.04.13) bionic; urgency=medium
+
+  * Fixed command to update mirror in lliurex-upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 Feb 2020 13:09:23 +0100
+
 lliurex-up (19.04.12) bionic; urgency=medium
 
   * Adding ca@valencia
