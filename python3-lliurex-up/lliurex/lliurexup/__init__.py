@@ -1,20 +1,24 @@
-import xmlrpclib 
+#!/usr/bin/python3
+# -*- coding: utf-8 -*
+
+import xmlrpc.client as n4dclient 
 import os
 import shutil
 import subprocess
 import socket
 import distutils.dir_util
-import urllib2
+import urllib.request
 import time
 import psutil
 import struct, fcntl
+import ssl
 
 
 class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil"] 
+		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client"] 
 		self.defaultMirror = 'llx19'
 		self.defaultVersion = 'bionic'
 		self.defaultUrltoCheck="http://lliurex.net/bionic"
@@ -43,7 +47,8 @@ class LliurexUpCore(object):
 		self.createLockToken()
 		self.retryN4d=True
 		self.n4dStatus=True
-		self.n4d = xmlrpclib.ServerProxy('https://localhost:9779')
+		context=ssl._create_unverified_context()
+		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
 		self.checkN4dStatus()
 		self.haveLliurexMirror = False
 		self.metapackageRef=[]
@@ -52,6 +57,7 @@ class LliurexUpCore(object):
 		
 		self.getTargetMetapackage()
 		self.flavours = []
+		self.lastFlavours=[]
 		self.getPreviousFlavours()
 		
 		if self.n4dStatus:
@@ -131,7 +137,7 @@ class LliurexUpCore(object):
 			code=0
 		except IOError:
 			dpkg_run=self.find_process("dpkg")
- 			if dpkg_run!=None:
+			if dpkg_run!=None:
 				code =1
 			else:
 				apt_run=self.find_process("apt-get")
@@ -171,7 +177,7 @@ class LliurexUpCore(object):
 			for x in lines:
 				self.previousFlavours.append(x.strip())
 			aux.close()
-
+		
 	#def getPreviousFlavours		
 
 	def checkN4dStatus(self):
@@ -185,13 +191,12 @@ class LliurexUpCore(object):
 				self.retryN4d=False
 				try: 
 					cmd='systemctl restart n4d.service 1>/dev/null'
-		 			restart=os.system(cmd)
-		 			time.sleep(5)
-		 			if restart ==0:
-		 				self.checkN4dStatus()
-		 			else:
-		 				self.n4dStatus=False
-		 						 				
+					restart=os.system(cmd)
+					time.sleep(5)
+					if restart ==0:
+						self.checkN4dStatus()
+					else:
+						self.n4dStatus=False
 				except Exception as e:
 					self.n4dStatus=False
 					
@@ -214,14 +219,18 @@ class LliurexUpCore(object):
 			for x in lines:
 				self.metapackageRef.append(x.strip())
 			aux.close()		
-
+		
 	#def getTargetMetapackage
 			
 	def saveTargetMetapackage(self,targetMetapackage):
 
 		aux=open(self.targetMetapackagePath,'w')
-		x=targetMetapackage.split("-")[2]
-		aux.write(x+"\n")
+		for x in targetMetapackage:
+			if 'minimal-client' not in x:
+				x=x.split("-")[2]
+				aux.write(x+"\n")
+			else:
+				aux.write(x+"\n")
 		x="edu"
 		aux.write(x+"\n")
 		aux.close()
@@ -231,10 +240,11 @@ class LliurexUpCore(object):
 	def checkInitialFlavour(self,args=None):
 
 		self.targetMetapackage=self.checkFlavour()
+		
 		if len(self.metapackageRef)==0:
 			self.getTargetMetapackage()
-	 	
-	 	self.metapackageRef=sorted(self.metapackageRef)	
+			
+		self.metapackageRef=sorted(self.metapackageRef)	
 		 	 
 		if len(self.previousFlavours)==0:
 			self.getPreviousFlavours()
@@ -250,18 +260,33 @@ class LliurexUpCore(object):
 
 	#def checkInitialFlavour	
 		
-	def updateFlavoursList(self):
+	def updateFlavoursList(self,args=None):
 		
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		result=p.communicate()
-		self.flavours = [ x.strip() for x in result[0].split(',') ]
-
-		if len(self.flavours) > 0:
-			aux = open(self.previousflavourspath,'w')
-			for x in self.flavours:
-				aux.write(x+"\n")
-			aux.close()
+		result=p.communicate()[0]
+		if type(result) is bytes:
+			result=result.decode()
+		
+		if args==None:
+			for x in result.split(','):
+				if x.strip() in ["edu","live"]:
+					pass
+				else:
+					if x.strip() not in self.flavours:
+						self.flavours.append(x.strip())
+			#self.flavours = [ x.strip() for x in result.split(',') ]
+			if len(self.flavours) > 0:
+				aux = open(self.previousflavourspath,'w')
+				for x in self.flavours:
+					aux.write(x+"\n")
+				aux.close()
+		else:
+			for x in result.split(','):
+				if x.strip() in ["edu","live"]:
+					pass
+				else:
+					self.lastFlavours.append(x.strip())
 
 	#def updateFlavoursList		
 
@@ -323,7 +348,7 @@ class LliurexUpCore(object):
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
 
 
-		if self.targetMetapackage=="lliurex-meta-client" or "client" in self.previousFlavours or "client" in self.metapackageRef:
+		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 			client=True
 			if args:
 				sourcesref=os.path.join(self.processSourceslist, 'default_all')
@@ -425,7 +450,10 @@ class LliurexUpCore(object):
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 		installed = None
 		candidate = None
-		for line in iter(p.stdout.readline,""):
+		for line in iter(p.stdout.readline,b""):
+			if type(line) is bytes:
+				line=line.decode()
+
 			stripedline = line.strip()
 			if stripedline.startswith("Installed"):
 				installed = stripedline.replace("Installed: ","")
@@ -441,7 +469,7 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
-		if "client" in self.previousFlavours or "lliurex-meta-client"==self.targetMetapackage:
+		if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
 			if not args:
 				sources=self.readSourcesList()
 				if sources==0:
@@ -477,6 +505,15 @@ class LliurexUpCore(object):
 		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --allow-downgrades --allow-remove-essential --allow-change-held-packages --yes lliurex-up {options}".format(options=options)
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 		poutput,perror = p.communicate()
+
+		if len(poutput)>0:
+			if type(poutput) is bytes:
+					poutput=poutput.decode()
+
+		if len(perror)>0:
+			if type(perror) is bytes:
+					perror=perror.decode()
+								
 		return {'returncode':p.returncode,'stdout':poutput,'stderrs':perror}
 
 	#def installLliurexUp	
@@ -488,7 +525,7 @@ class LliurexUpCore(object):
 			result.msg : message of status
 			result.action : Action to launch
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server'==self.targetMetapackage):
+		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server'in self.targetMetapackage):
 			result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
 			return result
 		return None
@@ -499,7 +536,7 @@ class LliurexUpCore(object):
 		'''
 			return Boolean
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server'==self.targetMetapackage):
+		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
 			result = self.n4d.is_alive('','MirrorManager')
 			return result['status']
 		return False
@@ -508,10 +545,11 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorIsRunning(self):
 
-		if self.targetMetapackage=="lliurex-meta-client" or "client" in self.previousFlavours or "client" in self.metapackageRef:
+		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 			
 			try:
-				client=xmlrpclib.ServerProxy('https://server:9779')
+				context=ssl._create_unverified_context()
+				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_alive('','MirrorManager')
 				return {'ismirrorrunning':result['status'],'exception':False}
 			
@@ -524,10 +562,11 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		if self.targetMetapackage=="lliurex-meta-client" or "client" in self.previousFlavours or "client" in self.metapackageRef:
+		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 			
 			try:
-				client=xmlrpclib.ServerProxy('https://server:9779')
+				context=ssl._create_unverified_context()
+				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_mirror_available('','MirrorManager')
 				return {'ismirroravailable':result['status'],'exception':False}
 			
@@ -544,7 +583,7 @@ class LliurexUpCore(object):
 		'''
 			return int | None
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server'==self.targetMetapackage):
+		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
 			result = self.n4d.get_percentage('','MirrorManager',self.defaultMirror)
 			if result['status']:
 				return result['msg']
@@ -552,31 +591,81 @@ class LliurexUpCore(object):
 
 	#def getPercentageLliurexMirror	
 	
-	def checkFlavour(self):
+	def checkFlavour(self,args=None):
 		'''
 			return None|String
 			If metapackages has been uninstalled, this function return 
 			package to must install. If return None, you are ok and don't need 
 			install anything.
 		'''
-		self.updateFlavoursList()
-		targetMetapackage = None
-		if 'None' in self.flavours:
-			# get last flavour
-			cmd='lliurex-version --history'
-			p=subprocess.Popen(cmd,shell=True, stdout=subprocess.PIPE)
-			result=p.communicate()
-			if result[0]:
-				history = [ x.strip().split('\t')[0].strip() for x in result[0].split('\n') ]
-				history = [ x for x in history if not 'lliurex-meta-live' in x ]
-				for x in reversed(history):
-					if x.startswith('-'):
-						targetMetapackage = x[2:]
-						break
+		self.updateFlavoursList(args)
+		targetMetapackage = []
+				
+		if args==None:
+			recoveryMeta=False
+			if 'None' in self.flavours:
+				recoveryMeta=True
+			else:
+				if len(self.flavours)==1 and 'minimal-client' in self.flavours:
+					recoveryMeta=True
+			if recoveryMeta:
+				# get last flavour
+				cmd='lliurex-version --history'
+				p=subprocess.Popen(cmd,shell=True, stdout=subprocess.PIPE)
+				result=p.communicate()[0]
+				if type(result) is bytes:
+					result=result.decode()
 
-		if targetMetapackage !=None:
-			self.saveTargetMetapackage(targetMetapackage)				
-		return targetMetapackage
+				if result:
+					history = [ x.strip().split('\t')[0].strip() for x in result.split('\n') ]
+					history = [ x for x in history if not 'lliurex-meta-live' in x ]
+					for x in reversed(history):
+						if x.startswith('-'):
+							if 'lliurex-meta-minimal-client' not in x:
+								targetMetapackage.append(x[2:])
+								break
+
+			if len(targetMetapackage)>0:
+				self.saveTargetMetapackage(targetMetapackage)				
+			return targetMetapackage
+		else:
+			if 'None' in self.lastFlavours:
+				if 'None' in self.flavours:
+					if 'None' not in self.previousFlavours:
+						targetMetapackage.append(self.previousFlavours)
+					if 'None' not in self.metapackageRef:
+						targetMetapackage=list(set(targetMetapackage+self.metapackageRef))
+				else:
+					targetMetapackage=self.flavours
+					if 'None' not in self.previousFlavours:
+						targetMetapackage=list(set(targetMetapackage+self.previousFlavours))
+					if 'None' not in self.metapackageRef:	
+						targetMetapackage=list(set(targetMetapackage+self.metapackageRef))
+			else:
+				tmp=[]
+				if 'None' in self.flavours:
+					if 'None' not in self.previousFlavours:
+						tmp.append(self.previousFlavours)
+					if 'None' not in self.metapackageRef:
+						tmp=list(set(tmp+self.metapackageRef))
+				else:
+					#tmp=[]
+					tmp=self.flavours
+					if 'None' not in self.previousFlavours:
+						tmp=list(set(tmp+self.previousFlavours))
+					if 'None' not in self.metapackageRef:
+						tmp=list(set(tmp+self.metapackageRef))
+				targetMetapackage=list(set(tmp)-set(self.lastFlavours))
+			tmp_list=[]
+			for item in targetMetapackage:
+				if item not in ['edu','live']:
+					if "lliurex-meta" not in item:
+						tmp="lliurex-meta-"+item
+					tmp_list.append(tmp)	
+			
+			return tmp_list		
+					
+					
 
 	#def checkFlavour	
 
@@ -585,8 +674,7 @@ class LliurexUpCore(object):
 			return Boolean
 		'''
 		try:
-			req=urllib2.Request(self.defaultUrltoCheck)
-			res=urllib2.urlopen(req)
+			res=urllib.request.urlopen(self.defaultUrltoCheck)
 			return True
 		except:
 			return False
@@ -647,8 +735,11 @@ class LliurexUpCore(object):
 
 			This function install lliurex-up
 		'''
+		tmp_list=""
+		for item in flavourToInstall:
+			tmp_list=tmp_list+item+" "
 		self.updateCacheApt(options)
-		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + flavourToInstall + "{options} ".format(options=options)
+		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + tmp_list + "{options} ".format(options=options)
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 		poutput,perror = p.communicate()
 		
@@ -656,8 +747,14 @@ class LliurexUpCore(object):
 			command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install -f --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {options} ".format(options=options)
 			p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			poutput,perror = p.communicate()
+			if len(poutput)>0:
+				if type(poutput) is bytes:
+					poutput=poutput.decode()
 
-
+			if len(perror)>0:
+				if type(perror) is bytes:
+					perror=perror.decode()
+					
 		return {'returncode':p.returncode,'stdout':poutput,'stderrs':perror}	
 
 	#def installInitialFlavour
@@ -678,7 +775,7 @@ class LliurexUpCore(object):
 		self.updateCacheApt("")
 		psimulate = subprocess.Popen('LANG=C LANGUAGE=en apt-get dist-upgrade -sV',shell=True,stdout=subprocess.PIPE)
 		rawoutputpsimulate = psimulate.stdout.readlines()
-		rawpackagestoinstall = [ aux.strip() for aux in rawoutputpsimulate if aux.startswith('Inst') ]
+		rawpackagestoinstall = [ aux.decode().strip() for aux in rawoutputpsimulate if aux.decode().startswith('Inst') ]
 		r = [ aux.replace('Inst ','') for aux in rawpackagestoinstall ]
 		for allinfo in r :
 			self.packageInfo[allinfo.split(' ')[0]] = {}
@@ -711,11 +808,13 @@ class LliurexUpCore(object):
 		if len(self.incorrect_flavours)>0:
 
 			for item in self.incorrect_flavours:
-				if self.targetMetapackage != None:
-					if item != self.targetMetapackage:
+				if len(self.targetMetapackage)>0:
+					if item not in self.targetMetapackage:
 						count=count+1
 				else:
 					meta=item.split("-")[2]
+					if meta=='minimal':
+						meta=meta+"-client"
 					if 'None' in self.previousFlavours:
 						if not meta in self.metapackageRef:
 							count=count+1
@@ -799,7 +898,11 @@ class LliurexUpCore(object):
 
 	def installFinalFlavour(self,flavourToInstall):
 
-		return 'apt-get install ' + flavourToInstall + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
+		tmp_list=""
+		for item in flavourToInstall:
+			tmp_list=tmp_list+item +" "
+		
+		return 'apt-get install ' + tmp_list + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
       	
 	#def installFinalFlavour
 
@@ -809,6 +912,10 @@ class LliurexUpCore(object):
 		
 		p=subprocess.Popen(["ps","aux"],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		output=p.communicate()[0]
+		
+		if type(output) is bytes:
+			output=output.decode()
+
 		lst=output.split("\n")
 		lst.pop(0)
 		

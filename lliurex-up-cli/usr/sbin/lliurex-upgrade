@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from clint import arguments
@@ -9,7 +9,7 @@ import subprocess
 import multiprocessing
 import sys
 import shutil
-import commands
+#import commands
 import datetime
 import time
 import signal
@@ -20,6 +20,7 @@ class LliurexUpCli(object):
 	def __init__(self):
 
 		self.lliurexcore = lliurex.lliurexup.LliurexUpCore()
+		self.defaultMirror = self.lliurexcore.defaultMirror
 		#log_msg="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
 		#self.log(log_msg)
 		signal.signal(signal.SIGINT,self.handler_signal)
@@ -104,7 +105,7 @@ class LliurexUpCli(object):
 			log_msg="Can connect to lliurex.net: False"
 			self.log(log_msg)
 
-			if "lliurex-meta-server" == self.targetMetapackage or "server" in self.lliurexcore.previousFlavours:
+			if "lliurex-meta-server" in self.targetMetapackage or "server" in self.lliurexcore.previousFlavours:
 				if self.initActionsArg !="initActionsSai":
 					'''
 					self.cleanEnvironment()
@@ -134,7 +135,7 @@ class LliurexUpCli(object):
 					if not is_mirror_exists["ismirroravailable"]:
 						log_msg="Mirror not detected in server"
 						self.log(log_msg)
-						response=raw_input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
+						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
 						if response.startswith('y'):
 							self.allRepos=True
 							log_msg="Adding the repositories of lliurex.net on client: Yes"
@@ -180,10 +181,11 @@ class LliurexUpCli(object):
 			
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			error=self.readErrorOutput(output[1])
+			output_err=output[1].decode()
+			error=self.readErrorOutput(output_err)
 			if error:
-				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output[1]))
-				log_msg="Exec Init-Actions. Error: %s"%output[1]
+				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output_err))
+				log_msg="Exec Init-Actions. Error: %s"%output_err
 			else:
 				log_msg="Exec Init-Actions. OK"
 			
@@ -205,11 +207,11 @@ class LliurexUpCli(object):
 
 
 		if not is_lliurexup_updated:
-			print ("  [Lliurex-Up]: Updating Lliurex-Up...")
+			print("  [Lliurex-Up]: Updating Lliurex-Up...")
 			is_lliurexup_installed=self.lliurexcore.installLliurexUp()
 			log_msg="Installing Lliurex-Up. Returncode: " + str(is_lliurexup_installed['returncode']) + ". Error: " + str(is_lliurexup_installed['stderrs'])
 			self.log(log_msg)
-			print ("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
+			print("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
 			time.sleep(3)
 			self.lliurexcore.cleanLliurexUpLock()
 			os.execv("/usr/sbin/lliurex-upgrade",sys.argv)	
@@ -217,7 +219,7 @@ class LliurexUpCli(object):
 		else:
 			log_msg="Checking Lliurex-Up. Is Lliurex-Up updated: "+ str(is_lliurexup_updated)
 			self.log(log_msg)
-			print ("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")	
+			print("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")	
 			
 	#def checkLliurexUp		
 
@@ -233,7 +235,7 @@ class LliurexUpCli(object):
 					is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
 					if is_mirror_running:
 						print("  [Lliurex-Up]: Updating mirror. Wait a moment please")
-						command='lliurex-mirror update llx19'
+						command='lliurex-mirror update %s'%self.defaultMirror
 						#os.system(command)
 						subprocess.Popen(command,shell=True).communicate()
 
@@ -243,7 +245,7 @@ class LliurexUpCli(object):
 							self.log(log_msg)
 							if not is_mirror_running:
 								if not extra_args["unattended_mirror"]:
-									response=raw_input('  [Lliurex-Up]: Do you want update mirror (yes/no): ').lower()
+									response=input('  [Lliurex-Up]: Do you want update mirror (yes/no): ').lower()
 								else:
 									response="yes"
 
@@ -251,7 +253,7 @@ class LliurexUpCli(object):
 									log_msg="Update lliurex-mirror: Yes"
 									self.log(log_msg)
 									print("  [Lliurex-Up]: Updating mirror. Wait a moment please")
-									command='lliurex-mirror update llx19'
+									command='lliurex-mirror update %s'%self.defaultMirror
 									#os.system(command)
 									subprocess.Popen(command,shell=True).communicate()
 
@@ -305,19 +307,18 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Checking if installation of metapackage is required...")
 
 		self.returncode_initflavour=0
-
-		if self.targetMetapackage == None:
+		if len(self.targetMetapackage)==0:
 			
-			print "  [Lliurex-Up]: Installation of metapackage is not required"
+			print("  [Lliurex-Up]: Installation of metapackage is not required")
 			
 		else:
-			print "  [Lliurex-Up]: Installation of metapackage is required: " + str(self.targetMetapackage)
+			print("  [Lliurex-Up]: Installation of metapackage is required: " + str(self.targetMetapackage))
 			is_flavour_installed=self.lliurexcore.installInitialFlavour(self.targetMetapackage)	
 			self.returncode_initflavour=is_flavour_installed['returncode']
 			error=is_flavour_installed['stderrs']
-			log_msg="Install initial metapackage:" + self.targetMetapackage + ": Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error)
+			log_msg="Install initial metapackage:" + str(self.targetMetapackage) + ": Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error)
 			self.log(log_msg)
-			print "  [Lliurex-Up]: Metapackage is now installed: Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error)
+			print("  [Lliurex-Up]: Metapackage is now installed: Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error))
 			
 	#def checkingInitialFlavourToInstall		
 	
@@ -381,7 +382,8 @@ class LliurexUpCli(object):
 			#os.system(command)
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			error=self.readErrorOutput(output[1])
+			output_err=output[1].decode()
+			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Preparing system to update. Error: " +'\n'+str(output[1]))
 				log_msg="Exec Pre-Actions. Error: %s"%output[1]
@@ -410,10 +412,13 @@ class LliurexUpCli(object):
 			#os.system(command)
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			error=self.readErrorOutput(output[1])
+			output_err=output[1].decode()
+			error=self.readErrorOutput(output_err)
 			if error:
-				print("  [Lliurex-Up]: Downloading and installing packages. Error: "+ '\n' +str(output[1]))
-				log_msg="Exec Dist-upgrade. Error: %s"%output[1]
+				if type(output[1]) is bytes:
+					output_err=output[1].decode()
+				print("  [Lliurex-Up]: Downloading and installing packages. Error: "+ '\n' +str(output_err))
+				log_msg="Exec Dist-upgrade. Error: %s"%output_err
 			else:
 				log_msg="Exec Dist-upgrade. OK"
 		
@@ -439,12 +444,12 @@ class LliurexUpCli(object):
 		try:
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-
-			error=self.readErrorOutput(output[1])
+			output_err=output[1].decode()
+			error=self.readErrorOutput(output_err)
 			if error:
-				print("  [Lliurex-Up]: Ending the update. Error: " +'\n'+str(output[1]))
+				print("  [Lliurex-Up]: Ending the update. Error: " +'\n'+str(output_err))
 				self.errorpostaction=True
-				log_msg="Exec Post-Actions. Error: %s"%output[1]
+				log_msg="Exec Post-Actions. Error: %s"%output_err
 			else:
 				log_msg="Exec Post-Actions.OK"
 
@@ -493,13 +498,13 @@ class LliurexUpCli(object):
 		self.checkFinalN4dStatus()
 
 		try:
-			self.flavourToInstall=self.lliurexcore.checkFlavour()
+			self.flavourToInstall=self.lliurexcore.checkFlavour(True)
 
-			log_msg="Final check metapackage. Metapackage to install:%s"%self.flavourToInstall
+			log_msg="Final check metapackage. Metapackage to install:%s"%str(self.flavourToInstall)
 			self.log(log_msg)
 							
-			if self.flavourToInstall!=None:
-				print ("  [Lliurex-Up]: Install of metapackage is required:%s"%self.flavourToInstall)
+			if len(self.flavourToInstall)>0:
+				print("  [Lliurex-Up]: Install of metapackage is required:%s"%str(self.flavourToInstall))
 			
 				if extra_args["unattendend_upgrade"]:
 					command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.installFinalFlavour(self.flavourToInstall)
@@ -510,31 +515,30 @@ class LliurexUpCli(object):
 
 					p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 					output=p.communicate()
-
-					error=self.readErrorOutput(output[1])
-
+					output_err=output[1].decode()
+					error=self.readErrorOutput(output_err)
 					if error:
 						self.errorfinalmetapackage=True
-						print ("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(output[1]))
-						log_msg="Final install metapackage. Error %s"%output[1]
+						print("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(output_err))
+						log_msg="Final install metapackage. Error %s"%output_err
 					else:
 						log_msg="Final install metapackage.OK"
 
 
 				except Exception as e:
 					self.errorfinalmetapackage=True
-					print ("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(e))
+					print("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(e))
 					log_msg="Install of metapackage. Error:%s"%e
 
 				self.log(log_msg)	
 					
 							
 			else:
-				print ("  [Lliurex-Up]: Metapackage is correct. Nothing to do")
+				print("  [Lliurex-Up]: Metapackage is correct. Nothing to do")
 
 		except Exception as e:	
 			self.errorfinalmetapackage=True
-			print ("  [Lliurex-Up]: Checking Metapackage. Error:" +'\n'+str(e))
+			print("  [Lliurex-Up]: Checking Metapackage. Error:" +'\n'+str(e))
 			log_msg="Final check metapackage. Error:%s"%e	
 			self.log(log_msg)	
 			
@@ -583,7 +587,10 @@ class LliurexUpCli(object):
 		if not self.checkingBlock:
 			self.cleanEnvironment()
 		'''
-		self.lliurexcore.cleanEnvironment()
+		self.lliurexcore.cleanEnif len(self.previousFlavours)>0 and not in tmp:
+						tmp.append(self.previousFlavours)
+					if len(self.metapackageRef)>0 and not in tmp:
+						tmp.append(self.metapackageRef)vironment()
 		self.lliurexcore.cleanLliurexUpLock()
 		'''
 		sys.exit(0)
@@ -603,7 +610,7 @@ class LliurexUpCli(object):
 	def free_space_check():
 		
 		if ((os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)) < 2: #less than 2GB available?
-			print "  [Lliurex-Up]: There's not enough space on disk to upgrade (2 GB needed)"
+			print("  [Lliurex-Up]: There's not enough space on disk to upgrade (2 GB needed)")
 				
 			sys.exit(1)
 
@@ -616,7 +623,7 @@ class LliurexUpCli(object):
 			print "  [Lliurex-Up]: Lliurex Up is now running "
 			sys.exit(1)
 		'''
-		print "  [Lliurex-Up]: Checking if LliureX-Up is running..."
+		print("  [Lliurex-Up]: Checking if LliureX-Up is running...")
 
 		code=self.lliurexcore.isLliurexUpLocked()
 		log_msg="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
@@ -635,7 +642,7 @@ class LliurexUpCli(object):
 
 	def isAptLocked(self,extra_args):
 
-		print "  [Lliurex-Up]: Checking if Apt is running..."
+		print("  [Lliurex-Up]: Checking if Apt is running...")
 
 		code=self.lliurexcore.isAptLocked()
 		
@@ -648,7 +655,7 @@ class LliurexUpCli(object):
 	def isDpkgLocked(self,extra_args):
 
 
-		print "  [Lliurex-Up]: Checking if Dpkg is running..."
+		print("  [Lliurex-Up]: Checking if Dpkg is running...")
 
 		code=self.lliurexcore.isDpkgLocked()
 
@@ -665,18 +672,18 @@ class LliurexUpCli(object):
 			if action!="Lliurex-Up":
 				log_msg=action+" is running"
 				self.log(log_msg)
-			print  "  [Lliurex-Up]: "+action+" is now running. Wait a moment and try again"
+			print("  [Lliurex-Up]: "+action+" is now running. Wait a moment and try again")
 		
 		elif code==3:
 			log_msg="Apt is running"
 			self.log(log_msg)
-			print  "  [Lliurex-Up]: Apt is now running. Wait a moment and try again"
+			print("  [Lliurex-Up]: Apt is now running. Wait a moment and try again")
 		
 		elif code==2:
 			log_msg=action+" is locked"
 			self.log(log_msg)
 			if not extra_args["unattendend_upgrade"]:
-				response=raw_input( '  [Lliurex-Up]: '+action+' seems blocked by a failed previous execution. Lliurex-Up can not continue if this block is maintained.You want to try to unlock it (yes/no)?')
+				response=input( '  [Lliurex-Up]: '+action+' seems blocked by a failed previous execution. Lliurex-Up can not continue if this block is maintained.You want to try to unlock it (yes/no)?')
 				if response.startswith('y'):
 					self.pulsate_unlocking_process()
 				else:
@@ -685,7 +692,7 @@ class LliurexUpCli(object):
 				unlocker=False
 
 		if not unlocker:
-			print  "  [Lliurex-Up]: "+action+ " seems blocked by a failed previous execution. Unabled to update de sytem"	
+			print("  [Lliurex-Up]: "+action+ " seems blocked by a failed previous execution. Unabled to update de sytem")
 		
 		sys.exit(1)			
 
@@ -718,10 +725,10 @@ class LliurexUpCli(object):
 			os.execv("/usr/sbin/lliurex-upgrade",sys.argv)
 		else:
 			if result==1:
-				print  "  [Lliurex-Up]: The unlocking process has failed"
+				print("  [Lliurex-Up]: The unlocking process has failed")
 				log_msg="The unlocking process has failed"
 			else:
-				print  "  [Lliurex-Up]: Some process are running. Wait a moment and try again"
+				print("  [Lliurex-Up]: Some process are running. Wait a moment and try again")
 				log_msg="Some process are running. Wait a moment and try again"
 	
 			self.log(log_msg)
@@ -800,10 +807,10 @@ class LliurexUpCli(object):
 
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
-				print self.listpackages
+				print(self.listpackages)
 				print("  [Lliurex-Up]: Number of packages to update: " +  str(len(self.packages)) + " (" + str(self.newpackages) + " news)" )
 				if not extra_args["unattendend_upgrade"]:
-					response=raw_input('  [Lliurex-Up]: Do you want to update the system (yes/no)): ').lower()
+					response=input('  [Lliurex-Up]: Do you want to update the system (yes/no)): ').lower()
 				else:
 					response="yes"
 
@@ -925,7 +932,7 @@ if __name__ == '__main__':
 	#lliurexupcli = LliurexUpCli()
 
 	if os.geteuid() != 0:
-		print "  [Lliurex-Up]: You need be root!"
+		print("  [Lliurex-Up]: You need be root!")
 		sys.exit(1)
 
 	'''
