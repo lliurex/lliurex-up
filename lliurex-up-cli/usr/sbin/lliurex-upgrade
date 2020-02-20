@@ -181,7 +181,10 @@ class LliurexUpCli(object):
 			
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			output_err=output[1].decode()
+			if type(output[1]) is bytes:
+				output_err=output[1].decode()
+			else:
+				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output_err))
@@ -382,7 +385,10 @@ class LliurexUpCli(object):
 			#os.system(command)
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			output_err=output[1].decode()
+			if type(output[1]) is bytes:
+				output_err=output[1].decode()
+			else:
+				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Preparing system to update. Error: " +'\n'+str(output[1]))
@@ -412,7 +418,10 @@ class LliurexUpCli(object):
 			#os.system(command)
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			output_err=output[1].decode()
+			if type(output[1]) is bytes:
+				output_err=output[1].decode()
+			else:
+				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
 				if type(output[1]) is bytes:
@@ -444,7 +453,10 @@ class LliurexUpCli(object):
 		try:
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
-			output_err=output[1].decode()
+			if type(output[1]) is bytes:
+				output_err=output[1].decode()
+			else:
+				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Ending the update. Error: " +'\n'+str(output_err))
@@ -515,7 +527,10 @@ class LliurexUpCli(object):
 
 					p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 					output=p.communicate()
-					output_err=output[1].decode()
+					if type(output[1]) is bytes:
+						output_err=output[1].decode()
+					else:
+						output_err=output[1]	
 					error=self.readErrorOutput(output_err)
 					if error:
 						self.errorfinalmetapackage=True
