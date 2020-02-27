@@ -424,8 +424,6 @@ class LliurexUpCli(object):
 				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
-				if type(output[1]) is bytes:
-					output_err=output[1].decode()
 				print("  [Lliurex-Up]: Downloading and installing packages. Error: "+ '\n' +str(output_err))
 				log_msg="Exec Dist-upgrade. Error: %s"%output_err
 			else:
