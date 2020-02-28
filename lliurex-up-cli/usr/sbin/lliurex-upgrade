@@ -724,9 +724,13 @@ class LliurexUpCli(object):
 		while self.unlocking_t.is_alive():
 			time.sleep(0.5)
 			per=i%16
+			'''
 			sys.stdout.write("  [Lliurex-Up]: The unlocking process is running. Wait a moment " + progressbar[per])
 			sys.stdout.flush()
 			sys.stdout.write("\r\33[2K")
+			'''			
+			print("  [Lliurex-Up]: The unlocking process is running. Wait a moment " + progressbar[per],end='\r')
+
 			i+=1
 
 		result=result_queue.get()
