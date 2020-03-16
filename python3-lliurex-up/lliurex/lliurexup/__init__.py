@@ -18,7 +18,7 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client"] 
+		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite"] 
 		self.defaultMirror = 'llx19'
 		self.defaultVersion = 'bionic'
 		self.defaultUrltoCheck="http://lliurex.net/bionic"
@@ -346,9 +346,12 @@ class LliurexUpCore(object):
 		client=False
 		textsearch_mirror="/mirror/"+str(self.defaultMirror)
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
+		
+		is_client=self.search_meta("client")		
 
+		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 
-		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
+		if is_client:
 			client=True
 			if args:
 				sourcesref=os.path.join(self.processSourceslist, 'default_all')
@@ -469,7 +472,10 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
-		if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
+		is_client=self.search_meta("client")		
+
+		#if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
+		if is_client:
 			if not args:
 				sources=self.readSourcesList()
 				if sources==0:
@@ -525,7 +531,9 @@ class LliurexUpCore(object):
 			result.msg : message of status
 			result.action : Action to launch
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server'in self.targetMetapackage):
+		is_server=self.search_meta("server")
+		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
+		if self.haveLliurexMirror and (is_server):
 			result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
 			return result
 		return None
@@ -536,7 +544,9 @@ class LliurexUpCore(object):
 		'''
 			return Boolean
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
+		is_server=self.search_meta("server")
+		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
+		if self.haveLliurexMirror and (is_server):
 			result = self.n4d.is_alive('','MirrorManager')
 			return result['status']
 		return False
@@ -545,8 +555,11 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorIsRunning(self):
 
-		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-			
+		is_client=self.search_meta("client")
+
+		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
+		if is_client:
+
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -562,8 +575,10 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-			
+		is_client=self.search_meta("client")
+
+		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
+		if is_client:				
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -583,7 +598,10 @@ class LliurexUpCore(object):
 		'''
 			return int | None
 		'''
-		if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
+		is_server=self.search_meta("server")
+		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
+		if self.haveLliurexMirror and (is_server):
+	
 			result = self.n4d.get_percentage('','MirrorManager',self.defaultMirror)
 			if result['status']:
 				return result['msg']
@@ -965,8 +983,24 @@ class LliurexUpCore(object):
 		else:
 			return None
 
-	#def find_process		
-				
+	#def find_process	
+
+	def search_meta(self,meta):
+
+
+		meta_list=list(self.targetMetapackage)
+		meta_list.extend(x for x in self.previousFlavours if x not in meta_list)
+		meta_list.extend(x for x in self.metapackageRef if x not in meta_list)
+		meta_list.extend(x for x in self.flavours if x not in meta_list)
+		match=False
+		for item in meta_list:
+			if meta in item:
+				match=True
+				break
+
+		return match
+	
+	#def search_meta				
 
 #def LliurexUpCore
 if __name__ == '__main__':
