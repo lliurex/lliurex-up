@@ -15,7 +15,7 @@
 
 export PYBUILD_NAME=lliurexup
 %:
-	dh $@ --with llxsrc,python2,zero,i18n --buildsystem pybuild
+	dh $@ --with llxsrc,python3,zero,i18n --buildsystem pybuild
 
 # dh_make generated override targets
 # This is example for Cmake (See https://bugs.debian.org/641051 )

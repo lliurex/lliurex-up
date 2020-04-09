@@ -1,3 +1,10 @@
+lliurex-up (19.04.14) bionic; urgency=medium
+
+  * Migrated to python3
+  * Metapackage management improved
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 09 Apr 2020 10:17:27 +0200
+
 lliurex-up (19.04.13) bionic; urgency=medium
 
   * Fixed command to update mirror in lliurex-upgrade
