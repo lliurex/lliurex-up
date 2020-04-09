@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Copyright (C) 2006 James Westby <jw+debian@jameswestby.net>
 #
@@ -18,11 +18,11 @@
 
 from setuptools import setup
 
-setup(name='python-lliurexup',
+setup(name='python3-lliurexup',
       version='0.1',
       description='lliurex-up library',
       url='http://lliurex.net',
-      package_dir={'': 'python-lliurex-up'},
+      package_dir={'': 'python3-lliurex-up'},
       packages=['lliurex.lliurexup'],
       maintainer='Raul Rodrigo Segura',
       maintainer_email='raurodse@gmail.com',

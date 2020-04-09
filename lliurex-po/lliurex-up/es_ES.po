@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-19 09:08+0200\n"
-"PO-Revision-Date: 2019-07-19 09:08+0200\n"
+"PO-Revision-Date: 2020-02-18 08:55+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -87,7 +87,7 @@ msgstr ""
 #: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:773
 msgid "Mirror is being updated in server. Unable to update the system"
 msgstr ""
-"El mirror se esta actualizando en el servidor. Imporsible actualizar el "
+"El mirror se esta actualizando en el servidor. Imposible actualizar el "
 "sistema"
 
 #: ../lliurex-up/usr/share/lliurex-up/lliurex-up.py:776
@@ -252,7 +252,7 @@ msgstr "No"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:193
 msgid "LliureX-Up"
-msgstr "Actualizando LliureX-Up"
+msgstr "LliureX-Up"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:331
 msgid "Cancel"

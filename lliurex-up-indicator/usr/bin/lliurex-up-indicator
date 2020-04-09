@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -107,11 +108,16 @@ class UpgradeIndicator:
 
 		flavours=self.get_flavour()
 		users_group=self.get_user_group()
-
+		client=False
 		if users_group:
 			if 'None' not in flavours:
-				if 'client' not in flavours:
+				for item in flavours:
+					if 'client' in item:
+						client=True
+						break
+				if not client:
 					self.updatedInfo=True
+			
 					
 				
 
@@ -144,8 +150,11 @@ class UpgradeIndicator:
 
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		result=p.communicate()
-		flavours = [ x.strip() for x in result[0].split(',') ]	
+		result=p.communicate()[0]
+
+		if type(result) is bytes:
+			result=result.decode()
+		flavours = [ x.strip() for x in result.split(',') ]	
 		
 		return flavours
 
@@ -246,8 +255,10 @@ class UpgradeIndicator:
 
 		cmd='who | grep -v "(:0"'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		result=p.communicate()
-		remote_users=[ x.strip() for x in result[0].split('\n') ]
+		result=p.communicate()[0]
+		if type(result) is bytes:
+			result=result.decode()
+		remote_users=[ x.strip() for x in result.split('\n') ]
 		remote_users.pop()
 
 		for item in remote_users:
@@ -260,8 +271,10 @@ class UpgradeIndicator:
 
 		cmd='ps -ef | grep "lliurex-upgrade" | grep -v "grep"'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		result=p.communicate()
-		isrunning= [ x.strip() for x in result[0].split('\n') ]
+		result=p.communicate()[0]
+		if type(result) is bytes:
+			result=result.decode()
+		isrunning= [ x.strip() for x in result.split('\n') ]
 		isrunning.pop()
 
 

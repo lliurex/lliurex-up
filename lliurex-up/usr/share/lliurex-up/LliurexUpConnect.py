@@ -1,4 +1,6 @@
-import xmlrpclib 
+#!/usr/bin/python3
+# -*- coding: utf-8 -*
+
 import os
 import shutil
 import subprocess
@@ -6,6 +8,7 @@ import socket
 import threading
 import datetime
 import math
+import ssl
 #from math import pi
 
 import lliurex.lliurexup as LliurexUpCore
@@ -363,13 +366,13 @@ class LliurexUpConnect():
 			is_flavour_installed=self.llxUpCore.installInitialFlavour(flavourToInstall)
 			returncode=is_flavour_installed['returncode']
 			error=is_flavour_installed['stderrs']
-			log_msg="Install initial metapackage:" + flavourToInstall + ": Returncode: " + str(returncode) + " Error: " + str(error)
+			log_msg="Install initial metapackage:" + str(flavourToInstall) + ": Returncode: " + str(returncode) + " Error: " + str(error)
 			self.log(log_msg)
 			return returncode
 
 		except Exception as e:
-			print str(e)
-			log_msg="Install initial metapackage: " + flavourToInstall + ". Error: " + str(e)
+			print(str(e))
+			log_msg="Install initial metapackage: " + str(flavourToInstall) + ". Error: " + str(e)
 			self.log(log_msg)
 			return 1
 			
@@ -406,13 +409,16 @@ class LliurexUpConnect():
 		try:
 			command='apt-cache show ' + pkg + ' |grep "^Size:" |cut -d " " -f2 |head -1'
 			p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
-			size=p.stdout.readline().strip()
+			size=p.stdout.readline()
+			if type(size) is bytes:
+				size=size.decode()
+			size=size.strip()
 			self.total_size=(self.total_size)+int(size)
 			size=self.convert_size(size)
 			return size
 
 		except Exception as e:
-			print e
+			print(e)
 			return self.convert_size(size) 
 	
 
@@ -506,7 +512,7 @@ class LliurexUpConnect():
 				self.log(log_msg)
 
 		except Exception as e:
-			print e
+			print(e)
 			log_msg="Error checking distupgrade. Error: " + str(e)
 			self.log(log_msg)
 			error=True
@@ -522,12 +528,15 @@ class LliurexUpConnect():
 		packages_status=[]
 		try:
 			p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
-			for line in iter(p.stdout.readline,""):
+			for line in iter(p.stdout.readline,b""):
+				if type(line) is bytes:
+					line=line.decode()
+
 				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
 				packages_status.append(tmp)
 
 		except Exception as e:
-			print str(e)
+			print(str(e))
 
 		return packages_status						
 
@@ -540,7 +549,7 @@ class LliurexUpConnect():
 
 		try:
 			#flavourToInstall=self.llxUpCore.checkFinalFlavour()
-			flavourToInstall=self.llxUpCore.checkFlavour()
+			flavourToInstall=self.llxUpCore.checkFlavour(True)
 			log_msg="Final check metapackage. Metapackage to install: " + str(flavourToInstall)
 			self.log(log_msg)
 
@@ -608,10 +617,20 @@ class LliurexUpConnect():
 			self.llxUpCore.cleanLliurexUpLock()
 		
 		except Exception as e:
-			print e
+			print(e)
 	
 	#def cleanLliurexUpLock		
 
+	def search_meta(self,meta):
+		
+		match=False
+		try:
+			match=self.llxUpCore.search_meta(meta)
+			return match
+		except Exception as e:
+			return match
+
+	#def searchMeta			
 
 	def log(self,msg):
 		
