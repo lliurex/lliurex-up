@@ -1222,7 +1222,8 @@ class LliurexUp:
 
 
 		if self.version_available==None:
-			if 'client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-client' or 'minimal-client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-minimal-client':
+			#if 'client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-client' or 'minimal-client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-minimal-client':
+			if self.llxup_connect.search_meta('client'):
 				msg_version_available_info=_("Not available for clients")
 
 			else:
@@ -1646,10 +1647,13 @@ class LliurexUp:
 
 		try:
 			if self.targetMetapackage !=None:
-				if self.targetMetapackage =='lliurex-meta-client' or self.targetMetapackage=='lliurex-meta-minimal-client': 
+				#if self.targetMetapackage =='lliurex-meta-client' or self.targetMetapackage=='lliurex-meta-minimal-client': 
+				if self.llxup_connect.search_meta('client'):
 					indicator=False
+									
 			else:
-				if 'client' in self.llxup_connect.previousFlavours or 'minimal-client' in self.llxup_connect.previousFlavours:
+				#if 'client' in self.llxup_connect.previousFlavours or 'minimal-client' in self.llxup_connect.previousFlavours:
+				if self.llxup_connect.search_meta('client'):	
 					indicator=False
 
 			if indicator: 		

@@ -621,6 +621,16 @@ class LliurexUpConnect():
 	
 	#def cleanLliurexUpLock		
 
+	def search_meta(self,meta):
+		
+		match=False
+		try:
+			match=self.llxUpCore.search_meta(meta)
+			return match
+		except Exception as e:
+			return match
+
+	#def searchMeta			
 
 	def log(self,msg):
 		

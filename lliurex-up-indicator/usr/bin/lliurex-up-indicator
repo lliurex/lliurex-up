@@ -108,11 +108,16 @@ class UpgradeIndicator:
 
 		flavours=self.get_flavour()
 		users_group=self.get_user_group()
-
+		client=False
 		if users_group:
 			if 'None' not in flavours:
-				if 'client' not in flavours:
+				for item in flavours:
+					if 'client' in item:
+						client=True
+						break
+				if not client:
 					self.updatedInfo=True
+			
 					
 				
 
