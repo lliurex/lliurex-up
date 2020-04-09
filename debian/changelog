@@ -1,3 +1,9 @@
+lliurex-up (19.04.15) bionic; urgency=medium
+
+  * Dummy upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 09 Apr 2020 11:11:59 +0200
+
 lliurex-up (19.04.14) bionic; urgency=medium
 
   * Migrated to python3
