@@ -18,7 +18,7 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite"] 
+		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite", "lliurex-meta-desktop-lite"] 
 		self.defaultMirror = 'llx19'
 		self.defaultVersion = 'bionic'
 		self.defaultUrltoCheck="http://lliurex.net/bionic"
