@@ -794,7 +794,7 @@ class LliurexUpCli(object):
 			'''
 			return 1
 			
-		self.clientCheckingMirrorExists(extra_args)	
+			
 
 		clientCheckingMirror=self.clientCheckingMirrorIsRunning()
 		
@@ -810,7 +810,9 @@ class LliurexUpCli(object):
 			self.lliurexcore.cleanLliurexUpLock()
 			'''
 			return 1
-			
+		else:
+			self.clientCheckingMirrorExists(extra_args)
+				
 		self.initActionsScript(extra_args)
 		self.checkLliurexUp()
 
