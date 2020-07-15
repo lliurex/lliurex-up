@@ -830,9 +830,14 @@ class LliurexUpCore(object):
 					if item not in self.targetMetapackage:
 						count=count+1
 				else:
-					meta=item.split("-")[2]
+					meta_split=item.split("-")
+					meta=meta_split[2]
 					if meta=='minimal':
 						meta=meta+"-client"
+					else:
+						if len(meta_split)==4:
+							meta=meta+"-"+meta_split[3]
+							
 					if 'None' in self.previousFlavours:
 						if not meta in self.metapackageRef:
 							count=count+1
