@@ -347,10 +347,11 @@ class LliurexUpCli(object):
 	def checkingIncorrectFlavours(self):
 		
 		incorrectFlavours=self.lliurexcore.checkIncorrectFlavours()
-		log_msg="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours)
+		self.aditionalFlavours=incorrectFlavours["data"]
+		log_msg="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours["status"])+". Detected Flavours: "+str(self.aditionalFlavours)
 		self.log(log_msg)
 
-		return incorrectFlavours
+		return incorrectFlavours['status']
 	
 	#def checkingIncorrectFlavours		
 		
@@ -862,7 +863,7 @@ class LliurexUpCli(object):
 					'''	
 					return 0
 			else:
-				print("[Lliurex-Up]: Updated abort for incorrect flavours detected in new update")
+				print("[Lliurex-Up]: Updated abort for incorrect flavours detected in new update. Detected flavours: "+str(self.aditionalFlavours))
 				log_msg="Updated abort for incorrect flavours detected in new update"
 				self.log(log_msg)
 				self.cleanEnvironment()

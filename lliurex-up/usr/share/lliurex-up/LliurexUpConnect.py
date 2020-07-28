@@ -440,8 +440,8 @@ class LliurexUpConnect():
 
 		incorrectFlavours=self.llxUpCore.checkIncorrectFlavours()
 
-		if incorrectFlavours:
-			log_msg="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours)
+		if incorrectFlavours['status']:
+			log_msg="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours['status']) + ". Detected flavours: "+str(incorrectFlavours['data'])
 			self.log(log_msg)
 		else:
 			log_msg="Checking incorrect metapackages. Others metapackages not detected"

@@ -1135,7 +1135,7 @@ class LliurexUp:
 									return False
 													
 						else:
-							if not self.incorrect_flavours:
+							if not self.incorrect_flavours['status']:
 
 								print("  [Lliurex-Up]: System nor update")
 
@@ -1148,7 +1148,7 @@ class LliurexUp:
 								return False
 							else:
 								self.gather_label.set_name("ERROR_FONT")
-								msg_gather="<span><b>"+_("Updated abort for incorrect metapackages detected in update")+"</b></span>"
+								msg_gather="<span><b>"+_("Updated abort for incorrect metapackages detected in update")+str(self.incorrect_flavours['data'])+"</b></span>"
 								self.gather_label.set_markup(msg_gather)
 								log_msg="Updated abort for incorrect metapackages detected in update"
 								self.llxup_connect.log(log_msg)

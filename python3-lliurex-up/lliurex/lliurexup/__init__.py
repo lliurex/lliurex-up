@@ -509,7 +509,7 @@ class LliurexUpCore(object):
 		'''
 		self.updateCacheApt(options)
 		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --allow-downgrades --allow-remove-essential --allow-change-held-packages --yes lliurex-up {options}".format(options=options)
-		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
+		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		poutput,perror = p.communicate()
 
 		if len(poutput)>0:
@@ -758,7 +758,7 @@ class LliurexUpCore(object):
 			tmp_list=tmp_list+item+" "
 		self.updateCacheApt(options)
 		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + tmp_list + "{options} ".format(options=options)
-		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
+		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		poutput,perror = p.communicate()
 		
 		if p.returncode!=0:
@@ -816,7 +816,13 @@ class LliurexUpCore(object):
 	def checkIncorrectFlavours(self):
 		
 		self.incorrect_flavours=[]
+		other_flavours=[]
 		count=0
+		stopMeta=True
+		error_flavours=['edu','live']
+		cdd_flavours=["lliurex-meta-infantil","lliurex-meta-music","lliurex-meta-pyme"]
+		cdd_path="/usr/share/lliurex-cdd"
+		count_cdd=0
 
 		for item in self.packageInfo:
 			if item in self.flavourReference:
@@ -824,32 +830,49 @@ class LliurexUpCore(object):
 
 
 		if len(self.incorrect_flavours)>0:
+			if len(self.flavours)>0:
+				if len(self.flavours)==1 and self.flavours[0] in error_flavours:
+					stopMeta=False
+			else:
+				for item in cdd_flavours:
+					if os.path.exists(os.path.join(cdd_path,item)):
+						count_cdd+=1
 
-			for item in self.incorrect_flavours:
-				if len(self.targetMetapackage)>0:
-					if item not in self.targetMetapackage:
-						count=count+1
-				else:
-					meta_split=item.split("-")
-					meta=meta_split[2]
-					if meta=='minimal':
-						meta=meta+"-client"
+			if count_cdd>0:
+				stopMeta=False
+
+			if stopMeta:	
+				for item in self.incorrect_flavours:
+					if len(self.targetMetapackage)>0:
+						if item not in self.targetMetapackage:
+							count=count+1
+							other_flavours.append(item)
+
 					else:
-						if len(meta_split)==4:
-							meta=meta+"-"+meta_split[3]
-							
-					if 'None' in self.previousFlavours:
-						if not meta in self.metapackageRef:
-							count=count+1
-					else:		
-						if not meta in self.previousFlavours:
-							count=count+1
+						meta_split=item.split("-")
+						meta=meta_split[2]
+						if meta=='minimal':
+							meta=meta+"-client"
+						else:
+							if len(meta_split)==4:
+								meta=meta+"-"+meta_split[3]
+								
+						if 'None' in self.previousFlavours:
+							if not meta in self.metapackageRef:
+								count=count+1
+								other_flavours.append(meta)
+
+						else:		
+							if not meta in self.previousFlavours:
+								count=count+1
+								other_flavours.append(meta)
+
 
 		if count>0:
-			return True
+			return {"status":True,"data":other_flavours}
 
 		else:
-			return False	
+			return {"status":False,"data":other_flavours}	
 
 	#def checkIncorrectFlavours
 
