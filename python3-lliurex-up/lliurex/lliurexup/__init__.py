@@ -227,7 +227,10 @@ class LliurexUpCore(object):
 		aux=open(self.targetMetapackagePath,'w')
 		for x in targetMetapackage:
 			if 'minimal-client' not in x:
-				x=x.split("-")[2]
+				if 'lite' in x:
+					x=x.split("-")[2]+"-lite"
+				else:
+					x=x.split("-")[2]	
 				aux.write(x+"\n")
 			else:
 				aux.write(x+"\n")
