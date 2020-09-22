@@ -501,11 +501,14 @@ class LliurexUpConnect():
 	def checkErrorDistUpgrade(self):
 
 		error=False
+		errorDetails=""
 		try:
 			errorDistUpgrade=self.llxUpCore.checkErrorDistUpgrade()
-			if errorDistUpgrade or self.errorCheckFlavour:
+			errorDetails=str(errorDistUpgrade[1])
+			
+			if errorDistUpgrade[0] or self.errorCheckFlavour:
 				error=True
-				log_msg="Dist-upgrade process ending with errors"
+				log_msg="Dist-upgrade process ending with errors. "+errorDetails
 				self.log(log_msg)
 			else:			
 				log_msg="Dist-upgrade process ending OK"

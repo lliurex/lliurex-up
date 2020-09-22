@@ -890,6 +890,9 @@ class LliurexUpCore(object):
 		countPostaction=0
 		countMetapackage=0
 		error=False
+		error_details=""
+		lines=""
+		pkgs_not_installed=[]
 
 		if os.path.exists(self.errorpostaction_token):
 			aux = open(self.errorpostaction_token,'r')
@@ -920,6 +923,7 @@ class LliurexUpCore(object):
 				
 					if len(lines)>0:
 						error=True
+						error_details="There are packages that have not been configured correctly. Details: "+str(lines)
 						
 					else:
 						j=0
@@ -933,15 +937,18 @@ class LliurexUpCore(object):
 							for x in lines:
 								if 'Inst' in x:
 									j=j+1
-
+									pkgs_not_installed.append(x)
 							if j>0:
-								error=True	
+								error=True
+								error_details="There are packages that have not been updated/installed. Details: "+str(pkgs_not_installed)
 			else:
-				error=True					
+				error=True
+				error_details="Error when installing metapackage. Details: "+str(lines)					
 		else:
 			error=True
+			error_details="Error when running Postactions.Details: "+str(lines)
 
-		return error	
+		return [error,error_details]	
 
 	#def checkErrorDistUpgrade	
 
