@@ -1,3 +1,9 @@
+lliurex-up (19.04.23) bionic; urgency=medium
+
+  * Improved log
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 23 Sep 2020 07:58:22 +0200
+
 lliurex-up (19.04.22) bionic; urgency=medium
 
   * Fixed function to save current metapackage
