@@ -14,5 +14,4 @@ Icon=lliurex-up
 Category=System
 ScriptPath=lliurex-up.zmd
 Service=False
-Using=pkexec
 Groups=sudo;admins
