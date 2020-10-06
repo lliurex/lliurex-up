@@ -1,3 +1,9 @@
+lliurex-up (19.04.24) bionic; urgency=medium
+
+  * Add screensaver inhibit when lliurex-up is launched
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 06 Oct 2020 10:26:03 +0200
+
 lliurex-up (19.04.23) bionic; urgency=medium
 
   * Improved log
