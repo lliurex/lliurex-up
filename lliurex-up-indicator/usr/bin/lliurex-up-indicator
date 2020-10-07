@@ -30,11 +30,11 @@ from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, Pro
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+import lliurex.screensaver
 
 import gettext
 gettext.textdomain('lliurex-up')
 _ = gettext.gettext
-
 
 
 RSRC="/usr/share/lliurex-up/"
@@ -61,6 +61,7 @@ class UpgradeIndicator:
 
 	def __init__(self,icon_name):
 
+		self.screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
 
 		self.sp_cont=0
 		self.sp_img=0
@@ -295,6 +296,7 @@ class UpgradeIndicator:
 	def is_alive(self):
 
 		self.is_working=True
+		self.screensaver_inhibitor.inHibit()
 
 		self.checkRemote=self.remote_execute()
 		self.remoteUpdateInfo=True
@@ -343,7 +345,8 @@ class UpgradeIndicator:
 			self.lliurexUp_running=False
 			self.is_working=False
 			self.is_cache_updated=False
-		
+			self.screensaver_inhibitor.unInhibit()
+
 			return False		
 
 	#def check_status	
@@ -464,7 +467,7 @@ class UpgradeIndicator:
 		if not os.path.exists(TARGET_FILE):
 			self.app_indicator.set_status(appindicator.IndicatorStatus.PASSIVE)
 			#self.notify.close()
-			cmd='lliurex-up-desktop-launcher.py'
+			cmd='lliurex-up-desktop-launcher.py &'
 			os.system(cmd)
 
 	#def open_gui		
