@@ -467,7 +467,7 @@ class UpgradeIndicator:
 		if not os.path.exists(TARGET_FILE):
 			self.app_indicator.set_status(appindicator.IndicatorStatus.PASSIVE)
 			#self.notify.close()
-			cmd='lliurex-up-desktop-launcher.py' + '&'
+			cmd='lliurex-up-desktop-launcher.py &'
 			os.system(cmd)
 
 	#def open_gui		
