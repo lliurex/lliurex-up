@@ -1,3 +1,9 @@
+lliurex-up (19.04.26) bionic; urgency=medium
+
+  * Add screensaver inhibit to indicator
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 07 Oct 2020 10:36:16 +0200
+
 lliurex-up (19.04.24) bionic; urgency=medium
 
   * Add screensaver inhibit when lliurex-up is launched
