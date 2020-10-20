@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-19 09:08+0200\n"
-"PO-Revision-Date: 2020-02-18 08:56+0100\n"
+"PO-Revision-Date: 2020-10-20 11:28+0200\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -316,7 +316,4 @@ msgstr "Hay nuevos paquetes listos para ser actualizados y/o instalados"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:443
 msgid "Lliurex-Up"
-msgstr ""
-
-#~ msgid "Lliurex Up is now running."
-#~ msgstr "LliureX Up se esta ejecuntando"
+msgstr "LliureX-Up"

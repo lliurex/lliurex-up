@@ -319,6 +319,3 @@ msgstr "Hi ha nous paquets preparats per a actualitzar-los i/o instal·lar-los."
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:443
 msgid "Lliurex-Up"
 msgstr "Lliurex-Up"
-
-#~ msgid "Lliurex Up is now running."
-#~ msgstr "S'està executant el LliureX Up."
