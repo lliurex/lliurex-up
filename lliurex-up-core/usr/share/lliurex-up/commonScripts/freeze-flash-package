@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ -e '/etc/apt/sources.list.d/canonical.list' ]; then
+    rm /etc/apt/sources.list.d/canonical.list
+fi
