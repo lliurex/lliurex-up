@@ -105,7 +105,9 @@ class LliurexUpCli(object):
 			log_msg="Can connect to lliurex.net: False"
 			self.log(log_msg)
 
-			if "lliurex-meta-server" in self.targetMetapackage or "server" in self.lliurexcore.previousFlavours:
+			#if "lliurex-meta-server" in self.targetMetapackage or "server" in self.lliurexcore.previousFlavours:
+			is_client=self.lliurexcore.search_meta("client")
+			if not is_client:
 				if self.initActionsArg !="initActionsSai":
 					'''
 					self.cleanEnvironment()
