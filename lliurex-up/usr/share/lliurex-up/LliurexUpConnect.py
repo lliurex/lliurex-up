@@ -165,7 +165,9 @@ class LliurexUpConnect():
 		else:
 			log_msg="Can connect to lliurex.net: False"
 			self.log(log_msg)
-			if "lliurex-meta-server" == self.targetMetapackage or "server" in self.llxUpCore.previousFlavours:
+			#if "lliurex-meta-server" == self.targetMetapackage or "server" in self.llxUpCore.previousFlavours:
+			is_client=self.search_meta("client")
+			if not is_client:
 				return False
 			else:
 				return True		
