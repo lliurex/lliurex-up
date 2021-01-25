@@ -1,3 +1,9 @@
+lliurex-up (19.04.29) bionic; urgency=medium
+
+  * Fixed performance in server-lite and desktop (full and lite) when fails connection to lliurex.net
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 25 Jan 2021 09:22:03 +0100
+
 lliurex-up (19.04.28) bionic; urgency=medium
 
   * Add script to freeze flash.
