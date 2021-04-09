@@ -11,7 +11,6 @@ import threading
 import time
 import Core
 import settings
-#from . import settings
 import gettext
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -113,6 +112,7 @@ class OptionsBox(Gtk.VBox):
 	
 		self.informationBox.load_panel(hide,error,msg)
 		self.stack.set_visible_child_name("information")
+	
 	#def show_info_panel	
 
 	def show_preferences(self):
@@ -126,7 +126,6 @@ class OptionsBox(Gtk.VBox):
 					preferences=False
 									
 			else:
-				#if 'client' in self.llxup_connect.previousFlavours or 'minimal-client' in self.llxup_connect.previousFlavours:
 				if self.core.llxUpConnect.search_meta('client'):	
 					preferences=False
 
@@ -143,4 +142,4 @@ class OptionsBox(Gtk.VBox):
 	
 #class OptionsBox
 
-#from . import Core
+

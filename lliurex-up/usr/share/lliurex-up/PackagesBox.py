@@ -170,6 +170,7 @@ class PackagesBox(Gtk.VBox):
 		pkg_size.set_max_width_chars(10)
 		pkg_size.set_xalign(1)
 		pkg_size.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
+		pkg_size.set_name("PKG_NAME")
 		pkg_size.id=name
 		pkg_size.version=version
 		pkg_size.status=False

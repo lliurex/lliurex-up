@@ -11,7 +11,6 @@ import os
 
 import Core
 import settings
-#from . import settings
 import gettext
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -81,5 +80,3 @@ class TerminalBox(Gtk.VBox):
 	
 		
 #class TerminalBox
-
-#from . import Core

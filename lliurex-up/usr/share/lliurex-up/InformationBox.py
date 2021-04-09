@@ -10,7 +10,6 @@ import os
 
 import Core
 import settings
-#from . import settings
 import gettext
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -106,7 +105,6 @@ class InformationBox(Gtk.VBox):
 
 
 		if self.core.loadBox.version_available==None:
-			#if 'client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-client' or 'minimal-client' in self.llxup_connect.previousFlavours or self.targetMetapackage=='lliurex-meta-minimal-client':
 			if self.core.llxUpConnect.search_meta('client'):
 				self.version_available_info_label.set_text(_("Not available for clients"))
 
@@ -132,9 +130,5 @@ class InformationBox(Gtk.VBox):
 	
 	#def get_update_summary	
 	
-
-	
 		
 #class InformationBox
-
-#from . import Core

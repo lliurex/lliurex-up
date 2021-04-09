@@ -13,7 +13,6 @@ import subprocess
 
 import Core
 import settings
-#from . import settings
 import gettext
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -390,7 +389,6 @@ class LoadBox(Gtk.VBox):
 
 	def pulsate_get_info(self):
 
-		#self.pbar.pulse()
 		if not self.get_lliurexversionlocal_t.launched:
 			print("  [Lliurex-Up]: Looking for LliurexVersion from local repository ")
 			msg_gather=_("Looking for new version to update")
@@ -547,8 +545,6 @@ class LoadBox(Gtk.VBox):
 
 	#def show_number_process_executing
 
+	
+#class LoadBox
 
-		
-#class PreferencesBox
-
-#from . import Core

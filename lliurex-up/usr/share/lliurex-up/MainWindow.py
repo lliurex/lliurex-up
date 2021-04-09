@@ -11,7 +11,6 @@ import platform
 import subprocess
 import sys
 import time
-#import commands
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, GLib, Gio
 
 import Core
@@ -229,7 +228,7 @@ class MainWindow:
 
 		self.main_window=builder.get_object("main_window")
 		self.main_window.set_title("Lliurex-Up")
-		self.main_window.resize(805,585)
+		self.main_window.resize(805,590)
 		self.banner_box=builder.get_object("banner_box")
 		self.window_box=builder.get_object("window_box")
 		self.main_box=builder.get_object("main_box")
@@ -329,7 +328,7 @@ class MainWindow:
 		self.number_process=4
 		GLib.timeout_add(100,self.dist_upgrade)
 
-	#def upgrade_process
+	#def init_update
 
 	def dist_upgrade(self):
 
