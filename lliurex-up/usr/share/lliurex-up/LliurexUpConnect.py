@@ -12,9 +12,6 @@ import ssl
 #from math import pi
 
 import lliurex.lliurexup as LliurexUpCore
-
-from gi.repository import Gtk, Gdk, GObject, GLib, PangoCairo, Pango
-
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -24,7 +21,6 @@ class LliurexUpConnect():
 	def __init__(self):
 
 		self.llxUpCore=LliurexUpCore.LliurexUpCore()
-		GObject.threads_init()
 
 		self.preactions_token=os.path.join(self.llxUpCore.processPath,'preactions_token')
 		self.upgrade_token=os.path.join(self.llxUpCore.processPath,'upgrade_token')
@@ -37,6 +33,9 @@ class LliurexUpConnect():
 
 	#def __init__	
 
+	def checkLocks(self):
+
+		self.llxUpCore.checkLocks()
 
 	def isLliurexUpLocked(self):
 
