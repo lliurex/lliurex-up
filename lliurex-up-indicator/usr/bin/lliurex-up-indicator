@@ -181,24 +181,35 @@ class UpgradeIndicator:
 	
 
 		label_item=_("LliureX-Up is being executed")
-		item=Gtk.ImageMenuItem()
-		item.set_label(label_item)
+		hbox=Gtk.HBox()
 		img=Gtk.Image.new_from_file(SP1)
-		item.set_image(img)
-		item.set_always_show_image(True)
+		img.remote=True
+		label=Gtk.Label(label=label_item)
+		label.remote=False
+		hbox.pack_start(img,False,False,0)
+		hbox.pack_end(label,False,False,0)
+
+		item=Gtk.MenuItem()
 		item.remote=True
+		item.add(hbox)
+
 		self.menu.insert(item,0)
 
 		if self.updatedInfo:
-			item=Gtk.ImageMenuItem()
 			label_item=_("Update the system now")
-			item.set_label(label_item)
+			hbox=Gtk.HBox()
 			img=Gtk.Image()
 			img.set_from_icon_name("update-low",Gtk.IconSize.MENU)
-			item.set_image(img)
-			item.set_always_show_image(True)
-			item.connect("activate",self.open_gui)
+			img.remote=False
+			label=Gtk.Label(label=label_item)
+			label.remote=False
+			hbox.pack_start(img,False,False,0)
+			hbox.pack_end(label,False,False,0)
+
+			item=Gtk.MenuItem()
 			item.remote=False
+			item.add(hbox)
+			item.connect("activate",self.open_gui)
 			self.menu.insert(item,1)
 
 	#def populate_menu		
@@ -323,17 +334,16 @@ class UpgradeIndicator:
 			if self.checkRemote:
 				self.spinner_sync()
 				for item in self.menu.get_children():
-					if item.remote:
-						item.set_image(self.sp_img)
-						self.sp_cont=self.sp_cont+1	
+					if item.get_children()[0].get_children()[0].remote:
+						item.get_children()[0].get_children()[0].set_from_file(self.sp_img)
+				self.sp_cont=self.sp_cont+1	
 			return True
 			
 		else:
 			if self.checkRemote:
-				img=Gtk.Image.new_from_file(SP1)
 				for item in self.menu.get_children():
-					if item.remote:
-						item.set_image(img)
+					if item.get_children()[0].get_children()[0].remote:
+						item.get_children()[0].get_children()[0].set_from_file(SP1)
 			
 				message=_("The upgrade process has ended")
 				self.show_message(message)
@@ -357,29 +367,29 @@ class UpgradeIndicator:
 			self.sp_cont=0
 			
 		if self.sp_cont==0:
-			img=Gtk.Image.new_from_file(SP1)
-			self.sp_img=img
+			#img=Gtk.Image.new_from_file(SP1)
+			self.sp_img=SP1
 		elif self.sp_cont==10:
-			img=Gtk.Image.new_from_file(SP2)
-			self.sp_img=img			
+			#img=Gtk.Image.new_from_file(SP2)
+			self.sp_img=SP2			
 		elif self.sp_cont==20:
-			img=Gtk.Image.new_from_file(SP3)
-			self.sp_img=img
+			#img=Gtk.Image.new_from_file(SP3)
+			self.sp_img=SP3
 		elif self.sp_cont==30:
-			img=Gtk.Image.new_from_file(SP4)
-			self.sp_img=img
+			#img=Gtk.Image.new_from_file(SP4)
+			self.sp_img=SP4
 		elif self.sp_cont==40:
-			img=Gtk.Image.new_from_file(SP5)
-			self.sp_img=img	
+			#img=Gtk.Image.new_from_file(SP5)
+			self.sp_img=SP5	
 		elif self.sp_cont==50:
-			img=Gtk.Image.new_from_file(SP6)
-			self.sp_img=img		
+			#img=Gtk.Image.new_from_file(SP6)
+			self.sp_img=SP6		
 		elif self.sp_cont==60:
-			img=Gtk.Image.new_from_file(SP7)
-			self.sp_img=img		
+			#img=Gtk.Image.new_from_file(SP7)
+			self.sp_img=SP7		
 		elif self.sp_cont==70:
-			img=Gtk.Image.new_from_file(SP8)
-			self.sp_img=img		
+			#img=Gtk.Image.new_from_file(SP8)
+			self.sp_img=SP8		
 				
 	#def spinner_sync		
 
@@ -484,5 +494,4 @@ if __name__=="__main__":
 
 
 	lliurexup=UpgradeIndicator("lliurex-up-indicator")
-	GObject.threads_init()
 	Gtk.main()
