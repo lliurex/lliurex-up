@@ -12,6 +12,8 @@ import time
 import psutil
 import struct, fcntl
 import ssl
+import dpkgunlocker.dpkgunlockermanager as DpkgUnlockerManager
+
 
 
 class LliurexUpCore(object):
@@ -39,6 +41,8 @@ class LliurexUpCore(object):
 		self.initActionsPath='/usr/share/lliurex-up/initActions'
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
+		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
+
 
 	#def __init__	
 
@@ -69,6 +73,12 @@ class LliurexUpCore(object):
 
 	#def startLliurexUp	
 
+	def checkLocks(self):
+
+		self.locks_info=self.dpkgUnlocker.checkingLocks()
+
+	#def checkLocks
+	
 	def isLliurexUpLocked(self):
 
 		'''
@@ -77,23 +87,7 @@ class LliurexUpCore(object):
 		 2: Lliurex-Up is locked for previous failed process
 		 ''' 
 
-		if os.path.exists(self.lockTokenPath):
-			f=open(self.lockTokenPath,'r')
-			up_pid=f.readline().split('\n')[0]
-			if up_pid !="":
-				up_pid=int(up_pid)
-				check_pid=psutil.pid_exists(up_pid)
-				if check_pid:
-					code=1
-				else:
-					code=2
-			else:
-				code=1
-				
-		else:
-			code=0
-
-		return code	
+		return self.locks_info["Lliurex-Up"]
 
 	#def isLliurexUpLocked		
 
@@ -103,20 +97,8 @@ class LliurexUpCore(object):
 		 0: Apt is not running
 		 1: Apt is running
 		 2: Apt is locked for previous failed process
-		 ''' 
-
-		f= open("/var/lib/apt/lists/lock", 'w')
-		try:
-			fcntl.lockf(f, fcntl.LOCK_EX|fcntl.LOCK_NB)
-			code=0
-		except IOError:
-			apt_run=self.find_process("apt-get")
-			if apt_run!=None:
-				code =1
-			else:
-				code=2
-
-		return code	
+		'''
+		return self.locks_info["Apt"]	
 
 
 	#def isAptLocked
@@ -131,22 +113,7 @@ class LliurexUpCore(object):
 
 		 ''' 
 
-		f= open("/var/lib/dpkg/lock", 'w')
-		try:
-			fcntl.lockf(f, fcntl.LOCK_EX|fcntl.LOCK_NB)
-			code=0
-		except IOError:
-			dpkg_run=self.find_process("dpkg")
-			if dpkg_run!=None:
-				code =1
-			else:
-				apt_run=self.find_process("apt-get")
-				if apt_run!=None:
-					code=3
-				else:
-					code=2	
-
-		return code		
+		return self.locks_info["Dpkg"]		
 			
 
 	#def isAptLocked			

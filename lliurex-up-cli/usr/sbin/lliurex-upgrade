@@ -24,6 +24,7 @@ class LliurexUpCli(object):
 		#log_msg="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
 		#self.log(log_msg)
 		signal.signal(signal.SIGINT,self.handler_signal)
+		self.lliurexcore.checkLocks()
 		self.checkingBlock=True
 		'''
 		if mode=="sai":
