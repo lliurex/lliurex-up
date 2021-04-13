@@ -119,8 +119,8 @@ class PackagesBox(Gtk.VBox):
 		image=Gtk.HBox()
 		icon=self.parse_desktop(installed,name)
 		icon.set_margin_left(5)
-		icon.set_margin_top(4)
-		icon.set_margin_bottom(4)
+		icon.set_margin_top(5)
+		icon.set_margin_bottom(5)
 		icon.set_halign(Gtk.Align.CENTER)
 		icon.set_valign(Gtk.Align.CENTER)
 		icon.id=name
@@ -135,7 +135,7 @@ class PackagesBox(Gtk.VBox):
 		pkg_name.set_text(name)
 		pkg_name.set_margin_left(10)
 		pkg_name.set_margin_right(5)
-		pkg_name.set_margin_top(4)
+		pkg_name.set_margin_top(5)
 		pkg_name.set_margin_bottom(0)
 		pkg_name.set_width_chars(40)
 		pkg_name.set_xalign(-1)
@@ -150,7 +150,7 @@ class PackagesBox(Gtk.VBox):
 		pkg_version.set_margin_left(10)
 		pkg_version.set_margin_right(5)
 		pkg_version.set_margin_top(0)
-		pkg_version.set_margin_bottom(4)
+		pkg_version.set_margin_bottom(5)
 		pkg_version.set_width_chars(40)
 		pkg_version.set_xalign(-1)
 		pkg_version.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
@@ -175,7 +175,7 @@ class PackagesBox(Gtk.VBox):
 		pkg_size.version=version
 		pkg_size.status=False
 
-		state=Gtk.Image.new_from_file(os.path.join(settings.RSRC_DIR,"ok.svg"))
+		state=Gtk.Image.new_from_file(os.path.join(settings.RSRC_DIR,"ok.png"))
 		state.set_halign(Gtk.Align.CENTER)
 		state.set_valign(Gtk.Align.CENTER)
 		state.set_margin_left(5)
@@ -320,7 +320,7 @@ class PackagesBox(Gtk.VBox):
 				version=item.get_children()[0].get_children()[1].get_children()[0].get_children()[2].version
 				pkg_name=name+"_"+version
 				if pkg_name not in packages_status:
-					item.get_children()[0].get_children()[1].get_children()[0].get_children()[2].set_from_file(os.path.join(settings.RSRC_DIR,"error.svg"))
+					item.get_children()[0].get_children()[1].get_children()[0].get_children()[2].set_from_file(os.path.join(settings.RSRC_DIR,"error.png"))
 
 				item.get_children()[0].get_children()[1].get_children()[0].get_children()[2].show()
 

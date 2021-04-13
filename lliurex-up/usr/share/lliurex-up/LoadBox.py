@@ -7,6 +7,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib,Gdk
 
 import os
+import sys
 import threading
 import time
 import subprocess
@@ -40,6 +41,8 @@ class LoadBox(Gtk.VBox):
 		self.systray_switch=builder.get_object("systray_switch")
 		self.pack_start(self.main_box,True,True,0)
 
+		self.max_seconds=5.0
+		self.current_second=0
 		self.number_process=9
 		self.init_threads()
 
