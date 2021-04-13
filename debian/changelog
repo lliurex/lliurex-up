@@ -1,3 +1,10 @@
+lliurex-up (21.04.29) focal; urgency=medium
+
+  * Initial release for focal
+  * New gui style
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 13 Apr 2021 12:12:54 +0200
+
 lliurex-up (19.04.29) bionic; urgency=medium
 
   * Fixed performance in server-lite and desktop (full and lite) when fails connection to lliurex.net
