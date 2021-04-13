@@ -199,7 +199,7 @@ class LoadBox(Gtk.VBox):
 		abort=False							
 
 		if not self.init_actions_t.launched:
-			print("  [Lliurex-Up]: Executing init-actions")
+			print("  [Lliurex-Up]: Executing init-actions...")
 			msg_gather=_("Executing init-actions")
 			self.init_actions_t.start()
 			self.init_actions_t.launched=True
@@ -209,7 +209,7 @@ class LoadBox(Gtk.VBox):
 
 			if  not self.check_lliurexup_t.is_alive() and not self.check_lliurexup_t.launched:
 				print("  [Lliurex-Up]: Checking Lliurex-Up version")
-				msg_gather=_("Looking for new version of LliureX Up")
+				msg_gather=_("Looking for new version of Lliurex-Up...")
 				self.check_lliurexup_t.start()
 				self.check_lliurexup_t.launched=True
 				self.show_number_process_executing(4,msg_gather)
@@ -219,20 +219,20 @@ class LoadBox(Gtk.VBox):
 				if not self.is_lliurexup_updated:
 					if  not self.install_lliurexup_t.is_alive() and not self.install_lliurexup_t.launched:
 						print("  [Lliurex-Up]: Updating Lliurex-Up")
-						msg_gather=_("Updating LliureX Up")
+						msg_gather=_("Updating Lliurex-Up...")
 						self.install_lliurexup_t.start()
 						self.install_lliurexup_t.launched=True
 						self.show_number_process_executing(5,msg_gather)
 					else:
 						if self.install_lliurexup_t.done:
 							print("  [Lliurex-Up]: Reboot Lliurex-Up")
-							self.msg_wait=_("LliureX Up is now updated and will be reboot in %s seconds...")
+							self.msg_wait=_("Lliurex-Up is now updated and will be reboot in %s seconds...")
 							GLib.timeout_add(10,self.wait_to_reboot)
 							return False
 				else:
 					if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
 						print("  [Lliurex-Up]: Checking if mirror exist")
-						msg_gather=_("Checking if mirror exist and there is updated")
+						msg_gather=_("Checking if mirror exist and there is updated...")
 						self.check_mirror_t.start()
 						self.check_mirror_t.launched=True
 						self.show_number_process_executing(5,msg_gather)
@@ -391,7 +391,7 @@ class LoadBox(Gtk.VBox):
 
 		if not self.get_lliurexversionlocal_t.launched:
 			print("  [Lliurex-Up]: Looking for LliurexVersion from local repository ")
-			msg_gather=_("Looking for new version to update")
+			msg_gather=_("Looking for new version to update...")
 			self.get_lliurexversionlocal_t.start()
 			self.get_lliurexversionlocal_t.launched=True
 			self.show_number_process_executing(6,msg_gather)
@@ -400,7 +400,7 @@ class LoadBox(Gtk.VBox):
 		if self.get_lliurexversionlocal_t.done:
 			if not self.get_lliurexversionnet_t.is_alive() and not self.get_lliurexversionnet_t.launched:
 				print("  [Lliurex-Up]: Looking for LliurexVersion from Lliurex net")
-				msg_gather=_("Looking for new version available")
+				msg_gather=_("Looking for new version available...")
 				self.get_lliurexversionnet_t.start()	
 				self.get_lliurexversionnet_t.launched=True
 				self.show_number_process_executing(7,msg_gather)
@@ -410,7 +410,7 @@ class LoadBox(Gtk.VBox):
 
 				if not self.checkInitialFlavourToInstall_t.is_alive() and not self.checkInitialFlavourToInstall_t.launched:
 					print("  [Lliurex-Up]: Checking if installation of metapackage is required")
-					msg_gather=_("Checking if installation of metapackage is required")
+					msg_gather=_("Checking if installation of metapackage is required...")
 					self.checkInitialFlavourToInstall_t.start()
 					self.checkInitialFlavourToInstall_t.launched=True
 					self.show_number_process_executing(8,msg_gather)
@@ -419,7 +419,7 @@ class LoadBox(Gtk.VBox):
 				if self.checkInitialFlavourToInstall_t.done:
 					if not self.gather_packages_t.is_alive() and not self.gather_packages_t.launched:
 						print("  [Lliurex-Up]: Looking for for new updates")
-						msg_gather=_("Looking for new updates")
+						msg_gather=_("Looking for new updates...")
 						self.gather_packages_t.start()
 						self.gather_packages_t.launched=True
 						self.show_number_process_executing(9,msg_gather)

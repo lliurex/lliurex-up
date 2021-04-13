@@ -339,7 +339,7 @@ class MainWindow:
 			self.core.optionsBox.terminal_btn.set_sensitive(True)
 			self.preactions_process_t.start()
 			self.preactions_process_t.launched=True
-			self.show_number_process_executing(1,_("Preparing system to the update"))
+			self.show_number_process_executing(1,_("Preparing system to the update..."))
 
 		else:
 
@@ -348,14 +348,14 @@ class MainWindow:
 					print("  [Lliurex-Up]: Executing dist-upgrade")
 					self.update_process_t.start()
 					self.update_process_t.launched=True
-					self.show_number_process_executing(2,_("Downloading and installing packages"))
+					self.show_number_process_executing(2,_("Downloading and installing packages..."))
 					
 				if self.update_process_t.done:
 					if not self.postactions_process_t.is_alive() and not self.postactions_process_t.launched:
 						print("  [Lliurex-Up]: Executing post-actions")
 						self.postactions_process_t.start()
 						self.postactions_process_t.launched=True
-						self.show_number_process_executing(3,_("Ending the update"))
+						self.show_number_process_executing(3,_("Ending the update..."))
 					
 					if self.postactions_process_t.done:
 
@@ -364,7 +364,7 @@ class MainWindow:
 							print("  [Lliurex-Up]: Checking Final metapackage")
 							self.checkFinalFlavourToInstall_t.start()
 							self.checkFinalFlavourToInstall_t.launched=True
-							self.show_number_process_executing(4,_("Checking metapackage"))
+							self.show_number_process_executing(4,_("Checking metapackage.."))
 										  			
 						if self.checkFinalFlavourToInstall_t.done:				  
 							self.core.packagesBox.update_state_icon()

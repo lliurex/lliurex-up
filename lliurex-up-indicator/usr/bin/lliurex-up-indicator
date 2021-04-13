@@ -180,7 +180,7 @@ class UpgradeIndicator:
 	def populate_menu(self):
 	
 
-		label_item=_("LliureX-Up is being executed")
+		label_item=_("Lliurex-Up is being executed")
 		hbox=Gtk.HBox()
 		img=Gtk.Image.new_from_file(SP1)
 		img.remote=True
