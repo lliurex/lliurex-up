@@ -200,7 +200,7 @@ class LoadBox(Gtk.VBox):
 
 		if not self.init_actions_t.launched:
 			print("  [Lliurex-Up]: Executing init-actions...")
-			msg_gather=_("Executing init-actions")
+			msg_gather=_("Executing init-actions...")
 			self.init_actions_t.start()
 			self.init_actions_t.launched=True
 			self.show_number_process_executing(3,msg_gather)
