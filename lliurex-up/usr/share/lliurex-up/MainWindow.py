@@ -73,7 +73,6 @@ class MainWindow:
 		print("  [Lliurex-Up]: Checking if Dpkg is running...")
 
 		code=self.llxup_connect.isDpkgLocked()
-		print(code)
 		if code !=0:
 			tmp_msg=self.getMessageDialog(code)
 			if code!=3:
