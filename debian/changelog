@@ -1,3 +1,10 @@
+lliurex-up (21.04.30) focal; urgency=medium
+
+  * Fixed terminal commands
+  * Fixed function to restart Lliurex-Up
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 13 Apr 2021 14:16:13 +0200
+
 lliurex-up (21.04.29) focal; urgency=medium
 
   * Initial release for focal
