@@ -7,6 +7,8 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib,Gdk
 
 import os
+import sys
+import pwd
 import threading
 import time
 import Core
@@ -44,6 +46,8 @@ class OptionsBox(Gtk.VBox):
 		self.pkgs_btn=builder.get_object("pkgs_btn")
 		self.terminal_btn=builder.get_object("terminal_btn")
 		self.preferences_btn=builder.get_object("preferences_btn")
+		self.help_btn=builder.get_object("help_btn")
+
 		
 		self.informationBox=self.core.informationBox
 		self.packagesBox=self.core.packagesBox
@@ -62,6 +66,8 @@ class OptionsBox(Gtk.VBox):
 		self.pack_start(self.main_box,True,True,0)
 		self.main_box.show_all()
 		self.set_css_info()
+		self.init_threads()
+
 				
 	#def __init__
 
@@ -87,9 +93,17 @@ class OptionsBox(Gtk.VBox):
 		self.info_btn.connect("clicked",self.change_panel,"information")
 		self.pkgs_btn.connect("clicked",self.change_panel,"packages")
 		self.terminal_btn.connect("clicked",self.change_panel,"terminal")		
+		self.help_btn.set_name("BORDERLESS_BUTTON")
 		self.preferences_btn.connect("clicked",self.change_panel,"preferences")
 
 	#def connect_signals
+	def init_threads(self):
+
+		self.open_help_t=threading.Thread(target=self.open_help)
+		self.open_help_t.daemon=True
+
+	#def init_threads	
+
 
 	def change_panel(self,widget,panel):
 
@@ -138,6 +152,50 @@ class OptionsBox(Gtk.VBox):
 			self.preferences_btn.hide()	
 
 	#def show_preferences
+
+	def help_clicked(self,widget):
+
+		language=os.environ["LANGUAGE"]
+		lang=os.environ["LANG"]
+		run_pkexec=False
+		
+		if "PKEXEC_UID" in os.environ:
+			run_pkexec=True
+		
+		exec_lang=""
+		app_lang=""
+
+		if language=="":
+			app_lang=lang
+		else:
+			language=language.split(":")[0]
+			app_lang=language
+
+		if 'valencia' in app_lang:
+			exec_lang="LANG=ca_ES.UTF-8@valencia"
+			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Dpkg-Unlocker.'
+		else:
+			exec_lang="LANG=es_ES.UTF-8"
+			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Dpkg-Unlocker'
+
+		if not run_pkexec:
+			self.fcmd="su -c '%s' $USER" %cmd
+		else:
+			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+			self.fcmd="su -c '" +cmd+ "' "+ user
+			
+		self.init_threads()
+		self.open_help_t.start()
+
+	#help_clicked		
+	
+
+	def open_help(self):
+
+		os.system(self.fcmd)
+
+	#def open_help	
+	
 
 	
 #class OptionsBox
