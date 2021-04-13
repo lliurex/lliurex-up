@@ -10,7 +10,6 @@ import os
 
 import Core
 import settings
-#from . import settings
 import gettext
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -42,7 +41,7 @@ class PreferencesBox(Gtk.VBox):
 		self.systray_switch.connect("notify::active", self.config_systray)
 		self.pack_start(self.main_box,True,True,0)
 
-		if os.path.exists(DISABLE_INDICATOR_TOKEN):
+		if not os.path.exists(DISABLE_INDICATOR_TOKEN):
 			self.systray_switch.set_active(True)
 		else:
 			self.systray_switch.set_active(False)
@@ -75,7 +74,7 @@ class PreferencesBox(Gtk.VBox):
 
 	def config_systray(self,switch,gparam):
 
-		if not switch.get_active():
+		if switch.get_active():
 			if os.path.exists(DISABLE_INDICATOR_TOKEN):
 				os.remove(DISABLE_INDICATOR_TOKEN)
 		else:
@@ -91,5 +90,3 @@ class PreferencesBox(Gtk.VBox):
 	
 		
 #class PreferencesBox
-
-#from . import Core
