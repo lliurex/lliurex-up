@@ -8,7 +8,7 @@
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkViewport" id="changelog_vp">
-        <property name="width_request">400</property>
+        <property name="width_request">450</property>
         <property name="height_request">250</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -21,6 +21,8 @@
               <object class="GtkTextView" id="changelog_tw">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="margin_left">5</property>
+                <property name="margin_right">5</property>
                 <property name="editable">False</property>
                 <property name="wrap_mode">word</property>
                 <property name="justification">fill</property>
