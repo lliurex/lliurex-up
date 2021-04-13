@@ -227,7 +227,7 @@ class MainWindow:
 
 		self.main_window=builder.get_object("main_window")
 		self.main_window.set_title("Lliurex-Up")
-		self.main_window.resize(805,590)
+		self.main_window.resize(805,610)
 		self.banner_box=builder.get_object("banner_box")
 		self.window_box=builder.get_object("window_box")
 		self.main_box=builder.get_object("main_box")
@@ -426,7 +426,7 @@ class MainWindow:
 
 		self.command=self.core.llxUpConnect.preActionsScript()
 		length=len(self.command)
-		self.core.terminalBox.vterminal.feed_child(self.command, length)
+		self.core.terminalBox.vterminal.feed_child_binary(bytes(self.command,'utf8'))
 
 	#def preactions_process
 	
@@ -434,7 +434,7 @@ class MainWindow:
 		
 		self.command=self.core.llxUpConnect.distUpgradeProcess()
 		length=len(self.command)
-		self.core.terminalBox.vterminal.feed_child(self.command, length)
+		self.core.terminalBox.vterminal.feed_child_binary(bytes(self.command,'utf8'))
 
 	#def update_process		
 
@@ -443,7 +443,7 @@ class MainWindow:
 
 		self.command=self.core.llxUpConnect.postActionsScript()
 		length=len(self.command)
-		self.core.terminalBox.vterminal.feed_child(self.command, length)
+		self.core.terminalBox.vterminal.feed_child_binary(bytes(self.command,'utf8'))
 
 	#def postactions_process
 
@@ -461,7 +461,7 @@ class MainWindow:
 			print("  [Lliurex-Up]: Check Final Metapackage: Nothing to do")
 			self.command='exit ' + '\n'
 			length=len(self.command)
-			self.core.terminalBox.vterminal.feed_child(self.command, length)
+			self.core.terminalBox.vterminal.feed_child_binary(bytes(self.command,'utf8'))
 			self.checkFinalFlavourToInstall_t.done=True	
 	
 	#def checkFinalFlavourToInstall
@@ -470,7 +470,7 @@ class MainWindow:
 
 		self.command=self.core.llxUpConnect.installFinalFlavour(flavourToInstall)
 		length=len(self.command)
-		self.core.terminalBox.vterminal.feed_child(self.command, length)
+		self.core.terminalBox.vterminal.feed_child_binary(bytes(self.command,'utf8'))
 
 	#def installFinalFlavour
 
