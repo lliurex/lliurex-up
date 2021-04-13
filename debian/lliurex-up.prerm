@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+
+SYSTEM_CONFIG_SCRIPT=/usr/bin/update-manager
+SYSTEM_AUTOSTART_SCRIPT="/usr/bin/update-notifier"
+OUR_AUTOSTART_BINARY="/bin/true"
+OUR_BINARY=/usr/sbin/lliurex-up
+
+OUR_PACKAGE="lliurex-up"
+INDICATOR_TOKEN="/etc/lliurex-up-indicator/disableIndicator.token"
+
+case $1 in 
+     
+     remove|purge|abort-install|disappear) 
+     
+		if [ -f "${SYSTEM_CONFIG_SCRIPT}.real" ] ; then
+			rm -f "${SYSTEM_CONFIG_SCRIPT}"
+			dpkg-divert --package lliurex-up --rename --quiet --remove "${SYSTEM_CONFIG_SCRIPT}" || true
+		fi
+			
+		if [ -f "${SYSTEM_AUTOSTART_SCRIPT}.real" ] ; then
+			rm -f "${SYSTEM_AUTOSTART_SCRIPT}"
+			dpkg-divert --package lliurex-up --rename --quiet --remove "${SYSTEM_AUTOSTART_SCRIPT}" || true
+		fi
+		
+		if  [ -e "${INDICATOR_TOKEN}" ]; then
+			rm -f "${INDICATOR_TOKEN}"
+		fi	
+		
+		
+     ;;
+esac
+
+#DEBHELPER#
+
+exit 0
+

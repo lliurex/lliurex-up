@@ -1,0 +1,1603 @@
+lliurex-up (19.04.29) bionic; urgency=medium
+
+  * Fixed performance in server-lite and desktop (full and lite) when fails connection to lliurex.net
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 25 Jan 2021 09:22:03 +0100
+
+lliurex-up (19.04.28) bionic; urgency=medium
+
+  * Add script to freeze flash.
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Fri, 08 Jan 2021 11:49:10 +0100
+
+lliurex-up (19.04.27) bionic; urgency=medium
+
+  * Fixed po files
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 20 Oct 2020 11:32:43 +0200
+
+lliurex-up (19.04.26) bionic; urgency=medium
+
+  * Add screensaver inhibit to indicator
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Wed, 07 Oct 2020 10:36:16 +0200
+
+lliurex-up (19.04.24) bionic; urgency=medium
+
+  * Add screensaver inhibit when lliurex-up is launched
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 06 Oct 2020 10:26:03 +0200
+
+lliurex-up (19.04.23) bionic; urgency=medium
+
+  * Improved log
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 23 Sep 2020 07:58:22 +0200
+
+lliurex-up (19.04.22) bionic; urgency=medium
+
+  * Fixed function to save current metapackage
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 29 Jul 2020 16:30:12 +0200
+
+lliurex-up (19.04.21) bionic; urgency=medium
+
+  * Improved function to detect incorrect metapackages
+  * Fixed function to restart lliurex-up
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 28 Jul 2020 18:20:08 +0200
+
+lliurex-up (19.04.20) bionic; urgency=medium
+
+  * Fixed depend (debconf-kde-helper) in control
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 27 Jul 2020 18:02:14 +0200
+
+lliurex-up (19.04.19) bionic; urgency=medium
+
+  * Fixed bug in function when check incorrect meta in upgrade package list in "lite" flavours
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 15 Jul 2020 14:43:33 +0200
+
+lliurex-up (19.04.18) bionic; urgency=medium
+
+  * Changed orde of question about mirror in lliurex-upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 21 May 2020 16:51:44 +0200
+
+lliurex-up (19.04.17) bionic; urgency=medium
+
+  * Added lliurex-meta-desktop-lite to meta list
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 15 May 2020 09:33:45 +0200
+
+lliurex-up (19.04.16) bionic; urgency=medium
+
+  * Fixed control
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 05 May 2020 16:38:18 +0200
+
+lliurex-up (19.04.15) bionic; urgency=medium
+
+  * Dummy upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 09 Apr 2020 11:11:59 +0200
+
+lliurex-up (19.04.14) bionic; urgency=medium
+
+  * Migrated to python3
+  * Metapackage management improved
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 09 Apr 2020 10:17:27 +0200
+
+lliurex-up (19.04.13) bionic; urgency=medium
+
+  * Fixed command to update mirror in lliurex-upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 Feb 2020 13:09:23 +0100
+
+lliurex-up (19.04.12) bionic; urgency=medium
+
+  * Adding ca@valencia
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Fri, 26 Jul 2019 11:33:34 +0200
+
+lliurex-up (19.04.11) bionic; urgency=medium
+
+  * Updated desktop file
+  * Fixed polkit files
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 19 Jul 2019 09:59:14 +0200
+
+lliurex-up (19.04.10) bionic; urgency=medium
+
+  * Fixed po files
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 18 Jun 2019 13:36:31 +0200
+
+lliurex-up (19.04.9) bionic; urgency=medium
+
+  * Fixed spanish translations
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 Jun 2019 13:30:36 +0200
+
+lliurex-up (19.04.8) bionic; urgency=medium
+
+  * Fixed valencian translations
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 Jun 2019 12:38:40 +0200
+
+lliurex-up (19.04.7) bionic; urgency=medium
+
+  * Fixed indicator icon
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 13 Jun 2019 12:53:23 +0200
+
+lliurex-up (19.04.6) bionic; urgency=medium
+
+  * Included new icons
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 13 Jun 2019 08:48:43 +0200
+
+lliurex-up (19.04.5) bionic; urgency=medium
+
+  * Removed update-manager diversion
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 23 Apr 2019 14:41:13 +0200
+
+lliurex-up (19.04.4) bionic; urgency=medium
+
+  * Fixed creation of lliurex-up sources.list
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 17 Apr 2019 11:32:41 +0200
+
+lliurex-up (19.04.3) bionic; urgency=medium
+
+  * Fixed depends to use kde as DEBIAN_FRONTEND
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 11 Apr 2019 13:58:50 +0200
+
+lliurex-up (19.04.2) bionic; urgency=medium
+
+  * Adding new button to update
+  * Check if mirror exists in server when updated client
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 29 Mar 2019 12:42:46 +0100
+
+lliurex-up (19.04.1) bionic; urgency=medium
+
+  * Inital release for bionic
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 06 Nov 2018 17:39:01 +0100
+
+lliurex-up (16.04.31) xenial; urgency=medium
+
+  * New alert when blockages are detected but there is some process running
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 03 Jul 2018 13:04:19 +0200
+
+lliurex-up (16.04.30) xenial; urgency=medium
+
+  * Added changes for integration with dpkg-unlocker
+
+ -- Juan Ramon Pelegrina  <juapesai@hotmail.com>  Fri, 15 Jun 2018 10:36:09 +0200
+
+lliurex-up (16.04.29) xenial; urgency=medium
+
+  * Save PID in lock file
+  * New banner
+  * Possibility of resizing the window
+  * Improved indicator performance 
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 07 Jun 2018 08:58:50 +0200
+
+lliurex-up (16.04.28) xenial; urgency=medium
+
+  * Increased the frequency of intermediate notifications when apt is updated
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 15 Dec 2017 08:53:34 +0100
+
+lliurex-up (16.04.27) xenial; urgency=medium
+
+  * Changes in the appearance of the "Update now" button
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 16 Nov 2017 12:09:21 +0100
+
+lliurex-up (16.04.26) xenial; urgency=medium
+
+  * Show stderr in lliurex-upgrade
+  * Add configuration to lliurex-up terminal
+  * Improve lliurex-up-indicator spinner
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 18 Oct 2017 12:53:28 +0200
+
+lliurex-up (16.04.25) xenial; urgency=medium
+
+  * Fix bug when n4d not worked
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 05 Oct 2017 14:39:47 +0200
+
+lliurex-up (16.04.24-lliurex2) xenial; urgency=medium
+
+  * Fix icon display in zomandos with a fake desktop for the store (previous change was made on the legacy code)
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Tue, 08 Aug 2017 09:33:56 +0200
+
+lliurex-up (16.04.24-lliurex1) xenial; urgency=medium
+
+  * Fix icon display in zomandos with a fake desktop for the store
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 07 Aug 2017 10:43:20 +0200
+
+lliurex-up (16.04.24) xenial; urgency=medium
+
+  * Add indicator for the menu bar to show availables updates and remote executions of lliurex-upgrade
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 03 Aug 2017 08:14:08 +0200
+
+lliurex-up (16.04.23) xenial; urgency=medium
+
+  * Fix mode --sai of lliurex-upgrade to enable update server without net connection
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 07 Jun 2017 13:09:33 +0200
+
+lliurex-up (16.04.22) xenial; urgency=medium
+
+  * Improve log file
+  * Restore lliurex-pinning file when lliurex-upgrade -s mode ends
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 16 May 2017 14:13:28 +0200
+
+lliurex-up (16.04.21) xenial; urgency=medium
+
+  * Add new mode in lliurex-upgrade to add mirror and lliurex.net repositories
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 15 May 2017 13:07:53 +0200
+
+lliurex-up (16.04.20) xenial; urgency=medium
+
+  * Fixed lliurex-upgrade to add return 0 when dist-upgrade is OK
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 09 May 2017 14:19:38 +0200
+
+lliurex-up (16.04.19) xenial; urgency=medium
+
+  * Improve startup of gui
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 08 May 2017 11:39:16 +0200
+
+lliurex-up (16.04.18) xenial; urgency=medium
+
+  * Change method to get lliurex-version
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 04 May 2017 10:52:40 +0200
+
+lliurex-up (16.04.17) xenial; urgency=medium
+
+  * Clean code of python lliurex-up lib
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 02 May 2017 18:21:00 +0200
+
+lliurex-up (16.04.16) xenial; urgency=medium
+
+  * Improve function to check n4d service
+  * Fix function to show changelogs
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 02 May 2017 13:42:12 +0200
+
+lliurex-up (16.04.15) xenial; urgency=medium
+
+  * Add checking of n4d service
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 26 Apr 2017 17:45:49 +0200
+
+lliurex-up (16.04.14) xenial; urgency=medium
+
+  * Add valencia translations
+  * Improve errors detection
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 30 Mar 2017 14:48:03 +0200
+
+lliurex-up (16.04.13) xenial; urgency=medium
+
+  * Add control of mirror exec in clients update
+  * Fix bug of lliurex-up auto-update in clients without lliurex.net repos
+  * Add lock to disable more than one execution of lliurex-up at a time
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 03 Mar 2017 08:57:56 +0100
+
+lliurex-up (16.04.12) xenial; urgency=medium
+
+  * Add unattendend mode in cli
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 17 Feb 2017 12:26:48 +0100
+
+lliurex-up (16.04.11) xenial; urgency=medium
+
+  * Show changelogs
+  * Fix postinst script 
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 15 Feb 2017 17:58:21 +0100
+
+lliurex-up (16.04.10) xenial; urgency=medium
+
+  * Remove final update-initramfs
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 13 Feb 2017 11:31:25 +0100
+
+lliurex-up (16.04.9) xenial; urgency=medium
+
+  * Remove alternative-update-initramfs
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 13 Feb 2017 09:09:29 +0100
+
+lliurex-up (16.04.8) xenial; urgency=medium
+
+  * Fix bug in cli
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 08 Feb 2017 11:55:05 +0100
+
+lliurex-up (16.04.7) xenial; urgency=medium
+
+  * Add Spanish translation
+  * Improve feedback to user
+  * Fix code
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 07 Feb 2017 13:24:57 +0100
+
+lliurex-up (16.04.6) xenial; urgency=medium
+
+  * Fix buildpackage of lliurex-up-cli
+  * Fi control to install lliurex-up-cli with lliurex-up
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 30 Jan 2017 08:11:45 +0100
+
+lliurex-up (16.04.5) xenial; urgency=medium
+
+  * Add first version of cli
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 27 Jan 2017 09:55:46 +0100
+
+lliurex-up (16.04.4) xenial; urgency=medium
+
+  * Fix bug in initActions directory
+  * Improve feedback of update process
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 25 Jan 2017 08:34:19 +0100
+
+lliurex-up (16.04.3) xenial; urgency=medium
+
+  * Fix bug when check lliurex-version
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 20 Jan 2017 13:22:38 +0100
+
+lliurex-up (16.04.2) xenial; urgency=medium
+
+  * Fix bug in lliurex-up.py
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 19 Jan 2017 09:41:47 +0100
+
+lliurex-up (16.04.1) xenial; urgency=medium
+
+  * Add forgotten depends
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Mon, 16 Jan 2017 13:07:42 +0100
+
+lliurex-up (16.04) xenial; urgency=medium
+
+  * First release
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Thu, 12 Jan 2017 09:34:37 +0100
+
+lliurex-up (16.03) xenial; urgency=medium
+
+  * Now is packaged
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 10 Jan 2017 13:02:00 +0100
+
+lliurex-up (16.02) xenial; urgency=medium
+
+  * Fix valencian translation desktop file
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 01 Sep 2016 10:39:06 +0200
+
+lliurex-up (16.01) xenial; urgency=medium
+
+  * Fix links to pools of xenial
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 01 Apr 2016 11:57:12 +0200
+
+lliurex-up (15.05.53) xenial; urgency=medium
+
+  * First release to xenial
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 09 Feb 2016 09:01:33 +0100
+
+lliurex-up (15.05.50) trusty; urgency=high
+
+  * Updated vimrc
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 08 Oct 2015 08:28:16 +0200
+
+lliurex-up (15.05.46) trusty; urgency=high
+
+  * Updated with other update
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 30 Sep 2015 08:57:33 +0200
+
+lliurex-up (15.05.45) trusty; urgency=high
+
+  * Updated with update-initramfs -u
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 30 Sep 2015 08:37:24 +0200
+
+lliurex-up (15.05.44) trusty; urgency=high
+
+  * Updated solution with more removing stuff 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 29 Sep 2015 16:30:26 +0200
+
+lliurex-up (15.05.43) trusty; urgency=high
+
+  * Updated removing solution
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 29 Sep 2015 09:44:23 +0200
+
+lliurex-up (15.05.42) trusty; urgency=high
+
+  * Update without modemmanager on clients and servers 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 28 Sep 2015 10:09:06 +0200
+
+lliurex-up (15.05.41) trusty; urgency=high
+
+  * Updated with more size 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 23 Sep 2015 20:06:35 +0200
+
+lliurex-up (15.05.40) trusty; urgency=high
+
+  * Updated with more less size 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 23 Sep 2015 18:23:50 +0200
+
+lliurex-up (15.05.39) trusty; urgency=high
+
+  * Updated without resize restrictions 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 21 Sep 2015 09:41:55 +0200
+
+lliurex-up (15.05.38) trusty; urgency=high
+
+  * Updated
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 21 Sep 2015 09:15:21 +0200
+
+lliurex-up (15.05.37) trusty; urgency=high
+
+  * Updated with more stuff for ThinClients
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 17 Sep 2015 14:17:46 +0200
+
+lliurex-up (15.05.36) trusty; urgency=high
+
+  * Updated lliurex-up with more parameters
+  * Updated to solve the problem with usbs 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 16 Sep 2015 15:25:31 +0200
+
+lliurex-up (15.05.34) trusty; urgency=high
+
+  * Updated syntax error
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Sep 2015 14:42:43 +0200
+
+lliurex-up (15.05.33) trusty; urgency=high
+
+  * Updated with session script check
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Sep 2015 14:14:57 +0200
+
+lliurex-up (15.05.32) trusty; urgency=high
+
+  * Updated with session script
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Sep 2015 13:59:25 +0200
+
+lliurex-up (15.05.31) trusty; urgency=high
+
+  * Updated with theme 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Sep 2015 13:06:34 +0200
+
+lliurex-up (15.05.30) trusty; urgency=high
+
+  * Updated gconf for if the flies
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Sep 2015 09:53:02 +0200
+
+lliurex-up (15.05.29) trusty; urgency=high
+
+  * Fixed lliurex-version on servers
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 20 Jul 2015 09:05:59 +0200
+
+lliurex-up (15.05.28) trusty; urgency=high
+
+  * Updated pime research 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 02 Jul 2015 11:35:28 +0200
+
+lliurex-up (15.05.26) trusty; urgency=high
+
+  * Updated final-d-i-installations
+  * Updated gnome-terminal on servers 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 18 Jun 2015 10:06:07 +0200
+
+lliurex-up (15.05.25) trusty; urgency=high
+
+  * Updated again 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 10 Jun 2015 14:34:39 +0200
+
+lliurex-up (15.05.24) trusty; urgency=high
+
+  * Updated mirror 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 10 Jun 2015 13:56:48 +0200
+
+lliurex-up (15.05.23) trusty; urgency=high
+
+  * Added final-d-i-installation 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 10 Jun 2015 12:54:52 +0200
+
+lliurex-up (15.05.22) trusty; urgency=high
+
+  * Updated translations
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 25 May 2015 11:26:10 +0200
+
+lliurex-up (15.05.21) trusty; urgency=high
+
+  * Updated desktop
+  * Updated zero-center banner
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 29 Apr 2015 11:59:43 +0200
+
+lliurex-up (15.05.20) trusty; urgency=high
+
+  * Updated desktop 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 27 Apr 2015 09:29:05 +0200
+
+lliurex-up (15.05.19) trusty; urgency=high
+
+  * Fixed translations
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 23 Apr 2015 10:36:23 +0200
+
+lliurex-up (15.05.18) trusty; urgency=high
+
+  * Fixed GVA test first
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 15 Apr 2015 14:32:31 +0200
+
+lliurex-up (15.05.17) trusty; urgency=high
+
+  * Updated scripts 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 09 Apr 2015 18:05:41 +0200
+
+lliurex-up (15.05.16) trusty; urgency=high
+
+  * Wake Up desktop on menu
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 09 Apr 2015 17:29:16 +0200
+
+lliurex-up (15.05.15) trusty; urgency=high
+
+  * Updated translation
+  * Fixed desktop 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 23 Feb 2015 13:29:52 +0100
+
+lliurex-up (15.05.14) trusty; urgency=high
+
+  * New lliurex-grub-custom fixes the problem 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 16 Feb 2015 16:07:33 +0100
+
+lliurex-up (15.05.13) trusty; urgency=high
+
+  * Updated version
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 10 Feb 2015 16:37:08 +0100
+
+lliurex-up (15.05.12) trusty; urgency=high
+
+  * Updated messages 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 06 Feb 2015 12:08:57 +0100
+
+lliurex-up (15.05.9) trusty; urgency=high
+
+  * Updated messages 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 02 Feb 2015 09:08:36 +0100
+
+lliurex-up (15.05.8) trusty; urgency=high
+
+  * Removed some apt-get -f install 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 02 Feb 2015 08:27:35 +0100
+
+lliurex-up (15.05.7) trusty; urgency=high
+
+  * Removed some apt-get -f install more
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 23 Jan 2015 09:28:02 +0100
+
+lliurex-up (15.05.6) trusty; urgency=high
+
+  * Updated with logic from precise 
+    - gfxterm on grub-cfg are setted to 0
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 23 Jan 2015 09:25:32 +0100
+
+lliurex-up (15.05.5) trusty; urgency=high
+
+  * Removed some apt-get update
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 20 Jan 2015 17:45:40 +0100
+
+lliurex-up (15.05.4) trusty; urgency=high
+
+  * Updated messages on cdd-version fixer 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 26 Dec 2014 09:42:45 +0100
+
+lliurex-up (15.05.3) trusty; urgency=high
+
+  * Added share cups on servers as in platinum
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 26 Dec 2014 08:22:38 +0100
+
+lliurex-up (15.05.2) trusty; urgency=high
+
+  * Changed sources.list modification on servers, now use trusty distro
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 30 Oct 2014 09:15:54 +0100
+
+lliurex-up (15.05.1) trusty; urgency=high
+
+  * Updated cddVersionFixer to solve the problem of lliurex edufication
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 26 Sep 2014 13:55:01 +0200
+
+lliurex-up (15.05.0) trusty; urgency=high
+
+  * Updated
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 17 Sep 2014 11:38:06 +0200
+
+lliurex-up (14.06.25) trusty; urgency=high
+
+  * Removing proxy configuration on netinstall 
+    out of the educational model. 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 11 Sep 2014 11:48:52 +0200
+
+lliurex-up (14.06.24) precise; urgency=high
+
+  * Updated lliure-up-client
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 03 Jul 2014 11:09:04 +0200
+
+lliurex-up (14.06.23) precise; urgency=high
+
+  * Updated to solve the upgrade for the people
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 01 Jul 2014 13:06:32 +0200
+
+lliurex-up (14.06.21) precise; urgency=high
+
+  *  Updated app
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 30 Jun 2014 09:32:24 +0200
+
+lliurex-up (14.06.20) precise; urgency=high
+
+  * Added glusterfs one shot when upgrading to 14.06	
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 24 Jun 2014 17:01:03 +0200
+
+lliurex-up (14.06.19) precise; urgency=high
+
+  * Updated debconf/priority to low
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 20 Jun 2014 09:36:55 +0200
+
+lliurex-up (14.06.17) precise; urgency=high
+
+  * Updated paths again 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 20 Jun 2014 09:04:18 +0200
+
+lliurex-up (14.06.16) precise; urgency=high
+
+  * Updated paths
+  * Updated question test result 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 20 Jun 2014 09:00:01 +0200
+
+lliurex-up (14.06.15) precise; urgency=high
+
+  * Updated with more questions 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 19 Jun 2014 17:09:46 +0200
+
+lliurex-up (14.06.14) precise; urgency=high
+
+  * Reestrucutre again to be more and more mindfullness
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 19 Jun 2014 17:06:28 +0200
+
+lliurex-up (14.06.13) precise; urgency=high
+
+  * Reestructure package to be more mindfullness
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 19 Jun 2014 16:53:37 +0200
+
+lliurex-up (14.06.12) precise; urgency=high
+
+  * Updated with sovietic solution:
+    - All questions with level fewer than "critical"
+      are ignored. 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 19 Jun 2014 16:37:03 +0200
+
+lliurex-up (14.06.11) precise; urgency=low
+
+  * Fixed bug 
+
+ -- Alfons Lloret Sananton <turix13@gmail.com>  Wed, 18 Jun 2014 12:44:48 +0200
+
+lliurex-up (14.06.10) precise; urgency=high
+
+  * Fixed banner creation
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 18 Jun 2014 12:43:46 +0200
+
+lliurex-up (14.06.09) precise; urgency=low
+
+  * Added new sources.list for client. 
+
+ -- Alfons Lloret Sananton <turix13@gmail.com>  Wed, 18 Jun 2014 12:32:10 +0200
+
+lliurex-up (14.06.08) precise; urgency=low
+
+  * Change preseed file
+
+ -- Alfons Lloret Sananton <turix13@gmail.com>  Wed, 18 Jun 2014 08:19:15 +0200
+
+lliurex-up (14.06.07) precise; urgency=low
+
+  * Rendering png banner from svg
+
+ -- Alfons Lloret Sananton <turix13@gmail.com>  Tue, 17 Jun 2014 10:27:44 +0200
+
+lliurex-up (14.06.06) precise; urgency=high
+
+  * Update codename new version
+  * Change sources.list for new version platinum
+  * Added new presed for smbconf 
+
+ -- Alfons Lloret Sananton <turix13@gmail.com>  Sun, 11 Jun 2014 11:23:45 +0200
+
+lliurex-up (14.06.05) precise; urgency=high
+
+  * Updated messages (14.06 upgrade)
+  * Updated logic to migration (14.06 upgrade)
+  * Removed cupsctl script control
+  * TODO: Change the steps needed to perform a correct upgrade 
+  * TODO: Test if the "change sources list" script works fine at 13.06 
+  * 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Sun, 08 Jun 2014 17:23:45 +0200
+
+lliurex-up (14.06.04) precise; urgency=high
+
+  * support now desktops on net installs
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 26 May 2014 11:33:10 +0200
+
+lliurex-up (14.06.03) precise; urgency=high
+
+  * Updated final-d-i-installation script
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 12 May 2014 14:47:59 +0200
+
+lliurex-up (14.06.01) precise; urgency=high
+
+  * Fixed zero-center banner
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 12 May 2014 11:38:39 +0200
+
+lliurex-up (13.06.04.29) precise; urgency=high
+
+  * Added zero-center banner
+  * Added gksu dependency
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 12 May 2014 11:37:36 +0200
+
+lliurex-up (13.06.04.28) precise; urgency=high
+
+  * Update messages
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 12 Feb 2014 14:01:31 +0100
+
+lliurex-up (13.06.04.27) precise; urgency=high
+
+  * Update lliurex-up removing messages 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 11 Feb 2014 12:11:18 +0100
+
+lliurex-up (13.06.04.26) precise; urgency=high
+
+  * Removing ubiquity and friends
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 06 Feb 2014 12:01:00 +0100
+
+lliurex-up (13.06.04.24) precise; urgency=high
+
+  * Updated with ltsp support 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 04 Feb 2014 12:44:12 +0100
+
+lliurex-up (13.06.04.22) precise; urgency=high
+
+  * Updated with new cdd-version for Pime and GVA 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 23 Jan 2014 08:28:07 +0100
+
+lliurex-up (13.06.04.21) precise; urgency=high
+
+  * Updated
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 13 Dec 2013 09:23:04 +0100
+
+lliurex-up (13.06.04.20) precise; urgency=high
+
+  * Updated size (Thanks to @sasogu) 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 04 Dec 2013 10:22:11 +0100
+
+lliurex-up (13.06.04.18) precise; urgency=high
+
+  * Updated text message 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 25 Nov 2013 10:35:37 +0100
+
+lliurex-up (13.06.04.17) precise; urgency=high
+
+  * Updated with apt-get check check.
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 21 Nov 2013 11:48:00 +0100
+
+lliurex-up (13.06.04.16) precise; urgency=high
+
+  * Updated wit autoremove 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Nov 2013 16:00:16 +0100
+
+lliurex-up (13.06.04.15) precise; urgency=high
+
+  * Added autoremove  
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Nov 2013 12:34:58 +0100
+
+lliurex-up (13.06.04.14) precise; urgency=high
+
+  * Removed all packages in serverization of clients
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 05 Nov 2013 14:19:26 +0100
+
+lliurex-up (13.06.04.13) precise; urgency=high
+
+  * Updated lliurex-up with --force-yes
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 05 Nov 2013 13:54:59 +0100
+
+lliurex-up (13.06.04.12) precise; urgency=high
+
+  * Updated lliurex-up-client to remove flashplugin 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 04 Nov 2013 13:39:07 +0100
+
+lliurex-up (13.06.04.11) precise; urgency=high
+
+  * Removed flashplugin 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 31 Oct 2013 12:47:24 +0100
+
+lliurex-up (13.06.04.10) precise; urgency=high
+
+  * Updated final-d-i-installation 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 31 Oct 2013 10:30:14 +0100
+
+lliurex-up (13.06.04.09) precise; urgency=high
+
+  * Updated final-d-i-installation 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 30 Oct 2013 13:16:57 +0100
+
+lliurex-up (13.06.04.08) precise; urgency=high
+
+  * Updated lliurex-mirror-removal 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 29 Oct 2013 12:00:38 +0100
+
+lliurex-up (13.06.04.07) precise; urgency=high
+
+  * Updated lliurex-mirror-removal for clients
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 29 Oct 2013 10:18:58 +0100
+
+lliurex-up (13.06.04.06) precise; urgency=high
+
+  * Updated for the sai
+  * Now the --sai option can be launched from the CLI
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 15 Oct 2013 07:56:10 +0200
+
+lliurex-up (13.06.04.05) precise; urgency=high
+
+  * Added binary to solve the possible future.
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 30 Sep 2013 11:05:21 +0200
+
+lliurex-up (13.06.04.04) precise; urgency=low
+
+  * Move the logic to a LliureX Upgrade script
+    to be executed each time. 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 17 Sep 2013 20:13:21 +0200
+
+lliurex-up (13.06.04.03) precise; urgency=high
+
+  * Updated with a test if the file exists 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 17 Sep 2013 14:17:23 +0200
+
+lliurex-up (13.06.04.02) precise; urgency=high
+
+  * Cupsctl is invoked
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 17 Sep 2013 13:03:05 +0200
+
+lliurex-up (13.06.04.01) precise; urgency=high
+
+  * Updated new path 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 17 Sep 2013 11:28:54 +0200
+
+lliurex-up (13.06.04) precise; urgency=low
+
+  * Updated with a new binary for clients, the flash
+    downloader from server. Is needed since this version
+    of lliurex-up-client that in the server can be be founded
+    the flashplugin.
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 17 Sep 2013 11:24:13 +0200
+
+lliurex-up (13.06.03.05) precise; urgency=high
+
+  * Updated lightdm
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 10 Sep 2013 12:47:38 +0200
+
+lliurex-up (13.06.03.04) precise; urgency=high
+
+  * Updated final - installation
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 18 Jul 2013 13:28:31 +0200
+
+lliurex-up (13.06.03.03) precise; urgency=low
+
+  * Updated client actions on final-d-i-installation
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 18 Jul 2013 12:26:34 +0200
+
+lliurex-up (13.06.03.02) precise; urgency=high
+
+  * Updated client actions
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 18 Jul 2013 12:14:33 +0200
+
+lliurex-up (13.06.03.01) precise; urgency=low
+
+  * Added lliurex-ultimate-rescue binary
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 17 Jul 2013 10:33:49 +0200
+
+lliurex-up (13.06.02.39) precise; urgency=low
+
+  * Updated final-d-i-installation with a simple reboot
+    only if arguments are "--force" 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 16 Jul 2013 16:38:24 +0200
+
+lliurex-up (13.06.02.38) precise; urgency=high
+
+  * Updated logic at final-d-i-installatio
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 16 Jul 2013 09:17:33 +0200
+
+lliurex-up (13.06.02.37) precise; urgency=high
+
+  * Fixed label
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 11 Jul 2013 09:18:20 +0200
+
+lliurex-up (13.06.02.36) precise; urgency=high
+
+  * Added lliurex-d-i-final operations
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 09 Jul 2013 13:04:59 +0200
+
+lliurex-up (13.06.02.35) precise; urgency=low
+
+  * Fixed duplicates entries at lliurex-up 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 09 Jul 2013 09:13:59 +0200
+
+lliurex-up (13.06.02.34) precise; urgency=high
+
+  * Fixed lliurex-mirror test on server 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 03 Jul 2013 09:38:07 +0200
+
+lliurex-up (13.06.02.33) precise; urgency=high
+
+  * Added priority
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 27 Jun 2013 10:56:05 +0200
+
+lliurex-up (13.06.02.32) precise; urgency=low
+
+  * Fixed adm in app file 
+
+ -- Jaime Munyoz Fayos <munyoz_jaifay@gva.es>  Thu, 27 Jun 2013 09:44:33 +0200
+
+lliurex-up (13.06.02.31) precise; urgency=low
+
+  * Updated with gksu 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 25 Jun 2013 16:10:06 +0200
+
+lliurex-up (13.06.02.30) precise; urgency=low
+
+  * Updated messages
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 06 Jun 2013 10:12:28 +0200
+
+lliurex-up (13.06.02.29) precise; urgency=low
+
+  * Updated messages
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 31 May 2013 14:45:23 +0200
+
+lliurex-up (13.06.02.28) precise; urgency=low
+
+  * Added the new Flavour XFCE4 desktop 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Sat, 18 May 2013 12:37:25 +0200
+
+lliurex-up (13.06.02.27) precise; urgency=low
+
+  * Adapted desktop to the new Config Panel
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 15 May 2013 18:39:22 +0200
+
+lliurex-up (13.06.02.25) precise; urgency=low
+
+  * Added DPKG::Options empty for now 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Tue, 30 Apr 2013 14:14:30 +0200
+
+lliurex-up (13.06.02.24) precise; urgency=low
+
+  * Fixed dependence libparse-debianchangelog-perl
+  * Recalculated size of package * 1024 
+
+ -- Jaime Munyoz Fayos <munyoz_jaifay@gva.es>  Thu, 25 Apr 2013 12:16:43 +0200
+
+lliurex-up (13.06.02.23) precise; urgency=low
+
+  * Fixed message at lliurex-upgrade
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Wed, 13 Feb 2013 09:12:28 +0100
+
+lliurex-up (13.06.02.21) precise; urgency=low
+
+  * Fixed the kernel permissions on 
+    - 3.* version instead 2.6.*
+  * Cleaning the code
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 08 Feb 2013 07:04:26 +0100
+
+lliurex-up (13.06.02.20) precise; urgency=low
+
+  * Added more capabilities to the command line
+  * N4D plugin is now more verbose:
+    * info -> Shows the upgrade steps
+    * help -> Shows the lliurex-upgrade help
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Fri, 08 Feb 2013 06:59:41 +0100
+
+lliurex-up (13.06.02.19) precise; urgency=low
+
+  * Dummy upgrade 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 20:28:01 +0100
+
+lliurex-up (13.06.02.18) precise; urgency=low
+
+  * Fixed version
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 20:26:32 +0100
+
+lliurex-up (13.06.02.17ubuntu1) precise; urgency=low
+
+  * Fixed postinstall message 
+  * Restart the n4d service is a great power
+    but great power comes with a great responsability 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 20:21:36 +0100
+
+lliurex-up (13.06.02.17) precise; urgency=low
+
+  * Fixed postinstall 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 13:07:47 +0100
+
+lliurex-up (13.06.02.16) precise; urgency=low
+
+  * Exit without error
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 11:31:32 +0100
+
+lliurex-up (13.06.02.15) precise; urgency=low
+
+  * Fixed lliurex-up to no depends llxcfg-acl 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 11:15:55 +0100
+
+lliurex-up (13.06.02.14) precise; urgency=low
+
+  * Now lliurex-mirror-non-gtk update in the new command
+    at server script 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 07 Feb 2013 08:22:18 +0100
+
+lliurex-up (13.06.02.13) precise; urgency=low
+
+  * Fixed link. Now it works! 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 04 Feb 2013 12:29:19 +0100
+
+lliurex-up (13.06.02.12) precise; urgency=low
+
+  * Fixed install files 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 04 Feb 2013 12:23:11 +0100
+
+lliurex-up (13.06.02.11) precise; urgency=low
+
+  * Fixed postinstall
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 04 Feb 2013 12:20:07 +0100
+
+lliurex-up (13.06.02.10) precise; urgency=low
+
+  * Added n4d-plugin for lliurex-up
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Mon, 04 Feb 2013 11:08:53 +0100
+
+lliurex-up (13.06.02.9) precise; urgency=low
+
+  * Testing if user is root
+
+ -- Miguel Garcia Gomez <garcia_miggom@gva.es>  Fri, 07 Dec 2012 10:04:03 +0100
+
+lliurex-up (13.06.02.8) precise; urgency=low
+
+  * Updated dependences
+  * Added classroom model
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 13:12:48 +0100
+
+lliurex-up (13.06.02.7) precise; urgency=low
+
+  * Updated dependences
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 12:50:28 +0100
+
+lliurex-up (13.06.02.6) precise; urgency=low
+
+  * Fixed python dependences
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 12:09:35 +0100
+
+lliurex-up (13.06.02.5) precise; urgency=low
+
+  * Fixed dependences
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 12:09:01 +0100
+
+lliurex-up (13.06.02.3) precise; urgency=low
+
+  * Fixed dependences
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 09:52:04 +0100
+
+lliurex-up (13.06.02.2) precise; urgency=low
+
+  * Fixed LliureX Up for precise
+  * Fixed package 
+
+ -- Angel Berlanas Vicente <angel.berlanas@gmail.com>  Thu, 15 Nov 2012 08:22:23 +0100
+
+lliurex-up (13.06.01) unstable; urgency=low
+
+  * LliureX Up for 11.09
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 28 Sep 2012 12:36:53 +0200
+
+lliurex-up (2.0.34) unstable; urgency=low
+
+  * Guia Edition: Fixed mirror
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 18 Sep 2012 10:25:26 +0200
+
+lliurex-up (2.0.32) unstable; urgency=low
+
+  * Fixed discover order on infantil
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 17 Sep 2012 12:05:50 +0200
+
+lliurex-up (2.0.31) unstable; urgency=low
+
+  * Emergency upgrade
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 14 Sep 2012 14:11:59 +0200
+
+lliurex-up (2.0.30) unstable; urgency=low
+
+  * "No hay suficientes apt-get -f install"...edition 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 03 Sep 2012 14:11:20 +0200
+
+lliurex-up (2.0.29) unstable; urgency=low
+
+  * Added 666 as evil priority
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 31 Aug 2012 12:48:40 +0200
+
+lliurex-up (2.0.28) unstable; urgency=low
+
+  * Removed old lsb-release
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 31 Aug 2012 12:45:27 +0200
+
+lliurex-up (2.0.27) unstable; urgency=low
+
+  * Removed debug info
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 30 Aug 2012 13:04:52 +0200
+
+lliurex-up (2.0.26) unstable; urgency=low
+
+  * Fixed /boot/ permissions on kernels
+
+ -- Jaime Munyoz Fayos <munyoz_jaifay@gva.es>  Wed, 18 Jul 2012 10:04:05 +0200
+
+lliurex-up (2.0.25) unstable; urgency=low
+
+  * Fixed
+
+ -- Jaime Munyoz Fayos <munyoz_jaifay@gva.es>  Wed, 18 Jul 2012 10:02:48 +0200
+
+lliurex-up (2.0.24) unstable; urgency=low
+
+  * Fixing Pime Flavour 
+
+ -- Jaime Munyoz Fayos <munyoz_jaifay@gva.es>  Wed, 18 Jul 2012 09:43:59 +0200
+
+lliurex-up (2.0.23) unstable; urgency=low
+
+  * Fixed lliurex-upgrade for server, now if the 12.06 mirror is ready 
+    and not continue upgrading from 11.09.
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 10 Jul 2012 07:54:51 +0200
+
+lliurex-up (2.0.22) unstable; urgency=low
+
+  * Now GVA is a distro and it seems like the others.
+  * Added methods to research gva and fix them.
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 05 Jul 2012 09:24:08 +0200
+
+lliurex-up (2.0.21) unstable; urgency=low
+
+  * Fixed if syntax on "desktop research problem"
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 05 Jul 2012 09:10:14 +0200
+
+lliurex-up (2.0.19) unstable; urgency=low
+
+  * Added extended tests to solve the "desktop research problem"
+    Now :
+       gnome && desktop to decide that this is Classical-Desktop
+       lxde  && desktop to decide that this is a Lite-Desktop
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 04 Jul 2012 09:51:32 +0200
+
+lliurex-up (2.0.18) unstable; urgency=low
+
+  * Fixed lxde test version
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 04 Jul 2012 08:13:54 +0200
+
+lliurex-up (2.0.17) lucid; urgency=low
+
+  * If no flavour is present, desktop is chosen
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 04 Jul 2012 08:13:05 +0200
+
+lliurex-up (2.0.16) unstable; urgency=low
+
+  * None
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 03 Jul 2012 08:10:55 +0200
+
+lliurex-up (2.0.15) unstable; urgency=low
+
+  * Ready for update
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 26 Jun 2012 14:11:41 +0200
+
+lliurex-up (2.0.14) unstable; urgency=low
+
+  * Last week edition
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 25 Jun 2012 09:56:40 +0200
+
+lliurex-up (2.0.13) lucid; urgency=low
+
+  * Ready for launched? Not yet. 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 25 Jun 2012 09:56:01 +0200
+
+lliurex-up (2.0.11) unstable; urgency=low
+
+  * Fixed threading function
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 20 Jun 2012 12:12:53 +0200
+
+lliurex-up (2.0.10) lucid; urgency=low
+
+  * Added binary to resolve the lliurex-cssh dependence 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 21 Jun 2012 09:24:51 +0200
+
+lliurex-up (2.0.8) unstable; urgency=low
+
+  * Trying to fix message dialogs
+
+ -- Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>  Thu, 07 Jun 2012 10:26:02 +0200
+
+lliurex-up (2.0.7) unstable; urgency=low
+
+  * Added dependence on server package
+
+ -- Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>  Mon, 04 Jun 2012 14:13:22 +0200
+
+lliurex-up (2.0.6) lucid; urgency=low
+
+  * fix acl on /net/share/teacher
+
+ -- Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>  Mon, 04 Jun 2012 13:58:54 +0200
+
+lliurex-up (2.0.5) unstable; urgency=low
+
+  * Now if you are at 12.06 not show the migrate-step
+    dialog
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 31 May 2012 09:03:47 +0200
+
+lliurex-up (2.0.4) unstable; urgency=low
+
+  * Changing Old DNS configuration:
+     - 194.179.1.100
+     - 194.179.1.101
+    are now changed to:
+     - 172.27.111.5
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 30 May 2012 09:14:08 +0200
+
+lliurex-up (2.0.3) lucid; urgency=low
+
+  * Fixed
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 30 May 2012 09:13:36 +0200
+
+lliurex-up (2.0.2) unstable; urgency=low
+
+  * Fixed translations
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 24 May 2012 09:53:33 +0200
+
+lliurex-up (2.0.2) unstable; urgency=low
+
+  * Fixed messages
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 16 May 2012 13:07:06 +0200
+
+lliurex-up (2.0.1) unstable; urgency=low
+
+  * Fixed
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 16 May 2012 10:08:00 +0200
+
+lliurex-up (2.0.0) unstable; urgency=low
+
+  * Now is possible migrate to nemo
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 28 Mar 2012 11:28:18 +0200
+
+lliurex-up (1.5.3) lucid; urgency=low
+
+  * Updated version 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 28 Mar 2012 11:27:35 +0200
+
+lliurex-up (1.5.2) unstable; urgency=low
+
+  * Fixed gui parsing
+  * - i
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 28 Mar 2012 11:27:34 +0200
+
+lliurex-up (1.5.1) unstable; urgency=low
+
+  * Added apt-get update code when checking for previous updates
+  * Added dialog box to indicate the system is up to date 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 12 Mar 2012 10:47:28 +0100
+
+lliurex-up (1.5.0) unstable; urgency=low
+
+  * Added new interface
+
+ -- Hector Garcia Huerta <lliurex_devel1@edu.gva.es>  Fri, 06 Mar 2012 09:24:51 +0100
+
+lliurex-up (1.0.0) unstable; urgency=low
+
+  * Diversion of update-manager...
+    Domination world begins now
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 02 Dec 2011 11:41:06 +0100
+
+lliurex-up (0.9.09) unstable; urgency=low
+
+  * Removed internal error for apt-sources.list
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 02 Dec 2011 11:36:11 +0100
+
+lliurex-up (0.9.08) unstable; urgency=low
+
+  * Removed gconf purgation
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 16 Nov 2011 10:14:54 +0100
+
+lliurex-up (0.9.07) unstable; urgency=low
+
+  * Removed lliurex-up 11.09 comprobation in 
+    order to be instaured in all LliureX to 
+    be the "Upgrade Solution".
+  * Added some scripts to remove files under
+    /etc/ directory.
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 16 Nov 2011 09:19:07 +0100
+
+lliurex-up (0.9.06) unstable; urgency=low
+
+  * Removed references to pyinotify
+
+ -- Jose Carlos Garcia <garcia_josmon@gva.es>  Tue, 18 Oct 2011 09:50:10 +0200
+
+lliurex-up (0.9.05) unstable; urgency=low
+
+  * Removed sun-java6-bin on fixes on server
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 14 Oct 2011 13:40:08 +0200
+
+lliurex-up (0.9.04) unstable; urgency=low
+
+  * Fixed apt-get update
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Fri, 07 Oct 2011 11:54:29 +0200
+
+lliurex-up (0.9.03) unstable; urgency=low
+
+  * Fixed translation
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Thu, 29 Sep 2011 14:54:46 +0200
+
+lliurex-up (0.9.01) unstable; urgency=low
+
+  * Added sources.list to internet
+  * Fixed version to the new and mathematics format
+  * Fixed scripts:
+    - Apply new gconf values
+    - Fixed syntax
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 27 Sep 2011 08:30:30 +0200
+
+lliurex-up (0.9) unstable; urgency=low
+
+  * Fixed post-upgrade actions
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Wed, 07 Sep 2011 08:50:01 +0200
+
+lliurex-up (0.8) unstable; urgency=low
+
+  * Fixed post-upgrade actions on server
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 06 Sep 2011 13:54:15 +0200
+
+lliurex-up (0.7) unstable; urgency=low
+
+  * Fixed certs
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 06 Sep 2011 12:15:39 +0200
+
+lliurex-up (0.6) unstable; urgency=low
+
+  * Fixed dist-upgrade action
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 06 Sep 2011 10:21:11 +0200
+
+lliurex-up (0.5) unstable; urgency=low
+
+  * Removed RSA-PRIVATE-KEY in all distributions 
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Tue, 06 Sep 2011 10:19:32 +0200
+
+lliurex-up (0.4) unstable; urgency=low
+
+  * Removed RSA-PRIVATE-KEY on /etc/lliurex-secrets/certs/apache.crt
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 05 Sep 2011 13:55:02 +0200
+
+lliurex-up (0.3) unstable; urgency=low
+
+  * Added logic
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 05 Sep 2011 13:47:45 +0200
+
+lliurex-up (0.2) unstable; urgency=low
+
+  * Added logic  in more functions
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 05 Sep 2011 11:02:57 +0200
+
+lliurex-up (0.1) unstable; urgency=low
+
+  * Initial Release
+
+ -- Angel Berlanas Vicente <lliurex_devel2@edu.gva.es>  Mon, 09 May 2011 09:22:33 +0200
