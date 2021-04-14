@@ -1,3 +1,9 @@
+lliurex-up (21.04.31) focal; urgency=medium
+
+  * Fixed n4d mirror call functions responses
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 14 Apr 2021 09:05:55 +0200
+
 lliurex-up (21.04.30) focal; urgency=medium
 
   * Fixed terminal commands
