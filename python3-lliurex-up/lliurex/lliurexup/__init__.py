@@ -522,7 +522,7 @@ class LliurexUpCore(object):
 		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
 		if self.haveLliurexMirror and (is_server):
 			result = self.n4d.is_alive('','MirrorManager')
-			return result['return']
+			return result['return']['status']
 		return False
 
 	#def lliurexMirrorIsRunning	
@@ -538,7 +538,7 @@ class LliurexUpCore(object):
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_alive('','MirrorManager')
-				return {'ismirrorrunning':result['return'],'exception':False}
+				return {'ismirrorrunning':result['return']['status'],'exception':False}
 			
 			except Exception as e:
 				return {'ismirrorrunning':None,'exception':str(e)}	
@@ -558,7 +558,10 @@ class LliurexUpCore(object):
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				try:
 					result=client.is_mirror_available('','MirrorManager')
-					return {'ismirroravailable':True,'exception':False}
+					if result['status']==0:
+						return {'ismirroravailable':True,'exception':False}
+					else:
+						return {'ismirroravailable':False,'exception':False}
 				except :
 					return {'ismirroravailable':False,'exception':False}
 				

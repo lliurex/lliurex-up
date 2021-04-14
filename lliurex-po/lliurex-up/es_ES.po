@@ -184,7 +184,7 @@ msgstr "Tu mirror no esta actualizado. ¿Quieres actualizarlo?"
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:384
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:383
 msgid "Updating mirror: "
-msgstr "Actualizando mirror:"
+msgstr "Actualizando mirror: "
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:396
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:394
