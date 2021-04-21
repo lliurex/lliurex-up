@@ -363,7 +363,7 @@ class MainWindow:
 							print("  [Lliurex-Up]: Checking Final metapackage")
 							self.checkFinalFlavourToInstall_t.start()
 							self.checkFinalFlavourToInstall_t.launched=True
-							self.show_number_process_executing(4,_("Checking metapackage.."))
+							self.show_number_process_executing(4,_("Checking metapackage..."))
 										  			
 						if self.checkFinalFlavourToInstall_t.done:				  
 							self.core.packagesBox.update_state_icon()
