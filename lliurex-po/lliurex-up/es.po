@@ -173,8 +173,8 @@ msgstr "Lliurex-Up se ha actualizado y se reiniciará en %s segundos..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:236
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:235
-msgid "Checking if mirror exist and there is updated"
-msgstr "Comprobando si existe mirror y esta actualizado"
+msgid "Checking if mirror exist and there is updated..."
+msgstr "Comprobando si existe mirror y esta actualizado..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:246
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:245

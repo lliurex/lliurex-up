@@ -383,7 +383,7 @@ class LoadBox(Gtk.VBox):
 		
 		msg_value=format(completed,'.0f')
 		
-		msg_percentage=_("Updating mirror: "+msg_value+"%")
+		msg_percentage=_("Updating mirror: ")+msg_value+"%"
 		self.load_message_label.set_markup(msg_percentage)
 		
 		
