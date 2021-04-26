@@ -1,3 +1,9 @@
+lliurex-up (21.04.33) focal; urgency=medium
+
+  * Fixed translations files
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 26 Apr 2021 08:13:39 +0200
+
 lliurex-up (21.04.32) focal; urgency=medium
 
   * Updated valencian translations
