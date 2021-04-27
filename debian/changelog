@@ -1,3 +1,10 @@
+lliurex-up (21.04.34) focal; urgency=medium
+
+  * Fixed function to check if mirror is updated
+  * Added function in lliurex-upgrade to check mirror update progress
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 27 Apr 2021 18:29:25 +0200
+
 lliurex-up (21.04.33) focal; urgency=medium
 
   * Fixed translations files
