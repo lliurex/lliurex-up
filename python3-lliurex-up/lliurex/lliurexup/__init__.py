@@ -505,7 +505,6 @@ class LliurexUpCore(object):
 		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
 		if self.haveLliurexMirror and (is_server):
 			result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
-			print(result)
 			if result['status_code']==0:
 				if result["return"]["action"]=="update":
 					return {"action":"update"}
