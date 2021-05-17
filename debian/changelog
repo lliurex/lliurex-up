@@ -1,3 +1,9 @@
+lliurex-up (21.04.35) focal; urgency=medium
+
+  * Fixed por files
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 May 2021 08:10:56 +0200
+
 lliurex-up (21.04.34) focal; urgency=medium
 
   * Fixed function to check if mirror is updated
