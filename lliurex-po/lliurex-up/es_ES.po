@@ -312,8 +312,8 @@ msgid "Downloading changelog..."
 msgstr "Descargando control de cambios..."
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:183
-msgid "LliureX-Up is being executed"
-msgstr "LliureX-Up está siendo ejecutado"
+msgid "Lliurex-Up is being executed"
+msgstr "Lliurex-Up está siendo ejecutado"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:194
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:199
