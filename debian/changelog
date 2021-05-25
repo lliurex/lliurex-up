@@ -1,6 +1,12 @@
+lliurex-up (21.04.36) focal; urgency=medium
+
+  * Fixed zero app file
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 25 May 2021 12:07:04 +0200
+
 lliurex-up (21.04.35) focal; urgency=medium
 
-  * Fixed por files
+  * Fixed po files
   
  -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 17 May 2021 08:10:56 +0200
 
