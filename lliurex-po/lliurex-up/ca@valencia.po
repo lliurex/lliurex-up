@@ -69,7 +69,7 @@ msgstr "S'està preparant el sistema per a l'actualització..."
 
 #: ../lliurex-up/usr/share/lliurex-up/MainWindow.py:352
 #: ../lliurex-up/usr/share/lliurex-up/MainWindow.py:351
-msgid "Downloading and installing packages.."
+msgid "Downloading and installing packages..."
 msgstr "S'estan descarregant i instal·lant paquets..."
 
 #: ../lliurex-up/usr/share/lliurex-up/MainWindow.py:359
