@@ -1,3 +1,10 @@
+lliurex-up (21.04.37) focal; urgency=medium
+
+  * Clean some code
+  * Improved feedback in Preferences panel
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 31 May 2021 10:24:37 +0200
+
 lliurex-up (21.04.36) focal; urgency=medium
 
   * Fixed zero app file
