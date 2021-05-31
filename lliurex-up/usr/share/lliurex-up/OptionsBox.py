@@ -84,6 +84,7 @@ class OptionsBox(Gtk.VBox):
 		self.pkgs_btn.set_name("BORDERLESS_BUTTON")
 		self.terminal_btn.set_name("BORDERLESS_BUTTON")
 		self.preferences_btn.set_name("BORDERLESS_BUTTON")
+		self.help_btn.set_name("BORDERLESS_BUTTON")
 		self.menu_box.set_name("MENU_BOX")
 
 	#def set-css_info
@@ -93,8 +94,8 @@ class OptionsBox(Gtk.VBox):
 		self.info_btn.connect("clicked",self.change_panel,"information")
 		self.pkgs_btn.connect("clicked",self.change_panel,"packages")
 		self.terminal_btn.connect("clicked",self.change_panel,"terminal")		
-		self.help_btn.set_name("BORDERLESS_BUTTON")
 		self.preferences_btn.connect("clicked",self.change_panel,"preferences")
+		self.help_btn.connect("clicked",self.help_clicked)
 
 	#def connect_signals
 	def init_threads(self):
@@ -107,6 +108,8 @@ class OptionsBox(Gtk.VBox):
 
 	def change_panel(self,widget,panel):
 
+		if panel=="preferences":
+			self.preferencesBox.confirmation_box.hide()
 		self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
 		self.stack.set_visible_child_name(panel)	
 		self.stack.set_transition_duration(1000)
@@ -173,11 +176,10 @@ class OptionsBox(Gtk.VBox):
 
 		if 'valencia' in app_lang:
 			exec_lang="LANG=ca_ES.UTF-8@valencia"
-			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex-Up_V2.'
+			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex+Up_V2.'
 		else:
 			exec_lang="LANG=es_ES.UTF-8"
-			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex-Up_V2'
-
+			cmd=exec_lang +' xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex+Up_V2'
 		if not run_pkexec:
 			self.fcmd="su -c '%s' $USER" %cmd
 		else:

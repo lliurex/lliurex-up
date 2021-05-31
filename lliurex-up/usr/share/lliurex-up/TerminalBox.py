@@ -60,16 +60,6 @@ class TerminalBox(Gtk.VBox):
 				
 	#def __init__
 
-	def set_css_info(self):
-		
-		self.style_provider=Gtk.CssProvider()
-
-		f=Gio.File.new_for_path(self.css_file)
-		self.style_provider.load_from_file(f)
-
-		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),self.style_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-			
-	#def set-css_info
 	
 	def manage_vterminal(self,enabled_input,sensitive):
 
