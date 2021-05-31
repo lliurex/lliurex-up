@@ -194,7 +194,6 @@ class OptionsBox(Gtk.VBox):
 
 	def open_help(self):
 
-		print(self.fcmd)
 		os.system(self.fcmd)
 
 	#def open_help	
