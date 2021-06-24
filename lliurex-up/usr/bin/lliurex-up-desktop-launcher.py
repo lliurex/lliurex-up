@@ -26,11 +26,22 @@ class LlxUpCheckRoot():
 		user=os.environ["USER"]
 		group_found=False
 		
-		for g in grp.getgrall():
-			if(g.gr_name in LlxUpCheckRoot.GROUPS):
-				for member in g.gr_mem:
-					if(member==user):
-						group_found=True
+		#old groups method
+		#for g in grp.getgrall():
+		#	if(g.gr_name in LlxUpCheckRoot.GROUPS):
+		#		for member in g.gr_mem:
+		#			if(member==user):
+		#				group_found=True
+
+		gid = pwd.getpwnam(user).pw_gid
+		groups_gids = os.getgrouplist(user, gid)
+		user_groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
+
+		for g in user_groups:
+			if (g in LlxUpCheckRoot.GROUPS):
+				group_found=True
+
+
 						
 		if group_found:		
 
