@@ -12,6 +12,7 @@ import subprocess
 import threading
 import sys
 import grp
+import pwd
 import re
 import time
 gi.require_version('Notify', '0.7')
