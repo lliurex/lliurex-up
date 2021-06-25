@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import grp
+import pwd
 import lliurex.screensaver
 import gettext
 gettext.textdomain('lliurex-up')
