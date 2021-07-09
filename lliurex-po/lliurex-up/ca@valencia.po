@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-31 10:03+0200\n"
-"PO-Revision-Date: 2021-05-31 10:07+0200\n"
+"PO-Revision-Date: 2021-07-09 10:09+0200\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -309,7 +309,7 @@ msgstr "Nombre de paquets: "
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:201
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:203
 msgid "Version to update: "
-msgstr "Versió per a actualitzar: "
+msgstr "Versió candidata: "
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:236
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:238

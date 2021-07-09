@@ -581,6 +581,9 @@
                                     <property name="margin_top">10</property>
                                     <property name="margin_bottom">10</property>
                                     <property name="justify">center</property>
+                                    <attributes>
+                                      <attribute name="font-desc" value="Noto Sans 11"/>
+                                    </attributes>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -725,6 +728,7 @@
                       <object class="GtkLabel" id="info_btn_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">5</property>
                         <property name="label" translatable="yes">Information</property>
                       </object>
                       <packing>
@@ -771,6 +775,7 @@
                       <object class="GtkLabel" id="pkg_btn_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">5</property>
                         <property name="label" translatable="yes">Packages list</property>
                       </object>
                       <packing>
@@ -817,6 +822,7 @@
                       <object class="GtkLabel" id="terminal_bn_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">5</property>
                         <property name="label" translatable="yes">Update process</property>
                       </object>
                       <packing>
@@ -863,6 +869,7 @@
                       <object class="GtkLabel" id="preferences_btn_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">5</property>
                         <property name="label" translatable="yes">Preferences</property>
                       </object>
                       <packing>
@@ -909,6 +916,7 @@
                       <object class="GtkLabel" id="help_btn_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">5</property>
                         <property name="label" translatable="yes">Help</property>
                       </object>
                       <packing>
