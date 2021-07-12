@@ -105,7 +105,7 @@ class MainWindow:
 
 		if code!=2:
 			dialog_type=Gtk.MessageType.INFO
-			dialog_buttons=Gtk.ButtonsType.CANCEL
+			dialog_buttons=Gtk.ButtonsType.OK
 		else:
 			dialog_type=Gtk.MessageType.WARNING
 			dialog_buttons=Gtk.ButtonsType.YES_NO	
