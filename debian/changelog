@@ -1,3 +1,10 @@
+lliurex-up (21.04.40) focal; urgency=medium
+
+  * Show information about versions when system is updated
+  * New banner
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 12 Jul 2021 08:43:57 +0200
+
 lliurex-up (21.04.39) focal; urgency=medium
 
   * New discover function groups with CDC validation.
