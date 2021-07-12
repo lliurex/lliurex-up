@@ -455,6 +455,7 @@ class LoadBox(Gtk.VBox):
 										self.core.mainWindow.show_options(True,True,msg_gather)
 										return False
 								else:
+									self.core.informationBox.get_update_summary(True)
 									msg_gather=_("Your system is update")
 									log_msg="System update. Nothing to do"
 									self.core.llxUpConnect.log(log_msg)

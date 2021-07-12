@@ -73,13 +73,18 @@ class InformationBox(Gtk.VBox):
 
 		self.main_box.show_all()
 		if hide:
-			self.info_grid.hide()
+			#self.info_grid.hide()
 			self.warning_box.show()
 			if error:
+				#self.info_grid.hide()
 				self.warning_box.set_name("ERROR_BOX")
 				self.warning_img_error.show()
 				self.warning_img_ok.hide()
 			else:
+				self.number_packages_label.hide()
+				self.number_packages_info_label.hide()
+				self.size_update_label.hide()
+				self.size_update_info_label.hide()
 				self.warning_box.set_name("INFORMATION_BOX")
 				self.warning_img_error.hide()
 				self.warning_img_ok.show()
@@ -95,7 +100,7 @@ class InformationBox(Gtk.VBox):
 
 	#def load_panel
 
-	def get_update_summary(self):
+	def get_update_summary(self,updated=False):
 
 		if self.core.loadBox.version_update["installed"]==None:
 			self.current_version_info_label.set_text(_("Not available"))
@@ -122,10 +127,11 @@ class InformationBox(Gtk.VBox):
 		else:
 			self.version_update_info_label.set_text(self.core.loadBox.version_update["candidate"])
 
-		self.number_pkg=len(self.core.loadBox.packages)
-		self.number_packages_info_label.set_text(str(self.number_pkg)+ " ("  +str(self.core.packagesBox.newpackages)+ _(" new)"))
+		if not updated:
+			self.number_pkg=len(self.core.loadBox.packages)
+			self.number_packages_info_label.set_text(str(self.number_pkg)+ " ("  +str(self.core.packagesBox.newpackages)+ _(" new)"))
 
-		self.size_update_info_label.set_text(self.core.loadBox.size_update)
+			self.size_update_info_label.set_text(self.core.loadBox.size_update)
 
 	
 	#def get_update_summary	
