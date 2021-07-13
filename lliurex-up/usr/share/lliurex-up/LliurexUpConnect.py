@@ -259,7 +259,14 @@ class LliurexUpConnect():
 			error=is_lliurexup_installed['stderrs']
 			log_msg="Installing lliurex-up. Returncode: " + str(returncode) + ". Error: " + str(error)
 			self.log(log_msg)
-			return returncode
+			if returncode==0:
+				return True 
+			else:
+				is_lliurexup_updated=self.llxUpCore.isLliurexUpIsUpdated()
+				if is_lliurexup_updated:
+					return True
+				else:
+					return False
 			
 		except Exception as e:
 			log_msg="Installing lliurex-up. Error: " + str(e)

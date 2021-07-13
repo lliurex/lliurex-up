@@ -228,10 +228,15 @@ class LoadBox(Gtk.VBox):
 						self.show_number_process_executing(5,msg_gather)
 					else:
 						if self.install_lliurexup_t.done:
-							print("  [Lliurex-Up]: Reboot Lliurex-Up")
-							self.msg_wait=_("Lliurex-Up is now updated and will be reboot in %s seconds...")
-							GLib.timeout_add(10,self.wait_to_reboot)
-							return False
+							if self.is_lliurexup_installed:
+								print("  [Lliurex-Up]: Reboot Lliurex-Up")
+								self.msg_wait=_("Lliurex-Up is now updated and will be reboot in %s seconds...")
+								GLib.timeout_add(10,self.wait_to_reboot)
+								return False
+							else:
+								msg_gather=_("Unable to update Lliurex-Up. See /var/log/lliurex-up.log")
+								print("  [Lliurex-Up]: Unable to update Lliurex-Up")
+								abort=True
 				else:
 					if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
 						print("  [Lliurex-Up]: Checking if mirror exist")
@@ -277,7 +282,12 @@ class LoadBox(Gtk.VBox):
 								GLib.timeout_add(100,self.pulsate_get_info)
 								return False
 					
-							
+		if abort:
+			self.load_spinner.stop()
+			self.load_message_label.set_markup(msg_gather)
+			self.core.mainWindow.show_options(True,abort,msg_gather)
+			return False
+					
 
 		if self.init_actions_t.launched:
 			if self.init_actions_t.is_alive():
