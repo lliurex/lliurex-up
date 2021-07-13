@@ -205,7 +205,7 @@ class LliurexUpCli(object):
 			log_msg="Checking Lliurex-Up. Is Lliurex-Up updated: "+ str(is_lliurexup_updated)
 			self.log(log_msg)
 			print("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")
-			return False	
+			return True	
 			
 	#def checkLliurexUp		
 
