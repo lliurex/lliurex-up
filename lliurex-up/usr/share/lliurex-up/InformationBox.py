@@ -76,7 +76,7 @@ class InformationBox(Gtk.VBox):
 			#self.info_grid.hide()
 			self.warning_box.show()
 			if error:
-				#self.info_grid.hide()
+				self.info_grid.hide()
 				self.warning_box.set_name("ERROR_BOX")
 				self.warning_img_error.show()
 				self.warning_img_ok.hide()
