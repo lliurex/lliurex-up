@@ -186,15 +186,26 @@ class LliurexUpCli(object):
 			is_lliurexup_installed=self.lliurexcore.installLliurexUp()
 			log_msg="Installing Lliurex-Up. Returncode: " + str(is_lliurexup_installed['returncode']) + ". Error: " + str(is_lliurexup_installed['stderrs'])
 			self.log(log_msg)
-			print("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
-			time.sleep(3)
-			self.lliurexcore.cleanLliurexUpLock()
-			os.execv("/usr/sbin/lliurex-upgrade",sys.argv)	
+			if is_lliurexup_installed['returncode']==0:
+				print("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
+				time.sleep(3)
+				self.lliurexcore.cleanLliurexUpLock()
+				os.execv("/usr/sbin/lliurex-upgrade",sys.argv)
+			else:
+				is_lliurexup_updated=self.lliurexcore.isLliurexUpIsUpdated(self.allRepos)
+				if not is_lliurexup_updated:
+					log_msg="Unable to update Lliurex-Up"
+					self.log(log_msg)
+					print("  [Lliurex-Up]: Unable to update Lliurex-Up")
+					return False
+				else:
+					return True		
 
 		else:
 			log_msg="Checking Lliurex-Up. Is Lliurex-Up updated: "+ str(is_lliurexup_updated)
 			self.log(log_msg)
-			print("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")	
+			print("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")
+			return False	
 			
 	#def checkLliurexUp		
 
@@ -778,7 +789,9 @@ class LliurexUpCli(object):
 			self.clientCheckingMirrorExists(extra_args)
 				
 		self.initActionsScript(extra_args)
-		self.checkLliurexUp()
+		if not self.checkLliurexUp():
+			self.cleanEnvironment()
+			return 1
 
 		if extra_args["mirror"]:
 			self.checkMirror(extra_args)
