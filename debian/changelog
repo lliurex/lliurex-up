@@ -1,3 +1,9 @@
+lliurex-up (21.04.41) focal; urgency=medium
+
+  * Added changes to avoid Lliurex-Up from looping when auto-update fails
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 13 Jul 2021 18:31:06 +0200
+
 lliurex-up (21.04.40) focal; urgency=medium
 
   * Show information about versions when system is updated
