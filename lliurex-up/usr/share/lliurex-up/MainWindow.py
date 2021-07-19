@@ -227,7 +227,7 @@ class MainWindow:
 
 		self.main_window=builder.get_object("main_window")
 		self.main_window.set_title("Lliurex-Up")
-		self.main_window.resize(805,610)
+		self.main_window.resize(835,610)
 		self.banner_box=builder.get_object("banner_box")
 		self.window_box=builder.get_object("window_box")
 		self.main_box=builder.get_object("main_box")

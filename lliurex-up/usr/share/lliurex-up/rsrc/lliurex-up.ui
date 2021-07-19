@@ -200,7 +200,7 @@
             <property name="halign">end</property>
             <property name="margin_top">5</property>
             <property name="margin_bottom">5</property>
-            <property name="label" translatable="yes">Version to update: </property>
+            <property name="label" translatable="yes">Candidate version (to install): </property>
             <property name="justify">right</property>
             <property name="lines">0</property>
             <attributes>
@@ -235,7 +235,7 @@
             <property name="halign">end</property>
             <property name="margin_top">5</property>
             <property name="margin_bottom">5</property>
-            <property name="label" translatable="yes">Version available: </property>
+            <property name="label" translatable="yes">Available version (lliurex.net): </property>
             <property name="justify">right</property>
             <attributes>
               <attribute name="font-desc" value="Noto Sans 11"/>

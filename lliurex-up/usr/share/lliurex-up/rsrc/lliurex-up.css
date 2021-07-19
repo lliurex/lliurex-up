@@ -26,6 +26,11 @@
 
 	}
 
+#ERROR_FONT{
+	font: 11pt Noto Sans Regular;
+	color: #CC0000;
+
+}
 #ERROR_BOX{
 
 	border-style:solid;
