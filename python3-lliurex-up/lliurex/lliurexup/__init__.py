@@ -41,6 +41,7 @@ class LliurexUpCore(object):
 		self.initActionsPath='/usr/share/lliurex-up/initActions'
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
+		self.optionsLlxUp=""
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 
 
@@ -450,14 +451,19 @@ class LliurexUpCore(object):
 				sources=self.readSourcesList()
 				if sources==0:
 					sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
+				else:
+					if not self.canConnectToLliurexNet():
+						sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
+						
 
-
+		'''				
 		options = ""
 		if self.canConnectToLliurexNet():
-			options = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
+		'''
+		self.optionsLlxUp = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
 
-		self.updateCacheApt(options)
-		result = self.getPackageVersionAvailable('lliurex-up',options)
+		self.updateCacheApt(self.optionsLlxUp)
+		result = self.getPackageVersionAvailable('lliurex-up',self.optionsLlxUp)
 
 		if result['installed'] != result['candidate']:
 			return False
@@ -477,8 +483,8 @@ class LliurexUpCore(object):
 
 			This function install lliurex-up
 		'''
-		self.updateCacheApt(options)
-		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --allow-downgrades --allow-remove-essential --allow-change-held-packages --yes lliurex-up {options}".format(options=options)
+		self.updateCacheApt(self.optionsLlxUp)
+		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --allow-downgrades --allow-remove-essential --allow-change-held-packages --yes lliurex-up {options}".format(options=self.optionsLlxUp)
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		poutput,perror = p.communicate()
 

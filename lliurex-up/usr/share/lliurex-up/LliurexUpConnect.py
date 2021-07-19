@@ -30,6 +30,7 @@ class LliurexUpConnect():
 		self.errorupgrade_token=self.llxUpCore.errorupgrade_token
 		self.errorfinalmetapackage_token=self.llxUpCore.errorfinalmetapackage_token
 		self.finalupgrade_token=self.llxUpCore.finalupgrade_token
+		self.allRepos=False
 
 	#def __init__	
 
@@ -233,13 +234,14 @@ class LliurexUpConnect():
 	def addSourcesListLliurex(self,args):
 
 		self.llxUpCore.addSourcesListLliurex(args)
+		self.allRepos=args
 
 	#def addSourcesListLliurex	
 
 	def isLliurexUpIsUpdated(self):
 
 		try:
-			is_lliurexup_updated=self.llxUpCore.isLliurexUpIsUpdated()
+			is_lliurexup_updated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
 			log_msg="Checking lliurex-up. Is lliurex-up updated: "+ str(is_lliurexup_updated)
 			self.log(log_msg)
 			return is_lliurexup_updated
@@ -262,7 +264,7 @@ class LliurexUpConnect():
 			if returncode==0:
 				return True 
 			else:
-				is_lliurexup_updated=self.llxUpCore.isLliurexUpIsUpdated()
+				is_lliurexup_updated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
 				if is_lliurexup_updated:
 					return True
 				else:
