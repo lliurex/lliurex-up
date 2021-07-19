@@ -1,3 +1,10 @@
+lliurex-up (21.04.44) focal; urgency=medium
+
+  * Change information about versions
+  * Fixed application banner
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 19 Jul 2021 14:04:54 +0200
+
 lliurex-up (21.04.43) focal; urgency=medium
 
   * Clean code
