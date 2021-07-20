@@ -17,7 +17,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="banner2.svg">
+   sodipodi:docname="banner.svg">
   <defs
      id="defs2">
     <linearGradient
@@ -522,9 +522,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="6.4154526"
-     inkscape:cx="434.15896"
-     inkscape:cy="56.018353"
+     inkscape:zoom="1.1341025"
+     inkscape:cx="381.57559"
+     inkscape:cy="-29.988111"
      inkscape:document-units="mm"
      inkscape:current-layer="g1153"
      inkscape:document-rotation="0"
@@ -533,8 +533,8 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="883"
+     inkscape:window-width="1024"
+     inkscape:window-height="689"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1">
@@ -670,72 +670,769 @@
          transform="translate(53.907418,-22.633506)"
          style="stroke:#000000;stroke-width:0.32568339;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <g
-         aria-label="Lliurex-Up"
-         transform="matrix(0.96071797,0,0,1.0408882,13.418442,-14)"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.11446381px;line-height:1;font-family:SpaceColony-SemiBold;-inkscape-font-specification:SpaceColony-SemiBold;letter-spacing:0px;word-spacing:0px;opacity:0.83999999;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3154)"
-         id="text1691-6">
-        <path
-           d="m -664.11111,-108.61732 h 21.26389 c 2.35696,0 3.53544,-1.12724 3.53544,-3.4842 0,-2.30572 -1.17848,-3.48421 -3.53544,-3.48421 h -20.39284 c -3.58668,0 -6.35355,-0.97352 -8.24937,-3.02305 -1.94705,-2.04954 -2.86934,-4.66269 -2.86934,-7.94194 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71733,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25448,0.35867 -2.92058,1.02476 -0.71734,0.71734 -1.02477,1.69087 -1.02477,2.92059 v 13.98805 c 0,5.27754 1.53715,9.58156 4.71393,12.91205 3.12553,3.38173 7.58326,5.02135 13.42443,5.02135 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7045"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -627.57827,-141.81973 c 0,-2.45944 -1.22972,-3.68916 -3.63792,-3.68916 -2.45944,0 -3.68916,1.22972 -3.68916,3.68916 v 29.56449 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7047"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -613.02668,-133.98027 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 v 21.72503 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z m -7.94193,-10.965 c 0,1.38344 0.35867,2.45944 1.12724,3.17678 0.71734,0.71733 1.79334,1.076 3.17677,1.076 1.3322,0 2.35697,-0.35867 3.12554,-1.076 0.71734,-0.71734 1.12724,-1.79334 1.12724,-3.17678 0,-1.33219 -0.4099,-2.4082 -1.12724,-3.17677 -0.76857,-0.71734 -1.79334,-1.12724 -3.12554,-1.12724 -1.38343,0 -2.45943,0.4099 -3.17677,1.12724 -0.76857,0.71734 -1.12724,1.79334 -1.12724,3.17677 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7049"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -567.16846,-133.98027 c 0,-2.4082 -1.22972,-3.63792 -3.68915,-3.63792 -2.45944,0 -3.63792,1.22972 -3.63792,3.63792 v 10.86252 c 0,2.35696 -0.71734,4.25277 -2.10077,5.73868 -1.38344,1.48592 -3.38173,2.20325 -5.94364,2.20325 h -8.40308 c -2.56192,0 -4.56021,-0.71733 -5.94365,-2.20325 -1.43467,-1.48591 -2.10077,-3.38172 -2.10077,-5.73868 v -10.86252 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 v 10.86252 c 0,4.25277 1.22972,7.73698 3.79163,10.45261 2.51068,2.71563 6.1486,4.04782 10.86252,4.04782 h 9.83775 c 4.71392,0 8.3006,-1.33219 10.86252,-4.04782 2.51068,-2.71563 3.79163,-6.19984 3.79163,-10.45261 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7051"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -545.54591,-131.05969 h 10.24765 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12724,-3.27925 -3.33049,-3.27925 h -10.96499 c -4.71392,0 -8.35184,1.38343 -10.86252,4.09906 -2.56191,2.71563 -3.79163,6.19984 -3.79163,10.40138 v 10.86251 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -10.86251 c 0,-2.30573 0.6661,-4.20154 2.10077,-5.68745 1.38344,-1.48592 3.38173,-2.25449 5.94365,-2.25449 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7053"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -513.82949,-131.05969 h 18.90693 c 2.20324,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12725,-3.27925 -3.33049,-3.27925 h -19.57303 c -4.71392,0 -8.35184,1.38343 -10.86252,4.09906 -2.56191,2.71563 -3.79163,6.19984 -3.79163,10.40138 0,4.25277 1.22972,7.73698 3.79163,10.45261 2.51068,2.71563 6.1486,4.04782 10.86252,4.04782 h 19.57303 c 2.20324,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12725,-3.27925 -3.33049,-3.27925 h -18.90693 c -1.9983,0 -3.63792,-0.40991 -4.91888,-1.33219 -1.28096,-0.92229 -2.15201,-2.15201 -2.66439,-3.68916 h 23.46714 c 1.99829,0 3.02306,-0.97353 3.02306,-2.92058 0,-0.92229 -0.30743,-1.63963 -0.81982,-2.15201 -0.51238,-0.51239 -1.28095,-0.76858 -2.20324,-0.76858 h -23.46714 c 0.51238,-1.53715 1.38343,-2.71563 2.66439,-3.63792 1.28096,-0.92228 2.92058,-1.38343 4.91888,-1.38343 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7055"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -450.19156,-131.31588 c 0.61486,-0.40991 1.076,-0.87105 1.38343,-1.28096 0.30743,-0.4099 0.46115,-0.92229 0.46115,-1.53715 0,-2.30572 -1.17848,-3.4842 -3.4842,-3.4842 -1.07601,0 -1.89582,0.25619 -2.45944,0.71734 l -13.06577,9.99146 -12.96329,-9.94023 c -0.66609,-0.51238 -1.48591,-0.76857 -2.51067,-0.76857 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 0,0.71733 0.15372,1.22972 0.46115,1.63962 0.30743,0.40991 0.76857,0.87105 1.48591,1.3322 l 10.7088,7.83946 -11.32366,8.24936 c -0.6661,0.51239 -1.12725,0.92229 -1.43468,1.28096 -0.30743,0.40991 -0.4099,0.92229 -0.4099,1.53715 0,2.35696 1.12724,3.4842 3.4842,3.4842 1.02477,0 1.84458,-0.20495 2.45944,-0.71733 l 13.52691,-10.2989 13.52691,10.24766 c 0.6661,0.51238 1.48591,0.76857 2.51067,0.76857 2.45944,0 3.68916,-1.17848 3.68916,-3.63792 0,-0.66609 -0.15371,-1.22972 -0.46114,-1.63962 -0.30743,-0.40991 -0.81982,-0.81981 -1.48591,-1.3322 l -11.22119,-8.14689 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7057"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -440.5076,-123.01528 h 11.3749 c 1.12724,0 1.99829,-0.30743 2.61315,-0.92229 0.61486,-0.61486 0.92229,-1.48591 0.92229,-2.61315 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -11.3749 c -2.35696,0 -3.53544,1.17848 -3.53544,3.4842 0,1.12724 0.30743,1.99829 0.92229,2.61315 0.61486,0.61486 1.48591,0.92229 2.61315,0.92229 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7059"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -412.3266,-140.53877 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71734,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25449,0.35867 -2.92059,1.02476 -0.71733,0.71734 -1.02476,1.69087 -1.02476,2.92059 v 13.98805 c 0,5.27754 1.53715,9.58156 4.71392,12.91205 3.12554,3.38173 7.58327,5.02135 13.42443,5.02135 h 12.09224 c 5.78993,0 10.24766,-1.63962 13.42443,-5.02135 3.12554,-3.33049 4.71393,-7.63451 4.71393,-12.91205 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71734,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25449,0.35867 -2.92058,1.02476 -0.71734,0.71734 -1.02477,1.69087 -1.02477,2.92059 v 13.98805 c 0,3.27925 -0.97353,5.8924 -2.86934,7.94194 -1.94706,2.04953 -4.66269,3.02305 -8.24937,3.02305 h -10.35013 c -3.58669,0 -6.35355,-0.97352 -8.24937,-3.02305 -1.94706,-2.04954 -2.86934,-4.66269 -2.86934,-7.94194 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7061"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -347.40774,-108.61732 h 8.04441 c 4.66269,0 8.24937,-1.33219 10.81128,-4.04782 2.51068,-2.71563 3.79164,-6.19984 3.79164,-10.45261 0,-4.20154 -1.28096,-7.68575 -3.79164,-10.40138 -2.56191,-2.71563 -6.14859,-4.09906 -10.81128,-4.09906 h -11.3749 c -4.71392,0 -8.35184,1.38343 -10.86251,4.09906 -2.56192,2.71563 -3.79164,6.19984 -3.79164,10.40138 v 18.54826 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -9.58156 c 1.89581,3.68915 5.43126,5.53373 10.65756,5.53373 z m 7.32708,-22.44237 c 2.56191,0 4.50897,0.76857 5.8924,2.25449 1.38344,1.48591 2.10077,3.38172 2.10077,5.68745 0,2.35696 -0.71733,4.25277 -2.10077,5.73868 -1.38343,1.48592 -3.33049,2.20325 -5.8924,2.20325 h -9.94023 c -2.56191,0 -4.56021,-0.71733 -5.94364,-2.20325 -1.43467,-1.48591 -2.10077,-3.38172 -2.10077,-5.73868 0,-2.30573 0.6661,-4.20154 2.10077,-5.68745 1.38343,-1.48592 3.38173,-2.25449 5.94364,-2.25449 z"
-           style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7063"
-           inkscape:connector-curvature="0" />
-      </g>
-      <g
          id="g1153"
-         transform="matrix(0.29182963,0,0,0.31618268,-570.13614,-312.2708)">
+         transform="matrix(0.29182963,0,0,0.31618268,-559.79988,-242.4394)">
         <g
-           transform="translate(-59.604769,499.67252)"
-           id="g3888-4"
-           style="opacity:0.81;filter:url(#filter1098)">
+           id="g4922"
+           transform="translate(23.743616,-636.47669)">
           <g
-             id="g4228"
-             transform="translate(62.820652,-497.06862)"
-             style="opacity:0.87999998;filter:url(#filter4238)">
+             style="opacity:0.81000001;filter:url(#filter1098)"
+             id="g3888-4"
+             transform="translate(-121.97902,923.47834)">
+            <g
+               style="opacity:0.87999998;filter:url(#filter4238)"
+               transform="translate(62.820652,-497.06862)"
+               id="g4228">
+              <path
+                 id="path19227-9"
+                 style="fill:#000000;fill-opacity:1"
+                 d="m 352.35,500.41 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="csssssc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19231-8"
+                 style="fill:#000000;fill-opacity:1"
+                 d="m 303.29,359.9 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cscscccsscc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <g
+                 id="g4170">
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 342.61769,657.56843 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19243-3-9" />
+                <g
+                   style="fill:#000000"
+                   transform="rotate(-18.981592,527.55261,1090.37)"
+                   id="g1080-0">
+                  <path
+                     id="path19221-9-9"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 568.86864,517.52581 c 0,0 7.27015,13.58718 46.60404,8.28607 39.33427,-5.30151 80.44999,-35.62264 80.82645,-81.86816 0.37586,-46.24552 -38.54049,-53.75867 -65.22688,-52.84192 -26.68539,0.91646 -57.79517,24.98781 -66.35236,55.5531 -6.53576,23.34454 -4.24967,37.62764 -3.40762,49.02569 0.84203,11.39804 7.55645,21.84422 7.55645,21.84422 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="csssssc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19223-7-1"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 670.4155,455.43927 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="cscscsc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19225-6-7"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 628.5955,405.14927 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="cscscscsc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                </g>
+                <g
+                   style="fill:#000000"
+                   transform="translate(-5.0037336,28.501867)"
+                   id="g1013-7">
+                  <path
+                     id="path19229-1"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 290.01,420.84 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 3.028,31.6137 3.028,31.6137 0,0 -3.0902,1.3244 0,0 3.0902,-1.3244 7.1427,-0.4846 7.1427,-0.4846 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="csczcscscc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19141-1"
+                     style="fill:#000000"
+                     d="m 235.14,429.03 c 0,0 2.2262,-4.1741 13.079,-5.8437 10.8528,-1.6696 21.427,-1.3914 21.427,-1.3914 0,0 5.2872,7.7916 16.696,15.305 11.4088,7.5134 21.427,11.131 21.427,11.131 0,0 -7.2351,-1.3914 -13.914,-0.83482 -6.6786,0.55655 -10.853,1.1131 -10.853,1.1131 0,0 -1.3914,-3.8958 -13.635,-8.3482 -12.2436,-4.4524 -33.114,-1.6696 -33.114,-1.6696 0,0 -1.6696,-0.27827 -2.5045,-3.3393 -0.83482,-3.061 1.3914,-6.122 1.3914,-6.122 z"
+                     inkscape:export-ydpi="34.466259"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19127-2-5"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 266.53494,502.68403 c 0,0 15.35119,-1.34388 25.93869,-39.59518 10.58727,-38.25159 -1.13006,-87.97664 -43.50576,-106.50088 -42.37463,-18.5243 -64.58124,14.30604 -74.22801,39.20381 -9.64726,24.89761 0.25747,62.96471 24.99883,82.84867 18.8959,15.18616 32.92817,18.6989 43.73977,22.4051 10.81156,3.70629 23.05635,1.63886 23.05635,1.63886 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="csssssc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19129-0-9"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 248.56629,384.70154 c 0,0 -3.83905,-8.14273 -1.44416,-12.81907 2.39472,-4.67587 11.01667,-3.42061 11.01667,-3.42061 0,0 -6.96587,-6.17954 -15.58329,-9.07766 -8.61751,-2.89815 -18.95857,-6.37594 -26.38931,7.56885 4.02228,1.07866 7.55207,1.99171 13.86896,5.21239 6.31659,3.22062 18.53176,12.53583 18.53176,12.53583 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="cscscsc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19131-2-7"
+                     style="fill:#000000;fill-opacity:1"
+                     d="m 186.24134,404.57103 c 0,0 -3.66687,-11.09949 7.12783,-23.63905 10.79469,-12.53957 21.14887,-13.9903 21.14887,-13.9903 0,0 -0.23965,-2.54717 1.81952,-4.59532 2.0591,-2.04818 5.10533,-4.58646 5.10533,-4.58646 0,0 -19.2905,1.52522 -31.08666,13.38912 -14.90851,14.9928 -16.63282,45.38247 -16.63282,45.38247 0,0 3.5636,-6.92078 5.93775,-8.69167 3.29241,-2.45559 6.58039,-3.26829 6.58039,-3.26829 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="cscscscsc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259" />
+                  <path
+                     id="path19133-3-7"
+                     style="opacity:0.40565999;fill:#000000;filter:url(#filter19165-7-7)"
+                     d="m 283.002,448.50918 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.01499,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
+                     inkscape:export-ydpi="34.466259"
+                     sodipodi:nodetypes="cssscc"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:connector-curvature="0"
+                     inkscape:export-xdpi="34.466259"
+                     transform="rotate(18.588265,235.12197,425.21082)" />
+                  <ellipse
+                     ry="1.6884948"
+                     rx="2.9873261"
+                     cy="354.52118"
+                     cx="409.34854"
+                     id="path19135-7-6"
+                     style="fill:#000000;stroke-width:0.79256278"
+                     inkscape:export-ydpi="34.466259"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     inkscape:export-xdpi="34.466259"
+                     transform="rotate(18.588265)" />
+                  <ellipse
+                     ry="3.7025514"
+                     rx="8.639287"
+                     cy="563.83679"
+                     cx="80.100502"
+                     id="path19235-9-7"
+                     style="fill:#000000;stroke:#27bb31;stroke-width:2.31428981"
+                     inkscape:export-ydpi="34.466259"
+                     inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                     transform="rotate(-20.028428)"
+                     inkscape:export-xdpi="34.466259" />
+                </g>
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csscc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 409.47,562.83 c -12.926,7.9226 -35.026,34.192 -35.443,52.539 -0.41698,18.347 36.072,67.395 22.934,93.82 -26.173,52.642 -112.17,59.628 -112.17,59.628 l 0.41698,1.2509"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19247-3" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 373.7,689.25 c 0,0 14.678,6.9543 44.252,-20.208 29.573,-27.162 44.816,-75.925 15.885,-114.16 -28.931,-38.233 -66.258,-21.846 -88.017,-5.6216 -21.759,16.225 -32.577,54.048 -20.411,84.135 9.2919,22.979 20.238,33.395 28.151,42.276 7.9131,8.8816 20.14,13.576 20.14,13.576 z"
+                   style="opacity:0.89623;fill:#000000"
+                   id="path19190-6" />
+                <ellipse
+                   inkscape:export-xdpi="34.466259"
+                   transform="matrix(0.94892,0.0063835,0.43733,0.79236,-314.26,165.21)"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   style="fill:#000000;stroke:#000000;stroke-opacity:1"
+                   id="path19188-5"
+                   cx="421.15836"
+                   cy="660.36096"
+                   rx="9.3590746"
+                   ry="4.9195137" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 408.27,576.22 c 0,0 -1.7204,-7.4816 -8.3597,-14.055 -6.6392,-6.5735 -12.673,-9.8678 -12.673,-9.8678 l 8.1172,-9.298 c 0,0 9.2171,0.33286 19.025,9.3733 9.8075,9.0404 14.283,20.422 14.283,20.422 z"
+                   style="fill:#000000"
+                   id="path19192-6" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 382.91,552.82 8.6783,-11.094 c 0,0 -6.9564,-4.6577 -19.012,-2.6634 -12.056,1.9944 -21.988,11.314 -21.988,11.314 0,0 5.4707,2.4626 4.457,6.5854 -1.0137,4.1228 -3.9539,13.694 -3.9539,13.694 0,0 5.52,-6.884 11.613,-10.247 6.0929,-3.3628 20.206,-7.5891 20.206,-7.5891 z"
+                   style="fill:#000000"
+                   id="path19194-3" />
+                <ellipse
+                   inkscape:export-xdpi="34.466259"
+                   transform="matrix(0.85715,0,0,0.85715,45.497,94.039)"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   style="fill:#000000;stroke:#000000;stroke-width:2.70000005;stroke-opacity:1"
+                   id="path19125-9"
+                   cx="329.9122"
+                   cy="663.9549"
+                   rx="10.079151"
+                   ry="4.3196359" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 406.82,559.56 c 0,0 7.0104,13.723 46.438,9.171 39.428,-4.5524 81.113,-34.086 82.369,-80.316 1.2554,-46.23 -37.511,-54.482 -64.21,-54.073 -26.698,0.40872 -58.26,23.884 -67.397,54.281 -6.9786,23.216 -4.9646,37.54 -4.3395,48.952 0.62509,11.412 7.1396,21.984 7.1396,21.984 z"
+                   style="fill:#000000;fill-opacity:1"
+                   id="path19221-4" />
+                <path
+                   id="rect19110-1"
+                   d="m 420.06,644.75 14.736,11.194 c 0,0 -10.455,1.5112 -13.219,4.6288 -2.7635,3.1176 -2.1938,10.839 -2.1938,10.839 l -14.75,-11.19 c 0,0 8.9256,-0.84037 11.841,-3.7415 2.9145,-2.9014 3.5719,-11.727 3.5719,-11.727 z"
+                   sodipodi:nodetypes="cczcczc"
+                   style="fill:#000000"
+                   inkscape:connector-curvature="0" />
+                <ellipse
+                   ry="4.4523568"
+                   rx="8.881237"
+                   cy="432.99243"
+                   cx="473.22205"
+                   id="path19100-2"
+                   style="fill:#000000;stroke:#000000;stroke-width:0.926732;stroke-opacity:1"
+                   transform="matrix(0.87223274,0.48909105,0,1,0,0)" />
+                <path
+                   id="path18586-9"
+                   d="m 419.17,656.92 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
+                   sodipodi:nodetypes="csssssc"
+                   style="fill:#000000;fill-opacity:1"
+                   inkscape:connector-curvature="0" />
+                <path
+                   id="path19096-3"
+                   d="m 504.05,574.67 c 0,0 2.109,-7.3815 -0.52726,-16.345 -2.6363,-8.9633 -6.327,-14.763 -6.327,-14.763 l 11.6,-4.218 c 0,0 7.9088,4.7453 12.127,17.399 4.218,12.654 2.6363,24.781 2.6363,24.781 z"
+                   style="fill:#000000"
+                   inkscape:connector-curvature="0" />
+                <path
+                   id="path19098-9"
+                   d="m 493.15,541.93 12.959,-5.5194 c 0,0 -3.8396,-7.4393 -15.358,-11.519 -11.519,-4.0796 -24.718,-0.71993 -24.718,-0.71993 0,0 3.5996,4.7995 0.71993,7.9192 -2.87967,3.1197 -10.079,10.079 -10.079,10.079 0,0 8.1592,-3.3597 15.119,-3.3597 6.9593,0 21.358,3.1197 21.358,3.1197 z"
+                   style="fill:#000000"
+                   inkscape:connector-curvature="0" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 267.71,655.9 c 0,0 14.122,-6.1672 11.964,-45.798 -2.1583,-39.631 -29.115,-83.027 -75.185,-87.077 -46.069,-4.0504 -56.652,34.146 -57.859,60.82 -1.2075,26.674 20.315,59.598 50.104,70.558 22.751,8.3706 37.171,7.2271 48.6,7.2936 11.429,0.0666 22.376,-5.7962 22.376,-5.7962 z"
+                   style="fill:#000000"
+                   id="path19127-0" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cscscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 213.07,549.8 c 0,0 -6.2344,-6.4942 -5.4551,-11.69 0.7793,-5.1953 9.3516,-6.7539 9.3516,-6.7539 0,0 -8.5723,-3.6367 -17.664,-3.6367 -9.0918,0 -20.002,0 -22.6,15.586 4.1563,-0.25977 7.793,-0.51953 14.807,0.51954 7.0137,1.0391 21.561,5.9746 21.561,5.9746 z"
+                   style="fill:#000000"
+                   id="path19129-8" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cscscscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 160.33,588.5 c 0,0 -7.0137,-9.3516 -0.7793,-24.678 6.2344,-15.3264 15.586,-20.002 15.586,-20.002 0,0 -1.0391,-2.3379 0.25977,-4.9356 1.2988,-2.5977 3.377,-5.9746 3.377,-5.9746 0,0 -17.798,7.5948 -25.197,22.6 -9.3516,18.963 -1.2988,48.317 -1.2988,48.317 0,0 1.1716,-7.6957 2.8574,-10.131 2.3379,-3.377 5.1953,-5.1954 5.1953,-5.1954 z"
+                   style="fill:#000000"
+                   id="path19131-8" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cssscc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 261.12,615.78 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.015,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
+                   style="opacity:0.40565999;fill:#000000;filter:url(#filter19165-6)"
+                   id="path19133-5" />
+                <ellipse
+                   inkscape:export-xdpi="34.466259"
+                   transform="matrix(0.82143,0,0,0.76471,56.357,140.05)"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   style="fill:#000000"
+                   id="path19135-0"
+                   cx="253.01309"
+                   cy="626.21436"
+                   rx="3.6367385"
+                   ry="2.2080197" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssccc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 296.72,545.13 c 0,0 -26.106,-8.9741 -34.286,-16.508 -10.723,-9.8765 -9.3122,-28.078 7.1957,-37.107 16.508,-9.03 28.924,0.70545 32.31,11.005 2.2143,6.7352 4.3739,40.494 4.3739,40.494 l -9.03,2.3986 z"
+                   style="fill:#000000;filter:url(#filter19157-5)"
+                   id="path19143-6" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 301.44,565.93 c 0,0 16.109,-2.2472 23.099,-41.317 9.1999,-51.42 -5.7962,-88.105 -49.366,-103.61 -43.569,-15.508 -72.418,21.342 -75.514,46.583 -3.2505,26.503 7.3886,60.944 33.463,79.044 19.914,13.824 34.158,16.344 45.203,19.283 11.045,2.9392 23.114,0.0182 23.114,0.0182 z"
+                   style="opacity:0.95597049;fill:#000000"
+                   id="path19137-3" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cscscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 509.42,498.59 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
+                   style="fill:#000000"
+                   id="path19223-8" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 333.38,549.13 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
+                   style="opacity:0.97170003;fill:#000000"
+                   id="path19169-5" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 353.74,671.2 c 11.054,1.6377 31.707,-25.522 37.666,-39.304 6.5506,-15.148 12.773,-44.756 -15.148,-52.405 -29.887,-8.1883 -54.043,-0.40941 -54.043,20.061 0,20.471 6.1412,45.036 12.282,50.768 6.1412,5.7318 19.243,20.88 19.243,20.88 z"
+                   style="opacity:0.38049999;fill:#000000"
+                   id="path19219-6" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csssssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 329.42,662.38 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
+                   style="opacity:0.94024999;fill:#000000"
+                   id="path19113-1" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csczcscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 267.08,582.81 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 -2.7925,36.945 -2.7925,36.945 0,0 2.7303,-4.0069 5.8205,-5.3313 3.0902,-1.3244 7.1426,-0.48456 7.1426,-0.48456 z"
+                   style="fill:#000000"
+                   id="path19115-1" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cscscccsscc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 280.36,521.87 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
+                   style="fill:#000000"
+                   id="path19121-5" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cccscscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 332.87,537.1 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 1.965,20.773 1.965,20.773 0,0 -2.6251,-3.0906 -10.423,-4.9885 -9.2694,-2.2561 -14.842,-0.90659 -14.842,-0.90659 0,0 1.4726,-7.667 -3.3901,-20.709 -5.3776,-14.423 -10.646,-16.907 -10.646,-16.907 z"
+                   style="fill:#000000"
+                   id="path19123-9" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 218.17,522.81 c 0,0 -5.0089,-5.5655 -3.8958,-17.531 1.1131,-11.9655 5.5655,-16.418 5.5655,-16.418 0,0 -7.2351,-11.409 -0.83482,-26.158 6.4003,-14.748 13.635,-22.262 13.635,-22.262 0,0 -2.5044,-1.3914 -2.5044,-3.6176 0,-2.2262 1.1131,-5.0089 1.1131,-5.0089 0,0 -23.931,10.853 -26.158,39.236 -2.2262,28.384 13.079,51.759 13.079,51.759 z"
+                   style="fill:#000000"
+                   id="path19139-8" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cscscscsc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 467.6,448.3 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
+                   style="fill:#000000"
+                   id="path19225-4" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 360.58,436.24 c 0,0 5.6267,-6.5645 22.272,-7.7367 16.646,-1.1722 24.617,6.33 24.617,6.33 0,0 1.1722,-2.11 6.33,-3.0478 5.1578,-0.93778 11.488,-1.4067 11.488,-1.4067 0,0 -3.7511,-12.426 -24.851,-15.239 -21.1,-2.8134 -42.2,14.301 -42.2,14.301 0,0 1.6411,0.70334 2.3445,2.5789 0.70334,1.8756 0,4.22 0,4.22 z"
+                   style="fill:#000000"
+                   id="path19171-1" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 410.52,437.41 c 0,0 0,-2.8134 6.5645,-3.2822 6.5645,-0.4689 11.722,-0.23445 11.722,-0.23445 0,0 7.5023,6.0956 10.081,19.459 2.5789,13.363 -0.4689,31.416 -0.4689,31.416 0,0 -4.9234,-3.2822 -9.6123,-5.1578 -4.6889,-1.8756 -8.6745,-3.5167 -8.6745,-3.5167 0,0 2.5789,-10.081 -0.23444,-20.162 -2.8134,-10.081 -9.3778,-18.521 -9.3778,-18.521 z"
+                   style="fill:#000000"
+                   id="path19173-0" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cccscscscc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 355.8,375.13 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 7.08862,11.67538 7.08862,11.67538 0,0 -1.91103,-0.66462 -9.70893,-2.56252 -9.2694,-2.2561 -20.67969,5.76505 -20.67969,5.76505 0,0 1.4726,-7.667 -3.3901,-20.709 -5.37,-14.42 -10.64,-16.91 -10.64,-16.91 z"
+                   style="fill:#000000;fill-opacity:1"
+                   id="path19233-3" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 335.26,451.71 c 0,0 0.70334,-4.4545 7.7367,-10.55 7.0334,-6.0956 11.253,-7.9712 11.253,-7.9712 0,0 1.1722,2.5789 2.11,4.4545 0.93778,1.8756 1.6411,2.3445 1.6411,2.3445 0,0 -2.5789,1.4067 -6.33,7.7367 -3.7511,6.33 -8.4401,23.21 -8.4401,23.21 0,0 1.8756,-11.957 -1.4067,-15.239 -3.2822,-3.2822 -6.5645,-3.9856 -6.5645,-3.9856 z"
+                   style="fill:#000000"
+                   id="path19175-0" />
+                <ellipse
+                   inkscape:export-xdpi="34.466259"
+                   transform="matrix(0.66972,-0.53495,0.53495,0.66972,-306.81,386.78)"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   style="fill:#000000;stroke:#000000;stroke-width:2.70000005;stroke-opacity:1"
+                   id="path19235-4"
+                   cx="329.9122"
+                   cy="663.9549"
+                   rx="10.079151"
+                   ry="4.3196359" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 327.89,667.56 c 0,0 -11.464,27.84 0,67.963 11.464,40.123 90.89,45.036 106.45,87.615 15.558,42.579 24.565,57.318 24.565,57.318"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19237-4" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 269.4,656.05 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19239-4" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 376.66,692.89 c 0,0 11.464,40.942 -20.471,64.688 -31.934,23.746 -58.137,33.572 -67.963,57.318 -9.826,23.746 -18.014,59.775 -18.014,59.775"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19241-4" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 413.51,664.24 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19243-7" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="csc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 360.3,681.82 c -11.464,9.826 -50.939,20.767 -61.412,68.782 -10.029,45.978 64.688,120.37 64.688,120.37"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19245-6" />
+                <path
+                   inkscape:export-xdpi="34.466259"
+                   inkscape:connector-curvature="0"
+                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                   sodipodi:nodetypes="cssc"
+                   inkscape:export-ydpi="34.466259"
+                   d="m 280.00598,635.99807 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
+                   style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
+                   id="path19239-2-3" />
+              </g>
+            </g>
+          </g>
+          <g
+             transform="translate(-64.738324,422.81979)"
+             id="g3888">
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 342.61769,657.56843 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
+               style="fill:none;stroke:#e5ca62;stroke-width:1px"
+               id="path19243-3" />
+            <g
+               transform="rotate(-18.981592,527.55261,1090.37)"
+               id="g1080">
+              <path
+                 id="path19221-9"
+                 style="fill:#ebde05;fill-opacity:1"
+                 d="m 568.86864,517.52581 c 0,0 7.27015,13.58718 46.60404,8.28607 39.33427,-5.30151 80.44999,-35.62264 80.82645,-81.86816 0.37586,-46.24552 -38.54049,-53.75867 -65.22688,-52.84192 -26.68539,0.91646 -57.79517,24.98781 -66.35236,55.5531 -6.53576,23.34454 -4.24967,37.62764 -3.40762,49.02569 0.84203,11.39804 7.55645,21.84422 7.55645,21.84422 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="csssssc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19223-7"
+                 style="fill:#d9f291;fill-opacity:1"
+                 d="m 670.4155,455.43927 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cscscsc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19225-6"
+                 style="fill:#f2ef91;fill-opacity:1"
+                 d="m 628.5955,405.14927 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cscscscsc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+            </g>
+            <g
+               transform="translate(-5.0037336,28.501867)"
+               id="g1013">
+              <path
+                 id="path19229"
+                 style="fill:#f6707d;fill-opacity:1"
+                 d="m 290.01,420.84 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 3.028,31.6137 3.028,31.6137 0,0 -3.0902,1.3244 0,0 3.0902,-1.3244 7.1427,-0.4846 7.1427,-0.4846 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="csczcscscc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19141"
+                 style="fill:#fbdb74"
+                 d="m 235.14,429.03 c 0,0 2.2262,-4.1741 13.079,-5.8437 10.8528,-1.6696 21.427,-1.3914 21.427,-1.3914 0,0 5.2872,7.7916 16.696,15.305 11.4088,7.5134 21.427,11.131 21.427,11.131 0,0 -7.2351,-1.3914 -13.914,-0.83482 -6.6786,0.55655 -10.853,1.1131 -10.853,1.1131 0,0 -1.3914,-3.8958 -13.635,-8.3482 -12.2436,-4.4524 -33.114,-1.6696 -33.114,-1.6696 0,0 -1.6696,-0.27827 -2.5045,-3.3393 -0.83482,-3.061 1.3914,-6.122 1.3914,-6.122 z"
+                 inkscape:export-ydpi="34.466259"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19127-2"
+                 style="fill:#1ad6d6;fill-opacity:1"
+                 d="m 266.53494,502.68403 c 0,0 15.35119,-1.34388 25.93869,-39.59518 10.58727,-38.25159 -1.13006,-87.97664 -43.50576,-106.50088 -42.37463,-18.5243 -64.58124,14.30604 -74.22801,39.20381 -9.64726,24.89761 0.25747,62.96471 24.99883,82.84867 18.8959,15.18616 32.92817,18.6989 43.73977,22.4051 10.81156,3.70629 23.05635,1.63886 23.05635,1.63886 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="csssssc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19129-0"
+                 style="fill:#91f2d6;fill-opacity:1"
+                 d="m 248.56629,384.70154 c 0,0 -3.83905,-8.14273 -1.44416,-12.81907 2.39472,-4.67587 11.01667,-3.42061 11.01667,-3.42061 0,0 -6.96587,-6.17954 -15.58329,-9.07766 -8.61751,-2.89815 -18.95857,-6.37594 -26.38931,7.56885 4.02228,1.07866 7.55207,1.99171 13.86896,5.21239 6.31659,3.22062 18.53176,12.53583 18.53176,12.53583 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cscscsc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19131-2"
+                 style="fill:#91f2f2;fill-opacity:1"
+                 d="m 186.24134,404.57103 c 0,0 -3.66687,-11.09949 7.12783,-23.63905 10.79469,-12.53957 21.14887,-13.9903 21.14887,-13.9903 0,0 -0.23965,-2.54717 1.81952,-4.59532 2.0591,-2.04818 5.10533,-4.58646 5.10533,-4.58646 0,0 -19.2905,1.52522 -31.08666,13.38912 -14.90851,14.9928 -16.63282,45.38247 -16.63282,45.38247 0,0 3.5636,-6.92078 5.93775,-8.69167 3.29241,-2.45559 6.58039,-3.26829 6.58039,-3.26829 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cscscscsc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259" />
+              <path
+                 id="path19133-3"
+                 style="opacity:0.40565999;fill:#119316;filter:url(#filter19165-7)"
+                 d="m 283.002,448.50918 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.01499,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
+                 inkscape:export-ydpi="34.466259"
+                 sodipodi:nodetypes="cssscc"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:connector-curvature="0"
+                 inkscape:export-xdpi="34.466259"
+                 transform="rotate(18.588265,235.12197,425.21082)" />
+              <ellipse
+                 ry="1.6884948"
+                 rx="2.9873261"
+                 cy="354.52118"
+                 cx="409.34854"
+                 id="path19135-7"
+                 style="fill:#119316;stroke-width:0.79256278"
+                 inkscape:export-ydpi="34.466259"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 inkscape:export-xdpi="34.466259"
+                 transform="rotate(18.588265)" />
+              <ellipse
+                 ry="3.7025514"
+                 rx="8.639287"
+                 cy="563.83679"
+                 cx="80.100502"
+                 id="path19235-9"
+                 style="fill:#258a0b;stroke:#27bb31;stroke-width:2.31428981"
+                 inkscape:export-ydpi="34.466259"
+                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+                 transform="rotate(-20.028428)"
+                 inkscape:export-xdpi="34.466259" />
+            </g>
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csscc"
+               inkscape:export-ydpi="34.466259"
+               d="m 409.47,562.83 c -12.926,7.9226 -35.026,34.192 -35.443,52.539 -0.41698,18.347 36.072,67.395 22.934,93.82 -26.173,52.642 -112.17,59.628 -112.17,59.628 l 0.41698,1.2509"
+               style="fill:none;stroke:#8ed766;stroke-width:1px"
+               id="path19247" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 373.7,689.25 c 0,0 14.678,6.9543 44.252,-20.208 29.573,-27.162 44.816,-75.925 15.885,-114.16 -28.931,-38.233 -66.258,-21.846 -88.017,-5.6216 -21.759,16.225 -32.577,54.048 -20.411,84.135 9.2919,22.979 20.238,33.395 28.151,42.276 7.9131,8.8816 20.14,13.576 20.14,13.576 z"
+               style="opacity:0.89623;fill:#eead71"
+               id="path19190" />
+            <ellipse
+               inkscape:export-xdpi="34.466259"
+               transform="matrix(0.94892,0.0063835,0.43733,0.79236,-314.26,165.21)"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               style="fill:url(#radialGradient1155);stroke:#b39412"
+               id="path19188"
+               cx="421.15836"
+               cy="660.36096"
+               rx="9.3590746"
+               ry="4.9195137" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 408.27,576.22 c 0,0 -1.7204,-7.4816 -8.3597,-14.055 -6.6392,-6.5735 -12.673,-9.8678 -12.673,-9.8678 l 8.1172,-9.298 c 0,0 9.2171,0.33286 19.025,9.3733 9.8075,9.0404 14.283,20.422 14.283,20.422 z"
+               style="fill:#f5d2af"
+               id="path19192" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 382.91,552.82 8.6783,-11.094 c 0,0 -6.9564,-4.6577 -19.012,-2.6634 -12.056,1.9944 -21.988,11.314 -21.988,11.314 0,0 5.4707,2.4626 4.457,6.5854 -1.0137,4.1228 -3.9539,13.694 -3.9539,13.694 0,0 5.52,-6.884 11.613,-10.247 6.0929,-3.3628 20.206,-7.5891 20.206,-7.5891 z"
+               style="fill:#f5d2af"
+               id="path19194" />
+            <ellipse
+               inkscape:export-xdpi="34.466259"
+               transform="matrix(0.85715,0,0,0.85715,45.497,94.039)"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               style="fill:#103485;stroke:#17366e;stroke-width:2.70000005"
+               id="path19125"
+               cx="329.9122"
+               cy="663.9549"
+               rx="10.079151"
+               ry="4.3196359" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 406.82,559.56 c 0,0 7.0104,13.723 46.438,9.171 39.428,-4.5524 81.113,-34.086 82.369,-80.316 1.2554,-46.23 -37.511,-54.482 -64.21,-54.073 -26.698,0.40872 -58.26,23.884 -67.397,54.281 -6.9786,23.216 -4.9646,37.54 -4.3395,48.952 0.62509,11.412 7.1396,21.984 7.1396,21.984 z"
+               style="fill:#4ca44f;fill-opacity:1"
+               id="path19221" />
+            <g
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-xdpi="34.466259"
+               style="opacity:0.90881001"
+               inkscape:export-ydpi="34.466259"
+               id="g19177">
+              <path
+                 inkscape:connector-curvature="0"
+                 style="fill:#cebe25"
+                 sodipodi:nodetypes="cczcczc"
+                 d="m 420.06,644.75 14.736,11.194 c 0,0 -10.455,1.5112 -13.219,4.6288 -2.7635,3.1176 -2.1938,10.839 -2.1938,10.839 l -14.75,-11.19 c 0,0 8.9256,-0.84037 11.841,-3.7415 2.9145,-2.9014 3.5719,-11.727 3.5719,-11.727 z"
+                 id="rect19110" />
+              <ellipse
+                 transform="matrix(0.8277,0.46412,0,0.90504,64.167,-128.68)"
+                 style="fill:url(#radialGradient19108);stroke:#b39412"
+                 id="path19100"
+                 cx="421.15836"
+                 cy="660.36096"
+                 rx="9.3590746"
+                 ry="4.9195137" />
+              <path
+                 inkscape:connector-curvature="0"
+                 style="fill:#c88c00;fill-opacity:1"
+                 sodipodi:nodetypes="csssssc"
+                 d="m 419.17,656.92 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
+                 id="path18586" />
+              <path
+                 inkscape:connector-curvature="0"
+                 style="fill:#e8d050"
+                 d="m 504.05,574.67 c 0,0 2.109,-7.3815 -0.52726,-16.345 -2.6363,-8.9633 -6.327,-14.763 -6.327,-14.763 l 11.6,-4.218 c 0,0 7.9088,4.7453 12.127,17.399 4.218,12.654 2.6363,24.781 2.6363,24.781 z"
+                 id="path19096" />
+              <path
+                 inkscape:connector-curvature="0"
+                 style="fill:#ecd450"
+                 d="m 493.15,541.93 12.959,-5.5194 c 0,0 -3.8396,-7.4393 -15.358,-11.519 -11.519,-4.0796 -24.718,-0.71993 -24.718,-0.71993 0,0 3.5996,4.7995 0.71993,7.9192 -2.87967,3.1197 -10.079,10.079 -10.079,10.079 0,0 8.1592,-3.3597 15.119,-3.3597 6.9593,0 21.358,3.1197 21.358,3.1197 z"
+                 id="path19098" />
+            </g>
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 267.71,655.9 c 0,0 14.122,-6.1672 11.964,-45.798 -2.1583,-39.631 -29.115,-83.027 -75.185,-87.077 -46.069,-4.0504 -56.652,34.146 -57.859,60.82 -1.2075,26.674 20.315,59.598 50.104,70.558 22.751,8.3706 37.171,7.2271 48.6,7.2936 11.429,0.0666 22.376,-5.7962 22.376,-5.7962 z"
+               style="fill:#1ad61f"
+               id="path19127" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cscscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 213.07,549.8 c 0,0 -6.2344,-6.4942 -5.4551,-11.69 0.7793,-5.1953 9.3516,-6.7539 9.3516,-6.7539 0,0 -8.5723,-3.6367 -17.664,-3.6367 -9.0918,0 -20.002,0 -22.6,15.586 4.1563,-0.25977 7.793,-0.51953 14.807,0.51954 7.0137,1.0391 21.561,5.9746 21.561,5.9746 z"
+               style="fill:#91f294"
+               id="path19129" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cscscscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 160.33,588.5 c 0,0 -7.0137,-9.3516 -0.7793,-24.678 6.2344,-15.3264 15.586,-20.002 15.586,-20.002 0,0 -1.0391,-2.3379 0.25977,-4.9356 1.2988,-2.5977 3.377,-5.9746 3.377,-5.9746 0,0 -17.798,7.5948 -25.197,22.6 -9.3516,18.963 -1.2988,48.317 -1.2988,48.317 0,0 1.1716,-7.6957 2.8574,-10.131 2.3379,-3.377 5.1953,-5.1954 5.1953,-5.1954 z"
+               style="fill:#91f294"
+               id="path19131" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cssscc"
+               inkscape:export-ydpi="34.466259"
+               d="m 261.12,615.78 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.015,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
+               style="opacity:0.40565999;fill:#119316;filter:url(#filter19165)"
+               id="path19133" />
+            <ellipse
+               inkscape:export-xdpi="34.466259"
+               transform="matrix(0.82143,0,0,0.76471,56.357,140.05)"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               style="fill:#119316"
+               id="path19135"
+               cx="253.01309"
+               cy="626.21436"
+               rx="3.6367385"
+               ry="2.2080197" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
@@ -743,8 +1440,106 @@
                sodipodi:nodetypes="csssssc"
                inkscape:export-ydpi="34.466259"
                d="m 352.35,500.41 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
-               style="fill:#000000;fill-opacity:1"
-               id="path19227-9" />
+               style="fill:#d61a28;fill-opacity:1"
+               id="path19227" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssccc"
+               inkscape:export-ydpi="34.466259"
+               d="m 296.72,545.13 c 0,0 -26.106,-8.9741 -34.286,-16.508 -10.723,-9.8765 -9.3122,-28.078 7.1957,-37.107 16.508,-9.03 28.924,0.70545 32.31,11.005 2.2143,6.7352 4.3739,40.494 4.3739,40.494 l -9.03,2.3986 z"
+               style="fill:#e98e07;filter:url(#filter19157)"
+               id="path19143" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 301.44,565.93 c 0,0 16.109,-2.2472 23.099,-41.317 9.1999,-51.42 -5.7962,-88.105 -49.366,-103.61 -43.569,-15.508 -72.418,21.342 -75.514,46.583 -3.2505,26.503 7.3886,60.944 33.463,79.044 19.914,13.824 34.158,16.344 45.203,19.283 11.045,2.9392 23.114,0.0182 23.114,0.0182 z"
+               style="opacity:0.95597049;fill:#ffab18"
+               id="path19137" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cscscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 509.42,498.59 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
+               style="fill:#91f294"
+               id="path19223" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 333.38,549.13 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
+               style="opacity:0.97170003;fill:#ee71ee"
+               id="path19169" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 353.74,671.2 c 11.054,1.6377 31.707,-25.522 37.666,-39.304 6.5506,-15.148 12.773,-44.756 -15.148,-52.405 -29.887,-8.1883 -54.043,-0.40941 -54.043,20.061 0,20.471 6.1412,45.036 12.282,50.768 6.1412,5.7318 19.243,20.88 19.243,20.88 z"
+               style="opacity:0.38049999;fill:#ce8725"
+               id="path19219" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csssssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 329.42,662.38 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
+               style="opacity:0.94024999;fill:#1a54d6"
+               id="path19113" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csczcscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 267.08,582.81 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 -2.7925,36.945 -2.7925,36.945 0,0 2.7303,-4.0069 5.8205,-5.3313 3.0902,-1.3244 7.1426,-0.48456 7.1426,-0.48456 z"
+               style="fill:#7099f6"
+               id="path19115" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cscscccsscc"
+               inkscape:export-ydpi="34.466259"
+               d="m 280.36,521.87 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
+               style="fill:#7099f6"
+               id="path19121" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cccscscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 332.87,537.1 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 1.965,20.773 1.965,20.773 0,0 -2.6251,-3.0906 -10.423,-4.9885 -9.2694,-2.2561 -14.842,-0.90659 -14.842,-0.90659 0,0 1.4726,-7.667 -3.3901,-20.709 -5.3776,-14.423 -10.646,-16.907 -10.646,-16.907 z"
+               style="fill:#7099f6"
+               id="path19123" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 218.17,522.81 c 0,0 -5.0089,-5.5655 -3.8958,-17.531 1.1131,-11.9655 5.5655,-16.418 5.5655,-16.418 0,0 -7.2351,-11.409 -0.83482,-26.158 6.4003,-14.748 13.635,-22.262 13.635,-22.262 0,0 -2.5044,-1.3914 -2.5044,-3.6176 0,-2.2262 1.1131,-5.0089 1.1131,-5.0089 0,0 -23.931,10.853 -26.158,39.236 -2.2262,28.384 13.079,51.759 13.079,51.759 z"
+               style="fill:#fbdb74"
+               id="path19139" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cscscscsc"
+               inkscape:export-ydpi="34.466259"
+               d="m 467.6,448.3 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
+               style="fill:#91f294"
+               id="path19225" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
@@ -752,1008 +1547,220 @@
                sodipodi:nodetypes="cscscccsscc"
                inkscape:export-ydpi="34.466259"
                d="m 303.29,359.9 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
-               style="fill:#000000;fill-opacity:1"
-               id="path19231-8" />
-            <g
-               id="g4170"
-               style="">
-              <path
-                 id="path19243-3-9"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 342.61769,657.56843 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <g
-                 id="g1080-0"
-                 transform="rotate(-18.981592,527.55261,1090.37)"
-                 style="fill:#000000">
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="csssssc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 568.86864,517.52581 c 0,0 7.27015,13.58718 46.60404,8.28607 39.33427,-5.30151 80.44999,-35.62264 80.82645,-81.86816 0.37586,-46.24552 -38.54049,-53.75867 -65.22688,-52.84192 -26.68539,0.91646 -57.79517,24.98781 -66.35236,55.5531 -6.53576,23.34454 -4.24967,37.62764 -3.40762,49.02569 0.84203,11.39804 7.55645,21.84422 7.55645,21.84422 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19221-9-9" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="cscscsc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 670.4155,455.43927 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19223-7-1" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="cscscscsc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 628.5955,405.14927 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19225-6-7" />
-              </g>
-              <g
-                 id="g1013-7"
-                 transform="translate(-5.0037336,28.501867)"
-                 style="fill:#000000">
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="csczcscscc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 290.01,420.84 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 3.028,31.6137 3.028,31.6137 0,0 -3.0902,1.3244 0,0 3.0902,-1.3244 7.1427,-0.4846 7.1427,-0.4846 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19229-1" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 235.14,429.03 c 0,0 2.2262,-4.1741 13.079,-5.8437 10.8528,-1.6696 21.427,-1.3914 21.427,-1.3914 0,0 5.2872,7.7916 16.696,15.305 11.4088,7.5134 21.427,11.131 21.427,11.131 0,0 -7.2351,-1.3914 -13.914,-0.83482 -6.6786,0.55655 -10.853,1.1131 -10.853,1.1131 0,0 -1.3914,-3.8958 -13.635,-8.3482 -12.2436,-4.4524 -33.114,-1.6696 -33.114,-1.6696 0,0 -1.6696,-0.27827 -2.5045,-3.3393 -0.83482,-3.061 1.3914,-6.122 1.3914,-6.122 z"
-                   style="fill:#000000"
-                   id="path19141-1" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="csssssc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 266.53494,502.68403 c 0,0 15.35119,-1.34388 25.93869,-39.59518 10.58727,-38.25159 -1.13006,-87.97664 -43.50576,-106.50088 -42.37463,-18.5243 -64.58124,14.30604 -74.22801,39.20381 -9.64726,24.89761 0.25747,62.96471 24.99883,82.84867 18.8959,15.18616 32.92817,18.6989 43.73977,22.4051 10.81156,3.70629 23.05635,1.63886 23.05635,1.63886 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19127-2-5" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="cscscsc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 248.56629,384.70154 c 0,0 -3.83905,-8.14273 -1.44416,-12.81907 2.39472,-4.67587 11.01667,-3.42061 11.01667,-3.42061 0,0 -6.96587,-6.17954 -15.58329,-9.07766 -8.61751,-2.89815 -18.95857,-6.37594 -26.38931,7.56885 4.02228,1.07866 7.55207,1.99171 13.86896,5.21239 6.31659,3.22062 18.53176,12.53583 18.53176,12.53583 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19129-0-9" />
-                <path
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="cscscscsc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 186.24134,404.57103 c 0,0 -3.66687,-11.09949 7.12783,-23.63905 10.79469,-12.53957 21.14887,-13.9903 21.14887,-13.9903 0,0 -0.23965,-2.54717 1.81952,-4.59532 2.0591,-2.04818 5.10533,-4.58646 5.10533,-4.58646 0,0 -19.2905,1.52522 -31.08666,13.38912 -14.90851,14.9928 -16.63282,45.38247 -16.63282,45.38247 0,0 3.5636,-6.92078 5.93775,-8.69167 3.29241,-2.45559 6.58039,-3.26829 6.58039,-3.26829 z"
-                   style="fill:#000000;fill-opacity:1"
-                   id="path19131-2-7" />
-                <path
-                   transform="rotate(18.588265,235.12197,425.21082)"
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:connector-curvature="0"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   sodipodi:nodetypes="cssscc"
-                   inkscape:export-ydpi="34.466259"
-                   d="m 283.002,448.50918 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.01499,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
-                   style="opacity:0.40565999;fill:#000000;filter:url(#filter19165-7-7)"
-                   id="path19133-3-7" />
-                <ellipse
-                   transform="rotate(18.588265)"
-                   inkscape:export-xdpi="34.466259"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   inkscape:export-ydpi="34.466259"
-                   style="fill:#000000;stroke-width:0.79256278"
-                   id="path19135-7-6"
-                   cx="409.34854"
-                   cy="354.52118"
-                   rx="2.9873261"
-                   ry="1.6884948" />
-                <ellipse
-                   inkscape:export-xdpi="34.466259"
-                   transform="rotate(-20.028428)"
-                   inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                   inkscape:export-ydpi="34.466259"
-                   style="fill:#000000;stroke:#27bb31;stroke-width:2.31428981"
-                   id="path19235-9-7"
-                   cx="80.100502"
-                   cy="563.83679"
-                   rx="8.639287"
-                   ry="3.7025514" />
-              </g>
-              <path
-                 id="path19247-3"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 409.47,562.83 c -12.926,7.9226 -35.026,34.192 -35.443,52.539 -0.41698,18.347 36.072,67.395 22.934,93.82 -26.173,52.642 -112.17,59.628 -112.17,59.628 l 0.41698,1.2509"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csscc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19190-6"
-                 style="opacity:0.89623;fill:#000000"
-                 d="m 373.7,689.25 c 0,0 14.678,6.9543 44.252,-20.208 29.573,-27.162 44.816,-75.925 15.885,-114.16 -28.931,-38.233 -66.258,-21.846 -88.017,-5.6216 -21.759,16.225 -32.577,54.048 -20.411,84.135 9.2919,22.979 20.238,33.395 28.151,42.276 7.9131,8.8816 20.14,13.576 20.14,13.576 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <ellipse
-                 ry="4.9195137"
-                 rx="9.3590746"
-                 cy="660.36096"
-                 cx="421.15836"
-                 id="path19188-5"
-                 style="fill:#000000;stroke:#000000;stroke-opacity:1"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 transform="matrix(0.94892,0.0063835,0.43733,0.79236,-314.26,165.21)"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19192-6"
-                 style="fill:#000000"
-                 d="m 408.27,576.22 c 0,0 -1.7204,-7.4816 -8.3597,-14.055 -6.6392,-6.5735 -12.673,-9.8678 -12.673,-9.8678 l 8.1172,-9.298 c 0,0 9.2171,0.33286 19.025,9.3733 9.8075,9.0404 14.283,20.422 14.283,20.422 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19194-3"
-                 style="fill:#000000"
-                 d="m 382.91,552.82 8.6783,-11.094 c 0,0 -6.9564,-4.6577 -19.012,-2.6634 -12.056,1.9944 -21.988,11.314 -21.988,11.314 0,0 5.4707,2.4626 4.457,6.5854 -1.0137,4.1228 -3.9539,13.694 -3.9539,13.694 0,0 5.52,-6.884 11.613,-10.247 6.0929,-3.3628 20.206,-7.5891 20.206,-7.5891 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <ellipse
-                 ry="4.3196359"
-                 rx="10.079151"
-                 cy="663.9549"
-                 cx="329.9122"
-                 id="path19125-9"
-                 style="fill:#000000;stroke:#000000;stroke-width:2.70000005;stroke-opacity:1"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 transform="matrix(0.85715,0,0,0.85715,45.497,94.039)"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19221-4"
-                 style="fill:#000000;fill-opacity:1"
-                 d="m 406.82,559.56 c 0,0 7.0104,13.723 46.438,9.171 39.428,-4.5524 81.113,-34.086 82.369,-80.316 1.2554,-46.23 -37.511,-54.482 -64.21,-54.073 -26.698,0.40872 -58.26,23.884 -67.397,54.281 -6.9786,23.216 -4.9646,37.54 -4.3395,48.952 0.62509,11.412 7.1396,21.984 7.1396,21.984 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 inkscape:connector-curvature="0"
-                 style="fill:#000000"
-                 sodipodi:nodetypes="cczcczc"
-                 d="m 420.06,644.75 14.736,11.194 c 0,0 -10.455,1.5112 -13.219,4.6288 -2.7635,3.1176 -2.1938,10.839 -2.1938,10.839 l -14.75,-11.19 c 0,0 8.9256,-0.84037 11.841,-3.7415 2.9145,-2.9014 3.5719,-11.727 3.5719,-11.727 z"
-                 id="rect19110-1" />
-              <ellipse
-                 transform="matrix(0.87223274,0.48909105,0,1,0,0)"
-                 style="fill:#000000;stroke:#000000;stroke-width:0.926732;stroke-opacity:1"
-                 id="path19100-2"
-                 cx="473.22205"
-                 cy="432.99243"
-                 rx="8.881237"
-                 ry="4.4523568" />
-              <path
-                 inkscape:connector-curvature="0"
-                 style="fill:#000000;fill-opacity:1"
-                 sodipodi:nodetypes="csssssc"
-                 d="m 419.17,656.92 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
-                 id="path18586-9" />
-              <path
-                 inkscape:connector-curvature="0"
-                 style="fill:#000000"
-                 d="m 504.05,574.67 c 0,0 2.109,-7.3815 -0.52726,-16.345 -2.6363,-8.9633 -6.327,-14.763 -6.327,-14.763 l 11.6,-4.218 c 0,0 7.9088,4.7453 12.127,17.399 4.218,12.654 2.6363,24.781 2.6363,24.781 z"
-                 id="path19096-3" />
-              <path
-                 inkscape:connector-curvature="0"
-                 style="fill:#000000"
-                 d="m 493.15,541.93 12.959,-5.5194 c 0,0 -3.8396,-7.4393 -15.358,-11.519 -11.519,-4.0796 -24.718,-0.71993 -24.718,-0.71993 0,0 3.5996,4.7995 0.71993,7.9192 -2.87967,3.1197 -10.079,10.079 -10.079,10.079 0,0 8.1592,-3.3597 15.119,-3.3597 6.9593,0 21.358,3.1197 21.358,3.1197 z"
-                 id="path19098-9" />
-              <path
-                 id="path19127-0"
-                 style="fill:#000000"
-                 d="m 267.71,655.9 c 0,0 14.122,-6.1672 11.964,-45.798 -2.1583,-39.631 -29.115,-83.027 -75.185,-87.077 -46.069,-4.0504 -56.652,34.146 -57.859,60.82 -1.2075,26.674 20.315,59.598 50.104,70.558 22.751,8.3706 37.171,7.2271 48.6,7.2936 11.429,0.0666 22.376,-5.7962 22.376,-5.7962 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19129-8"
-                 style="fill:#000000"
-                 d="m 213.07,549.8 c 0,0 -6.2344,-6.4942 -5.4551,-11.69 0.7793,-5.1953 9.3516,-6.7539 9.3516,-6.7539 0,0 -8.5723,-3.6367 -17.664,-3.6367 -9.0918,0 -20.002,0 -22.6,15.586 4.1563,-0.25977 7.793,-0.51953 14.807,0.51954 7.0137,1.0391 21.561,5.9746 21.561,5.9746 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cscscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19131-8"
-                 style="fill:#000000"
-                 d="m 160.33,588.5 c 0,0 -7.0137,-9.3516 -0.7793,-24.678 6.2344,-15.3264 15.586,-20.002 15.586,-20.002 0,0 -1.0391,-2.3379 0.25977,-4.9356 1.2988,-2.5977 3.377,-5.9746 3.377,-5.9746 0,0 -17.798,7.5948 -25.197,22.6 -9.3516,18.963 -1.2988,48.317 -1.2988,48.317 0,0 1.1716,-7.6957 2.8574,-10.131 2.3379,-3.377 5.1953,-5.1954 5.1953,-5.1954 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cscscscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19133-5"
-                 style="opacity:0.40565999;fill:#000000;filter:url(#filter19165-6)"
-                 d="m 261.12,615.78 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.015,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cssscc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <ellipse
-                 ry="2.2080197"
-                 rx="3.6367385"
-                 cy="626.21436"
-                 cx="253.01309"
-                 id="path19135-0"
-                 style="fill:#000000"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 transform="matrix(0.82143,0,0,0.76471,56.357,140.05)"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19143-6"
-                 style="fill:#000000;filter:url(#filter19157-5)"
-                 d="m 296.72,545.13 c 0,0 -26.106,-8.9741 -34.286,-16.508 -10.723,-9.8765 -9.3122,-28.078 7.1957,-37.107 16.508,-9.03 28.924,0.70545 32.31,11.005 2.2143,6.7352 4.3739,40.494 4.3739,40.494 l -9.03,2.3986 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssccc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19137-3"
-                 style="opacity:0.95597049;fill:#000000"
-                 d="m 301.44,565.93 c 0,0 16.109,-2.2472 23.099,-41.317 9.1999,-51.42 -5.7962,-88.105 -49.366,-103.61 -43.569,-15.508 -72.418,21.342 -75.514,46.583 -3.2505,26.503 7.3886,60.944 33.463,79.044 19.914,13.824 34.158,16.344 45.203,19.283 11.045,2.9392 23.114,0.0182 23.114,0.0182 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19223-8"
-                 style="fill:#000000"
-                 d="m 509.42,498.59 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cscscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19169-5"
-                 style="opacity:0.97170003;fill:#000000"
-                 d="m 333.38,549.13 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19219-6"
-                 style="opacity:0.38049999;fill:#000000"
-                 d="m 353.74,671.2 c 11.054,1.6377 31.707,-25.522 37.666,-39.304 6.5506,-15.148 12.773,-44.756 -15.148,-52.405 -29.887,-8.1883 -54.043,-0.40941 -54.043,20.061 0,20.471 6.1412,45.036 12.282,50.768 6.1412,5.7318 19.243,20.88 19.243,20.88 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19113-1"
-                 style="opacity:0.94024999;fill:#000000"
-                 d="m 329.42,662.38 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csssssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19115-1"
-                 style="fill:#000000"
-                 d="m 267.08,582.81 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 -2.7925,36.945 -2.7925,36.945 0,0 2.7303,-4.0069 5.8205,-5.3313 3.0902,-1.3244 7.1426,-0.48456 7.1426,-0.48456 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csczcscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19121-5"
-                 style="fill:#000000"
-                 d="m 280.36,521.87 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cscscccsscc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19123-9"
-                 style="fill:#000000"
-                 d="m 332.87,537.1 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 1.965,20.773 1.965,20.773 0,0 -2.6251,-3.0906 -10.423,-4.9885 -9.2694,-2.2561 -14.842,-0.90659 -14.842,-0.90659 0,0 1.4726,-7.667 -3.3901,-20.709 -5.3776,-14.423 -10.646,-16.907 -10.646,-16.907 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cccscscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19139-8"
-                 style="fill:#000000"
-                 d="m 218.17,522.81 c 0,0 -5.0089,-5.5655 -3.8958,-17.531 1.1131,-11.9655 5.5655,-16.418 5.5655,-16.418 0,0 -7.2351,-11.409 -0.83482,-26.158 6.4003,-14.748 13.635,-22.262 13.635,-22.262 0,0 -2.5044,-1.3914 -2.5044,-3.6176 0,-2.2262 1.1131,-5.0089 1.1131,-5.0089 0,0 -23.931,10.853 -26.158,39.236 -2.2262,28.384 13.079,51.759 13.079,51.759 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19225-4"
-                 style="fill:#000000"
-                 d="m 467.6,448.3 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cscscscsc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19171-1"
-                 style="fill:#000000"
-                 d="m 360.58,436.24 c 0,0 5.6267,-6.5645 22.272,-7.7367 16.646,-1.1722 24.617,6.33 24.617,6.33 0,0 1.1722,-2.11 6.33,-3.0478 5.1578,-0.93778 11.488,-1.4067 11.488,-1.4067 0,0 -3.7511,-12.426 -24.851,-15.239 -21.1,-2.8134 -42.2,14.301 -42.2,14.301 0,0 1.6411,0.70334 2.3445,2.5789 0.70334,1.8756 0,4.22 0,4.22 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19173-0"
-                 style="fill:#000000"
-                 d="m 410.52,437.41 c 0,0 0,-2.8134 6.5645,-3.2822 6.5645,-0.4689 11.722,-0.23445 11.722,-0.23445 0,0 7.5023,6.0956 10.081,19.459 2.5789,13.363 -0.4689,31.416 -0.4689,31.416 0,0 -4.9234,-3.2822 -9.6123,-5.1578 -4.6889,-1.8756 -8.6745,-3.5167 -8.6745,-3.5167 0,0 2.5789,-10.081 -0.23444,-20.162 -2.8134,-10.081 -9.3778,-18.521 -9.3778,-18.521 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19233-3"
-                 style="fill:#000000;fill-opacity:1"
-                 d="m 355.8,375.13 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 7.08862,11.67538 7.08862,11.67538 0,0 -1.91103,-0.66462 -9.70893,-2.56252 -9.2694,-2.2561 -20.67969,5.76505 -20.67969,5.76505 0,0 1.4726,-7.667 -3.3901,-20.709 -5.37,-14.42 -10.64,-16.91 -10.64,-16.91 z"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cccscscscc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19175-0"
-                 style="fill:#000000"
-                 d="m 335.26,451.71 c 0,0 0.70334,-4.4545 7.7367,-10.55 7.0334,-6.0956 11.253,-7.9712 11.253,-7.9712 0,0 1.1722,2.5789 2.11,4.4545 0.93778,1.8756 1.6411,2.3445 1.6411,2.3445 0,0 -2.5789,1.4067 -6.33,7.7367 -3.7511,6.33 -8.4401,23.21 -8.4401,23.21 0,0 1.8756,-11.957 -1.4067,-15.239 -3.2822,-3.2822 -6.5645,-3.9856 -6.5645,-3.9856 z"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <ellipse
-                 ry="4.3196359"
-                 rx="10.079151"
-                 cy="663.9549"
-                 cx="329.9122"
-                 id="path19235-4"
-                 style="fill:#000000;stroke:#000000;stroke-width:2.70000005;stroke-opacity:1"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 transform="matrix(0.66972,-0.53495,0.53495,0.66972,-306.81,386.78)"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19237-4"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 327.89,667.56 c 0,0 -11.464,27.84 0,67.963 11.464,40.123 90.89,45.036 106.45,87.615 15.558,42.579 24.565,57.318 24.565,57.318"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19239-4"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 269.4,656.05 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19241-4"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 376.66,692.89 c 0,0 11.464,40.942 -20.471,64.688 -31.934,23.746 -58.137,33.572 -67.963,57.318 -9.826,23.746 -18.014,59.775 -18.014,59.775"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19243-7"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 413.51,664.24 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
-                 inkscape:export-ydpi="34.466259"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19245-6"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 360.3,681.82 c -11.464,9.826 -50.939,20.767 -61.412,68.782 -10.029,45.978 64.688,120.37 64.688,120.37"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="csc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-              <path
-                 id="path19239-2-3"
-                 style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1"
-                 d="m 280.00598,635.99807 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
-                 inkscape:export-ydpi="34.466259"
-                 sodipodi:nodetypes="cssc"
-                 inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-                 inkscape:connector-curvature="0"
-                 inkscape:export-xdpi="34.466259" />
-            </g>
-          </g>
-        </g>
-        <g
-           id="g3888">
-          <path
-             id="path19243-3"
-             style="fill:none;stroke:#e5ca62;stroke-width:1px"
-             d="m 342.61769,657.56843 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <g
-             id="g1080"
-             transform="rotate(-18.981592,527.55261,1090.37)">
-            <path
-               inkscape:export-xdpi="34.466259"
-               inkscape:connector-curvature="0"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="csssssc"
-               inkscape:export-ydpi="34.466259"
-               d="m 568.86864,517.52581 c 0,0 7.27015,13.58718 46.60404,8.28607 39.33427,-5.30151 80.44999,-35.62264 80.82645,-81.86816 0.37586,-46.24552 -38.54049,-53.75867 -65.22688,-52.84192 -26.68539,0.91646 -57.79517,24.98781 -66.35236,55.5531 -6.53576,23.34454 -4.24967,37.62764 -3.40762,49.02569 0.84203,11.39804 7.55645,21.84422 7.55645,21.84422 z"
-               style="fill:#ebde05;fill-opacity:1"
-               id="path19221-9" />
-            <path
-               inkscape:export-xdpi="34.466259"
-               inkscape:connector-curvature="0"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="cscscsc"
-               inkscape:export-ydpi="34.466259"
-               d="m 670.4155,455.43927 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
-               style="fill:#d9f291;fill-opacity:1"
-               id="path19223-7" />
-            <path
-               inkscape:export-xdpi="34.466259"
-               inkscape:connector-curvature="0"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="cscscscsc"
-               inkscape:export-ydpi="34.466259"
-               d="m 628.5955,405.14927 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
-               style="fill:#f2ef91;fill-opacity:1"
-               id="path19225-6" />
-          </g>
-          <g
-             id="g1013"
-             transform="translate(-5.0037336,28.501867)">
-            <path
-               inkscape:export-xdpi="34.466259"
-               inkscape:connector-curvature="0"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="csczcscscc"
-               inkscape:export-ydpi="34.466259"
-               d="m 290.01,420.84 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 3.028,31.6137 3.028,31.6137 0,0 -3.0902,1.3244 0,0 3.0902,-1.3244 7.1427,-0.4846 7.1427,-0.4846 z"
-               style="fill:#f6707d;fill-opacity:1"
-               id="path19229" />
+               style="fill:#f67076;fill-opacity:1"
+               id="path19231" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
                inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
                inkscape:export-ydpi="34.466259"
-               d="m 235.14,429.03 c 0,0 2.2262,-4.1741 13.079,-5.8437 10.8528,-1.6696 21.427,-1.3914 21.427,-1.3914 0,0 5.2872,7.7916 16.696,15.305 11.4088,7.5134 21.427,11.131 21.427,11.131 0,0 -7.2351,-1.3914 -13.914,-0.83482 -6.6786,0.55655 -10.853,1.1131 -10.853,1.1131 0,0 -1.3914,-3.8958 -13.635,-8.3482 -12.2436,-4.4524 -33.114,-1.6696 -33.114,-1.6696 0,0 -1.6696,-0.27827 -2.5045,-3.3393 -0.83482,-3.061 1.3914,-6.122 1.3914,-6.122 z"
-               style="fill:#fbdb74"
-               id="path19141" />
+               d="m 360.58,436.24 c 0,0 5.6267,-6.5645 22.272,-7.7367 16.646,-1.1722 24.617,6.33 24.617,6.33 0,0 1.1722,-2.11 6.33,-3.0478 5.1578,-0.93778 11.488,-1.4067 11.488,-1.4067 0,0 -3.7511,-12.426 -24.851,-15.239 -21.1,-2.8134 -42.2,14.301 -42.2,14.301 0,0 1.6411,0.70334 2.3445,2.5789 0.70334,1.8756 0,4.22 0,4.22 z"
+               style="fill:#f787f7"
+               id="path19171" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
                inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="csssssc"
                inkscape:export-ydpi="34.466259"
-               d="m 266.53494,502.68403 c 0,0 15.35119,-1.34388 25.93869,-39.59518 10.58727,-38.25159 -1.13006,-87.97664 -43.50576,-106.50088 -42.37463,-18.5243 -64.58124,14.30604 -74.22801,39.20381 -9.64726,24.89761 0.25747,62.96471 24.99883,82.84867 18.8959,15.18616 32.92817,18.6989 43.73977,22.4051 10.81156,3.70629 23.05635,1.63886 23.05635,1.63886 z"
-               style="fill:#1ad6d6;fill-opacity:1"
-               id="path19127-2" />
+               d="m 410.52,437.41 c 0,0 0,-2.8134 6.5645,-3.2822 6.5645,-0.4689 11.722,-0.23445 11.722,-0.23445 0,0 7.5023,6.0956 10.081,19.459 2.5789,13.363 -0.4689,31.416 -0.4689,31.416 0,0 -4.9234,-3.2822 -9.6123,-5.1578 -4.6889,-1.8756 -8.6745,-3.5167 -8.6745,-3.5167 0,0 2.5789,-10.081 -0.23444,-20.162 -2.8134,-10.081 -9.3778,-18.521 -9.3778,-18.521 z"
+               style="fill:#f787f7"
+               id="path19173" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
                inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="cscscsc"
+               sodipodi:nodetypes="cccscscscc"
                inkscape:export-ydpi="34.466259"
-               d="m 248.56629,384.70154 c 0,0 -3.83905,-8.14273 -1.44416,-12.81907 2.39472,-4.67587 11.01667,-3.42061 11.01667,-3.42061 0,0 -6.96587,-6.17954 -15.58329,-9.07766 -8.61751,-2.89815 -18.95857,-6.37594 -26.38931,7.56885 4.02228,1.07866 7.55207,1.99171 13.86896,5.21239 6.31659,3.22062 18.53176,12.53583 18.53176,12.53583 z"
-               style="fill:#91f2d6;fill-opacity:1"
-               id="path19129-0" />
+               d="m 355.8,375.13 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 7.08862,11.67538 7.08862,11.67538 0,0 -1.91103,-0.66462 -9.70893,-2.56252 -9.2694,-2.2561 -20.67969,5.76505 -20.67969,5.76505 0,0 1.4726,-7.667 -3.3901,-20.709 -5.37,-14.42 -10.64,-16.91 -10.64,-16.91 z"
+               style="fill:#f67080;fill-opacity:1"
+               id="path19233" />
             <path
                inkscape:export-xdpi="34.466259"
                inkscape:connector-curvature="0"
                inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="cscscscsc"
                inkscape:export-ydpi="34.466259"
-               d="m 186.24134,404.57103 c 0,0 -3.66687,-11.09949 7.12783,-23.63905 10.79469,-12.53957 21.14887,-13.9903 21.14887,-13.9903 0,0 -0.23965,-2.54717 1.81952,-4.59532 2.0591,-2.04818 5.10533,-4.58646 5.10533,-4.58646 0,0 -19.2905,1.52522 -31.08666,13.38912 -14.90851,14.9928 -16.63282,45.38247 -16.63282,45.38247 0,0 3.5636,-6.92078 5.93775,-8.69167 3.29241,-2.45559 6.58039,-3.26829 6.58039,-3.26829 z"
-               style="fill:#91f2f2;fill-opacity:1"
-               id="path19131-2" />
-            <path
-               transform="rotate(18.588265,235.12197,425.21082)"
-               inkscape:export-xdpi="34.466259"
-               inkscape:connector-curvature="0"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               sodipodi:nodetypes="cssscc"
-               inkscape:export-ydpi="34.466259"
-               d="m 283.002,448.50918 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.01499,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
-               style="opacity:0.40565999;fill:#119316;filter:url(#filter19165-7)"
-               id="path19133-3" />
-            <ellipse
-               transform="rotate(18.588265)"
-               inkscape:export-xdpi="34.466259"
-               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-               inkscape:export-ydpi="34.466259"
-               style="fill:#119316;stroke-width:0.79256278"
-               id="path19135-7"
-               cx="409.34854"
-               cy="354.52118"
-               rx="2.9873261"
-               ry="1.6884948" />
+               d="m 335.26,451.71 c 0,0 0.70334,-4.4545 7.7367,-10.55 7.0334,-6.0956 11.253,-7.9712 11.253,-7.9712 0,0 1.1722,2.5789 2.11,4.4545 0.93778,1.8756 1.6411,2.3445 1.6411,2.3445 0,0 -2.5789,1.4067 -6.33,7.7367 -3.7511,6.33 -8.4401,23.21 -8.4401,23.21 0,0 1.8756,-11.957 -1.4067,-15.239 -3.2822,-3.2822 -6.5645,-3.9856 -6.5645,-3.9856 z"
+               style="fill:#f787f7"
+               id="path19175" />
             <ellipse
                inkscape:export-xdpi="34.466259"
-               transform="rotate(-20.028428)"
+               transform="matrix(0.66972,-0.53495,0.53495,0.66972,-306.81,386.78)"
                inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
                inkscape:export-ydpi="34.466259"
-               style="fill:#258a0b;stroke:#27bb31;stroke-width:2.31428981"
-               id="path19235-9"
-               cx="80.100502"
-               cy="563.83679"
-               rx="8.639287"
-               ry="3.7025514" />
+               style="fill:#258a0b;stroke:#27bb31;stroke-width:2.70000005"
+               id="path19235"
+               cx="329.9122"
+               cy="663.9549"
+               rx="10.079151"
+               ry="4.3196359" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 327.89,667.56 c 0,0 -11.464,27.84 0,67.963 11.464,40.123 90.89,45.036 106.45,87.615 15.558,42.579 24.565,57.318 24.565,57.318"
+               style="fill:none;stroke:#eedd9c;stroke-width:1px"
+               id="path19237" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 269.4,656.05 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
+               style="fill:none;stroke:#b8b8b8;stroke-width:1px"
+               id="path19239" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 376.66,692.89 c 0,0 11.464,40.942 -20.471,64.688 -31.934,23.746 -58.137,33.572 -67.963,57.318 -9.826,23.746 -18.014,59.775 -18.014,59.775"
+               style="fill:none;stroke:#e1b7b7;stroke-width:1px"
+               id="path19241" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               inkscape:export-ydpi="34.466259"
+               d="m 413.51,664.24 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
+               style="fill:none;stroke:#e5ca62;stroke-width:1px"
+               id="path19243" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="csc"
+               inkscape:export-ydpi="34.466259"
+               d="m 360.3,681.82 c -11.464,9.826 -50.939,20.767 -61.412,68.782 -10.029,45.978 64.688,120.37 64.688,120.37"
+               style="fill:none;stroke:#6d9cd9;stroke-width:1px"
+               id="path19245" />
+            <path
+               inkscape:export-xdpi="34.466259"
+               inkscape:connector-curvature="0"
+               inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
+               sodipodi:nodetypes="cssc"
+               inkscape:export-ydpi="34.466259"
+               d="m 280.00598,635.99807 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
+               style="fill:none;stroke:#b8b8b8;stroke-width:1px"
+               id="path19239-2" />
           </g>
-          <path
-             id="path19247"
-             style="fill:none;stroke:#8ed766;stroke-width:1px"
-             d="m 409.47,562.83 c -12.926,7.9226 -35.026,34.192 -35.443,52.539 -0.41698,18.347 36.072,67.395 22.934,93.82 -26.173,52.642 -112.17,59.628 -112.17,59.628 l 0.41698,1.2509"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csscc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19190"
-             style="opacity:0.89623;fill:#eead71"
-             d="m 373.7,689.25 c 0,0 14.678,6.9543 44.252,-20.208 29.573,-27.162 44.816,-75.925 15.885,-114.16 -28.931,-38.233 -66.258,-21.846 -88.017,-5.6216 -21.759,16.225 -32.577,54.048 -20.411,84.135 9.2919,22.979 20.238,33.395 28.151,42.276 7.9131,8.8816 20.14,13.576 20.14,13.576 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <ellipse
-             ry="4.9195137"
-             rx="9.3590746"
-             cy="660.36096"
-             cx="421.15836"
-             id="path19188"
-             style="fill:url(#radialGradient1155);stroke:#b39412"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             transform="matrix(0.94892,0.0063835,0.43733,0.79236,-314.26,165.21)"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19192"
-             style="fill:#f5d2af"
-             d="m 408.27,576.22 c 0,0 -1.7204,-7.4816 -8.3597,-14.055 -6.6392,-6.5735 -12.673,-9.8678 -12.673,-9.8678 l 8.1172,-9.298 c 0,0 9.2171,0.33286 19.025,9.3733 9.8075,9.0404 14.283,20.422 14.283,20.422 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19194"
-             style="fill:#f5d2af"
-             d="m 382.91,552.82 8.6783,-11.094 c 0,0 -6.9564,-4.6577 -19.012,-2.6634 -12.056,1.9944 -21.988,11.314 -21.988,11.314 0,0 5.4707,2.4626 4.457,6.5854 -1.0137,4.1228 -3.9539,13.694 -3.9539,13.694 0,0 5.52,-6.884 11.613,-10.247 6.0929,-3.3628 20.206,-7.5891 20.206,-7.5891 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <ellipse
-             ry="4.3196359"
-             rx="10.079151"
-             cy="663.9549"
-             cx="329.9122"
-             id="path19125"
-             style="fill:#103485;stroke:#17366e;stroke-width:2.70000005"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             transform="matrix(0.85715,0,0,0.85715,45.497,94.039)"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19221"
-             style="fill:#4ca44f;fill-opacity:1"
-             d="m 406.82,559.56 c 0,0 7.0104,13.723 46.438,9.171 39.428,-4.5524 81.113,-34.086 82.369,-80.316 1.2554,-46.23 -37.511,-54.482 -64.21,-54.073 -26.698,0.40872 -58.26,23.884 -67.397,54.281 -6.9786,23.216 -4.9646,37.54 -4.3395,48.952 0.62509,11.412 7.1396,21.984 7.1396,21.984 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <g
-             id="g19177"
-             inkscape:export-ydpi="34.466259"
-             style="opacity:0.90881001"
-             inkscape:export-xdpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png">
-            <path
-               id="rect19110"
-               d="m 420.06,644.75 14.736,11.194 c 0,0 -10.455,1.5112 -13.219,4.6288 -2.7635,3.1176 -2.1938,10.839 -2.1938,10.839 l -14.75,-11.19 c 0,0 8.9256,-0.84037 11.841,-3.7415 2.9145,-2.9014 3.5719,-11.727 3.5719,-11.727 z"
-               sodipodi:nodetypes="cczcczc"
-               style="fill:#cebe25"
-               inkscape:connector-curvature="0" />
-            <ellipse
-               ry="4.9195137"
-               rx="9.3590746"
-               cy="660.36096"
-               cx="421.15836"
-               id="path19100"
-               style="fill:url(#radialGradient19108);stroke:#b39412"
-               transform="matrix(0.8277,0.46412,0,0.90504,64.167,-128.68)" />
-            <path
-               id="path18586"
-               d="m 419.17,656.92 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
-               sodipodi:nodetypes="csssssc"
-               style="fill:#c88c00;fill-opacity:1"
-               inkscape:connector-curvature="0" />
-            <path
-               id="path19096"
-               d="m 504.05,574.67 c 0,0 2.109,-7.3815 -0.52726,-16.345 -2.6363,-8.9633 -6.327,-14.763 -6.327,-14.763 l 11.6,-4.218 c 0,0 7.9088,4.7453 12.127,17.399 4.218,12.654 2.6363,24.781 2.6363,24.781 z"
-               style="fill:#e8d050"
-               inkscape:connector-curvature="0" />
-            <path
-               id="path19098"
-               d="m 493.15,541.93 12.959,-5.5194 c 0,0 -3.8396,-7.4393 -15.358,-11.519 -11.519,-4.0796 -24.718,-0.71993 -24.718,-0.71993 0,0 3.5996,4.7995 0.71993,7.9192 -2.87967,3.1197 -10.079,10.079 -10.079,10.079 0,0 8.1592,-3.3597 15.119,-3.3597 6.9593,0 21.358,3.1197 21.358,3.1197 z"
-               style="fill:#ecd450"
-               inkscape:connector-curvature="0" />
-          </g>
-          <path
-             id="path19127"
-             style="fill:#1ad61f"
-             d="m 267.71,655.9 c 0,0 14.122,-6.1672 11.964,-45.798 -2.1583,-39.631 -29.115,-83.027 -75.185,-87.077 -46.069,-4.0504 -56.652,34.146 -57.859,60.82 -1.2075,26.674 20.315,59.598 50.104,70.558 22.751,8.3706 37.171,7.2271 48.6,7.2936 11.429,0.0666 22.376,-5.7962 22.376,-5.7962 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19129"
-             style="fill:#91f294"
-             d="m 213.07,549.8 c 0,0 -6.2344,-6.4942 -5.4551,-11.69 0.7793,-5.1953 9.3516,-6.7539 9.3516,-6.7539 0,0 -8.5723,-3.6367 -17.664,-3.6367 -9.0918,0 -20.002,0 -22.6,15.586 4.1563,-0.25977 7.793,-0.51953 14.807,0.51954 7.0137,1.0391 21.561,5.9746 21.561,5.9746 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19131"
-             style="fill:#91f294"
-             d="m 160.33,588.5 c 0,0 -7.0137,-9.3516 -0.7793,-24.678 6.2344,-15.3264 15.586,-20.002 15.586,-20.002 0,0 -1.0391,-2.3379 0.25977,-4.9356 1.2988,-2.5977 3.377,-5.9746 3.377,-5.9746 0,0 -17.798,7.5948 -25.197,22.6 -9.3516,18.963 -1.2988,48.317 -1.2988,48.317 0,0 1.1716,-7.6957 2.8574,-10.131 2.3379,-3.377 5.1953,-5.1954 5.1953,-5.1954 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19133"
-             style="opacity:0.40565999;fill:#119316;filter:url(#filter19165)"
-             d="m 261.12,615.78 c 0,0 -17.924,-7.2735 -26.756,-19.483 -8.8321,-12.209 -10.015,-24.844 -5.4551,-28.834 6.2344,-5.4551 20.262,-9.8711 29.094,3.377 8.8321,13.248 4.9356,44.42 4.9356,44.42 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cssscc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <ellipse
-             ry="2.2080197"
-             rx="3.6367385"
-             cy="626.21436"
-             cx="253.01309"
-             id="path19135"
-             style="fill:#119316"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             transform="matrix(0.82143,0,0,0.76471,56.357,140.05)"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19227"
-             style="fill:#d61a28;fill-opacity:1"
-             d="m 352.35,500.41 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19143"
-             style="fill:#e98e07;filter:url(#filter19157)"
-             d="m 296.72,545.13 c 0,0 -26.106,-8.9741 -34.286,-16.508 -10.723,-9.8765 -9.3122,-28.078 7.1957,-37.107 16.508,-9.03 28.924,0.70545 32.31,11.005 2.2143,6.7352 4.3739,40.494 4.3739,40.494 l -9.03,2.3986 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssccc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19137"
-             style="opacity:0.95597049;fill:#ffab18"
-             d="m 301.44,565.93 c 0,0 16.109,-2.2472 23.099,-41.317 9.1999,-51.42 -5.7962,-88.105 -49.366,-103.61 -43.569,-15.508 -72.418,21.342 -75.514,46.583 -3.2505,26.503 7.3886,60.944 33.463,79.044 19.914,13.824 34.158,16.344 45.203,19.283 11.045,2.9392 23.114,0.0182 23.114,0.0182 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19223"
-             style="fill:#91f294"
-             d="m 509.42,498.59 c 0,0 6.105,-6.6159 11.338,-6.1524 5.233,0.46351 7.3074,8.9258 7.3074,8.9258 0,0 3.1114,-8.7766 2.5612,-17.852 -0.55014,-9.0752 -1.2103,-19.965 -16.925,-21.615 0.51079,4.1329 0.99013,7.7473 0.37736,14.811 -0.61277,7.0637 -4.6591,21.883 -4.6591,21.883 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19169"
-             style="opacity:0.97170003;fill:#ee71ee"
-             d="m 333.38,549.13 c 0,0 9.4905,13.181 48.507,3.6908 39.017,-9.4905 75.924,-44.816 69.07,-92.269 -6.8543,-47.453 -47.453,-51.143 -74.343,-47.453 -26.89,3.6908 -54.638,31.577 -58.525,63.798 -2.9686,24.608 1.5818,39.017 4.218,50.616 2.6363,11.6 11.072,21.617 11.072,21.617 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19219"
-             style="opacity:0.38049999;fill:#ce8725"
-             d="m 353.74,671.2 c 11.054,1.6377 31.707,-25.522 37.666,-39.304 6.5506,-15.148 12.773,-44.756 -15.148,-52.405 -29.887,-8.1883 -54.043,-0.40941 -54.043,20.061 0,20.471 6.1412,45.036 12.282,50.768 6.1412,5.7318 19.243,20.88 19.243,20.88 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19113"
-             style="opacity:0.94024999;fill:#1a54d6"
-             d="m 329.42,662.38 c 0,0 16.113,2.2181 33.464,-33.478 22.837,-46.981 18.382,-86.361 -19.328,-113.13 -37.71,-26.772 -75.493,0.84375 -85.336,24.292 -10.335,24.62 -9.4634,60.657 10.706,85.166 15.404,18.718 28.426,25.017 38.256,30.849 9.8295,5.8321 22.238,6.3034 22.238,6.3034 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csssssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19115"
-             style="fill:#7099f6"
-             d="m 267.08,582.81 c 0,0 -4.3617,-13.633 -1.3244,-24.28 6.6603,-23.347 14.568,-24.28 14.568,-24.28 0,0 -1.8154,-2.7547 -2.2073,-4.4146 -0.39185,-1.6599 0,-5.2975 0,-5.2975 0,0 -13.856,7.3509 -21.207,27.143 -6.5223,17.56 -2.7925,36.945 -2.7925,36.945 0,0 2.7303,-4.0069 5.8205,-5.3313 3.0902,-1.3244 7.1426,-0.48456 7.1426,-0.48456 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csczcscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19121"
-             style="fill:#7099f6"
-             d="m 280.36,521.87 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscccsscc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19123"
-             style="fill:#7099f6"
-             d="m 332.87,537.1 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 1.965,20.773 1.965,20.773 0,0 -2.6251,-3.0906 -10.423,-4.9885 -9.2694,-2.2561 -14.842,-0.90659 -14.842,-0.90659 0,0 1.4726,-7.667 -3.3901,-20.709 -5.3776,-14.423 -10.646,-16.907 -10.646,-16.907 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cccscscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19139"
-             style="fill:#fbdb74"
-             d="m 218.17,522.81 c 0,0 -5.0089,-5.5655 -3.8958,-17.531 1.1131,-11.9655 5.5655,-16.418 5.5655,-16.418 0,0 -7.2351,-11.409 -0.83482,-26.158 6.4003,-14.748 13.635,-22.262 13.635,-22.262 0,0 -2.5044,-1.3914 -2.5044,-3.6176 0,-2.2262 1.1131,-5.0089 1.1131,-5.0089 0,0 -23.931,10.853 -26.158,39.236 -2.2262,28.384 13.079,51.759 13.079,51.759 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19225"
-             style="fill:#91f294"
-             d="m 467.6,448.3 c 0,0 8.9101,-7.5667 24.585,-2.2711 15.6749,5.2956 20.909,14.347 20.909,14.347 0,0 2.2708,-1.1786 4.9422,-0.0394 2.6715,1.1393 6.168,3.0093 6.168,3.0093 0,0 -8.6578,-17.306 -24.083,-23.784 -19.494,-8.187 -48.307,1.6271 -48.307,1.6271 0,0 7.7525,0.70374 10.285,2.2392 3.5122,2.1293 5.5002,4.8715 5.5002,4.8715 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscscsc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19231"
-             style="fill:#f67076;fill-opacity:1"
-             d="m 303.29,359.9 c 0,0 -0.82067,1.7636 0.0793,5.4921 0.79035,3.2746 2.8435,4.513 2.8435,4.513 0,0 2.6461,-4.2029 19.65,-3.93 21.421,0.34371 26.064,6.9535 26.064,6.9535 0,0 0.29016,-3.1604 12.609,-3.9878 10.294,-0.69846 15.225,0.96436 15.225,0.96436 0,0 -10.288,-8.9652 -20.212,-14.317 -12.107,-6.5291 -21.226,-7.5794 -36.615,-5.2114 -12.046,1.8535 -19.644,9.5229 -19.644,9.5229 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cscscccsscc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19171"
-             style="fill:#f787f7"
-             d="m 360.58,436.24 c 0,0 5.6267,-6.5645 22.272,-7.7367 16.646,-1.1722 24.617,6.33 24.617,6.33 0,0 1.1722,-2.11 6.33,-3.0478 5.1578,-0.93778 11.488,-1.4067 11.488,-1.4067 0,0 -3.7511,-12.426 -24.851,-15.239 -21.1,-2.8134 -42.2,14.301 -42.2,14.301 0,0 1.6411,0.70334 2.3445,2.5789 0.70334,1.8756 0,4.22 0,4.22 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19173"
-             style="fill:#f787f7"
-             d="m 410.52,437.41 c 0,0 0,-2.8134 6.5645,-3.2822 6.5645,-0.4689 11.722,-0.23445 11.722,-0.23445 0,0 7.5023,6.0956 10.081,19.459 2.5789,13.363 -0.4689,31.416 -0.4689,31.416 0,0 -4.9234,-3.2822 -9.6123,-5.1578 -4.6889,-1.8756 -8.6745,-3.5167 -8.6745,-3.5167 0,0 2.5789,-10.081 -0.23444,-20.162 -2.8134,-10.081 -9.3778,-18.521 -9.3778,-18.521 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19233"
-             style="fill:#f67080;fill-opacity:1"
-             d="m 355.8,375.13 c 0,0 4.1768,-3.2902 10.084,-3.4264 9.2537,-0.30473 11.419,1.0847 17.627,3.4908 0,0 6.8448,8.8726 9.6236,22.674 2.5557,12.693 7.08862,11.67538 7.08862,11.67538 0,0 -1.91103,-0.66462 -9.70893,-2.56252 -9.2694,-2.2561 -20.67969,5.76505 -20.67969,5.76505 0,0 1.4726,-7.667 -3.3901,-20.709 -5.37,-14.42 -10.64,-16.91 -10.64,-16.91 z"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cccscscscc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19175"
-             style="fill:#f787f7"
-             d="m 335.26,451.71 c 0,0 0.70334,-4.4545 7.7367,-10.55 7.0334,-6.0956 11.253,-7.9712 11.253,-7.9712 0,0 1.1722,2.5789 2.11,4.4545 0.93778,1.8756 1.6411,2.3445 1.6411,2.3445 0,0 -2.5789,1.4067 -6.33,7.7367 -3.7511,6.33 -8.4401,23.21 -8.4401,23.21 0,0 1.8756,-11.957 -1.4067,-15.239 -3.2822,-3.2822 -6.5645,-3.9856 -6.5645,-3.9856 z"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <ellipse
-             ry="4.3196359"
-             rx="10.079151"
-             cy="663.9549"
-             cx="329.9122"
-             id="path19235"
-             style="fill:#258a0b;stroke:#27bb31;stroke-width:2.70000005"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             transform="matrix(0.66972,-0.53495,0.53495,0.66972,-306.81,386.78)"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19237"
-             style="fill:none;stroke:#eedd9c;stroke-width:1px"
-             d="m 327.89,667.56 c 0,0 -11.464,27.84 0,67.963 11.464,40.123 90.89,45.036 106.45,87.615 15.558,42.579 24.565,57.318 24.565,57.318"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19239"
-             style="fill:none;stroke:#b8b8b8;stroke-width:1px"
-             d="m 269.4,656.05 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19241"
-             style="fill:none;stroke:#e1b7b7;stroke-width:1px"
-             d="m 376.66,692.89 c 0,0 11.464,40.942 -20.471,64.688 -31.934,23.746 -58.137,33.572 -67.963,57.318 -9.826,23.746 -18.014,59.775 -18.014,59.775"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19243"
-             style="fill:none;stroke:#e5ca62;stroke-width:1px"
-             d="m 413.51,664.24 c 0,0 -47.492,42.579 -72.057,61.412 -24.565,18.833 -31.934,54.043 -30.297,85.159 1.6377,31.116 13.101,57.318 13.101,57.318"
-             inkscape:export-ydpi="34.466259"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19245"
-             style="fill:none;stroke:#6d9cd9;stroke-width:1px"
-             d="m 360.3,681.82 c -11.464,9.826 -50.939,20.767 -61.412,68.782 -10.029,45.978 64.688,120.37 64.688,120.37"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="csc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
-          <path
-             id="path19239-2"
-             style="fill:none;stroke:#b8b8b8;stroke-width:1px"
-             d="m 280.00598,635.99807 c 0,0 -0.81883,31.116 25.384,45.036 26.20283,13.92 100.72,25.384 114.64,54.043 9.4517,19.459 -15.558,102.35 -15.558,102.35"
-             inkscape:export-ydpi="34.466259"
-             sodipodi:nodetypes="cssc"
-             inkscape:export-filename="/Users/Haessler/Pictures/SVG/baloons-floating.png"
-             inkscape:connector-curvature="0"
-             inkscape:export-xdpi="34.466259" />
         </g>
       </g>
       <g
-         aria-label="Lliurex-Up"
-         transform="matrix(0.96071797,0,0,1.0408882,13.844687,6)"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.11446381px;line-height:1;font-family:SpaceColony-SemiBold;-inkscape-font-specification:SpaceColony-SemiBold;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="text1691">
-        <path
-           d="m -664.55478,-129.66885 h 21.2639 c 2.35696,0 3.53544,-1.12725 3.53544,-3.48421 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -20.39284 c -3.58669,0 -6.35355,-0.97353 -8.24937,-3.02306 -1.94706,-2.04953 -2.86934,-4.66269 -2.86934,-7.94194 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92058 -0.71734,-0.6661 -1.69086,-1.02477 -2.92058,-1.02477 -1.28096,0 -2.25449,0.35867 -2.92059,1.02477 -0.71733,0.71733 -1.02476,1.69086 -1.02476,2.92058 v 13.98805 c 0,5.27755 1.53715,9.58156 4.71392,12.91205 3.12554,3.38173 7.58327,5.02136 13.42443,5.02136 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7066"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -628.02194,-162.87127 c 0,-2.45944 -1.22972,-3.68915 -3.63792,-3.68915 -2.45944,0 -3.68916,1.22971 -3.68916,3.68915 v 29.5645 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7068"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -613.47034,-155.03181 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 v 21.72504 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z m -7.94194,-10.96499 c 0,1.38343 0.35867,2.45943 1.12725,3.17677 0.71733,0.71734 1.79334,1.07601 3.17677,1.07601 1.3322,0 2.35696,-0.35867 3.12554,-1.07601 0.71733,-0.71734 1.12724,-1.79334 1.12724,-3.17677 0,-1.3322 -0.40991,-2.4082 -1.12724,-3.17678 -0.76858,-0.71733 -1.79334,-1.12724 -3.12554,-1.12724 -1.38343,0 -2.45944,0.40991 -3.17677,1.12724 -0.76858,0.71734 -1.12725,1.79334 -1.12725,3.17678 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7070"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -567.61212,-155.03181 c 0,-2.4082 -1.22972,-3.63792 -3.68916,-3.63792 -2.45944,0 -3.63792,1.22972 -3.63792,3.63792 v 10.86252 c 0,2.35696 -0.71733,4.25278 -2.10077,5.73869 -1.38343,1.48591 -3.38172,2.20324 -5.94364,2.20324 h -8.40308 c -2.56191,0 -4.56021,-0.71733 -5.94364,-2.20324 -1.43467,-1.48591 -2.10077,-3.38173 -2.10077,-5.73869 v -10.86252 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 v 10.86252 c 0,4.25278 1.22972,7.73698 3.79164,10.45261 2.51067,2.71563 6.14859,4.04783 10.86251,4.04783 h 9.83776 c 4.71392,0 8.3006,-1.3322 10.86252,-4.04783 2.51067,-2.71563 3.79163,-6.19983 3.79163,-10.45261 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7072"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -545.98958,-152.11123 h 10.24766 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.152 -1.12724,-3.27925 -3.33049,-3.27925 h -10.965 c -4.71392,0 -8.35184,1.38344 -10.86251,4.09907 -2.56192,2.71563 -3.79164,6.19983 -3.79164,10.40137 v 10.86252 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -10.86252 c 0,-2.30572 0.6661,-4.20154 2.10077,-5.68745 1.38343,-1.48591 3.38173,-2.25449 5.94364,-2.25449 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7074"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -514.27316,-152.11123 h 18.90693 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.152 -1.12724,-3.27925 -3.33049,-3.27925 h -19.57303 c -4.71392,0 -8.35184,1.38344 -10.86251,4.09907 -2.56192,2.71563 -3.79164,6.19983 -3.79164,10.40137 0,4.25278 1.22972,7.73698 3.79164,10.45261 2.51067,2.71563 6.14859,4.04783 10.86251,4.04783 h 19.57303 c 2.20325,0 3.33049,-1.07601 3.33049,-3.27925 0,-2.15201 -1.12724,-3.27926 -3.33049,-3.27926 h -18.90693 c -1.99829,0 -3.63792,-0.4099 -4.91887,-1.33219 -1.28096,-0.92229 -2.15201,-2.15201 -2.66439,-3.68916 h 23.46713 c 1.9983,0 3.02306,-0.97353 3.02306,-2.92058 0,-0.92229 -0.30743,-1.63963 -0.81981,-2.15201 -0.51238,-0.51238 -1.28096,-0.76857 -2.20325,-0.76857 h -23.46713 c 0.51238,-1.53715 1.38343,-2.71563 2.66439,-3.63792 1.28095,-0.92229 2.92058,-1.38344 4.91887,-1.38344 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7076"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -450.63522,-152.36742 c 0.61486,-0.4099 1.076,-0.87105 1.38343,-1.28095 0.30743,-0.40991 0.46114,-0.92229 0.46114,-1.53715 0,-2.30573 -1.17848,-3.48421 -3.4842,-3.48421 -1.076,0 -1.89582,0.25619 -2.45944,0.71734 l -13.06576,9.99147 -12.96329,-9.94023 c -0.6661,-0.51239 -1.48591,-0.76858 -2.51068,-0.76858 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 0,0.71734 0.15371,1.22972 0.46114,1.63963 0.30743,0.4099 0.76858,0.87105 1.48591,1.33219 l 10.7088,7.83946 -11.32366,8.24937 c -0.6661,0.51238 -1.12724,0.92229 -1.43467,1.28095 -0.30743,0.40991 -0.40991,0.92229 -0.40991,1.53715 0,2.35696 1.12725,3.48421 3.48421,3.48421 1.02476,0 1.84458,-0.20496 2.45944,-0.71734 l 13.5269,-10.2989 13.52691,10.24766 c 0.6661,0.51238 1.48591,0.76858 2.51068,0.76858 2.45944,0 3.68916,-1.17848 3.68916,-3.63792 0,-0.6661 -0.15372,-1.22972 -0.46115,-1.63963 -0.30743,-0.4099 -0.81981,-0.81981 -1.48591,-1.33219 l -11.22118,-8.14689 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7078"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -440.95127,-144.06681 h 11.37491 c 1.12724,0 1.99829,-0.30743 2.61315,-0.92229 0.61486,-0.61486 0.92229,-1.48591 0.92229,-2.61316 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -11.37491 c -2.35696,0 -3.53544,1.17848 -3.53544,3.4842 0,1.12725 0.30743,1.9983 0.92229,2.61316 0.61486,0.61486 1.48591,0.92229 2.61315,0.92229 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7080"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -412.77027,-161.59031 c 0,-1.22972 -0.35867,-2.20325 -1.02476,-2.92058 -0.71734,-0.6661 -1.69087,-1.02477 -2.92059,-1.02477 -1.28095,0 -2.25448,0.35867 -2.92058,1.02477 -0.71734,0.71733 -1.02477,1.69086 -1.02477,2.92058 v 13.98805 c 0,5.27755 1.53715,9.58156 4.71393,12.91205 3.12553,3.38173 7.58326,5.02136 13.42443,5.02136 h 12.09224 c 5.78992,0 10.24766,-1.63963 13.42443,-5.02136 3.12554,-3.33049 4.71392,-7.6345 4.71392,-12.91205 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02476,-2.92058 -0.71734,-0.6661 -1.69087,-1.02477 -2.92059,-1.02477 -1.28095,0 -2.25448,0.35867 -2.92058,1.02477 -0.71734,0.71733 -1.02476,1.69086 -1.02476,2.92058 v 13.98805 c 0,3.27925 -0.97353,5.89241 -2.86935,7.94194 -1.94705,2.04953 -4.66268,3.02306 -8.24936,3.02306 h -10.35014 c -3.58668,0 -6.35355,-0.97353 -8.24936,-3.02306 -1.94706,-2.04953 -2.86935,-4.66269 -2.86935,-7.94194 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7082"
-           inkscape:connector-curvature="0" />
-        <path
-           d="m -347.8514,-129.66885 h 8.04441 c 4.66268,0 8.24937,-1.3322 10.81128,-4.04783 2.51068,-2.71563 3.79163,-6.19983 3.79163,-10.45261 0,-4.20154 -1.28095,-7.68574 -3.79163,-10.40137 -2.56191,-2.71563 -6.1486,-4.09907 -10.81128,-4.09907 h -11.3749 c -4.71392,0 -8.35184,1.38344 -10.86252,4.09907 -2.56191,2.71563 -3.79163,6.19983 -3.79163,10.40137 v 18.54826 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -9.58156 c 1.89582,3.68916 5.43126,5.53374 10.65757,5.53374 z m 7.32707,-22.44238 c 2.56192,0 4.50897,0.76858 5.89241,2.25449 1.38343,1.48591 2.10077,3.38173 2.10077,5.68745 0,2.35696 -0.71734,4.25278 -2.10077,5.73869 -1.38344,1.48591 -3.33049,2.20324 -5.89241,2.20324 h -9.94022 c -2.56192,0 -4.56021,-0.71733 -5.94365,-2.20324 -1.43467,-1.48591 -2.10077,-3.38173 -2.10077,-5.73869 0,-2.30572 0.6661,-4.20154 2.10077,-5.68745 1.38344,-1.48591 3.38173,-2.25449 5.94365,-2.25449 z"
-           style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path7084"
-           inkscape:connector-curvature="0" />
+         id="g4805">
+        <g
+           id="text1691-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.11446381px;line-height:1;font-family:SpaceColony-SemiBold;-inkscape-font-specification:SpaceColony-SemiBold;letter-spacing:0px;word-spacing:0px;opacity:0.83999999;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3154)"
+           transform="matrix(0.96071797,0,0,1.0408882,13.418442,-14)"
+           aria-label="Lliurex-Up">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7045"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -664.11111,-108.61732 h 21.26389 c 2.35696,0 3.53544,-1.12724 3.53544,-3.4842 0,-2.30572 -1.17848,-3.48421 -3.53544,-3.48421 h -20.39284 c -3.58668,0 -6.35355,-0.97352 -8.24937,-3.02305 -1.94705,-2.04954 -2.86934,-4.66269 -2.86934,-7.94194 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71733,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25448,0.35867 -2.92058,1.02476 -0.71734,0.71734 -1.02477,1.69087 -1.02477,2.92059 v 13.98805 c 0,5.27754 1.53715,9.58156 4.71393,12.91205 3.12553,3.38173 7.58326,5.02135 13.42443,5.02135 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7047"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -627.57827,-141.81973 c 0,-2.45944 -1.22972,-3.68916 -3.63792,-3.68916 -2.45944,0 -3.68916,1.22972 -3.68916,3.68916 v 29.56449 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7049"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -613.02668,-133.98027 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 v 21.72503 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z m -7.94193,-10.965 c 0,1.38344 0.35867,2.45944 1.12724,3.17678 0.71734,0.71733 1.79334,1.076 3.17677,1.076 1.3322,0 2.35697,-0.35867 3.12554,-1.076 0.71734,-0.71734 1.12724,-1.79334 1.12724,-3.17678 0,-1.33219 -0.4099,-2.4082 -1.12724,-3.17677 -0.76857,-0.71734 -1.79334,-1.12724 -3.12554,-1.12724 -1.38343,0 -2.45943,0.4099 -3.17677,1.12724 -0.76857,0.71734 -1.12724,1.79334 -1.12724,3.17677 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7051"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -567.16846,-133.98027 c 0,-2.4082 -1.22972,-3.63792 -3.68915,-3.63792 -2.45944,0 -3.63792,1.22972 -3.63792,3.63792 v 10.86252 c 0,2.35696 -0.71734,4.25277 -2.10077,5.73868 -1.38344,1.48592 -3.38173,2.20325 -5.94364,2.20325 h -8.40308 c -2.56192,0 -4.56021,-0.71733 -5.94365,-2.20325 -1.43467,-1.48591 -2.10077,-3.38172 -2.10077,-5.73868 v -10.86252 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 v 10.86252 c 0,4.25277 1.22972,7.73698 3.79163,10.45261 2.51068,2.71563 6.1486,4.04782 10.86252,4.04782 h 9.83775 c 4.71392,0 8.3006,-1.33219 10.86252,-4.04782 2.51068,-2.71563 3.79163,-6.19984 3.79163,-10.45261 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7053"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -545.54591,-131.05969 h 10.24765 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12724,-3.27925 -3.33049,-3.27925 h -10.96499 c -4.71392,0 -8.35184,1.38343 -10.86252,4.09906 -2.56191,2.71563 -3.79163,6.19984 -3.79163,10.40138 v 10.86251 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -10.86251 c 0,-2.30573 0.6661,-4.20154 2.10077,-5.68745 1.38344,-1.48592 3.38173,-2.25449 5.94365,-2.25449 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7055"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -513.82949,-131.05969 h 18.90693 c 2.20324,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12725,-3.27925 -3.33049,-3.27925 h -19.57303 c -4.71392,0 -8.35184,1.38343 -10.86252,4.09906 -2.56191,2.71563 -3.79163,6.19984 -3.79163,10.40138 0,4.25277 1.22972,7.73698 3.79163,10.45261 2.51068,2.71563 6.1486,4.04782 10.86252,4.04782 h 19.57303 c 2.20324,0 3.33049,-1.076 3.33049,-3.27925 0,-2.15201 -1.12725,-3.27925 -3.33049,-3.27925 h -18.90693 c -1.9983,0 -3.63792,-0.40991 -4.91888,-1.33219 -1.28096,-0.92229 -2.15201,-2.15201 -2.66439,-3.68916 h 23.46714 c 1.99829,0 3.02306,-0.97353 3.02306,-2.92058 0,-0.92229 -0.30743,-1.63963 -0.81982,-2.15201 -0.51238,-0.51239 -1.28095,-0.76858 -2.20324,-0.76858 h -23.46714 c 0.51238,-1.53715 1.38343,-2.71563 2.66439,-3.63792 1.28096,-0.92228 2.92058,-1.38343 4.91888,-1.38343 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7057"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -450.19156,-131.31588 c 0.61486,-0.40991 1.076,-0.87105 1.38343,-1.28096 0.30743,-0.4099 0.46115,-0.92229 0.46115,-1.53715 0,-2.30572 -1.17848,-3.4842 -3.4842,-3.4842 -1.07601,0 -1.89582,0.25619 -2.45944,0.71734 l -13.06577,9.99146 -12.96329,-9.94023 c -0.66609,-0.51238 -1.48591,-0.76857 -2.51067,-0.76857 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 0,0.71733 0.15372,1.22972 0.46115,1.63962 0.30743,0.40991 0.76857,0.87105 1.48591,1.3322 l 10.7088,7.83946 -11.32366,8.24936 c -0.6661,0.51239 -1.12725,0.92229 -1.43468,1.28096 -0.30743,0.40991 -0.4099,0.92229 -0.4099,1.53715 0,2.35696 1.12724,3.4842 3.4842,3.4842 1.02477,0 1.84458,-0.20495 2.45944,-0.71733 l 13.52691,-10.2989 13.52691,10.24766 c 0.6661,0.51238 1.48591,0.76857 2.51067,0.76857 2.45944,0 3.68916,-1.17848 3.68916,-3.63792 0,-0.66609 -0.15371,-1.22972 -0.46114,-1.63962 -0.30743,-0.40991 -0.81982,-0.81981 -1.48591,-1.3322 l -11.22119,-8.14689 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7059"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -440.5076,-123.01528 h 11.3749 c 1.12724,0 1.99829,-0.30743 2.61315,-0.92229 0.61486,-0.61486 0.92229,-1.48591 0.92229,-2.61315 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -11.3749 c -2.35696,0 -3.53544,1.17848 -3.53544,3.4842 0,1.12724 0.30743,1.99829 0.92229,2.61315 0.61486,0.61486 1.48591,0.92229 2.61315,0.92229 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7061"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -412.3266,-140.53877 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71734,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25449,0.35867 -2.92059,1.02476 -0.71733,0.71734 -1.02476,1.69087 -1.02476,2.92059 v 13.98805 c 0,5.27754 1.53715,9.58156 4.71392,12.91205 3.12554,3.38173 7.58327,5.02135 13.42443,5.02135 h 12.09224 c 5.78993,0 10.24766,-1.63962 13.42443,-5.02135 3.12554,-3.33049 4.71393,-7.63451 4.71393,-12.91205 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92059 -0.71734,-0.66609 -1.69086,-1.02476 -2.92058,-1.02476 -1.28096,0 -2.25449,0.35867 -2.92058,1.02476 -0.71734,0.71734 -1.02477,1.69087 -1.02477,2.92059 v 13.98805 c 0,3.27925 -0.97353,5.8924 -2.86934,7.94194 -1.94706,2.04953 -4.66269,3.02305 -8.24937,3.02305 h -10.35013 c -3.58669,0 -6.35355,-0.97352 -8.24937,-3.02305 -1.94706,-2.04954 -2.86934,-4.66269 -2.86934,-7.94194 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7063"
+             style="font-size:51.23829269px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -347.40774,-108.61732 h 8.04441 c 4.66269,0 8.24937,-1.33219 10.81128,-4.04782 2.51068,-2.71563 3.79164,-6.19984 3.79164,-10.45261 0,-4.20154 -1.28096,-7.68575 -3.79164,-10.40138 -2.56191,-2.71563 -6.14859,-4.09906 -10.81128,-4.09906 h -11.3749 c -4.71392,0 -8.35184,1.38343 -10.86251,4.09906 -2.56192,2.71563 -3.79164,6.19984 -3.79164,10.40138 v 18.54826 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -9.58156 c 1.89581,3.68915 5.43126,5.53373 10.65756,5.53373 z m 7.32708,-22.44237 c 2.56191,0 4.50897,0.76857 5.8924,2.25449 1.38344,1.48591 2.10077,3.38172 2.10077,5.68745 0,2.35696 -0.71733,4.25277 -2.10077,5.73868 -1.38343,1.48592 -3.33049,2.20325 -5.8924,2.20325 h -9.94023 c -2.56191,0 -4.56021,-0.71733 -5.94364,-2.20325 -1.43467,-1.48591 -2.10077,-3.38172 -2.10077,-5.73868 0,-2.30573 0.6661,-4.20154 2.10077,-5.68745 1.38343,-1.48592 3.38173,-2.25449 5.94364,-2.25449 z" />
+        </g>
+        <g
+           id="text1691"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.11446381px;line-height:1;font-family:SpaceColony-SemiBold;-inkscape-font-specification:SpaceColony-SemiBold;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           transform="matrix(0.96071797,0,0,1.0408882,13.844687,6)"
+           aria-label="Lliurex-Up">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7066"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -664.55478,-129.66885 h 21.2639 c 2.35696,0 3.53544,-1.12725 3.53544,-3.48421 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -20.39284 c -3.58669,0 -6.35355,-0.97353 -8.24937,-3.02306 -1.94706,-2.04953 -2.86934,-4.66269 -2.86934,-7.94194 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02477,-2.92058 -0.71734,-0.6661 -1.69086,-1.02477 -2.92058,-1.02477 -1.28096,0 -2.25449,0.35867 -2.92059,1.02477 -0.71733,0.71733 -1.02476,1.69086 -1.02476,2.92058 v 13.98805 c 0,5.27755 1.53715,9.58156 4.71392,12.91205 3.12554,3.38173 7.58327,5.02136 13.42443,5.02136 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7068"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -628.02194,-162.87127 c 0,-2.45944 -1.22972,-3.68915 -3.63792,-3.68915 -2.45944,0 -3.68916,1.22971 -3.68916,3.68915 v 29.5645 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7070"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -613.47034,-155.03181 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 v 21.72504 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 z m -7.94194,-10.96499 c 0,1.38343 0.35867,2.45943 1.12725,3.17677 0.71733,0.71734 1.79334,1.07601 3.17677,1.07601 1.3322,0 2.35696,-0.35867 3.12554,-1.07601 0.71733,-0.71734 1.12724,-1.79334 1.12724,-3.17677 0,-1.3322 -0.40991,-2.4082 -1.12724,-3.17678 -0.76858,-0.71733 -1.79334,-1.12724 -3.12554,-1.12724 -1.38343,0 -2.45944,0.40991 -3.17677,1.12724 -0.76858,0.71734 -1.12725,1.79334 -1.12725,3.17678 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7072"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -567.61212,-155.03181 c 0,-2.4082 -1.22972,-3.63792 -3.68916,-3.63792 -2.45944,0 -3.63792,1.22972 -3.63792,3.63792 v 10.86252 c 0,2.35696 -0.71733,4.25278 -2.10077,5.73869 -1.38343,1.48591 -3.38172,2.20324 -5.94364,2.20324 h -8.40308 c -2.56191,0 -4.56021,-0.71733 -5.94364,-2.20324 -1.43467,-1.48591 -2.10077,-3.38173 -2.10077,-5.73869 v -10.86252 c 0,-2.4082 -1.22972,-3.63792 -3.63792,-3.63792 -2.45944,0 -3.68916,1.22972 -3.68916,3.63792 v 10.86252 c 0,4.25278 1.22972,7.73698 3.79164,10.45261 2.51067,2.71563 6.14859,4.04783 10.86251,4.04783 h 9.83776 c 4.71392,0 8.3006,-1.3322 10.86252,-4.04783 2.51067,-2.71563 3.79163,-6.19983 3.79163,-10.45261 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7074"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -545.98958,-152.11123 h 10.24766 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.152 -1.12724,-3.27925 -3.33049,-3.27925 h -10.965 c -4.71392,0 -8.35184,1.38344 -10.86251,4.09907 -2.56192,2.71563 -3.79164,6.19983 -3.79164,10.40137 v 10.86252 c 0,2.45944 1.22972,3.63792 3.68916,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -10.86252 c 0,-2.30572 0.6661,-4.20154 2.10077,-5.68745 1.38343,-1.48591 3.38173,-2.25449 5.94364,-2.25449 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7076"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -514.27316,-152.11123 h 18.90693 c 2.20325,0 3.33049,-1.076 3.33049,-3.27925 0,-2.152 -1.12724,-3.27925 -3.33049,-3.27925 h -19.57303 c -4.71392,0 -8.35184,1.38344 -10.86251,4.09907 -2.56192,2.71563 -3.79164,6.19983 -3.79164,10.40137 0,4.25278 1.22972,7.73698 3.79164,10.45261 2.51067,2.71563 6.14859,4.04783 10.86251,4.04783 h 19.57303 c 2.20325,0 3.33049,-1.07601 3.33049,-3.27925 0,-2.15201 -1.12724,-3.27926 -3.33049,-3.27926 h -18.90693 c -1.99829,0 -3.63792,-0.4099 -4.91887,-1.33219 -1.28096,-0.92229 -2.15201,-2.15201 -2.66439,-3.68916 h 23.46713 c 1.9983,0 3.02306,-0.97353 3.02306,-2.92058 0,-0.92229 -0.30743,-1.63963 -0.81981,-2.15201 -0.51238,-0.51238 -1.28096,-0.76857 -2.20325,-0.76857 h -23.46713 c 0.51238,-1.53715 1.38343,-2.71563 2.66439,-3.63792 1.28095,-0.92229 2.92058,-1.38344 4.91887,-1.38344 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7078"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -450.63522,-152.36742 c 0.61486,-0.4099 1.076,-0.87105 1.38343,-1.28095 0.30743,-0.40991 0.46114,-0.92229 0.46114,-1.53715 0,-2.30573 -1.17848,-3.48421 -3.4842,-3.48421 -1.076,0 -1.89582,0.25619 -2.45944,0.71734 l -13.06576,9.99147 -12.96329,-9.94023 c -0.6661,-0.51239 -1.48591,-0.76858 -2.51068,-0.76858 -2.45943,0 -3.68915,1.22972 -3.68915,3.63792 0,0.71734 0.15371,1.22972 0.46114,1.63963 0.30743,0.4099 0.76858,0.87105 1.48591,1.33219 l 10.7088,7.83946 -11.32366,8.24937 c -0.6661,0.51238 -1.12724,0.92229 -1.43467,1.28095 -0.30743,0.40991 -0.40991,0.92229 -0.40991,1.53715 0,2.35696 1.12725,3.48421 3.48421,3.48421 1.02476,0 1.84458,-0.20496 2.45944,-0.71734 l 13.5269,-10.2989 13.52691,10.24766 c 0.6661,0.51238 1.48591,0.76858 2.51068,0.76858 2.45944,0 3.68916,-1.17848 3.68916,-3.63792 0,-0.6661 -0.15372,-1.22972 -0.46115,-1.63963 -0.30743,-0.4099 -0.81981,-0.81981 -1.48591,-1.33219 l -11.22118,-8.14689 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7080"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -440.95127,-144.06681 h 11.37491 c 1.12724,0 1.99829,-0.30743 2.61315,-0.92229 0.61486,-0.61486 0.92229,-1.48591 0.92229,-2.61316 0,-2.30572 -1.17848,-3.4842 -3.53544,-3.4842 h -11.37491 c -2.35696,0 -3.53544,1.17848 -3.53544,3.4842 0,1.12725 0.30743,1.9983 0.92229,2.61316 0.61486,0.61486 1.48591,0.92229 2.61315,0.92229 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7082"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -412.77027,-161.59031 c 0,-1.22972 -0.35867,-2.20325 -1.02476,-2.92058 -0.71734,-0.6661 -1.69087,-1.02477 -2.92059,-1.02477 -1.28095,0 -2.25448,0.35867 -2.92058,1.02477 -0.71734,0.71733 -1.02477,1.69086 -1.02477,2.92058 v 13.98805 c 0,5.27755 1.53715,9.58156 4.71393,12.91205 3.12553,3.38173 7.58326,5.02136 13.42443,5.02136 h 12.09224 c 5.78992,0 10.24766,-1.63963 13.42443,-5.02136 3.12554,-3.33049 4.71392,-7.6345 4.71392,-12.91205 v -13.98805 c 0,-1.22972 -0.35867,-2.20325 -1.02476,-2.92058 -0.71734,-0.6661 -1.69087,-1.02477 -2.92059,-1.02477 -1.28095,0 -2.25448,0.35867 -2.92058,1.02477 -0.71734,0.71733 -1.02476,1.69086 -1.02476,2.92058 v 13.98805 c 0,3.27925 -0.97353,5.89241 -2.86935,7.94194 -1.94705,2.04953 -4.66268,3.02306 -8.24936,3.02306 h -10.35014 c -3.58668,0 -6.35355,-0.97353 -8.24936,-3.02306 -1.94706,-2.04953 -2.86935,-4.66269 -2.86935,-7.94194 z" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7084"
+             style="font-size:51.23829269px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.96071798;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             d="m -347.8514,-129.66885 h 8.04441 c 4.66268,0 8.24937,-1.3322 10.81128,-4.04783 2.51068,-2.71563 3.79163,-6.19983 3.79163,-10.45261 0,-4.20154 -1.28095,-7.68574 -3.79163,-10.40137 -2.56191,-2.71563 -6.1486,-4.09907 -10.81128,-4.09907 h -11.3749 c -4.71392,0 -8.35184,1.38344 -10.86252,4.09907 -2.56191,2.71563 -3.79163,6.19983 -3.79163,10.40137 v 18.54826 c 0,2.45944 1.22972,3.63792 3.68915,3.63792 2.4082,0 3.63792,-1.17848 3.63792,-3.63792 v -9.58156 c 1.89582,3.68916 5.43126,5.53374 10.65757,5.53374 z m 7.32707,-22.44238 c 2.56192,0 4.50897,0.76858 5.89241,2.25449 1.38343,1.48591 2.10077,3.38173 2.10077,5.68745 0,2.35696 -0.71734,4.25278 -2.10077,5.73869 -1.38344,1.48591 -3.33049,2.20324 -5.89241,2.20324 h -9.94022 c -2.56192,0 -4.56021,-0.71733 -5.94365,-2.20324 -1.43467,-1.48591 -2.10077,-3.38173 -2.10077,-5.73869 0,-2.30572 0.6661,-4.20154 2.10077,-5.68745 1.38344,-1.48591 3.38173,-2.25449 5.94365,-2.25449 z" />
+        </g>
       </g>
     </g>
     <g
