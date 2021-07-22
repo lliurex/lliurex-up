@@ -117,8 +117,9 @@ class LliurexUpConnect():
 
 	def free_space_check(self):
 
-		if ((os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)) < 2: #less than 2GB available?
-			log_msg="Not enough space on disk to upgrade (2 GB needed)"
+		free_space=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		if (free_space) < 2: #less than 2GB available?
+			log_msg="Not enough space on disk to upgrade (2 GB needed): "+str(free_space)+" GB available"
 			self.log(log_msg)
 			return False
 			
