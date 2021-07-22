@@ -54,7 +54,11 @@ class LliurexUpCore(object):
 		self.n4dStatus=True
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		self.checkN4dStatus()
+		
+		editImage=self.checkImageBeingEdited()
+		if not editImage:
+			self.checkN4dStatus()
+		
 		self.haveLliurexMirror = False
 		self.metapackageRef=[]
 		self.previousFlavours = []
@@ -65,9 +69,10 @@ class LliurexUpCore(object):
 		self.lastFlavours=[]
 		self.getPreviousFlavours()
 		
-		if self.n4dStatus:
-			if len(self.n4d.get_methods('MirrorManager')) > 0:
-				self.haveLliurexMirror = True
+		if not editImage: 
+			if self.n4dStatus:
+				if len(self.n4d.get_methods('MirrorManager')) > 0:
+					self.haveLliurexMirror = True
 			
 		self.retryN4d=True
 		self.prepareEnvironment()
@@ -136,6 +141,18 @@ class LliurexUpCore(object):
 			f.close()
 
 	#def createLockToken		
+
+	def checkImageBeingEdited(self):
+
+		imageEdited=False
+		if os.path.exists('/var/lib/lmd/semi'):
+			if not os.path.exists('/run/lmd/semi'):
+				imageEdited=True
+		
+		return imageEdited
+
+	#def checkImagesBeingEdited
+	
 
 	def getPreviousFlavours(self):
 		
@@ -1026,7 +1043,8 @@ class LliurexUpCore(object):
 
 		return match
 	
-	#def search_meta				
+	#def search_meta
+
 
 #def LliurexUpCore
 if __name__ == '__main__':
