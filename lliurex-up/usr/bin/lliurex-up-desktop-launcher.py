@@ -25,12 +25,15 @@ class LlxUpCheckRoot():
 
 		user=os.environ["USER"]
 		group_found=False
+		user_groups=[]
 		
 		for g in grp.getgrall():
 			if(g.gr_name in LlxUpCheckRoot.GROUPS):
 				for member in g.gr_mem:
 					if(member==user):
 						group_found=True
+						
+			user_groups.append(g.gr_name)
 						
 		if not self.checkImageBeingEdited():				
 
