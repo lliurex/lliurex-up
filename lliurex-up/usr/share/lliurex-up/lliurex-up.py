@@ -859,11 +859,17 @@ class LliurexUp:
 						self.show_number_process_executing(5,"")
 					else:
 						if self.install_lliurexup_t.done:
-							print("  [Lliurex-Up]: Reboot Lliurex-Up")
-							self.pbar_label.hide()
-							self.msg_wait="<span><b>"+_("LliureX Up is now updated and will be reboot in %s seconds...")+"</b></span>"
-							GLib.timeout_add(10,self.wait_to_reboot)
-							return False
+							if self.is_lliurexup_installed:
+								print("  [Lliurex-Up]: Reboot Lliurex-Up")
+								self.pbar_label.hide()
+								self.msg_wait="<span><b>"+_("LliureX Up is now updated and will be reboot in %s seconds...")+"</b></span>"
+								GLib.timeout_add(10,self.wait_to_reboot)
+								return False
+							else:
+								msg_gather=_("Unable to update Lliurex-Up. See /var/log/lliurex-up.log")
+								print("  [Lliurex-Up]: Unable to update Lliurex-Up")
+								abort=True
+					
 				else:
 					if not self.check_mirror_t.is_alive() and not self.check_mirror_t.launched:
 						print("  [Lliurex-Up]: Checking if mirror exist")
@@ -901,7 +907,16 @@ class LliurexUp:
 								return False
 					
 								
-
+		if abort:
+			self.spinner.stop()
+			self.pbar.hide()
+			self.pbar_label.hide()
+			self.cancel_button_box.show()
+			self.show_indicator_switch()
+			self.gather_label.set_name("ERROR_FONT")
+			self.gather_label.set_markup(msg_gather)
+			
+		
 		if self.init_actions_t.launched:
 			if self.init_actions_t.is_alive():
 				return True
