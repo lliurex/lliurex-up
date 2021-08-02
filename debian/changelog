@@ -1,3 +1,10 @@
+lliurex-up (19.04.30) bionic-updates; urgency=medium
+
+  * Avoid lliurex-up from loop when auto-update fails
+  * Check if LTSP Image is edited when launch lliurex-up
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 02 Aug 2021 11:50:26 +0200
+
 lliurex-up (19.04.29) bionic; urgency=medium
 
   * Fixed performance in server-lite and desktop (full and lite) when fails connection to lliurex.net
