@@ -32,21 +32,45 @@ class LlxUpCheckRoot():
 					if(member==user):
 						group_found=True
 						
-		if group_found:		
+		if not self.checkImageBeingEdited():				
 
-			screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
-			
-			screensaver_inhibitor.inHibit()
-			cmd='pkexec lliurex-up'
-			os.system(cmd)
-			screensaver_inhibitor.unInhibit()
+			if group_found:		
+
+				screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
+				
+				screensaver_inhibitor.inHibit()
+				cmd='pkexec lliurex-up'
+				os.system(cmd)
+				screensaver_inhibitor.unInhibit()
+			else:
+				text=_("You need administration privileges to run this application.")
+				cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
+				"%s" 5'%text
+				os.system(cmd)
 		else:
-			text=_("You need administration privileges to run this application.")
-			cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
-			"%s" 5'%text
-			os.system(cmd)
+			if 'root' in user_groups:
+				cmd='lliurex-up'
+				os.system(cmd)
+			else:
+				text=_("You need administration privileges to run this application.")
+				cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
+				"%s" 5'%text
+				os.system(cmd)
+		
 					
 	#def check_root
+
+	def checkImageBeingEdited(self):
+
+		imageEdited=False
+		if os.path.exists('/var/lib/lmd/semi'):
+			if not os.path.exists('/run/lmd/semi'):
+				imageEdited=True
+		
+		return imageEdited
+
+	#def checkImagesBeingEdited
+
 	
 #def LlxUpCheckRoot
 
