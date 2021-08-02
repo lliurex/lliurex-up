@@ -1,3 +1,9 @@
+lliurex-up (19.04.31) bionic-updates; urgency=medium
+
+  * Fixed lliurex-up-desktop-launcher in LTSP image
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 02 Aug 2021 13:04:31 +0200
+
 lliurex-up (19.04.30) bionic-updates; urgency=medium
 
   * Avoid lliurex-up from loop when auto-update fails
