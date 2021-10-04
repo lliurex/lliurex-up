@@ -200,11 +200,10 @@ class LliurexUpCore(object):
 
 	def checkN4dStatus(self):
 	
-		checkStatus=True
-		cmd='systemctl status n4d.service 1>/dev/null'
-		result=os.system(cmd)
-
-		if result !=0:
+		try:
+			test=self.n4d.get_methods()
+			self.n4dStatus=True 
+		except:
 			if self.retryN4d:
 				self.retryN4d=False
 				try: 
@@ -217,14 +216,8 @@ class LliurexUpCore(object):
 						self.n4dStatus=False
 				except Exception as e:
 					self.n4dStatus=False
-					
-					
 			else:
 				self.n4dStatus=False
-				
-										
-		else:		
-			self.n4dStatus=True
 
 	#def checkN4dStatus		
 			
