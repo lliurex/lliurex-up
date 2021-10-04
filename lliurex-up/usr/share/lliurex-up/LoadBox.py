@@ -115,54 +115,49 @@ class LoadBox(Gtk.VBox):
 		
 		if self.check_system_t.done:
 			if self.free_space:
-				if self.statusN4d:
-					if self.can_connect:
-						self.show_number_process_executing(2,_("Checking mirror..."))
+				if self.can_connect:
+					self.show_number_process_executing(2,_("Checking mirror..."))
 
-						if self.is_mirror_running_inserver==False:
+					if self.is_mirror_running_inserver==False:
 
-							if not self.is_mirror_exists_inserver:
-								print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
-								message=_("Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
-								dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Lliurex-Up")
-								dialog.format_secondary_text(message)
-								response=dialog.run()
-								dialog.destroy()
-								if response==Gtk.ResponseType.YES:
-									log_msg="Adding the repositories of lliurex.net on client: Yes"
-									print("  [Lliurex-Up]: "+log_msg)
-									self.core.llxUpConnect.log(log_msg)
-									self.core.llxUpConnect.addSourcesListLliurex(True)	
-								else:
-									log_msg="Adding the repositories of lliurex.net on client: No"
-									print("  [Lliurex-Up]: "+log_msg)
-									self.core.llxUpConnect.log(log_msg)
-	
-								GLib.timeout_add(10,self.pulsate_check_llxup_mirror)
-								return False
+						if not self.is_mirror_exists_inserver:
+							print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
+							message=_("Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
+							dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.INFO,Gtk.ButtonsType.YES_NO,"Lliurex-Up")
+							dialog.format_secondary_text(message)
+							response=dialog.run()
+							dialog.destroy()
+							if response==Gtk.ResponseType.YES:
+								log_msg="Adding the repositories of lliurex.net on client: Yes"
+								print("  [Lliurex-Up]: "+log_msg)
+								self.core.llxUpConnect.log(log_msg)
+								self.core.llxUpConnect.addSourcesListLliurex(True)	
 							else:
-								self.core.llxUpConnect.addSourcesListLliurex(False)
-								GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
-								return False
+								log_msg="Adding the repositories of lliurex.net on client: No"
+								print("  [Lliurex-Up]: "+log_msg)
+								self.core.llxUpConnect.log(log_msg)
 
+							GLib.timeout_add(10,self.pulsate_check_llxup_mirror)
+							return False
 						else:
-							abort=True
-							if self.is_mirror_running_inserver:
-								msg_gather=_("Mirror is being updated in server. Unable to update the system")
-								print("  [Lliurex-Up]: Mirror is being updated in server")
-							else:
-								msg_gather=_("Unable to connect with server")
-								print("  [Lliurex-Up]: Unable to connect with server")
+							self.core.llxUpConnect.addSourcesListLliurex(False)
+							GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
+							return False
 
 					else:
 						abort=True
-						msg_gather=_("Unable to connect to lliurex.net")
-						print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+						if self.is_mirror_running_inserver:
+							msg_gather=_("Mirror is being updated in server. Unable to update the system")
+							print("  [Lliurex-Up]: Mirror is being updated in server")
+						else:
+							msg_gather=_("Unable to connect with server")
+							print("  [Lliurex-Up]: Unable to connect with server")
 
 				else:
 					abort=True
-					msg_gather=_('N4d is not working. Restart the service and try againg')
-					print("  [Lliurex-Up]: N4d is not working")
+					msg_gather=_("Unable to connect to lliurex.net")
+					print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+
 			else:
 				abort=True
 				msg_gather=_("There's not enough space on disk to upgrade (2 GB needed)")
@@ -186,12 +181,11 @@ class LoadBox(Gtk.VBox):
 		self.free_space=self.core.llxUpConnect.free_space_check()
 		if self.free_space:
 			self.statusN4d=self.core.llxUpConnect.checkInitialN4dStatus()
-			if self.statusN4d:
-				self.core.llxUpConnect.checkInitialFlavour()
-				self.can_connect=self.core.llxUpConnect.canConnectToLliurexNet()
-				if self.can_connect:
-					self.is_mirror_exists_inserver=self.core.llxUpConnect.clientCheckingMirrorExists()
-					self.is_mirror_running_inserver=self.core.llxUpConnect.clientCheckingMirrorIsRunning()
+			self.core.llxUpConnect.checkInitialFlavour()
+			self.can_connect=self.core.llxUpConnect.canConnectToLliurexNet()
+			if self.can_connect:
+				self.is_mirror_exists_inserver=self.core.llxUpConnect.clientCheckingMirrorExists()
+				self.is_mirror_running_inserver=self.core.llxUpConnect.clientCheckingMirrorIsRunning()
 	
 		self.check_system_t.done=True
 
