@@ -750,43 +750,38 @@ class LliurexUp:
 		
 		if self.check_system_t.done:
 			if self.free_space:
-				if self.statusN4d:
-					if self.can_connect:
-						if self.is_mirror_running_inserver==False:
+				if self.can_connect:
+					if self.is_mirror_running_inserver==False:
 
-							if not self.is_mirror_exists_inserver:
-								self.clicked_action="repository"
-								print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
-								self.yes_button_box.show()
-								self.no_button_box.show()
-								self.pbar.hide()
-								self.pbar_label.hide()
-								msg_gather="<span><b>"+_("Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")+"</b></span>"
-								self.gather_label.set_markup(msg_gather)
-								return False
-							else:
-								self.llxup_connect.addSourcesListLliurex(False)
-								GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
-								return False
-
+						if not self.is_mirror_exists_inserver:
+							self.clicked_action="repository"
+							print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
+							self.yes_button_box.show()
+							self.no_button_box.show()
+							self.pbar.hide()
+							self.pbar_label.hide()
+							msg_gather="<span><b>"+_("Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")+"</b></span>"
+							self.gather_label.set_markup(msg_gather)
+							return False
 						else:
-							abort=True
-							if self.is_mirror_running_inserver:
-								msg_gather="<span><b>"+_("Mirror is being updated in server. Unable to update the system")+"</b></span>"
-								print("  [Lliurex-Up]: Mirror is being updated in server")
-							else:
-								msg_gather="<span><b>"+_("Unable to connect with server")+"</b></span>"
-								print("  [Lliurex-Up]: Unable to connect with server")
+							self.llxup_connect.addSourcesListLliurex(False)
+							GLib.timeout_add(10,self.pulsate_check_llxup_mirror)	
+							return False
 
 					else:
 						abort=True
-						msg_gather="<span><b>"+_("Unable to connect to lliurex.net")+"</b></span>"
-						print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+						if self.is_mirror_running_inserver:
+							msg_gather="<span><b>"+_("Mirror is being updated in server. Unable to update the system")+"</b></span>"
+							print("  [Lliurex-Up]: Mirror is being updated in server")
+						else:
+							msg_gather="<span><b>"+_("Unable to connect with server")+"</b></span>"
+							print("  [Lliurex-Up]: Unable to connect with server")
 
 				else:
 					abort=True
-					msg_gather="<span><b>"+_('N4d is not working. Restart the service and try againg')+"</b></span>"
-					print("  [Lliurex-Up]: N4d is not working")
+					msg_gather="<span><b>"+_("Unable to connect to lliurex.net")+"</b></span>"
+					print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+
 			else:
 				abort=True
 				msg_gather="<span><b>"+_("There's not enough space on disk to upgrade (2 GB needed)")+"</b></span>"
@@ -814,12 +809,11 @@ class LliurexUp:
 		self.free_space=self.llxup_connect.free_space_check()
 		if self.free_space:
 			self.statusN4d=self.llxup_connect.checkInitialN4dStatus()
-			if self.statusN4d:
-				self.llxup_connect.checkInitialFlavour()
-				self.can_connect=self.llxup_connect.canConnectToLliurexNet()
-				if self.can_connect:
-					self.is_mirror_exists_inserver=self.llxup_connect.clientCheckingMirrorExists()
-					self.is_mirror_running_inserver=self.llxup_connect.clientCheckingMirrorIsRunning()
+			self.llxup_connect.checkInitialFlavour()
+			self.can_connect=self.llxup_connect.canConnectToLliurexNet()
+			if self.can_connect:
+				self.is_mirror_exists_inserver=self.llxup_connect.clientCheckingMirrorExists()
+				self.is_mirror_running_inserver=self.llxup_connect.clientCheckingMirrorIsRunning()
 	
 		self.check_system_t.done=True		
 
