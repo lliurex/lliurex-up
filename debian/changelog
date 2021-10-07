@@ -1,3 +1,9 @@
+lliurex-up (19.04.32) bionic-updates; urgency=medium
+
+  * Allows update the system when n4d is not working
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 07 Oct 2021 08:27:03 +0200
+
 lliurex-up (19.04.31) bionic-updates; urgency=medium
 
   * Fixed lliurex-up-desktop-launcher in LTSP image
