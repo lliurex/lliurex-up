@@ -52,8 +52,8 @@ class LliurexUpCli(object):
 		self.statusN4d=self.lliurexcore.n4dStatus
 		
 		if not self.statusN4d:
-			print("  [Lliurex-Up]: N4d is not working. Execute 'sudo systemctl restart n4d.service' and try again")
 			log_msg="N4d is not working"
+			print("  [Lliurex-Up]: %s"%log_msg)
 			self.log(log_msg)
 			'''
 			self.cleanEnvironment()
