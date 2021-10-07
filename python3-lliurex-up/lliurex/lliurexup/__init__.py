@@ -54,7 +54,6 @@ class LliurexUpCore(object):
 		self.n4dStatus=True
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		
 		editImage=self.checkImageBeingEdited()
 		if not editImage:
 			self.checkN4dStatus()
@@ -63,12 +62,11 @@ class LliurexUpCore(object):
 		self.metapackageRef=[]
 		self.previousFlavours = []
 
-		
 		self.getTargetMetapackage()
 		self.flavours = []
 		self.lastFlavours=[]
 		self.getPreviousFlavours()
-		
+
 		if not editImage: 
 			if self.n4dStatus:
 				if len(self.n4d.get_methods('MirrorManager')) > 0:
@@ -167,32 +165,25 @@ class LliurexUpCore(object):
 
 	def checkN4dStatus(self):
 	
-		checkStatus=True
-		cmd='systemctl status n4d.service 1>/dev/null'
-		result=os.system(cmd)
-
-		if result !=0:
+		try:
+			test=self.n4d.get_methods()
+			self.n4dStatus=True
+		except:
 			if self.retryN4d:
 				self.retryN4d=False
 				try: 
 					cmd='systemctl restart n4d.service 1>/dev/null'
 					restart=os.system(cmd)
 					time.sleep(5)
-					if restart ==0:
+					if restart==0:
 						self.checkN4dStatus()
 					else:
 						self.n4dStatus=False
 				except Exception as e:
 					self.n4dStatus=False
-					
-					
 			else:
 				self.n4dStatus=False
-				
-										
-		else:		
-			self.n4dStatus=True
-
+		
 	#def checkN4dStatus		
 			
 				
