@@ -427,44 +427,47 @@ class UpgradeIndicator:
 		self.is_working=True
 
 		
-		apt_client=client.AptClient()
-		
-		if(self.is_cache_updated==False):
-			apt_client.update_cache(wait=True)
-			self.is_cache_updated=True
+		try:
+			apt_client=client.AptClient()
 			
-		transaction=apt_client.upgrade_system()
+			if(self.is_cache_updated==False):
+				apt_client.update_cache(wait=True)
+				self.is_cache_updated=True
+				
+			transaction=apt_client.upgrade_system()
 
-		transaction.simulate()
-		#this sync is needed in order to update transaction properties after simulation
-		#credits go to Lubuntu Team as this is completly undocumented :)
-		transaction.sync()
+			transaction.simulate()
+			#this sync is needed in order to update transaction properties after simulation
+			#credits go to Lubuntu Team as this is completly undocumented :)
+			transaction.sync()
 
 
-		#transaction dependencies []
-		# install transaction.dependencies reinstall remove purge upgrade
-		
-		packages=[]
-		cont=0
+			#transaction dependencies []
+			# install transaction.dependencies reinstall remove purge upgrade
+			
+			packages=[]
+			cont=0
 
-		for d in transaction.dependencies:
-			if cont<5:
-				for p in d:
-					packages.append(d)
-			cont+=1		
-		
-		
-		
-		if(len(packages)>0):
-			self.menu.show_all()
-			for item in self.menu.get_children():
-				if item.remote:
-						item.set_visible(False)
+			for d in transaction.dependencies:
+				if cont<5:
+					for p in d:
+						packages.append(d)
+				cont+=1		
+			
+			
+			
+			if(len(packages)>0):
+				self.menu.show_all()
+				for item in self.menu.get_children():
+					if item.remote:
+							item.set_visible(False)
 
-			self.app_indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
+				self.app_indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
 
-			message=_("There are new packages ready to be updated or installed")
-			self.show_message(message)
+				message=_("There are new packages ready to be updated or installed")
+				self.show_message(message)
+		except:
+			pass
 						
 		
 		self.is_working=False
