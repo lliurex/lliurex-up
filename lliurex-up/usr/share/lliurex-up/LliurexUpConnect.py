@@ -5,16 +5,12 @@ import os
 import shutil
 import subprocess
 import socket
-import threading
 import datetime
 import math
 import ssl
 #from math import pi
 
 import lliurex.lliurexup as LliurexUpCore
-
-from gi.repository import Gtk, Gdk, GObject, GLib, PangoCairo, Pango
-
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -24,7 +20,6 @@ class LliurexUpConnect():
 	def __init__(self):
 
 		self.llxUpCore=LliurexUpCore.LliurexUpCore()
-		GObject.threads_init()
 
 		self.preactions_token=os.path.join(self.llxUpCore.processPath,'preactions_token')
 		self.upgrade_token=os.path.join(self.llxUpCore.processPath,'upgrade_token')
@@ -117,8 +112,9 @@ class LliurexUpConnect():
 
 	def free_space_check(self):
 
-		if ((os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)) < 2: #less than 2GB available?
-			log_msg="Not enough space on disk to upgrade (2 GB needed)"
+		free_space=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		if (free_space) < 2: #less than 2GB available?
+			log_msg="Not enough space on disk to upgrade (2 GB needed): "+str(free_space)+" GB available"
 			self.log(log_msg)
 			return False
 			
