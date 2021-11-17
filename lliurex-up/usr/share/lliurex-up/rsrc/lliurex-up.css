@@ -1,0 +1,100 @@
+#BANNER_BOX{
+	background-color: #0049ab;
+}
+
+#BORDERLESS_BUTTON{
+			
+	border: 0px;
+	background: #FFFFFF;
+	border-radius: 0%;
+	box-shadow: none;
+	}
+			
+#BORDERLESS_BUTTON:hover{
+	background: #93CEE9
+	}
+
+#PACKAGE_BOX{
+			
+	background: transparent
+	
+	}
+			
+#PACKAGE_BOX:hover{
+
+	background: #93CEE9
+
+	}
+
+#ERROR_FONT{
+	font: 11pt Noto Sans Regular;
+	color: #CC0000;
+
+}
+#ERROR_BOX{
+
+	border-style:solid;
+	border-width: 1px;
+	border-radius: 0px;
+	border-color:#da4453;
+	background:#ebced2;
+}
+
+#SUCCESS_BOX{
+
+	border-style:solid;
+	border-width: 1px;
+	border-radius: 0px;
+	border-color:#27ae60;
+	background:#c7e3d4;
+}
+
+#INFORMATION_BOX{
+
+	border-style:solid;
+	border-width: 1px;
+	border-radius: 0px;
+	border-color:#3daee9;
+	background:#cbe3f0;
+}
+
+#MENU_BOX{
+	background: #FFFFFF;
+	border-bottom-style:solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #bec0c1;
+}	
+
+#LIST_BOX{
+
+	background: #FFFFFF;
+	
+}
+
+#PKG_NAME{
+	font: 11pt Noto Sans Regular;
+}	
+
+#SEPARATOR{
+
+	background-color: #bec0c1;
+
+}
+
+#WHITE_SEPARATOR{
+
+	background-color: #ffffff;
+
+	}
+
+#MOUSE_OVER{
+
+	background: #93CEE9
+
+}
+
+#MOUSE_EXIT{
+
+	background: transparent
+
+}	
