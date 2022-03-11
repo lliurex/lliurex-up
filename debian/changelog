@@ -1,3 +1,9 @@
+lliurex-up (19.04.34) bionic; urgency=medium
+
+  * Fixed bug when running lliurex-upgrade -u -r
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 11 Mar 2022 09:15:20 +0100
+
 lliurex-up (19.04.33) bionic-updates; urgency=medium
 
   * Backported LliureX 21 gui
