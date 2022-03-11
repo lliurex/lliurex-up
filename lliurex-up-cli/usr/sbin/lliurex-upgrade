@@ -98,8 +98,11 @@ class LliurexUpCli(object):
 
 		self.allRepos=False
 
+		if extra_args["repositories"]:
+			self.allRepos=True
+		
 		if not extra_args["unattendend_upgrade"]:
-			if not extra_args["repositories"]:
+			if not self.allRepos:
 				print("  [Lliurex-Up]: Checking if mirror exists in server...")
 				is_mirror_exists=self.lliurexcore.clientCheckingMirrorExists()
 				if is_mirror_exists["ismirroravailable"]==None:
@@ -117,8 +120,6 @@ class LliurexUpCli(object):
 							log_msg="Adding the repositories of lliurex.net on client : No"	
 						self.log(log_msg)	
 
-			else:
-				self.allRepos=True
 
 		self.lliurexcore.addSourcesListLliurex(self.allRepos)						
 	
