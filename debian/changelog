@@ -1,3 +1,9 @@
+lliurex-up (21.04.51) focal; urgency=medium
+
+  * Fixed bug when running lliurex-upgrade -u -r
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 11 Mar 2022 08:34:18 +0100
+
 lliurex-up (21.04.50) focal; urgency=medium
 
   * Improved indicator stability
