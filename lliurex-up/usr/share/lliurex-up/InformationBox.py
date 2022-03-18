@@ -44,7 +44,8 @@ class InformationBox(Gtk.VBox):
 		self.number_packages_info_label=builder.get_object("number_packages_info_label")
 		self.size_update_label=builder.get_object("size_update_label")
 		self.size_update_info_label=builder.get_object("size_update_info_label")
-
+		self.update_source_label=builder.get_object("update_source_label")
+		self.update_source_info_label=builder.get_object("update_source_info_label")
 		self.warning_box=builder.get_object("warning_box")
 		self.warning_img_error=builder.get_object("warning_img_error")
 		self.warning_img_ok=builder.get_object("warning_img_ok")
@@ -133,7 +134,11 @@ class InformationBox(Gtk.VBox):
 
 			self.size_update_info_label.set_text(self.core.loadBox.size_update)
 
-	
+		if self.core.loadBox.version_update["updateSource"]==None:
+			self.update_source_info_label.set_text(_("Not available"))
+		else:
+			self.update_source_info_label.set_text(self.core.loadBox.version_update["updateSource"])
+			
 	#def get_update_summary	
 	
 		
