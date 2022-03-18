@@ -307,6 +307,8 @@ class LliurexUpCli(object):
 		self.log(log_msg)
 		log_msg="Get LliurexVersion candidate from Local repository: " + str(self.version_update["candidate"])
 		self.log(log_msg)
+		log_msg="Get Update source: "+str(self.version_update["updateSource"])
+		self.log(log_msg)
 
 	#def getLliurexVersionLocal	
 	
@@ -820,6 +822,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Current version:                 " +str(self.version_update["installed"]))
 				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.version_available["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.version_update["candidate"]))
+				print("  [Lliurex-Up]: Update source: "+str(self.version_update["updateSource"]))
 				
 				if not extra_args["unattendend_upgrade"]:
 					response=input('  [Lliurex-Up]: Do you want to update the system (yes/no)): ').lower()
@@ -860,6 +863,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Current version:                 " +str(self.version_update["installed"]))
 				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.version_available["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.version_update["candidate"]))
+				print("  [Lliurex-Up]: Update source: "+str(self.version_update["updateSource"]))
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
 				log_msg="System updated. Nothing to do"
 				self.log(log_msg)
