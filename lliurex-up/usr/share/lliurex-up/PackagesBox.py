@@ -38,6 +38,9 @@ class PackagesBox(Gtk.VBox):
 		self.css_file=self.core.rsrc_dir+"lliurex-up.css"
 
 		self.main_box=builder.get_object("packages_box")
+		self.search_entry=builder.get_object("search_entry")
+		self.search_entry.connect("changed",self.search_entry_changed)
+
 		self.packages_list_box=builder.get_object("packages_list_box")
 		self.list_box=builder.get_object("list_box")
 		self.pack_start(self.main_box,True,True,0)
@@ -58,7 +61,8 @@ class PackagesBox(Gtk.VBox):
 		self.stack_popover.show_all()
 		self.changelog_main_box.pack_start(self.stack_popover,True,True,5)
 		
-
+		self.search_list=[]
+		self.packages_list=[]
 		self.main_box.show_all()
 
 		self.set_css_info()
@@ -101,6 +105,7 @@ class PackagesBox(Gtk.VBox):
 					self.newpackages=int(self.newpackages)+1
 
 				self.new_pkg_box(tmp[3],tmp[0],tmp[1],tmp[2],count)	
+				self.packages_list.append(tmp[0])
 				count-=1	
 
 	#def draw_pkg_list
@@ -326,7 +331,39 @@ class PackagesBox(Gtk.VBox):
 
 	#def update_state_icon
 
+	def hide_non_search(self):
 
+		for hbox in self.list_box.get_children():
+			for item in hbox:
+				name=item.get_children()[0].get_children()[1].get_children()[0].get_children()[2].id
+				if name in self.search_list:
+					hbox.hide()
+				else:
+					hbox.show()
+	
+	#def hide_non_search	
+
+	def search_entry_changed(self,widget):
+
+		self.search_list=[]
+		search=self.search_entry.get_text().lower()
+		tmp_pkg=copy.deepcopy(self.packages_list)
+
+		if search=="":
+			self.hide_non_search()
+		else:
+			for item in range(len(tmp_pkg)-1,-1,-1):
+				pkg_name=tmp_pkg[item]
+				if search in pkg_name:
+					pass
+				else:
+					self.search_list.append(pkg_name)
+					tmp_pkg.pop(item)
+
+			if len(self.search_list)>0:
+				self.hide_non_search()
+
+	#search_entry_changed
 		
 #class PackageBox
 
