@@ -344,11 +344,13 @@ class LliurexUpConnect():
 			self.log(log_msg)
 			log_msg="Get LliurexVersion candidate from Local repository: " + str(self.lliurexVersionLocal["candidate"])
 			self.log(log_msg)
+			log_msg="Get Update source: "+self.lliurexVersionLocal["updateSource"]
+			self.log(log_msg)
 
 		except Exception as e:
 			log_msg="Get LliurexVersion from Local repository. Error: " + str(e)
 			self.log(log_msg)
-			self.lliurexVersionLocal={"installed":None,"candidate":None}
+			self.lliurexVersionLocal={"installed":None,"candidate":None,"updateSource":None}
 
 		return self.lliurexVersionLocal
 

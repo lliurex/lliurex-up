@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-19 13:11+0200\n"
-"PO-Revision-Date: 2021-07-19 13:15+0200\n"
+"POT-Creation-Date: 2022-03-18 10:44+0100\n"
+"PO-Revision-Date: 2022-03-18 10:47+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -52,6 +52,7 @@ msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/MainWindow.py:208
 #: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:56
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:65
 msgid "You need administration privileges to run this application."
 msgstr "Necesitas permisos de administrador para ejecutar la aplicación"
 
@@ -85,6 +86,8 @@ msgstr "El proceso de actualización ha finalizado con errores"
 #: ../lliurex-up/usr/share/lliurex-up/MainWindow.py:484
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:554
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:556
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:548
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:550
 msgid " of "
 msgstr " de "
 
@@ -93,10 +96,12 @@ msgid "Checking sytem..."
 msgstr "Comprobando el sistema..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:120
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:119
 msgid "Checking mirror..."
 msgstr "Comprobando el mirror..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:126
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:125
 msgid ""
 "Mirror not detected on the server.\n"
 "Do you want to add the repositories of lliurex.net?"
@@ -105,16 +110,19 @@ msgstr ""
 "¿Desea añadir los repositorios de lliurex.net?"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:151
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:150
 msgid "Mirror is being updated in server. Unable to update the system"
 msgstr ""
 "El mirror se esta actualizando en el servidor. Imposible actualizar el "
 "sistema"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:154
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:153
 msgid "Unable to connect with server"
 msgstr "Imposible conectar con el servidor"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:159
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:158
 msgid "Unable to connect to lliurex.net"
 msgstr "Imposible conectar con lliurex.net"
 
@@ -123,67 +131,83 @@ msgid "N4d is not working. Restart the service and try againg"
 msgstr "N4d no funciona. Reinicia el servicio y prueba otra vez"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:168
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:163
 msgid "There's not enough space on disk to upgrade (2 GB needed)"
 msgstr "No hay suficiente espacio en disco para actualizar (se necesitan 2 GB)"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:206
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:200
 msgid "Executing init-actions..."
 msgstr "Ejecutando acciones de inicio..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:215
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:209
 msgid "Looking for new version of Lliurex-Up..."
 msgstr "Buscando nueva versión de Lliurex-Up..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:225
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:219
 msgid "Updating Lliurex-Up..."
 msgstr "Actualizando Lliurex-Up..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:233
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:227
 #, python-format
 msgid "Lliurex-Up is now updated and will be reboot in %s seconds..."
 msgstr "Lliurex-Up se ha actualizado y se reiniciará en %s segundos..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:237
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:231
 msgid "Unable to update Lliurex-Up. See /var/log/lliurex-up.log"
 msgstr "No es posible actualizar Lliurex-Up. Vea /var/log/lliurex-up.log"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:243
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:237
 msgid "Checking if mirror exist and there is updated..."
 msgstr "Comprobando si existe mirror y esta actualizado..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:253
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:247
 msgid "Your mirror is not update. Do you want to update it?"
 msgstr "Tu mirror no esta actualizado. ¿Quieres actualizarlo?"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:396
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:390
 msgid "Updating mirror: "
 msgstr "Actualizando mirror: "
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:407
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:401
 msgid "Looking for new version to update..."
 msgstr "Buscando nueva versión para actualizar..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:416
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:410
 msgid "Looking for new version available..."
 msgstr "Buscando nueva versión disponible..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:426
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:420
 msgid "Checking if installation of metapackage is required..."
 msgstr "Comprobando si la instalación del metapaquete es necesaria..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:435
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:429
 msgid "Looking for new updates..."
 msgstr "Buscando nuevas actualizaciones..."
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:461
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:455
 msgid "Updated abort. An error occurred in the search for updates"
 msgstr "Actualización abortada. Ha ocurrido un error buscando actualizaciones"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:469
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:463
 msgid "Your system is update"
 msgstr "Tu sistema esta actualizado"
 
 #: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:485
+#: ../lliurex-up/usr/share/lliurex-up/LoadBox.py:479
 msgid "Updated abort for incorrect metapackages detected in update"
 msgstr ""
 "Actualización abortada. Detectados metapaquetes incorrectos en la "
@@ -191,18 +215,24 @@ msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:106
 #: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:125
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:107
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:126
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:138
 msgid "Not available"
 msgstr "No disponible"
 
 #: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:114
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:115
 msgid "Not available for clients"
 msgstr "No disponible para clientes"
 
 #: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:118
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:119
 msgid "Not available. Check conexion to lliurex.net"
 msgstr "No disponible. Comprueba conexión con lliurex.net"
 
 #: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:132
+#: ../lliurex-up/usr/share/lliurex-up/InformationBox.py:133
 msgid " new)"
 msgstr " nuevos)"
 
@@ -235,43 +265,54 @@ msgid "Current version: "
 msgstr "Versión actual: "
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:732
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:764
 msgid "Information"
 msgstr "Información"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:779
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:811
 msgid "Packages list"
 msgstr "Lista de paquetes"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:826
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:858
 msgid "Update process"
 msgstr "Proceso de actualización"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:873
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1049
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:905
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1081
 msgid "Preferences"
 msgstr "Preferencias"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:920
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:952
 msgid "Help"
 msgstr "Ayuda"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:981
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1013
 msgid "List of packages to update/install"
 msgstr "Lista de paquetes para actualizar/instalar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1100
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1132
 msgid "Changes will take effect the next time you log in"
 msgstr "Los cambios tendrán efecto la próxima vez que inicie sesión"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1137
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1169
 msgid "Show notifications for available updates:"
 msgstr "Mostrar notificaciones de actualizaciones disponibles:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1184
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1216
 msgid "Update process details"
 msgstr "Detalles del proceso de actualización"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1247
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1279
 msgid "Downloading changelog..."
 msgstr "Descargando control de cambios..."
 
@@ -288,9 +329,15 @@ msgid "The upgrade process has ended"
 msgstr "El proceso de actualización ha finalizado"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:466
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:467
 msgid "There are new packages ready to be updated or installed"
 msgstr "Hay nuevos paquetes listos para ser actualizados y/o instalados"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:480
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:483
 msgid "Lliurex-Up"
 msgstr "Lliurex-Up"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:288
+msgid "Update source:"
+msgstr "Origen de la actualización:"

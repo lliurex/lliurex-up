@@ -417,7 +417,7 @@ class LliurexUpCore(object):
 	#def updateCacheApt	
 
 
-	def getPackageVersionAvailable(self,package,options=""):
+	def getPackageVersionAvailable(self,package,options="",checkRepo=False):
 		'''
 			Args :
 				package String
@@ -432,6 +432,9 @@ class LliurexUpCore(object):
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 		installed = None
 		candidate = None
+		getRepo=False
+		updateSource=None
+
 		for line in iter(p.stdout.readline,b""):
 			if type(line) is bytes:
 				line=line.decode()
@@ -441,7 +444,19 @@ class LliurexUpCore(object):
 				installed = stripedline.replace("Installed: ","")
 			if stripedline.startswith("Candidate"):
 				candidate = stripedline.replace("Candidate: ","")
-		return {"installed":installed,"candidate":candidate}
+			if checkRepo:
+				if candidate !=None:
+					if candidate in stripedline:
+						getRepo=True 
+			if getRepo:
+				if stripedline.startswith("666"):
+					try:
+						updateSource=stripedline.split(" ")[1]
+						getRepo=False
+					except:
+						getRepo=False
+
+		return {"installed":installed,"candidate":candidate,"updateSource":updateSource}
 
 	#def getPackageVersionAvailable	
 
@@ -715,7 +730,7 @@ class LliurexUpCore(object):
 	def getLliurexVersionLocal(self):
 		
 		self.updateCacheApt('')
-		return self.getPackageVersionAvailable('lliurex-version-timestamp','')		
+		return self.getPackageVersionAvailable('lliurex-version-timestamp','',True)		
 
 	#def getLliurexVersionLocal
 

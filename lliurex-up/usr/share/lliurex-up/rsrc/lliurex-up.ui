@@ -278,6 +278,38 @@
             <property name="top_attach">0</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel" id="update_source_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">end</property>
+            <property name="margin_top">5</property>
+            <property name="margin_bottom">5</property>
+            <property name="label" translatable="yes">Update source:</property>
+            <property name="justify">right</property>
+            <attributes>
+              <attribute name="font-desc" value="Noto Sans 11"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="update_source_info_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <attributes>
+              <attribute name="font-desc" value="Noto Sans 11"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>
