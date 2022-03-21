@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-18 10:44+0100\n"
-"PO-Revision-Date: 2022-03-18 10:47+0100\n"
+"POT-Creation-Date: 2022-03-18 13:30+0100\n"
+"PO-Revision-Date: 2022-03-18 13:31+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -283,6 +283,7 @@ msgstr "Proceso de actualización"
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1049
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:905
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1081
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1111
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -293,26 +294,31 @@ msgstr "Ayuda"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:981
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1013
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1019
 msgid "List of packages to update/install"
 msgstr "Lista de paquetes para actualizar/instalar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1100
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1132
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1162
 msgid "Changes will take effect the next time you log in"
 msgstr "Los cambios tendrán efecto la próxima vez que inicie sesión"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1137
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1169
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1199
 msgid "Show notifications for available updates:"
 msgstr "Mostrar notificaciones de actualizaciones disponibles:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1184
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1216
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1246
 msgid "Update process details"
 msgstr "Detalles del proceso de actualización"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1247
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1279
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1309
 msgid "Downloading changelog..."
 msgstr "Descargando control de cambios..."
 
@@ -341,3 +347,7 @@ msgstr "Lliurex-Up"
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:288
 msgid "Update source:"
 msgstr "Origen de la actualización:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up.ui:1039
+msgid "Search..."
+msgstr "Buscar..."
