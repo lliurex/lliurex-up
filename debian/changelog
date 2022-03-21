@@ -1,3 +1,10 @@
+lliurex-up (19.04.35) bionic-updates; urgency=medium
+
+  * Added update source at Information panel
+  * Added search option at Packages List panel
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 21 Mar 2022 11:09:45 +0100
+
 lliurex-up (19.04.34) bionic; urgency=medium
 
   * Fixed bug when running lliurex-upgrade -u -r
