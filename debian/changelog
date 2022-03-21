@@ -1,3 +1,10 @@
+lliurex-up (21.04.52) focal-updates; urgency=medium
+
+  * Added update source in Information panel
+  * Added search option in Packages List panel
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 21 Mar 2022 10:12:22 +0100
+
 lliurex-up (21.04.51) focal; urgency=medium
 
   * Fixed bug when running lliurex-upgrade -u -r
