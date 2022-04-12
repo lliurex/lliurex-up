@@ -593,12 +593,12 @@ class LliurexUpCore(object):
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_alive('','MirrorManager')
-				return {'ismirrorrunning':result['status'],'exception':False}
+				return {'ismirrorrunning':result['status'],'exception':False,'data':result}
 			
 			except Exception as e:
-				return {'ismirrorrunning':None,'exception':str(e)}	
+				return {'ismirrorrunning':None,'exception':str(e),'data':""}	
 
-		return {'ismirrorrunning':False,'exception':False}	
+		return {'ismirrorrunning':False,'exception':False,'data':""}	
 
 	#def clientCheckingMirrorIsRunning	
 
@@ -612,13 +612,13 @@ class LliurexUpCore(object):
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_mirror_available('','MirrorManager')
-				return {'ismirroravailable':result['status'],'exception':False}
+				return {'ismirroravailable':result['status'],'exception':False,'data':result}
 			
 			except Exception as e:
-				return {'ismirroravailable':None,'exception':str(e)}	
+				return {'ismirroravailable':None,'exception':str(e),'data':""}	
 
 		else:
-			return {'ismirroravailable':True,'exception':False}	
+			return {'ismirroravailable':True,'exception':False,'data':""}	
 
 	#def clientCheckingMirrorExists	
 
@@ -717,14 +717,16 @@ class LliurexUpCore(object):
 	#def checkFlavour	
 
 	def canConnectToLliurexNet(self):
+		
 		'''
-			return Boolean
+			return dictionary => result
+			result : {'status':bool,'data':String}
 		'''
 		try:
 			res=urllib.request.urlopen(self.defaultUrltoCheck)
-			return True
-		except:
-			return False
+			return {'status':True,'data':str(res)}
+		except Exception as e:
+			return {'status':False,'data':str(e)}
 
 	#def canConnectToLliurexNet		
 				
@@ -735,7 +737,7 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 		options = ""
-		if self.canConnectToLliurexNet():
+		if self.canConnectToLliurexNet()['status']:
 			options = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
 		self.updateCacheApt(options)
 		return self.getPackageVersionAvailable('lliurex-version-timestamp',options)

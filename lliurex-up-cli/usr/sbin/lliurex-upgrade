@@ -95,7 +95,9 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
 
 		can_connect=self.lliurexcore.canConnectToLliurexNet()
-		if can_connect:
+		log_msg="Checking connection to lliurex.net: %s"%can_connect
+		self.log(log_msg)
+		if can_connect['status']:
 				log_msg="Can connect to lliurex.net: True"
 				self.log(log_msg)
 				return True
@@ -130,9 +132,13 @@ class LliurexUpCli(object):
 			if not self.allRepos:
 				print("  [Lliurex-Up]: Checking if mirror exists in server...")
 				is_mirror_exists=self.lliurexcore.clientCheckingMirrorExists()
+				log_msg="Checking if mirrror exists in server. MirrorManager response: %s"%is_mirror_exists['data']
+				self.log(log_msg)
 				if is_mirror_exists["ismirroravailable"]==None:
 					log_msg="Checking if mirror exists in server. Error: "+str(is_mirror_exists['exception'])
 					self.log(log_msg)
+					print("  [Lliurex-Up]: %s"%log_msg)
+
 				else:
 					if not is_mirror_exists["ismirroravailable"]:
 						log_msg="Mirror not detected in server"
@@ -140,11 +146,12 @@ class LliurexUpCli(object):
 						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
 						if response.startswith('y'):
 							self.allRepos=True
-							log_msg="Adding the repositories of lliurex.net on client: Yes"
+							log_msg="Adding the repositories of lliurex.net on client. Response: Yes"
 						else:
-							log_msg="Adding the repositories of lliurex.net on client : No"	
+							log_msg="Adding the repositories of lliurex.net on client. Response : No"	
 						self.log(log_msg)	
-
+					else:
+						print("  [Lliurex-Up]: Nothing to do with mirror")
 
 		self.lliurexcore.addSourcesListLliurex(self.allRepos)						
 	
@@ -153,7 +160,8 @@ class LliurexUpCli(object):
 	def clientCheckingMirrorIsRunning(self):
 		
 		is_mirror_running_inserver=self.lliurexcore.clientCheckingMirrorIsRunning()
-		
+		log_msg="Checking if mirrror in server is being updated. MirrorManager response: %s"%is_mirror_running_inserver['data']
+		self.log(log_msg)		
 		if is_mirror_running_inserver['ismirrorrunning'] ==None:
 			log_msg="Checking if mirror in server is being updated. Error: " + str(is_mirror_running_inserver['exception'])
 			self.log(log_msg)
@@ -248,6 +256,8 @@ class LliurexUpCli(object):
 			is_mirror_updated=self.lliurexcore.lliurexMirrorIsUpdated()
 
 			if is_mirror_updated !=None:
+				log_msg="Checking mirror. MirrorManager response: %s"%is_mirror_updated
+				self.log(log_msg)
 				try:
 					is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
 					if is_mirror_running:
@@ -267,7 +277,7 @@ class LliurexUpCli(object):
 									response="yes"
 
 								if response.startswith('y'):
-									log_msg="Update lliurex-mirror: Yes"
+									log_msg="Update lliurex-mirror. Response: Yes"
 									self.log(log_msg)
 									print("  [Lliurex-Up]: Updating mirror. Wait a moment please")
 									command='lliurex-mirror update %s'%self.defaultMirror
@@ -275,9 +285,13 @@ class LliurexUpCli(object):
 									subprocess.Popen(command,shell=True).communicate()
 
 								else:
-									log_msg="Update lliurex-mirror: No"
+									log_msg="Update lliurex-mirror. Response: No"
 									self.log(log_msg)
-									print("  [Lliurex-Up]: Mirror update.Nothing to do")	
+									print("  [Lliurex-Up]: Mirror update. Not update")	
+						else:
+							log_msg="Checking mirror. Is mirror update: nothing-to-do"
+							self.log(log_msg)
+							print("  [Lliurex-Up]: %s"%log_msg)
 				
 				except Exception as e:
 					log_msg="Updating mirror. Error: " + str(e)
@@ -303,7 +317,7 @@ class LliurexUpCli(object):
 		self.version_update=self.lliurexcore.getLliurexVersionLocal()
 		log_msg="Get LliurexVersion installed: " + str(self.version_update["installed"])
 		self.log(log_msg)
-		log_msg="Get LliurexVersion candidate from Local repository: " + str(self.version_update["candidate"])
+		log_msg="Get LliurexVersion candidate from local repository: " + str(self.version_update["candidate"])
 		self.log(log_msg)
 		log_msg="Get Update source: "+str(self.version_update["updateSource"])
 		self.log(log_msg)
@@ -316,7 +330,7 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
 
 		self.version_available=self.lliurexcore.getLliurexVersionLliurexNet()
-		log_msg="Get LliurexVersion candidate from Lliurex Net: " + str(self.version_available["candidate"])
+		log_msg="Get LliurexVersion candidate from lliurex.net: " + str(self.version_available["candidate"])
 		self.log(log_msg)
 	
 	#def getLliurexVersionLliurexNet		
