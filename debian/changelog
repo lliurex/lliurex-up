@@ -1,3 +1,9 @@
+lliurex-up (21.04.53) focal-updates; urgency=medium
+
+  * Improved log
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 12 Apr 2022 18:29:16 +0200
+
 lliurex-up (21.04.52) focal-updates; urgency=medium
 
   * Added update source in Information panel
