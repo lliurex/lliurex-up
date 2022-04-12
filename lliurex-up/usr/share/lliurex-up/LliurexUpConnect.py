@@ -349,13 +349,13 @@ class LliurexUpConnect():
 			self.lliurexVersionLocal=self.llxUpCore.getLliurexVersionLocal()
 			log_msg="Get LliurexVersion installed: " + str(self.lliurexVersionLocal["installed"])
 			self.log(log_msg)
-			log_msg="Get LliurexVersion candidate from Local repository: " + str(self.lliurexVersionLocal["candidate"])
+			log_msg="Get LliurexVersion candidate from local repository: " + str(self.lliurexVersionLocal["candidate"])
 			self.log(log_msg)
 			log_msg="Get Update source: "+self.lliurexVersionLocal["updateSource"]
 			self.log(log_msg)
 
 		except Exception as e:
-			log_msg="Get LliurexVersion from Local repository. Error: " + str(e)
+			log_msg="Get LliurexVersion from local repository. Error: " + str(e)
 			self.log(log_msg)
 			self.lliurexVersionLocal={"installed":None,"candidate":None,"updateSource":None}
 
@@ -367,12 +367,12 @@ class LliurexUpConnect():
 		
 		try:
 			self.lliurexVersionNet=self.llxUpCore.getLliurexVersionLliurexNet()["candidate"]
-			log_msg="Get LliurexVersion candidate from Lliurex Net: " + str(self.lliurexVersionNet)
+			log_msg="Get LliurexVersion candidate from lliurex.net: " + str(self.lliurexVersionNet)
 			self.log(log_msg)
 			
 
 		except Exception as e:
-			log_msg="Get LliurexVersion from Lliurex Net. Error: " + str(e)
+			log_msg="Get LliurexVersion from lliurex.net. Error: " + str(e)
 			self.log(log_msg)
 			self.lliurexVersionNet=None
 

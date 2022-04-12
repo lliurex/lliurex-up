@@ -319,7 +319,7 @@ class LliurexUpCli(object):
 		self.version_update=self.lliurexcore.getLliurexVersionLocal()
 		log_msg="Get LliurexVersion installed: " + str(self.version_update["installed"])
 		self.log(log_msg)
-		log_msg="Get LliurexVersion candidate from Local repository: " + str(self.version_update["candidate"])
+		log_msg="Get LliurexVersion candidate from local repository: " + str(self.version_update["candidate"])
 		self.log(log_msg)
 		log_msg="Get Update source: "+str(self.version_update["updateSource"])
 		self.log(log_msg)
@@ -332,7 +332,7 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
 
 		self.version_available=self.lliurexcore.getLliurexVersionLliurexNet()
-		log_msg="Get LliurexVersion candidate from Lliurex Net: " + str(self.version_available["candidate"])
+		log_msg="Get LliurexVersion candidate from lliurex.net: " + str(self.version_available["candidate"])
 		self.log(log_msg)
 	
 	#def getLliurexVersionLliurexNet		
