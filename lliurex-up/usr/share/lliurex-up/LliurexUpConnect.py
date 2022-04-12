@@ -157,8 +157,10 @@ class LliurexUpConnect():
 	def canConnectToLliurexNet(self):
 
 		can_connect=self.llxUpCore.canConnectToLliurexNet()
+		log_msg="Checking connection to lliurex.net: %s"%can_connect
+		self.log(log_msg)
 
-		if can_connect:
+		if can_connect['status']:
 			log_msg="Can connect to lliurex.net: True"
 			self.log(log_msg)
 			return True
@@ -198,6 +200,8 @@ class LliurexUpConnect():
 	def clientCheckingMirrorIsRunning(self):
 
 		is_mirror_running_inserver=self.llxUpCore.clientCheckingMirrorIsRunning()
+		log_msg="Checking if mirrror in server is being updated. MirrorManager response: %s"%is_mirror_running_inserver['data']
+		self.log(log_msg)		
 		
 		if is_mirror_running_inserver['ismirrorrunning'] ==None:
 			log_msg="Checking if mirror in server is being updated. Error: " + str(is_mirror_running_inserver['exception'])
@@ -217,7 +221,9 @@ class LliurexUpConnect():
 	def clientCheckingMirrorExists(self):
 
 		is_mirror_exists_inserver=self.llxUpCore.clientCheckingMirrorExists()
-		
+		log_msg="Checking if mirrror exists in server. MirrorManager response: %s"%is_mirror_exists_inserver['data']
+		self.log(log_msg)
+	
 		if is_mirror_exists_inserver['ismirroravailable'] ==None:
 			log_msg="Checking if mirror exists in server. Error: " + str(is_mirror_exists_inserver['exception'])
 			self.log(log_msg)
@@ -283,7 +289,8 @@ class LliurexUpConnect():
 
 		try:
 			is_mirror_updated=self.llxUpCore.lliurexMirrorIsUpdated()
-
+			log_msg="Checking mirror: %s"%is_mirror_updated
+			self.log(log_msg)
 			if is_mirror_updated !=None:
 			
 				if is_mirror_updated['action']=='update':
