@@ -128,12 +128,12 @@ class LoadBox(Gtk.VBox):
 							response=dialog.run()
 							dialog.destroy()
 							if response==Gtk.ResponseType.YES:
-								log_msg="Adding the repositories of lliurex.net on client: Yes"
+								log_msg="Adding the repositories of lliurex.net on client. Response: Yes"
 								print("  [Lliurex-Up]: "+log_msg)
 								self.core.llxUpConnect.log(log_msg)
 								self.core.llxUpConnect.addSourcesListLliurex(True)	
 							else:
-								log_msg="Adding the repositories of lliurex.net on client: No"
+								log_msg="Adding the repositories of lliurex.net on client. Response: No"
 								print("  [Lliurex-Up]: "+log_msg)
 								self.core.llxUpConnect.log(log_msg)
 
@@ -254,11 +254,11 @@ class LoadBox(Gtk.VBox):
 									self.updated_percentage(0)
 									self.execute_lliurexmirror_t.start()
 									self.mirror_running_msg()
-									log_msg="Update lliurex-mirror: Yes"
+									log_msg="Update lliurex-mirror. Response: Yes"
 									self.core.llxUpConnect.log(log_msg)
 									return False
 								else:
-									log_msg="Update lliurex-mirror: No"
+									log_msg="Update lliurex-mirror. Response: No"
 									self.core.llxUpConnect.log(log_msg)
 									GLib.timeout_add(100,self.pulsate_get_info)
 									return False
