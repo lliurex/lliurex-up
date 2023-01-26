@@ -16,4 +16,4 @@ Icon=lliurex-up
 Category=System
 ScriptPath=lliurex-up.zmd
 Service=False
-Groups=sudo;admins
+Groups=sudo;admins;teachers
