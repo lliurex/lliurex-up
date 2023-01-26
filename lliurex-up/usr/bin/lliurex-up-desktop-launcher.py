@@ -14,7 +14,7 @@ _= gettext.gettext
 
 class LlxUpCheckRoot():
 
-	GROUPS=["admins","sudo"]
+	GROUPS=["admins","sudo","teachers"]
 	
 	def __init__(self):
 		self.check_root()
@@ -26,6 +26,8 @@ class LlxUpCheckRoot():
 
 		user=os.environ["USER"]
 		group_found=False
+		run_llxup=True
+		show_msg=False
 		
 		#old groups method
 		#for g in grp.getgrall():
@@ -45,14 +47,25 @@ class LlxUpCheckRoot():
 
 		if not self.checkImageBeingEdited():				
 			if group_found:		
+				is_server=self.get_flavour()
+				if is_server:
+					if 'teachers' in user_groups:
+						if 'sudo' not in user_groups and 'admins' not in user_groups:
+							run_llxup=False
 
-				screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
-				
-				screensaver_inhibitor.inHibit()
-				cmd='pkexec lliurex-up'
-				os.system(cmd)
-				screensaver_inhibitor.unInhibit()
+				if run_llxup:
+					screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
+					screensaver_inhibitor.inHibit()
+					cmd='pkexec lliurex-up'
+					os.system(cmd)
+					screensaver_inhibitor.unInhibit()
+				else:
+					show_msg=True
+
 			else:
+				show_msg=True
+
+			if show_msg:
 				text=_("You need administration privileges to run this application.")
 				cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
 				"%s" 5'%text
@@ -79,6 +92,25 @@ class LlxUpCheckRoot():
 		return imageEdited
 
 	#def checkImagesBeingEdited
+
+	def get_flavour(self):
+
+		cmd='lliurex-version -v'
+		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+		result=p.communicate()[0]
+		is_server=False
+
+		if type(result) is bytes:
+			result=result.decode()
+		flavours = [ x.strip() for x in result.split(',') ]	
+		
+		for item in flavours:
+			if 'server' in item:
+				is_server=True
+							
+		return is_server
+
+	#def get_flavour
 	
 #def LlxUpCheckRoot
 

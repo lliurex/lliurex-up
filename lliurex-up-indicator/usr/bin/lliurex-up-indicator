@@ -57,7 +57,7 @@ DISABLE_INDICATOR_TOKEN="/etc/lliurex-up-indicator/disableIndicator.token"
 class UpgradeIndicator:
 
 	ID="net.lliurex.UpIndicator"
-	GROUPS=["admins","adm"]
+	GROUPS=["admins","adm","teachers"]
 	WATCH_DIR=os.path.expanduser("/var/run")
 
 	def __init__(self,icon_name):
@@ -109,15 +109,21 @@ class UpgradeIndicator:
 	def menuMode(self):
 
 		flavours=self.get_flavour()
-		users_group=self.get_user_group()
+		group_found,user_groups=self.get_user_group()
 		client=False
-		if users_group:
+		server=False
+		if group_found:
 			if 'None' not in flavours:
 				for item in flavours:
 					if 'client' in item:
 						client=True
 						break
-				if not client:
+					if 'server' in item:
+						if 'teachers' in user_groups:
+							if 'sudo' not in user_groups and 'admins' not in user_groups:
+								server=True
+								break
+				if not client and not server:
 					self.updatedInfo=True
 			
 					
@@ -167,6 +173,7 @@ class UpgradeIndicator:
 		
 		user=os.environ["USER"]
 		group_found=False
+		user_groups=[]
 		
 		#old groups method
 		#for g in grp.getgrall():
@@ -184,7 +191,7 @@ class UpgradeIndicator:
 			if (g in UpgradeIndicator.GROUPS):
 				group_found=True
 						
-		return group_found				
+		return [group_found,user_groups]				
 
 	#def get_user_group					
 					
