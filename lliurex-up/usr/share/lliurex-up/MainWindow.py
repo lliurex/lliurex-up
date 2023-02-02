@@ -196,13 +196,20 @@ class MainWindow:
 
 	def check_root(self):
 		
+		abort=False
 		try:
 			print("  [Lliurex-Up]: Checking root")
 			f=open("/etc/lliurex-up.token","w")
 			f.close()
 			os.remove("/etc/lliurex-up.token")
+			if self.llxup_connect.checkUser():
+				abort=True
 
 		except:
+			abort=True
+			pass
+		
+		if abort:
 			print("  [Lliurex-Up]: No administration privileges")
 			dialog = Gtk.MessageDialog(None,0,Gtk.MessageType.ERROR, Gtk.ButtonsType.CANCEL, "Lliurex-Up")
 			dialog.format_secondary_text(_("You need administration privileges to run this application."))
