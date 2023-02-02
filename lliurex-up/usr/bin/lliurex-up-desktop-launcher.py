@@ -47,10 +47,10 @@ class LlxUpCheckRoot():
 
 		if not self.checkImageBeingEdited():				
 			if group_found:		
-				flavours=self.get_flavour()
+				lock_flavour=self.get_flavour()
 				if 'teachers' in user_groups:
 					if 'sudo' not in user_groups and 'admins' not in user_groups:
-						if 'server' in flavours or 'client' in flavours:
+						if lock_flavour:
 							run_llxup=False
 
 				if run_llxup:
@@ -98,18 +98,19 @@ class LlxUpCheckRoot():
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 		result=p.communicate()[0]
-		is_server=False
+		lock_flavour=False
 
 		if type(result) is bytes:
 			result=result.decode()
 		flavours = [ x.strip() for x in result.split(',') ]	
 		
-		'''
+		
 		for item in flavours:
-			if 'server' in item:
-				is_server=True
-		'''					
-		return flavours
+			if 'server' in item or 'client' in item:
+				lock_flavour=True
+				break
+							
+		return lock_flavour
 
 	#def get_flavour
 	
