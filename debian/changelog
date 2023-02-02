@@ -1,3 +1,9 @@
+lliurex-up (21.04.57) focal; urgency=medium
+
+  * Fixed launcher
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 02 Feb 2023 16:29:21 +0100
+
 lliurex-up (21.04.56) focal; urgency=medium
 
   * Improved user's control
