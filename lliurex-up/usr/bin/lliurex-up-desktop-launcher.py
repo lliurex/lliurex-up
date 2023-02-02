@@ -47,10 +47,10 @@ class LlxUpCheckRoot():
 
 		if not self.checkImageBeingEdited():				
 			if group_found:		
-				is_server=self.get_flavour()
-				if is_server:
-					if 'teachers' in user_groups:
-						if 'sudo' not in user_groups and 'admins' not in user_groups:
+				flavours=self.get_flavour()
+				if 'teachers' in user_groups:
+					if 'sudo' not in user_groups and 'admins' not in user_groups:
+						if 'server' in flavours or 'client' in flavours:
 							run_llxup=False
 
 				if run_llxup:
@@ -104,11 +104,12 @@ class LlxUpCheckRoot():
 			result=result.decode()
 		flavours = [ x.strip() for x in result.split(',') ]	
 		
+		'''
 		for item in flavours:
 			if 'server' in item:
 				is_server=True
-							
-		return is_server
+		'''					
+		return flavours
 
 	#def get_flavour
 	

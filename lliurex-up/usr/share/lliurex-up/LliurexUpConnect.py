@@ -9,6 +9,8 @@ import threading
 import datetime
 import math
 import ssl
+import pwd
+import grp
 #from math import pi
 
 import lliurex.lliurexup as LliurexUpCore
@@ -662,4 +664,36 @@ class LliurexUpConnect():
 		f.write(msg + '\n')
 		f.close()
 
-	#def log			
+	#def log
+
+	def checkUser(self):
+		
+		lockUser=False
+		flavours=[]
+
+		try:
+			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+			gid = pwd.getpwnam(user).pw_gid
+			groups_gids = os.getgrouplist(user, gid)
+			user_groups = [ grp.getgrgid(x).gr_name for x in groups_gids ]
+
+			if 'teachers' in user_groups:
+				if 'sudo' not in user_groups and 'admins' not in user_groups:
+					cmd='lliurex-version -v'
+					p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+					result=p.communicate()[0]
+					if type(result) is bytes:
+						result=result.decode()
+						flavours = [ x.strip() for x in result.split(',') ]	
+					
+					for item in flavours:
+						if 'server' in item or 'client' in item:
+							lockUser=True
+							break
+		
+		except Exception as e:
+			pass
+
+		return lockUser
+
+	#def checkUser			
