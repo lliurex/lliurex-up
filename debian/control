@@ -28,7 +28,7 @@ Description: Python library for lliurex-up; pre-actions and postactions
 
 Package: lliurex-up
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, python3, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version}), debconf-kde-helper,python3-screensaver-manager
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version}), debconf-kde-helper,python3-screensaver-manager,gir1.2-vte-2.91
 Recommends: lliurex-up-indicator (= ${binary:Version})
 Description: Graphical interface to update system
  Interface to update system.
