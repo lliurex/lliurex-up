@@ -1,3 +1,9 @@
+lliurex-up (24.04.57ubuntu1) jammy; urgency=medium
+
+  * Initial version for Jammy
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 30 Aug 2023 14:17:03 +0200
+
 lliurex-up (21.04.57) focal; urgency=medium
 
   * Fixed launcher
