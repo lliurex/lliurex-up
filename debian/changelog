@@ -1,3 +1,9 @@
+lliurex-up (24.04.58) jammy; urgency=medium
+
+  * Added gir1.2-vte-2.91 as depend
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 30 Aug 2023 15:21:02 +0200
+
 lliurex-up (24.04.57) jammy; urgency=medium
 
   * Initial version for Jammy
