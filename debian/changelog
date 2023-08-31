@@ -1,3 +1,9 @@
+lliurex-up (24.04.59) jammy; urgency=medium
+
+  * Added gir1.2-appindicator3-0.1 as depend
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 31 Aug 2023 08:08:03 +0200
+
 lliurex-up (24.04.58) jammy; urgency=medium
 
   * Added gir1.2-vte-2.91 as depend
