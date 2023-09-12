@@ -1,3 +1,9 @@
+lliurex-up (24.04.60) jammy; urgency=medium
+
+  * Fixed default_mirror value
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 12 Sep 2023 13:22:37 +0200
+
 lliurex-up (24.04.59) jammy; urgency=medium
 
   * Added gir1.2-appindicator3-0.1 as depend
