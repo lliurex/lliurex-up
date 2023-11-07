@@ -4,14 +4,7 @@ import sys
 import lliurex.lliurexup as LliurexUpCore
 
 import LliurexUpConnect
-import MainWindow
-import LoadBox
-import OptionsBox
-import InformationBox
-import PackagesBox
-import TerminalBox
-import PreferencesBox
-import settings
+import MainStack
 
 class Core:
 	
@@ -36,26 +29,11 @@ class Core:
 	
 	def init(self):
 
-		self.rsrc_dir= settings.RSRC_DIR + "/"
-		self.ui_path= settings.RSRC_DIR + "/lliurex-up.ui"
-		
 		self.llxUpConnect=LliurexUpConnect.LliurexUpConnect()
-
-		self.loadBox=LoadBox.LoadBox()
-		self.informationBox=InformationBox.InformationBox()
-		self.packagesBox=PackagesBox.PackagesBox()
-		self.terminalBox=TerminalBox.TerminalBox()
-		self.preferencesBox=PreferencesBox.PreferencesBox()
-		self.optionsBox=OptionsBox.OptionsBox()
-		self.mainWindow=MainWindow.MainWindow()
-		self.mainWindow.load_gui()
-		self.mainWindow.start_gui()
-			
-		
+		self.mainStack=MainStack.Bridge()
+		self.mainStack.startLliurexUp()
 		
 	#def init
-	
-	
 	
 	def dprint(self,msg):
 		
