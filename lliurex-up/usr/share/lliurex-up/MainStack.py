@@ -25,9 +25,10 @@ class Bridge(QObject):
 
 	#def __init__
 
-	def startLliurexUp(self):
+	def initBridge(self):
 
-		print("iniciando")
+		Bridge.llxUpConnect.startLliurexUp()
+		self.core.loadStack.checkSystem()		
 
 	#def startLliurexUp
 

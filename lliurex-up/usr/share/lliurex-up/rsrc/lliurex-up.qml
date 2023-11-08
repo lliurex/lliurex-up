@@ -72,17 +72,26 @@ ApplicationWindow {
             Layout.fillWidth:true
             Layout.fillHeight: true
 
-            initialItem:errorView
+            initialItem:loadView
 
             onCurrentViewChanged:{
                 switch(currentView){
                     case 0:
+                        mainView.replace(loadView)
+                        break;
+                    case 1:
                         mainView.replace(errorView)
                         break;
                 }
             }
        }
-         
+       
+       Component{
+            id:loadView
+            LoadPanel{
+                id:loadPanel
+            }
+       } 
        Component{
             id:errorView
             ErrorPanel{

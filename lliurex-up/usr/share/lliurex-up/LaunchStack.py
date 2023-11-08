@@ -241,6 +241,7 @@ class Bridge(QObject):
 	def _unlockProcessRet(self):
 
 		self.closeGui=True
+		self.isProgressBarVisible=False
 
 		if self.unlockProcessT.ret==0:
 			os.execl(sys.executable, sys.executable, *sys.argv) 
