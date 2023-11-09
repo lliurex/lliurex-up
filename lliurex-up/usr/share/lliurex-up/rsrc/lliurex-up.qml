@@ -82,6 +82,9 @@ ApplicationWindow {
                     case 1:
                         mainView.replace(errorView)
                         break;
+                    case 2:
+                        mainView.replace(applicationOptionsView)
+                        break;
                 }
             }
        }
@@ -96,6 +99,12 @@ ApplicationWindow {
             id:errorView
             ErrorPanel{
                 id:errorPanel
+            }
+        }
+        Component{
+            id:applicationOptionsView
+            ApplicationOptions{
+                id:applicationOptions
             }
         }
       

@@ -31,9 +31,11 @@ else:
 	engine.clearComponentCache()
 	context=engine.rootContext()
 	mainStackBridge=c.mainStack
-	loadStackBrdige=c.loadStack
+	loadStackBridge=c.loadStack
+	infoStackBridge=c.infoStack
 	context.setContextProperty("mainStackBridge",mainStackBridge)
-	context.setContextProperty("loadStackBridge",loadStackBrdige)
+	context.setContextProperty("loadStackBridge",loadStackBridge)
+	context.setContextProperty("infoStackBridge",infoStackBridge)
 
 	url = QUrl("/usr/share/lliurex-up/rsrc/lliurex-up.qml")
 

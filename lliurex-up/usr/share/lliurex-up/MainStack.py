@@ -14,6 +14,9 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Bridge(QObject):
 
+	UPDATE_OK=1
+	UPDATE_ERROR=-1
+
 	def __init__(self):
 
 		QObject.__init__(self)
@@ -21,6 +24,14 @@ class Bridge(QObject):
 		Bridge.llxUpConnect=self.core.llxUpConnect
 		self._currentStack=0
 		self._showErrorMessage=["","Warning"]
+		self._currentOptionStack=0
+		self._showProgressBar=False
+		self._progressBarValue=0.0
+		self._totalUpdateSteps=4
+		self._updateStep=0
+		self._showUpdateBtn=False
+		self._enableUpdateBtn=False
+		self._showUpdateResult=[False,"","Ok"]
 		self._closeGui=False
 
 	#def __init__
@@ -30,7 +41,19 @@ class Bridge(QObject):
 		Bridge.llxUpConnect.startLliurexUp()
 		self.core.loadStack.checkSystem()		
 
-	#def startLliurexUp
+	#def initBridge
+
+	def loadInfo(self,updated=False):
+
+		self.core.infoStack.getUpdateInfo(updated)
+
+		if not updated:
+			self.showUpdateBtn=True
+			self.enableUpdateBtn=True
+		
+		self.currentStack=2
+			
+	#def loadInfo
 
 	def _getCurrentStack(self):
 
@@ -60,6 +83,108 @@ class Bridge(QObject):
 
 	#def _setShowErrorMessage
 
+	def _getCurrentOptionStack(self):
+
+		return self._currentOptionStack
+
+	#def _getCurrentOptionStack
+
+	def _setCurrentOptionStack(self,currentOptionStack):
+
+		if self._currentOptionStack!=currentOptionStack:
+			self._currentOptionStack=currentOptionStack
+			self.on_currentOptionStack.emit()
+
+	#def _setCurrentOptionStack
+
+	def _getShowProgessBar(self):
+
+		return self._showProgressBar
+
+	#def _getShowProgressBar
+
+	def _setShowProgressBar(self,showProgressBar):
+
+		if self._showProgressBar!=showProgressBar:
+			self._showProgressBar=showProgressBar
+			self.on_showProgressBar.emit()
+
+	#def _setShowProgressBar
+
+	def _getProgressBarValue(self):
+
+		return self._progressBarValue
+
+	#def _getProgressBarValue
+
+	def _setProgressBarValue(self,progressBarValue):
+
+		if self._progressBarValue!=progressBarValue:
+			self._progressBarValue=progressBarValue
+			self.on_progressBarValue.emit()
+
+	def _getTotalUpdateSteps(self):
+
+		return self._totalUpdateSteps
+
+	#der _getTotalUpateSteps
+
+	def _getUpdateStep(self):
+
+		return self._updateStep
+
+	#def _getUpdateStep
+
+	def _setUpdateStep(self,updateStep):
+
+		if self._updateStep!=updateStep:
+			self._updateStep=updateStep
+			self.on_updateStep.emit()
+
+	#def _setUpdateStep
+
+	def _getShowUpdateBtn(self):
+
+		return self._showUpdateBtn
+
+	#def _getShowUpdateBtn
+
+	def _setShowUpdateBtn(self,showUpdateBtn):
+
+		if self._showUpdateBtn!=showUpdateBtn:
+			self._showUpdateBtn=showUpdateBtn
+			self.on_showUpdateBtn.emit()
+
+	#def _setShowUpdateBtn
+
+	def _getEnableUpdateBtn(self):
+
+		return self._enableUpdateBtn
+
+	#def _getEnableUpdateBtn
+
+	def _setEnableUpdateBtn(self,enableUpdateBtn):
+
+		if self._enableUpdateBtn!=enableUpdateBtn:
+			self._enableUpdateBtn=enableUpdateBtn
+			self.on_enableUpdateBtn.emit()
+
+	#def _setEnableUpdateBtn
+
+	def _getShowUpdateResult(self):
+
+		return self._showUpdateResult
+
+	#def _getShowUpdateResult
+
+	def _setShowUpdateResult(self,showUpdateResult):
+
+		if self._showUpdateResult!=showUpdateResult:
+			self._showUpdateResult=showUpdateResult
+			self.on_showUpdateResult.emit()
+
+	#def _setShowUpdateResult
+
 	def _getCloseGui(self):
 
 		return self._closeGui
@@ -74,10 +199,49 @@ class Bridge(QObject):
 
 	#def _setCloseGui
 
+	@Slot(int)
+	def manageTransitions(self,stack):
+
+		if self.currentOptionStack!=stack:
+			self.currentOptionStack=stack
+
+	#de manageTransitions
+
+	@Slot()
+	def openHelp(self):
+
+		runPkexec=False
+
+		if 'PKEXEC_UID' in os.environ:
+			runPkexec=True
+
+		self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex+Up'
+
+		if runPkexec:
+			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+			self.helpCmd="su -c '%s' %s"%(self.helpCmd,user)
+		else:
+			self.helpCmd="su -c '%s' $USER"%self.helpCmd
+		
+		self.openHelp_t=threading.Thread(target=self._openHelpRet)
+		self.openHelp_t.daemon=True
+		self.openHelp_t.start()
+
+	#def openHelp
+
+	def _openHelpRet(self):
+
+		os.system(self.helpCmd)
+
+	#def _openHelpRet
+
 	@Slot()
 	def closeApplication(self):
 
+		print("Cerrando")
+		Bridge.llxUpConnect.cleanEnvironment()
 		self.closeGui=True
+
 
 	#def closeApplication
 
@@ -87,8 +251,31 @@ class Bridge(QObject):
 	on_showErrorMessage=Signal()
 	showErrorMessage=Property('QVariantList',_getShowErrorMessage,_setShowErrorMessage,notify=on_showErrorMessage)
 
+	on_currentOptionStack=Signal()
+	currentOptionStack=Property(int,_getCurrentOptionStack,_setCurrentOptionStack,notify=on_currentOptionStack)
+
+	on_showProgressBar=Signal()
+	showProgressBar=Property(bool,_getShowProgessBar,_setShowProgressBar,notify=on_showProgressBar)
+	
+	on_progressBarValue=Signal()
+	progressBarValue=Property(float,_getProgressBarValue,_setProgressBarValue,notify=on_progressBarValue)	
+
+	on_updateStep=Signal()
+	updateStep=Property(int,_getUpdateStep,_setUpdateStep,notify=on_updateStep)
+
+	on_showUpdateBtn=Signal()
+	showUpdateBtn=Property(bool,_getShowUpdateBtn,_setShowUpdateBtn,notify=on_showUpdateBtn)
+
+	on_enableUpdateBtn=Signal()
+	enableUpdateBtn=Property(bool,_getEnableUpdateBtn,_setEnableUpdateBtn,notify=on_enableUpdateBtn)
+
+	on_showUpdateResult=Signal()
+	showUpdateResult=Property('QVariantList',_getShowUpdateResult,_setShowUpdateResult,notify=on_showUpdateResult)	
+	
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
+
+	totalUpdateSteps=Property(int,_getTotalUpdateSteps,constant=True)
 
 #class Bridge
 

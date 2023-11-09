@@ -44,7 +44,7 @@ Rectangle{
                     }
                 }
                 font.family: "Quattrocento Sans Bold"
-                font.pointSize: 10
+                font.pointSize: 11
                 Layout.alignment:Qt.AlignHCenter
             }
         }
@@ -59,7 +59,45 @@ Rectangle{
                 to:1.0
                 value:loadStackBridge.progressValue
                 Layout.alignment:Qt.AlignHCenter
+                implicitWidth:300
             }
+        }
+    }
+
+    CustomDialog{
+        id:repoDialog
+        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Repository configuration")
+        dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
+        dialogVisible:loadStackBridge.showRepoDialog
+        dialogWidth:500
+        Connections{
+           target:repoDialog
+           function onDialogApplyClicked(){
+               loadStackBridge.manageRepoDialog('Yes')         
+           }
+           function onRejectDialogClicked(){
+               loadStackBridge.manageRepoDialog('No')       
+           }
+
+        }
+
+    }
+
+     CustomDialog{
+        id:mirrorDialog
+        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
+        dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
+        dialogVisible:loadStackBridge.showMirrorDialog
+        dialogWidth:500
+        Connections{
+           target:mirrorDialog
+           function onDialogApplyClicked(){
+               loadStackBridge.manageMirrorDialog('Yes')         
+           }
+           function onRejectDialogClicked(){
+               loadStackBridge.manageMirrorDialog('No')       
+           }
+
         }
     }
 
@@ -100,6 +138,9 @@ Rectangle{
                 break;
             case 12:
                 msg=i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
+                return msg
+            case 13:
+                msg=i18nd("lliurex-up","Updating mirror: ")+" "+loadStackBridge.mirrorPercentage+" %"
                 return msg
         }
         msg=headed+". "+msg

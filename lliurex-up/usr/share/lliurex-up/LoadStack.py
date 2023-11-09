@@ -8,6 +8,7 @@ import copy
 import time
 import sys
 import pwd
+import subprocess
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -88,7 +89,9 @@ class UpdateLliurexUp(QThread):
 	#def __init__
 
 	def run (self,*args):
+		time.sleep(5)
 		self.isLliurexUpInstalled=Bridge.llxUpConnect.installLliurexUp()
+	
 	#def run
 
 #class UpdateLliurexUp
@@ -111,6 +114,24 @@ class CheckMirror(QThread):
 	#def run
 
 #class CheckMirror
+
+class LaunchMirror(QThread):
+
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+		self.ret=""
+
+	#def __init__
+
+	def run (self,*args):
+
+		cmd="/usr/sbin/lliurex-mirror-gui"
+		self.ret=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
+		
+	#def run
+
+#class LaunchMirror
 
 class GetCurrentVersion(QThread):
 
@@ -211,12 +232,14 @@ class Bridge(QObject):
 		self._showProgressBar=False
 		self._progressValue=0.0
 		self._countDownValue=5
+		self._mirrorPercentage=0
 		self.maxSeconds=5.0
 		self.currentSecond=0.0
 		self._showRepoDialog=False
 		self._showMirrorDialog=False
 		self.addRepos=True
 		self.addAllRepos=False
+		self.endLaunchMirror=True
 
 	#def __init__
 
@@ -288,7 +311,7 @@ class Bridge(QObject):
 
 	#def _getShowRepoDialog
 
-	def _setShowRepoDialog(self,setShowRepoDialog):
+	def _setShowRepoDialog(self,showRepoDialog):
 
 		if self._showRepoDialog!=showRepoDialog:
 			self._showRepoDialog=showRepoDialog
@@ -302,13 +325,27 @@ class Bridge(QObject):
 
 	#def _getShowRepoDialog
 
-	def _setShowMirrorDialog(self,_setShowMirrorDialog):
+	def _setShowMirrorDialog(self,showMirrorDialog):
 
 		if self._showMirrorDialog!=showMirrorDialog:
 			self._showMirrorDialog=showMirrorDialog
 			self.on_showMirrorDialog.emit()
 
 	#def _setShowMirrorDialog
+
+	def _getMirrorPercentage(self):
+
+		return self._mirrorPercentage
+
+	#def _getMirrorPercentage
+
+	def _setMirrorPercentage(self,mirrorPercentage):
+
+		if self._mirrorPercentage!=mirrorPercentage:
+			self._mirrorPercentage=mirrorPercentage
+			self.on_mirrorPercentage.emit()
+
+	#def _setMirrorPercentage
 
 	def checkSystem(self):
 
@@ -407,7 +444,8 @@ class Bridge(QObject):
 			self.loadStep=12
 			self.waitForRestartTimer=QTimer(None)
 			self.waitForRestartTimer.timeout.connect(self._waitForRestartT)
-			self.waitForRestartTimer.start(1000)
+			self.progressValue=0.0
+			self.waitForRestartTimer.start(10)
 		else:
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
 			self.core.mainStack.showErrorMessage=[Bridge.UPDATE_LLIUREXUP_ERROR,"Error"]
@@ -418,15 +456,14 @@ class Bridge(QObject):
 
 	def _waitForRestartT(self):
 
-		self.countDownValue=int(self.maxSeconds-self.currentSecond)
+		self.countDownValue=int(self.maxSeconds+1-self.currentSecond)
 		self.progressValue=self.currentSecond/self.maxSeconds
 
-		self.currentSecond+=1.0	
-		if self.currentSecond>=self.maxSeconds+1.0:
+		self.currentSecond+=0.01	
+		if self.currentSecond>=self.maxSeconds:
 			self.waitForRestartTimer.stop()
 			Bridge.llxUpConnect.cleanLliurexUpLock()
 			os.execl(sys.executable, sys.executable, *sys.argv)
-
 
 	#def _waitForRestartT
 
@@ -448,21 +485,56 @@ class Bridge(QObject):
 				print("  [Lliurex-Up]: Asking if mirror will be update")
 				self.showMirrorDialog=True
 			else:
-				self._waitForMirror()
+				self._launchMirrorTimer()
 		else:
 			if self.checkMirrorT.isMirrorRunning:
-				self._waitForMirror()
+				self._launchMirrorTimer()
 			else:
 				print("  [Lliurex-Up]: Nothing to do with mirror")
 				self._getCurrentVersion()
-	
+
 	#def _checkMirrorRet
 
-	def _waitForMirror(self):
+	def _launchMirror(self):
 
-		print("Actualizando Mirror")
+		print("  [Lliurex-Up]: Updating mirror")
+		self.endLaunchMirror=False
+		self._launchMirrorTimer()
+		self.launchMirrorT=LaunchMirror()
+		self.launchMirrorT.start()
+		self.launchMirrorT.finished.connect(self._launchMirrorRet)
 
-	#def _waitForMirror
+	#def _launchMirror
+
+	def _launchMirrorRet(self):
+
+		self.endLaunchMirror=True
+
+	#def _launchMirrorRet
+
+	def _launchMirrorTimer(self):
+
+		self.loadStep=13
+		self.progressValue=0
+		self.waitForMirrorTimer=QTimer(None)
+		self.waitForMirrorTimer.timeout.connect(self._waitForMirrorT)
+		self.waitForMirrorTimer.start(10)
+
+	#def _launchMirrorTimer
+
+	def _waitForMirrorT(self):
+
+		isMirrorRunning=Bridge.llxUpConnect.lliurexMirrorIsRunning()
+
+		if isMirrorRunning or not self.endLaunchMirror:
+			completed=Bridge.llxUpConnect.getPercentageLliurexMirror()
+			self.mirrorPercentage=format(completed,'.0f')
+			self.progressValue=completed/100.0
+		else:
+			self.waitForMirrorTimer.stop()
+			self._getCurrentVersion()
+
+	#def _waitForMirrorT
 
 	def _getCurrentVersion(self):
 
@@ -534,9 +606,11 @@ class Bridge(QObject):
 				logMsg="System update. Nothing to do"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: System update. Nothing to do")
+				self.core.mainStack.loadInfo(True)
 		else:
 			if not self.gatherPackagesT.incorrectFlavours['status']:
 				print("  [Lliurex-Up]: System nor update")
+				self.core.mainStack.loadInfo()
 			else:
 				logMsg="Updated abort for incorrect metapackages detected in update"
 				Bridge.llxUpConnect.log(log_msg)
@@ -554,6 +628,38 @@ class Bridge(QObject):
 		return currentProgress
 
 	#def _getProgress
+
+	@Slot(str)
+	def manageRepoDialog(self,response):
+
+		self.showRepoDialog=False
+		if response=="Yes":
+			self.addAllRepos=True
+			logMsg="Adding the repositories of lliurex.net on client. Response: Yes"
+		else:
+			self.addRepos=False
+			logMsg="Adding the repositories of lliurex.net on client. Response: No"
+			
+		Bridge.llxUpConnect.log(logMsg)
+		print("  [Lliurex-Up]: "+logMsg)
+		self._launchInitActions()
+
+	#def manageRepoDialog
+
+	@Slot(str)
+	def manageMirrorDialog(self,response):
+
+		self.showMirrorDialog=False
+		if response=="Yes":
+			logMsg="Update lliurex-mirror. Response: Yes"
+			Bridge.llxUpConnect.log(logMsg)
+			self._launchMirror()
+		else:
+			logMsg="Update lliurex-mirror. Response: No"
+			Bridge.llxUpConnect.log(logMsg)
+			self._getCurrentVersion()
+			
+	#def manageRepoDialog
 	
 
 	on_loadStep=Signal()
@@ -567,11 +673,15 @@ class Bridge(QObject):
 
 	on_countDownValue=Signal()
 	countDownValue=Property(int,_getCountDownValue,_setCountDownValue,notify=on_countDownValue)
-	on_showMirrorDialog=Signal()
-	showMirrorDialog=Property(bool,_getShowMirrorDialog,_setShowMirrorDialog,notify=on_showMirrorDialog)
+	
+	on_showRepoDialog=Signal()
+	showRepoDialog=Property(bool,_getShowRepoDialog,_setShowRepoDialog,notify=on_showRepoDialog)
 
 	on_showMirrorDialog=Signal()
 	showMirrorDialog=Property(bool,_getShowMirrorDialog,_setShowMirrorDialog,notify=on_showMirrorDialog)
+
+	on_mirrorPercentage=Signal()
+	mirrorPercentage=Property(int,_getMirrorPercentage,_setMirrorPercentage,notify=on_mirrorPercentage)
 
 	totalSteps=Property(int,_getTotalSteps,constant=True)
 
