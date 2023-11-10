@@ -127,7 +127,7 @@ class Bridge(QObject):
 
 	#def _setUpdateSource
 
-	def getUpdateInfo(self,updated=False):
+	def getUpdateInfo(self):
 
 		currentVersion=self.core.loadStack.getCurrentVersionT.currentVersion["installed"]
 		
@@ -154,7 +154,7 @@ class Bridge(QObject):
 		else:
 			self.candidateVersion=candidateVersion
 
-		if not updated:
+		if self.core.mainStack.updateRequired:
 			self.packagesToUpdate=len(self.core.loadStack.gatherPackagesT.packages)
 			self.newPackagesToUpdate=0
 			self.updateSize=self.core.loadStack.gatherPackagesT.updateSize

@@ -11,6 +11,8 @@ import math
 import ssl
 import pwd
 import grp
+import configparser
+
 #from math import pi
 
 import lliurex.lliurexup as LliurexUpCore
@@ -33,6 +35,11 @@ class LliurexUpConnect():
 		self.errorfinalmetapackage_token=self.llxUpCore.errorfinalmetapackage_token
 		self.finalupgrade_token=self.llxUpCore.finalupgrade_token
 		self.allRepos=False
+		self.packagesData=[]
+		self.desktopsPath="/usr/share/applications"
+		self.standardIconPath="/usr/share/lliurex-up/rsrc"
+		self.systemIconPath="/usr/share/icons/hicolor/48x48/apps"
+		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
 
 	#def __init__	
 
@@ -421,12 +428,15 @@ class LliurexUpConnect():
 			log_msg="Get packages to update. Error: " + str(e)
 			self.log(log_msg)
 
-		self.total_size=self.convert_size(self.total_size)	
+		self.total_size=self.convert_size(self.total_size)
+		self.getPackagesData(packages_parse)	
+
 		return packages_parse,self.total_size
 			
 	#def getPackagesToUpdate
 	
 	def getSizePackagesToUpdate(self,pkg):
+		
 		size=0
 		try:
 			command='apt-cache show ' + pkg + ' |grep "^Size:" |cut -d " " -f2 |head -1'
@@ -457,7 +467,72 @@ class LliurexUpConnect():
 		s=int(s)
 		return '%s %s' % (s, size_name[i])
 
-	
+	#def convert_size
+
+	def getPackagesData(self,packages):
+
+		self.newPackages=0
+		self.packagesData=[]
+
+		for item in packages:
+			tmp={}
+			tmpItem=item.split(";")
+			if len(tmpItem)>1:
+				if tmpItem[3]==str(None):
+					self.newPackages=int(self.newPackages)+1
+				tmp["pkgId"]=tmpItem[0]
+				tmp["pkgVersion"]=tmpItem[1]
+				tmp["pkgSize"]=tmpItem[2]
+				tmp["pkgIcon"]=self._parseDesktop(tmpItem[3],tmpItem[0])
+				tmp["pkgStatus"]=0
+				tmp["showStatus"]=False
+				self.packagesData.append(tmp)
+
+	#def getPackagesData
+
+	def _parseDesktop(self,installed,name):
+
+		installedIcon=False
+		desktopFile=os.path.join(self.desktopsPath,name+".desktop")
+
+		try:
+			if str(installed)=='None':
+				icon=os.path.join(self.standardIconPath,"new_package.png")
+			else:	
+				config = configparser.ConfigParser()
+				config.optionxform=str
+				config.read(desktopFile)
+				
+				#Zomandos may include a desktop file of type zomando with info for the store. Those desktops must be skipped
+				if config.has_section("Desktop Entry") and config.has_option("Desktop Entry","Icon") and config.get("Desktop Entry","Type").lower()!="zomando":
+					icon=config.get("Desktop Entry","Icon")
+					installedIcon=True
+					iconExtension=os.path.splitext(icon)[1]
+					if iconExtension!="":
+						if iconExtension==".xpm":
+							icon=os.path.join(self.standardIconPath,"package.png")
+							installedIcon=False
+						elif iconExtension==".png":
+							icon=os.path.join(self.systemIconPath,icon)
+						elif iconExtension==".svg":
+							icon=os.path.join(self.systemScalableIconPath,icon)
+					else:
+						icon=os.path.join(self.systemIconPath,icon+".png")	
+				else:
+					icon=os.path.join(self.standardIconPath,"package.png")
+				
+		except Exception as e:
+			icon=os.path.join(self.standardIconPath,"package.png")
+
+		if os.path.exists(icon):
+			print(icon)
+			return icon
+		else:
+			return os.path.join(self.standardIconPath,"package.png")
+
+		
+	#def parseDesktop
+
 	def checkIncorrectFlavours(self):
 
 		incorrectFlavours=self.llxUpCore.checkIncorrectFlavours()

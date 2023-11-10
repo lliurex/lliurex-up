@@ -33,9 +33,12 @@ else:
 	mainStackBridge=c.mainStack
 	loadStackBridge=c.loadStack
 	infoStackBridge=c.infoStack
+	packageStackBridge=c.packageStack
 	context.setContextProperty("mainStackBridge",mainStackBridge)
 	context.setContextProperty("loadStackBridge",loadStackBridge)
 	context.setContextProperty("infoStackBridge",infoStackBridge)
+	context.setContextProperty("packageStackBridge",packageStackBridge)
+
 
 	url = QUrl("/usr/share/lliurex-up/rsrc/lliurex-up.qml")
 

@@ -15,6 +15,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 class Bridge(QObject):
 
 	UPDATE_OK=1
+	UPDATE_NO_REQUIRED=2
 	UPDATE_ERROR=-1
 
 	def __init__(self):
@@ -31,7 +32,8 @@ class Bridge(QObject):
 		self._updateStep=0
 		self._showUpdateBtn=False
 		self._enableUpdateBtn=False
-		self._showUpdateResult=[False,"","Ok"]
+		self._showFeedbackMessage=[False,"","Ok"]
+		self._updateRequired=False
 		self._closeGui=False
 
 	#def __init__
@@ -43,13 +45,16 @@ class Bridge(QObject):
 
 	#def initBridge
 
-	def loadInfo(self,updated=False):
+	def loadInfo(self):
 
-		self.core.infoStack.getUpdateInfo(updated)
+		self.core.infoStack.getUpdateInfo()
+		self.core.packageStack.getPackagesInfo()
 
-		if not updated:
+		if self.updateRequired:
 			self.showUpdateBtn=True
 			self.enableUpdateBtn=True
+		else:
+			self.showFeedbackMessage=[True,Bridge.UPDATE_NO_REQUIRED,"Info"]
 		
 		self.currentStack=2
 			
@@ -171,19 +176,33 @@ class Bridge(QObject):
 
 	#def _setEnableUpdateBtn
 
-	def _getShowUpdateResult(self):
+	def _getShowFeedbackMessage(self):
 
-		return self._showUpdateResult
+		return self._showFeedbackMessage
 
-	#def _getShowUpdateResult
+	#def _getShowFeedbackMessage
 
-	def _setShowUpdateResult(self,showUpdateResult):
+	def _setShowFeedbackMessage(self,showFeedbackMessage):
 
-		if self._showUpdateResult!=showUpdateResult:
-			self._showUpdateResult=showUpdateResult
-			self.on_showUpdateResult.emit()
+		if self._showFeedbackMessage!=showFeedbackMessage:
+			self._showFeedbackMessage=showFeedbackMessage
+			self.on_showFeedbackMessage.emit()
 
-	#def _setShowUpdateResult
+	#def _setShowFeedbackMessage
+
+	def _getUpdateRequired(self):
+
+		return self._updateRequired
+
+	#def _getUpdateRequired
+
+	def _setUpdateRequired(self,updateRequired):
+
+		if self._updateRequired!=updateRequired:
+			self._updateRequired=updateRequired
+			self.on_updateRequired.emit()
+
+	#def _setUpdateRequired
 
 	def _getCloseGui(self):
 
@@ -240,6 +259,7 @@ class Bridge(QObject):
 
 		print("Cerrando")
 		Bridge.llxUpConnect.cleanEnvironment()
+		Bridge.llxUpConnect.cleanLliurexUpLock()
 		self.closeGui=True
 
 
@@ -269,9 +289,12 @@ class Bridge(QObject):
 	on_enableUpdateBtn=Signal()
 	enableUpdateBtn=Property(bool,_getEnableUpdateBtn,_setEnableUpdateBtn,notify=on_enableUpdateBtn)
 
-	on_showUpdateResult=Signal()
-	showUpdateResult=Property('QVariantList',_getShowUpdateResult,_setShowUpdateResult,notify=on_showUpdateResult)	
+	on_showFeedbackMessage=Signal()
+	showFeedbackMessage=Property('QVariantList',_getShowFeedbackMessage,_setShowFeedbackMessage,notify=on_showFeedbackMessage)	
 	
+	on_updateRequired=Signal()
+	updateRequired=Property(bool,_getUpdateRequired,_setUpdateRequired,notify=on_updateRequired)
+
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
 

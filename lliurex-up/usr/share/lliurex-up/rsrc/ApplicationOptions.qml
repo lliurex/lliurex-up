@@ -12,7 +12,7 @@ GridLayout{
     columnSpacing:10
 
     Rectangle{
-        width:130
+        width:150
         Layout.minimumHeight:460
         Layout.preferredHeight:460
         Layout.fillHeight:true
@@ -20,7 +20,7 @@ GridLayout{
 
         GridLayout{
             id: menuGrid
-            rows:2 
+            rows:3 
             flow: GridLayout.TopToBottom
             rowSpacing:0
 
@@ -32,6 +32,18 @@ GridLayout{
                 Connections{
                     function onMenuOptionClicked(){
                         mainStackBridge.manageTransitions(0)
+                    }
+                }
+            }
+
+            MenuOptionBtn {
+                id:pkgOption
+                optionText:i18nd("lliurex-up","Packages list")
+                optionIcon:"/usr/share/icons/breeze/actions/22/view-list-details.svg"
+                optionVisible:true
+                Connections{
+                    function onMenuOptionClicked(){
+                        mainStackBridge.manageTransitions(1)
                     }
                 }
             }
@@ -65,13 +77,17 @@ GridLayout{
             InfoPanel{
                 id:infoPanel
             }
+
+            PackagesPanel{
+                id:packagesPanel
+            }
            
  
         }
 
          Kirigami.InlineMessage {
             id: messageLabel
-            visible:mainStackBridge.showUpdateResult[0]
+            visible:mainStackBridge.showFeedbackMessage[0]
             text:getResultText()
             type:getMsgType()
             Layout.minimumWidth:555
@@ -163,10 +179,13 @@ GridLayout{
     function getResultText(){
 
         var msg=""
-        switch(mainStackBridge.showUpdateResult[1]){
+        switch(mainStackBridge.showFeedbackMessage[1]){
 
             case 1:
                 msg=i18nd("lliurex-up","The updated process has ended successfully.The system is now update")
+                break;
+            case 2:
+                msg=i18nd("lliurex-up","Your system is update")
                 break;
             case -1:
                 msg=i18nd("lliurex-up","The updated process has ended with errors")
@@ -203,7 +222,7 @@ GridLayout{
 
     function getMsgType(){
 
-        switch(mainStackBridge.showUpdateResult[2]){
+        switch(mainStackBridge.showFeedbackMessage[2]){
             case "Ok":
                 return Kirigami.MessageType.Positive;
             case "Error":

@@ -108,6 +108,7 @@ Rectangle{
 
             Text{
                 id:numberPackagesText
+                visible:mainStackBridge.updateRequired
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
                 text:i18nd("lliurex-up","Number of packages:")
@@ -117,6 +118,7 @@ Rectangle{
 
             Text{
                 id:numberPackagesValue
+                visible:mainStackBridge.updateRequired
                 text:infoStackBridge.packagesToUpdate+" ( "+infoStackBridge.newPackagesToUpdate+ " "+i18nd("lliurex-up","news")+" )"
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
@@ -126,6 +128,7 @@ Rectangle{
 
             Text{
                 id:sizeText
+                visible:mainStackBridge.updateRequired
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
                 text:i18nd("lliurex-up","Size of update (aprox):")

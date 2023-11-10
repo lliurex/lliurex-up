@@ -583,32 +583,32 @@ class Bridge(QObject):
 	def _gatherPackagesRet(self):
 
 		if len(self.gatherPackagesT.packages)==0:
-			systemUpdate=True
+			self.core.mainStack.updateRequired=False
 
 			if self.checkInitialFlavourToInstallT.isFlavourInstalled!=0:
-				systemUpdate=False
+				self.core.mainStack.updateRequired=True
 			else:	
 				if self.getCurrentVersionT.currentVersion["candidate"]!=None:
 					if self.getCurrentVersionT.currentVersion["installed"]!=self.getCurrentVersionT.currentVersion["candidate"]:
-						systemUpdate=False
+						self.core.mainStack.updateRequired=True
 					else:
 						if self.getCurrentVersionT.currentVersion["installed"]!=self.getAvailableVersionT.availableVersion:
-							systemUpdate=False
+							self.core.mainStack.updateRequired=True
 
-			if not systemUpdate:
+			if self.core.mainStack.updateRequired:
 				logMsg="Updated abort. An error occurred in the search for updates"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: Error in search for updates")
 				self.core.mainStack.showErrorMessage=[Bridge.SEARCH_UPDATES_ERROR,"Error"]
 				self.core.mainStack.currentStack=1
 			else:
-				#self.core.informationStack.getUpdateSummary(True)
 				logMsg="System update. Nothing to do"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: System update. Nothing to do")
-				self.core.mainStack.loadInfo(True)
+				self.core.mainStack.loadInfo()
 		else:
 			if not self.gatherPackagesT.incorrectFlavours['status']:
+				self.core.mainStack.updateRequired=True
 				print("  [Lliurex-Up]: System nor update")
 				self.core.mainStack.loadInfo()
 			else:
