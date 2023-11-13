@@ -12,7 +12,7 @@ GridLayout{
     columnSpacing:10
 
     Rectangle{
-        width:150
+        width:190
         Layout.minimumHeight:460
         Layout.preferredHeight:460
         Layout.fillHeight:true
@@ -20,7 +20,7 @@ GridLayout{
 
         GridLayout{
             id: menuGrid
-            rows:3 
+            rows:5 
             flow: GridLayout.TopToBottom
             rowSpacing:0
 
@@ -28,7 +28,7 @@ GridLayout{
                 id:infoOption
                 optionText:i18nd("lliurex-up","Information")
                 optionIcon:"/usr/share/icons/breeze/status/22/update-low.svg"
-                optionVisible:true
+                visible:true
                 Connections{
                     function onMenuOptionClicked(){
                         mainStackBridge.manageTransitions(0)
@@ -40,10 +40,36 @@ GridLayout{
                 id:pkgOption
                 optionText:i18nd("lliurex-up","Packages list")
                 optionIcon:"/usr/share/icons/breeze/actions/22/view-list-details.svg"
-                optionVisible:true
+                visible:mainStackBridge.updateRequired
                 Connections{
                     function onMenuOptionClicked(){
                         mainStackBridge.manageTransitions(1)
+                    }
+                }
+            }
+
+            MenuOptionBtn {
+                id:konsoleOption
+                optionText:i18nd("lliurex-up","Update process")
+                optionIcon:"/usr/share/icons/breeze/apps/22/utilities-terminal.svg"
+                visible:mainStackBridge.updateRequired
+                enabled:true
+                Connections{
+                    function onMenuOptionClicked(){
+                        mainStackBridge.manageTransitions(2)
+                    }
+                }
+            }
+
+            MenuOptionBtn {
+                id:settingsOption
+                optionText:i18nd("lliurex-up","Settings")
+                optionIcon:"/usr/share/icons/breeze/actions/22/configure.svg"
+                visible:settingStackBridge.showSettingsPanel
+                enabled:true
+                Connections{
+                    function onMenuOptionClicked(){
+                        mainStackBridge.manageTransitions(3)
                     }
                 }
             }
@@ -80,6 +106,14 @@ GridLayout{
 
             PackagesPanel{
                 id:packagesPanel
+            }
+
+            KonsolePanel{
+                id:konsolePanel
+            }
+
+            SettingsPanel{
+                id:settingsPanel
             }
            
  

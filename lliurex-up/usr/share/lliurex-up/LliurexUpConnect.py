@@ -40,6 +40,8 @@ class LliurexUpConnect():
 		self.standardIconPath="/usr/share/lliurex-up/rsrc"
 		self.systemIconPath="/usr/share/icons/hicolor/48x48/apps"
 		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
+		self.disableSystrayPath="/etc/lliurex-up-indicator"
+		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
 
 	#def __init__	
 
@@ -493,6 +495,7 @@ class LliurexUpConnect():
 	def _parseDesktop(self,installed,name):
 
 		installedIcon=False
+		iconWithPath=False
 		desktopFile=os.path.join(self.desktopsPath,name+".desktop")
 
 		try:
@@ -507,17 +510,22 @@ class LliurexUpConnect():
 				if config.has_section("Desktop Entry") and config.has_option("Desktop Entry","Icon") and config.get("Desktop Entry","Type").lower()!="zomando":
 					icon=config.get("Desktop Entry","Icon")
 					installedIcon=True
+					if len(icon.split("/"))>1:
+						iconWithPath=True
 					iconExtension=os.path.splitext(icon)[1]
 					if iconExtension!="":
 						if iconExtension==".xpm":
 							icon=os.path.join(self.standardIconPath,"package.png")
 							installedIcon=False
 						elif iconExtension==".png":
-							icon=os.path.join(self.systemIconPath,icon)
+							if not iconWithPath:
+								icon=os.path.join(self.systemIconPath,icon)
 						elif iconExtension==".svg":
-							icon=os.path.join(self.systemScalableIconPath,icon)
+							if not iconWithPath:
+								icon=os.path.join(self.systemScalableIconPath,icon)
 					else:
-						icon=os.path.join(self.systemIconPath,icon+".png")	
+						if not iconWithPath:
+							icon=os.path.join(self.systemIconPath,icon+".png")	
 				else:
 					icon=os.path.join(self.standardIconPath,"package.png")
 				
@@ -525,7 +533,6 @@ class LliurexUpConnect():
 			icon=os.path.join(self.standardIconPath,"package.png")
 
 		if os.path.exists(icon):
-			print(icon)
 			return icon
 		else:
 			return os.path.join(self.standardIconPath,"package.png")
@@ -573,7 +580,50 @@ class LliurexUpConnect():
 
 		return changelog	
 
-	#def getPackageChangelog		
+	#def getPackageChangelog
+
+	def manageSettingsOptions(self):
+
+		showSettings=True
+		try:
+			if self.targetMetapackage !=None:
+				if self.search_meta('client'):
+					showSettings=False
+			else:
+				if self.search_meta('client'):	
+					showSettings=False
+
+			print(showSettings)
+			return showSettings
+
+		except Exception as e:	
+			return False
+
+	#def manageSettinsgOptions
+
+	def isSystrayEnabled(self):
+
+		if os.path.exists(self.disableSystrayToken):
+			return False
+		else:
+			return True
+
+	#de isSystrayEnabled
+
+	def manageSystray(self,enable):
+
+		if enable:
+			if os.path.exists(self.disableSystrayToken):
+				os.remove(self.disableSystrayToken)
+		else:
+			if not os.path.exists(self.disableSystrayToken):
+				if not os.path.exists(self.disableSystrayPath):
+					os.mkdir(self.disableSystrayPath)
+			
+				f=open(self.disableSystrayToken,'w')
+				f.close()
+
+	#def manageSystray		
 
 	def preActionsScript(self):
 

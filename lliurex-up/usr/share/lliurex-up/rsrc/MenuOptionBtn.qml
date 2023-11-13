@@ -5,22 +5,20 @@ import QtQuick.Layouts 1.15
 
 Item {
 	id:menuItem
-	Layout.preferredWidth: 150
+	Layout.preferredWidth: 190
 	Layout.preferredHeight: 35
 
 	property alias optionIcon:menuOptionIcon.source
 	property alias optionText:menuOptionText.text
-  property alias optionVisible:menuOption.visible
 
 	signal menuOptionClicked()
 
 	Rectangle{
 		id:menuOption
-		width:150
+		width:190
 		height:35
 		color:"transparent"
 		border.color:"transparent"
-    visible:optionVisible
 
 		Row{
 			spacing:5
