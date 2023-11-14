@@ -49,7 +49,12 @@ class Bridge(QObject):
 
 	def updatePackagesModelInfo(self):
 
+		params=[]
+		params.append("pkgStatus")
+		params.append("showStatus")
+
 		updatedInfo=Bridge.llxUpConnect.packagesData
+
 		if len(updatedInfo)>0:
 			for i in range(len(updatedInfo)):
 				valuesToUpdate=[]
