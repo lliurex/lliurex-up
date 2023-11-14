@@ -14,6 +14,8 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class UpdateStack(QObject):
 
+	UPDATE_PROCESS_OK=1
+	UPDATE_PROCESS_ERROR=-1
 
 	def __init__(self):
 
@@ -93,9 +95,9 @@ class UpdateStack(QObject):
 						self.core.mainStack.updateStep=0
 
 						if not UpdateStack.llxUpConnect.checkErrorDistUpgrade():
-							self.core.mainStack.showFeedbackMessage=[True,self.core.mainStack.UPDATE_PROCESS_OK,"OK"]
+							self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_OK,"Ok"]
 						else:
-							self.core.mainStack.showFeedbackMessage=[True,self.core.mainStack.UPDATE_PROCESS_ERROR,"Error"]
+							self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_ERROR,"Error"]
 
 
 		if self.preActionsLaunched:

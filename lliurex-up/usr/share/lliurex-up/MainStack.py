@@ -15,10 +15,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Bridge(QObject):
 
-	UPDATE_OK=1
 	UPDATE_NO_REQUIRED=2
-	UPDATE_ERROR=-1
-
 
 	def __init__(self):
 
