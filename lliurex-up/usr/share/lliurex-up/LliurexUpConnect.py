@@ -749,7 +749,7 @@ class LliurexUpConnect():
 
 	def updatePackagesData(self):
 
-		pkgStatus=getStatusPackage()
+		pkgStatus=self.getStatusPackage()
 
 		for item in self.packagesData:
 			pkgName=item["pkgId"]
