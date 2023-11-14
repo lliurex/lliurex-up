@@ -12,11 +12,13 @@ import pwd
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-UPDATE_OK=1
-UPDATE_NO_REQUIRED=2
-UPDATE_ERROR=-1
 
 class Bridge(QObject):
+
+	UPDATE_OK=1
+	UPDATE_NO_REQUIRED=2
+	UPDATE_ERROR=-1
+
 
 	def __init__(self):
 
@@ -62,7 +64,7 @@ class Bridge(QObject):
 			self.showUpdateBtn=True
 			self.enableUpdateBtn=True
 		else:
-			self.showFeedbackMessage=[True,UPDATE_NO_REQUIRED,"Info"]
+			self.showFeedbackMessage=[True,Bridge.UPDATE_NO_REQUIRED,"Info"]
 		
 		self.currentStack=2
 			
