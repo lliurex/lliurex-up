@@ -139,6 +139,7 @@ Rectangle{
             Text{
                 id:sizeValue
                 text:infoStackBridge.updateSize
+                visible:mainStackBridge.updateRequired
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignLeft

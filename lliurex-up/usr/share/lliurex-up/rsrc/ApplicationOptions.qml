@@ -52,7 +52,7 @@ GridLayout{
                 id:konsoleOption
                 optionText:i18nd("lliurex-up","Update process")
                 optionIcon:"/usr/share/icons/breeze/apps/22/utilities-terminal.svg"
-                visible:mainStackBridge.updateRequired
+                visible:mainStackBridge.enableKonsole
                 enabled:true
                 Connections{
                     function onMenuOptionClicked(){
@@ -177,8 +177,13 @@ GridLayout{
                 Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
-                Keys.onReturnPressed: installBtn.clicked()
-                Keys.onEnterPressed: installBtn.clicked()
+                Keys.onReturnPressed: updateBtn.clicked()
+                Keys.onEnterPressed: updateBtn.clicked()
+                onClicked:{
+                    konsolePanel.runCommand('history -c\n')
+                    updateSystem()
+                    mainStackBridge.launchUpdateProcess()
+                }
                 
             }
         }
@@ -194,8 +199,8 @@ GridLayout{
         timer.triggered.connect(cb);
         timer.start()
     }
-   /*
-    function applyChanges(){
+   
+    function updateSystem(){
         delay(100, function() {
             if (mainStackBridge.endProcess){
                 timer.stop()
@@ -209,7 +214,7 @@ GridLayout{
             }
           })
     } 
-    */
+
     function getResultText(){
 
         var msg=""

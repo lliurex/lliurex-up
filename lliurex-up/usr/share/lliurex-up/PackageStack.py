@@ -42,11 +42,26 @@ class Bridge(QObject):
 		ret=self._packagesModel.clear()
 		packagesEntries=Bridge.llxUpConnect.packagesData
 		for item in packagesEntries:
-			print(item)
 			if item["pkgId"]!="":
 				self._packagesModel.appendRow(item["pkgId"],item["pkgVersion"],item["pkgSize"],item["pkgIcon"],item["pkgStatus"],item["showStatus"])
 
 	#def _updatePackagesModel
+
+	def updatePackagesModelInfo(self):
+
+		updatedInfo=Bridge.llxUpConnect.packagesData
+		if len(updatedInfo)>0:
+			for i in range(len(updatedInfo)):
+				valuesToUpdate=[]
+				index=self._packagesModel.index(i)
+				for item in params:
+					tmp={}
+					tmp[item]=updatedInfo[i][item]
+					valuesToUpdate.append(tmp)
+				self._packagesModel.setData(index,valuesToUpdate)
+	
+	#def updatePackagesModelInfo
+
 
 	packagesModel=Property(QObject,_getPackagesModel,constant=True)
 

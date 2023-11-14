@@ -623,7 +623,7 @@ class LliurexUpConnect():
 				f=open(self.disableSystrayToken,'w')
 				f.close()
 
-	#def manageSystray		
+	#def manageSystray	
 
 	def preActionsScript(self):
 
@@ -745,8 +745,22 @@ class LliurexUpConnect():
 
 			self.log(log_msg)
 
-	#def checkFinalN4dStatus		
+	#def checkFinalN4dStatus
 
+	def updatePackagesData(self):
+
+		pkgStatus=getStatusPackage()
+
+		for item in self.packagesData:
+			pkgName=item["pkgId"]
+			pkgVersion=item["pkgVersion"]
+			tmpName=pkgName+"_"+pkgVersion
+			if tmpName not in pkgStatus:
+				item["pkgStatus"]=-1
+
+			item["showStatus"]=True
+
+	#def updatePackagesData		
 
 	def cleanEnvironment(self):
 		

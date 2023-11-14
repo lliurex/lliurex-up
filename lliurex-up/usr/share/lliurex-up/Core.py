@@ -4,6 +4,7 @@ import sys
 import lliurex.lliurexup as LliurexUpCore
 
 import LliurexUpConnect
+import UpdateStack
 import SettingStack
 import PackageStack
 import InfoStack
@@ -34,12 +35,12 @@ class Core:
 	def init(self):
 
 		self.llxUpConnect=LliurexUpConnect.LliurexUpConnect()
+		self.updateStack=UpdateStack.UpdateStack()
 		self.settingStack=SettingStack.Bridge()
 		self.packageStack=PackageStack.Bridge()
 		self.infoStack=InfoStack.Bridge()
 		self.loadStack=LoadStack.Bridge()
 		self.mainStack=MainStack.Bridge()
-		print("Arrancando")
 		self.mainStack.initBridge()
 		
 	#def init

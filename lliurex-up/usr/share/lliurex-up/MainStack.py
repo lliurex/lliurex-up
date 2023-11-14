@@ -12,11 +12,11 @@ import pwd
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class Bridge(QObject):
+UPDATE_OK=1
+UPDATE_NO_REQUIRED=2
+UPDATE_ERROR=-1
 
-	UPDATE_OK=1
-	UPDATE_NO_REQUIRED=2
-	UPDATE_ERROR=-1
+class Bridge(QObject):
 
 	def __init__(self):
 
@@ -34,6 +34,13 @@ class Bridge(QObject):
 		self._enableUpdateBtn=False
 		self._showFeedbackMessage=[False,"","Ok"]
 		self._updateRequired=False
+		self._enableKonsole=False
+		self._isProcessRunning=False
+		self._endProcess=True
+		self._endCurrentCommand=False
+		self._currentCommand=""
+		self._enableKonsole=False
+
 		self._closeGui=False
 
 	#def __init__
@@ -55,7 +62,7 @@ class Bridge(QObject):
 			self.showUpdateBtn=True
 			self.enableUpdateBtn=True
 		else:
-			self.showFeedbackMessage=[True,Bridge.UPDATE_NO_REQUIRED,"Info"]
+			self.showFeedbackMessage=[True,UPDATE_NO_REQUIRED,"Info"]
 		
 		self.currentStack=2
 			
@@ -205,6 +212,76 @@ class Bridge(QObject):
 
 	#def _setUpdateRequired
 
+	def _getIsProcessRunning(self):
+
+		return self._isProcessRunning
+
+	#def _getIsProcessRunning
+
+	def _setIsProcessRunning(self,isProcessRunning):
+
+		if self._isProcessRunning!=isProcessRunning:
+			self._isProcessRunning=isProcessRunning
+			self.on_isProcessRunning.emit()
+
+	#def _setIsProcessRunning
+
+	def _getEndProcess(self):
+
+		return self._endProcess
+
+	#def _getEndProcess
+
+	def _setEndProcess(self,endProcess):
+
+		if self._endProcess!=endProcess:
+			self._endProcess=endProcess
+			self.on_endProcess.emit()
+
+	#def _setEndProcess
+
+	def _getEndCurrentCommand(self):
+
+		return self._endCurrentCommand
+
+	#def _getEndCurrentCommand
+
+	def _setEndCurrentCommand(self,endCurrentCommand):
+
+		if self._endCurrentCommand!=endCurrentCommand:
+			self._endCurrentCommand=endCurrentCommand
+			self.on_endCurrentCommand.emit()
+
+	#def _setEndCurrentCommand
+
+	def _getCurrentCommand(self):
+
+		return self._currentCommand
+
+	#def _getCurrentCommand
+
+	def _setCurrentCommand(self,currentCommand):
+
+		if self._currentCommand!=currentCommand:
+			self._currentCommand=currentCommand
+			self.on_currentCommand.emit()
+
+	#def _setCurrentCommand
+
+	def _getEnableKonsole(self):
+
+		return self._enableKonsole
+
+	#def _getEnableKonsole
+
+	def _setEnableKonsole(self,enableKonsole):
+
+		if self._enableKonsole!=enableKonsole:
+			self._enableKonsole=enableKonsole
+			self.on_enableKonsole.emit()
+
+	#def _setEnableKonsole
+
 	def _getCloseGui(self):
 
 		return self._closeGui
@@ -227,6 +304,33 @@ class Bridge(QObject):
 			self.core.settingStack.showSettingsMsg=False
 
 	#de manageTransitions
+
+	@Slot()
+	def launchUpdateProcess(self):
+
+		self.closeGui=False
+		self.enableUpdateBtn=False
+		self.showProgressBar=True
+		self.isProcessRunning=True
+		self.endProcess=False
+		self.enableKonsole=True
+		self.core.updateStack.launchUpdateProcess()
+
+	#def launchUpdateProcess
+
+	@Slot()
+	def getNewCommand(self):
+		
+		self.endCurrentCommand=False
+		
+	#def getNewCommand
+
+	def setProgress(self):
+
+		totalProgress=self._totalUpdateSteps+1.0
+		self.progressBarValue=round(self.updateStep/totalProgress,1)
+
+	#def setProgress
 
 	@Slot()
 	def openHelp(self):
@@ -296,6 +400,21 @@ class Bridge(QObject):
 	
 	on_updateRequired=Signal()
 	updateRequired=Property(bool,_getUpdateRequired,_setUpdateRequired,notify=on_updateRequired)
+
+	on_isProcessRunning=Signal()
+	isProcessRunning=Property(bool,_getIsProcessRunning,_setIsProcessRunning,notify=on_isProcessRunning)
+	
+	on_endProcess=Signal()
+	endProcess=Property(bool,_getEndProcess,_setEndProcess,notify=on_endProcess)
+
+	on_endCurrentCommand=Signal()
+	endCurrentCommand=Property(bool,_getEndCurrentCommand,_setEndCurrentCommand,notify=on_endCurrentCommand)
+
+	on_currentCommand=Signal()
+	currentCommand=Property(str,_getCurrentCommand,_setCurrentCommand,notify=on_currentCommand)
+	
+	on_enableKonsole=Signal()
+	enableKonsole=Property(bool,_getEnableKonsole,_setEnableKonsole,notify=on_enableKonsole)
 
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
