@@ -13,6 +13,7 @@ Rectangle{
         rows: 3
         flow: GridLayout.TopToBottom
         anchors.centerIn:parent
+        rowSpacing:10
 
         RowLayout{
             Layout.fillWidth: true
@@ -59,7 +60,7 @@ Rectangle{
                 to:1.0
                 value:loadStackBridge.progressValue
                 Layout.alignment:Qt.AlignHCenter
-                implicitWidth:300
+                implicitWidth:500
             }
         }
     }
