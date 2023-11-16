@@ -350,6 +350,7 @@ class Bridge(QObject):
 	def checkSystem(self):
 
 		print("  [Lliurex-Up]: Checking system: connection to lliurex.net, n4d status...")
+		self.core.mainStack.endProcess=False
 		self.loadStep=1
 		self.progressValue=self._getProgress()
 		self.checkSystemT=CheckSystem()
@@ -391,6 +392,7 @@ class Bridge(QObject):
 			self.core.mainStack.showErrorMessage=[Bridge.FREESPACE_ERROR,"Error"]
 		
 		if abort:
+			self.core.mainStack.endProcess=True
 			self.core.mainStack.currentStack=1	
 
 	#def _checkSystemRet
@@ -438,6 +440,8 @@ class Bridge(QObject):
 	#def _updateLliureXUp
 
 	def _updateLliurexUpRet(self):
+
+		self.core.mainStack.endProcess=True
 
 		if self.updateLliurexUpT.isLliurexUpUpdated:
 			print("  [Lliurex-Up]: Reboot Lliurex-Up")
@@ -582,6 +586,8 @@ class Bridge(QObject):
 
 	def _gatherPackagesRet(self):
 
+		self.core.mainStack.endProcess=True
+		
 		if len(self.gatherPackagesT.packages)==0:
 			self.core.mainStack.updateRequired=False
 

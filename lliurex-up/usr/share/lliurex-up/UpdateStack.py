@@ -89,8 +89,6 @@ class UpdateStack(QObject):
 						UpdateStack.llxUpConnect.updatePackagesData()
 						self.core.packageStack.updatePackagesModelInfo()
 						self.core.mainStack.showProgressBar=False
-						self.core.mainStack.closeGui=True
-						self.core.mainStack.isProcessRunning=False
 						self.core.mainStack.endProcess=True
 						self.core.mainStack.updateStep=0
 

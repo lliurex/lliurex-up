@@ -34,7 +34,6 @@ class Bridge(QObject):
 		self._showFeedbackMessage=[False,"","Ok"]
 		self._updateRequired=False
 		self._enableKonsole=False
-		self._isProcessRunning=False
 		self._endProcess=True
 		self._endCurrentCommand=False
 		self._currentCommand=""
@@ -211,20 +210,6 @@ class Bridge(QObject):
 
 	#def _setUpdateRequired
 
-	def _getIsProcessRunning(self):
-
-		return self._isProcessRunning
-
-	#def _getIsProcessRunning
-
-	def _setIsProcessRunning(self,isProcessRunning):
-
-		if self._isProcessRunning!=isProcessRunning:
-			self._isProcessRunning=isProcessRunning
-			self.on_isProcessRunning.emit()
-
-	#def _setIsProcessRunning
-
 	def _getEndProcess(self):
 
 		return self._endProcess
@@ -307,10 +292,8 @@ class Bridge(QObject):
 	@Slot()
 	def launchUpdateProcess(self):
 
-		self.closeGui=False
 		self.enableUpdateBtn=False
 		self.showProgressBar=True
-		self.isProcessRunning=True
 		self.endProcess=False
 		self.enableKonsole=True
 		self.core.updateStack.launchUpdateProcess()
@@ -362,11 +345,12 @@ class Bridge(QObject):
 	@Slot()
 	def closeApplication(self):
 
-		print("Cerrando")
-		Bridge.llxUpConnect.cleanEnvironment()
-		Bridge.llxUpConnect.cleanLliurexUpLock()
-		self.closeGui=True
-
+		if self.endProcess:
+			Bridge.llxUpConnect.cleanEnvironment()
+			Bridge.llxUpConnect.cleanLliurexUpLock()
+			self.closeGui=True
+		else:
+			self.closeGui=False
 
 	#def closeApplication
 
@@ -400,9 +384,6 @@ class Bridge(QObject):
 	on_updateRequired=Signal()
 	updateRequired=Property(bool,_getUpdateRequired,_setUpdateRequired,notify=on_updateRequired)
 
-	on_isProcessRunning=Signal()
-	isProcessRunning=Property(bool,_getIsProcessRunning,_setIsProcessRunning,notify=on_isProcessRunning)
-	
 	on_endProcess=Signal()
 	endProcess=Property(bool,_getEndProcess,_setEndProcess,notify=on_endProcess)
 
