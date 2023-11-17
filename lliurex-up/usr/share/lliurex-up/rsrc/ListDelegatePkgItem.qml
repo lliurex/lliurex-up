@@ -56,7 +56,7 @@ Components.ListItem{
             width:parent.width-(packageSize.width-statusImg.width)
 
             Text{
-                id: pkgName
+                id:pkgName
                 text:pkgId
                 width: parent.width
                 elide:Text.ElideMiddle
@@ -78,8 +78,24 @@ Components.ListItem{
             id:packageSize
             text:pkgSize
             anchors.verticalCenter:parent.verticalCenter
-            anchors.right:showStatus?statusImg.left:parent.right
-            anchors.rightMargin:showStatus?15:10
+            anchors.right:{
+                if (showStatus){
+                    statusImg.left
+                }else{
+                    if (showChangelogBtn.visible){
+                        showChangelogBtn.left
+                    }else{
+                        parent.right
+                    }
+                }
+            }
+            anchors.rightMargin:{
+                if (showStatus || showChangelogBtn.visible){
+                    15
+                }else{
+                    10
+                }
+            }
 
         }
         Image {
@@ -97,8 +113,36 @@ Components.ListItem{
             sourceSize.height:32
             anchors.leftMargin:10
             anchors.rightMargin:10
+            anchors.right:showChangelogBtn.visible?showChangelogBtn.left:parent.right
+            anchors.verticalCenter:parent.verticalCenter
+        }
+
+        PC3.Button{
+            id:showChangelogBtn
+            display:AbstractButton.IconOnly
+            icon.name:"help-about"
+            anchors.rightMargin:10
             anchors.right:parent.right
             anchors.verticalCenter:parent.verticalCenter
+            visible:{
+                if (listPkgItem.ListView.isCurrentItem){
+                    if (mainStackBridge.endProcess){
+                        true
+                    }else{
+                        false
+                    }
+                }else{
+                    false
+                }
+            }
+            ToolTip.delay: 1000
+            ToolTip.timeout: 3000
+            ToolTip.visible: hovered
+            ToolTip.text:i18nd("lliurex-up","Press to view pkg changelog")
+            onClicked:{
+                packageStackBridge.showPkgChangelog(pkgId)
+                changelogPopUp.open()
+            }
         }
      
     }

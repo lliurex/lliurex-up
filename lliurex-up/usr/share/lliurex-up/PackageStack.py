@@ -13,6 +13,24 @@ import PackagesModel
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+class GatherChangelog(QThread):
+
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+		self.pkgId=args[0]
+		self.ret=""
+
+	#def __init__
+
+	def run(self,*args):
+
+		self.ret=Bridge.llxUpConnect.getPackageChangelog(self.pkgId)
+
+	#def run
+
+#class GatherChangelog
+
 class Bridge(QObject):
 
 	def __init__(self):
@@ -21,7 +39,8 @@ class Bridge(QObject):
 		self.core=Core.Core.get_core()
 		Bridge.llxUpConnect=self.core.llxUpConnect
 		self._packagesModel=PackagesModel.PackagesModel()
-		
+		self._pkgChangelog=["",""]
+
 
 	#def __init__
 
@@ -30,6 +49,20 @@ class Bridge(QObject):
 		return self._packagesModel
 
 	#def _getCurrentVersion
+
+	def _getPkgChangelog(self):
+
+		return self._pkgChangelog
+
+	#def _getPkgChangelog
+
+	def _setPkgChangelog(self,pkgChangelog):
+
+		if self._pkgChangelog!=pkgChangelog:
+			self._pkgChangelog=pkgChangelog
+			self.on_pkgChangelog.emit()
+
+	#def _setPkgChangelog
 
 	def getPackagesInfo(self):
 
@@ -67,6 +100,25 @@ class Bridge(QObject):
 	
 	#def updatePackagesModelInfo
 
+	@Slot(str)
+	def showPkgChangelog(self,pkgId):
+
+		self.pkgId=pkgId
+		self.pkgChangelog=[self.pkgId,""]
+		self.gatherPkgChangelogT=GatherChangelog(self.pkgId)
+		self.gatherPkgChangelogT.start()
+		self.gatherPkgChangelogT.finished.connect(self._gatherPkgChangelogRet)
+
+	#def showPkgChangelog
+
+	def _gatherPkgChangelogRet(self):
+
+		self.pkgChangelog=[self.pkgId,self.gatherPkgChangelogT.ret]
+
+	#def _gatherPkgChangelogRet
+
+	on_pkgChangelog=Signal()
+	pkgChangelog=Property('QVariantList',_getPkgChangelog,_setPkgChangelog,notify=on_pkgChangelog)
 
 	packagesModel=Property(QObject,_getPackagesModel,constant=True)
 

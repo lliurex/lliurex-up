@@ -572,11 +572,13 @@ class LliurexUpConnect():
 			cmd="sed -i '/Get:1 http\|Fetched/d' " + str(changelog_file)
 			os.system(cmd)
 			f=open(changelog_file,"r")
-			changelog=f.readlines()
+			tmpChangelog=f.readlines()
 			f.close()
+			changelog="".join(str(x) for x in tmpChangelog)
+			changelog=changelog.replace("\n ","\n")
 								
 		except Exception as e:
-			changelog="Changelog not found"	
+			return changelog
 
 		return changelog	
 
