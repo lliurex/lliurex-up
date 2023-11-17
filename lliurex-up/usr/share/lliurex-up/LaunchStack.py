@@ -67,8 +67,56 @@ class Bridge(QObject):
 		self.abortProcess=False
 		self.lockedProcess=False
 		self.closeGui=True
+		self._clearCache()
 
 	#def __init__
+
+	def _clearCache(self):
+
+		clear=False
+		versionFile="/root/.lliurex-up.conf"
+		cachePath1="/root/.cache/liurex-up"
+		installedVersion=self.getPackageVersion()
+
+		if not os.path.exists(versionFile):
+			with open(versionFile,'w') as fd:
+				fd.write(installedVersion)
+				fd.close()
+
+			clear=True
+
+		else:
+			with open(versionFile,'r') as fd:
+				fileVersion=fd.readline()
+				fd.close()
+
+			if fileVersion!=installedVersion:
+				with open(versionFile,'w') as fd:
+					fd.write(installedVersion)
+					fd.close()
+				clear=True
+		
+		if clear:
+			if os.path.exists(cachePath1):
+				shutil.rmtree(cachePath1)
+
+	#def clearCache
+
+	def getPackageVersion(self):
+
+		packageVersionFile="/var/lib/lliurex-up/version"
+		pkgVersion=""
+
+		if os.path.exists(packageVersionFile):
+			with open(packageVersionFile,'r') as fd:
+				pkgVersion=fd.readline()
+				fd.close()
+
+		return pkgVersion
+
+	#def getPackageVersion
+
+	#def _clearCache
 
 	def _getIsProgressBarVisible(self):
 

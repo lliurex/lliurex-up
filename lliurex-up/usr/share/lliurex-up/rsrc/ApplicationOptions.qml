@@ -171,7 +171,7 @@ GridLayout{
                 visible:mainStackBridge.showUpdateBtn
                 focus:true
                 display:AbstractButton.TextBesideIcon
-                icon.name:"view-refresh.svg"
+                icon.name:"view-refresh"
                 text:i18nd("lliurex-up","Update")
                 enabled:mainStackBridge.enableUpdateBtn
                 Layout.preferredHeight:40
