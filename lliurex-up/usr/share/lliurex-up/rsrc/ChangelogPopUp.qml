@@ -17,12 +17,14 @@ Popup {
         id:mainContainer
         width:changelogPopUp.width
         height:changelogPopUp.height
+        anchors.centerIn:changelogPopUp.center
         color:"transparent"
         Text{ 
-            id:title
-            text:packageStackBridge.pkgChangelog[0]+" "+i18nd("lliurex-up","changelog:")
+            id:changelogText
+            text:i18nd("lliurex-up","Changelog")
             font.family: "Quattrocento Sans Bold"
-            font.pointSize: 14
+            font.pointSize: 16
+            anchors.top:changelogPopUp.bottom
         }
 
         GridLayout{
@@ -30,7 +32,7 @@ Popup {
             rows:1
             flow: GridLayout.TopToBottom
             rowSpacing:10
-            anchors.top:title.bottom
+            anchors.top:changelogText.bottom
             anchors.topMargin:25
             anchors.left:mainContainer.left
             anchors.horizontalCenter:mainContainer.horizontalCenter
@@ -39,8 +41,8 @@ Popup {
                 Rectangle{
                     id:container
                     color:"transparent"
-                    width:580
-                    height:230
+                    width:575
+                    height:215
                     clip:true
 
                     PC3.ScrollView{
@@ -58,7 +60,20 @@ Popup {
                              } 
                              font.family: "Quattrocento Sans"
                              font.pointSize: 11
-                             horizontalAlignment:Text.AlignLeft
+                             horizontalAlignment:{
+                              if (packageStackBridge.pkgChangelog[1]==""){
+                                    Text.AlignHCenter
+                                }else{
+                                    Text.AlignLeft
+                                }
+                             }
+                             verticalAlignment:{
+                                if (packageStackBridge.pkgChangelog[1]==""){
+                                    Text.AlignVCenter
+                                }else{
+                                    Text.AlignTop
+                                }
+                             }
                              width:container.width
                              height:container.height
                              wrapMode: Text.WordWrap

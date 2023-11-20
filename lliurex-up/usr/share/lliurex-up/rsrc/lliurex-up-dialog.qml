@@ -106,7 +106,7 @@ ApplicationWindow {
 	   				anchors.verticalCenter:parent.verticalCenter
 	   				display:AbstractButton.TextBesideIcon
 	   				icon.name:"dialog-ok"
-	   				text:i18nd("lliurex-up","Accept")
+	   				text:i18nd("lliurex-up","Yes")
 	   				visible:launchStackBridge.showApplyBtn
 	   				Keys.onReturnPressed: applyBtn.clicked()
 	                Keys.onEnterPressed: applyBtn.clicked()
@@ -120,8 +120,8 @@ ApplicationWindow {
 	   				anchors.right: parent.right
 	   				anchors.verticalCenter:parent.verticalCenter
 	   				display:AbstractButton.TextBesideIcon
-	   				icon.name:launchStackBridge.showApplyBtn?"dialog-cancel":"dialog-ok"
-	   				text:launchStackBridge.showApplyBtn?i18nd("lliurex-up","Cancel"):i18nd("lliurex-up","Accept")
+	   				icon.name:launchStackBridge.showApplyBtn?"dialog-cancel":"dialog-close"
+	   				text:launchStackBridge.showApplyBtn?i18nd("lliurex-up","No"):i18nd("lliurex-up","Close")
 	   				Keys.onReturnPressed: cancelBtn.clicked()
 	                Keys.onEnterPressed: cancelBtn.clicked()
 	                onClicked:{

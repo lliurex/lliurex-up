@@ -7,7 +7,7 @@ import org.kde.kirigami 2.16 as Kirigami
 Rectangle{
     color:"transparent"
     Text{ 
-       text:i18nd("lliurex-up","System settings")
+       text:i18nd("lliurex-up","Settings")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }
