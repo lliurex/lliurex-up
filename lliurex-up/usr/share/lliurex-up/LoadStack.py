@@ -29,7 +29,7 @@ class CheckSystem(QThread):
 	def run (self,*args):
 
 		time.sleep(5)
-		self.freeSpace=Bridge.llxUpConnect.free_space_check()
+		self.freeSpace=Bridge.llxUpConnect.freeSpaceCheck()
 		if self.freeSpace:
 			self.statusN4d=Bridge.llxUpConnect.checkInitialN4dStatus()
 			Bridge.llxUpConnect.checkInitialFlavour()

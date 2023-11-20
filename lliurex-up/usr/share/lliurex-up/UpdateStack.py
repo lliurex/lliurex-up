@@ -100,22 +100,22 @@ class UpdateStack(QObject):
 
 		if self.preActionsLaunched:
 			if not self.preActionsDone:
-				if os.path.exists(UpdateStack.llxUpConnect.preactions_token):
+				if os.path.exists(UpdateStack.llxUpConnect.preactionsToken):
 					self.preActionsDone=True
 		
 		if self.updateLaunched:
 			if not self.updateDone:
-				if os.path.exists(UpdateStack.llxUpConnect.upgrade_token):
+				if os.path.exists(UpdateStack.llxUpConnect.upgradeToken):
 					self.updateDone=True
 
 		if self.postActionsLaunched:
 			if not self.postActionsDone:
-				if os.path.exists(UpdateStack.llxUpConnect.postactions_token):
+				if os.path.exists(UpdateStack.llxUpConnect.postactionsToken):
 					self.postActionsDone=True
 
 		if self.checkFinalFlavourLaunched:
 			if not self.checkFinalFlavourDone:
-				if os.path.exists(UpdateStack.llxUpConnect.installflavour_token):
+				if os.path.exists(UpdateStack.llxUpConnect.installflavourToken):
 					self.checkFinalFlavourDone=True
 
 	#def _updateProcessRet

@@ -139,7 +139,7 @@ class Bridge(QObject):
 		availableVersion=self.core.loadStack.getAvailableVersionT.availableVersion
 		
 		if availableVersion==None:
-			if Bridge.llxUpConnect.search_meta('client'):
+			if Bridge.llxUpConnect.searchMeta('client'):
 				self.availableVersion=="Client"
 			else:
 				self.availableVersion=="Connection"
