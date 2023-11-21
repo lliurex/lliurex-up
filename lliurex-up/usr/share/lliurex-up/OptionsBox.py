@@ -139,11 +139,11 @@ class OptionsBox(Gtk.VBox):
 		try:
 			if self.core.llxUpConnect.targetMetapackage !=None:
 				#if self.targetMetapackage =='lliurex-meta-client' or self.targetMetapackage=='lliurex-meta-minimal-client': 
-				if self.core.llxUpConnect.search_meta('client'):
+				if self.core.llxUpConnect.search_meta('client') and self.core.llxUpConnect.connectionWithServer:
 					preferences=False
 									
 			else:
-				if self.core.llxUpConnect.search_meta('client'):	
+				if self.core.llxUpConnect.search_meta('client') and self.core.llxUpConnect.connectionWithServer:	
 					preferences=False
 
 			if preferences: 		

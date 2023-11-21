@@ -33,6 +33,7 @@ class LliurexUpConnect():
 		self.errorfinalmetapackage_token=self.llxUpCore.errorfinalmetapackage_token
 		self.finalupgrade_token=self.llxUpCore.finalupgrade_token
 		self.allRepos=False
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 
 	#def __init__	
 
@@ -213,8 +214,8 @@ class LliurexUpConnect():
 			if is_mirror_running_inserver['ismirrorrunning']==True:
 				log_msg="Mirror is being udpated in server. Unable to update the system"
 				self.log(log_msg)
-				
-		
+
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 		return is_mirror_running_inserver['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
@@ -234,8 +235,8 @@ class LliurexUpConnect():
 			if not is_mirror_exists_inserver['ismirroravailable']:
 				log_msg="Mirror not detected on the server"
 				self.log(log_msg)
-				
-		
+
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 		return is_mirror_exists_inserver['ismirroravailable']
 
 	#def clientCheckingMirrorIsRunning
