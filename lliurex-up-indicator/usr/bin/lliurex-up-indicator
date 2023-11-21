@@ -32,6 +32,8 @@ import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 import lliurex.screensaver
+import xmlrpc.client as n4dclient
+import ssl
 
 import gettext
 gettext.textdomain('lliurex-up')
@@ -111,23 +113,31 @@ class UpgradeIndicator:
 		flavours=self.get_flavour()
 		group_found,user_groups=self.get_user_group()
 		client=False
-		server=False
+		desktop=False
+		hide_indicator=False
 		if group_found:
 			if 'None' not in flavours:
 				for item in flavours:
 					if 'client' in item:
 						client=True
-						break
-					if 'server' in item:
+					elif 'desktop' in item:
+						desktop=True	
+					elif 'server' in item:
 						if 'teachers' in user_groups:
 							if 'sudo' not in user_groups and 'admins' not in user_groups:
-								server=True
+								hide_indicator=True
 								break
-				if not client and not server:
-					self.updatedInfo=True
-			
-					
 				
+			if client:
+				if desktop:
+					if self.check_is_connection_with_server():
+						hide_indicator=True
+				else:
+					hide_indicator=True
+				
+			if not hide_indicator:
+				self.updatedInfo=True
+			
 
 	#def menuMode		
 
@@ -193,7 +203,19 @@ class UpgradeIndicator:
 						
 		return [group_found,user_groups]				
 
-	#def get_user_group					
+	#def get_user_group	
+
+	def check_is_connection_with_server(self):
+
+		try:
+			context=ssl._create_unverified_context()
+			client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+			test=client.is_alive('','MirrorManager')
+			return True
+		except Exception as e:
+			return False
+
+	#def check_is_connection_with_server				
 					
 	def populate_menu(self):
 	
