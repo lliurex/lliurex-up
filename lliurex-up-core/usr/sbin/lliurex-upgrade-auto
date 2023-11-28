@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import subprocess
+import sys
+import xmlrpc.client as n4dclient
+import ssl
+
+
+class LlxUpAutoUpgrade():
+
+	def __init__(self):
+
+		self.launch_upgrade()
+
+	#def __init__ 	
+
+
+	def launch_upgrade(self):
+
+		if not self._get_flavour():
+			os.system("lliurex-upgrade -u -n")
+
+	#def launch_upgrade
+
+	def _get_flavour(self):
+
+		cmd='lliurex-version -v'
+		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+		result=p.communicate()[0]
+		lock_flavour=False
+		client=False
+		desktop=False
+
+		if type(result) is bytes:
+			result=result.decode()
+		flavours = [ x.strip() for x in result.split(',') ]	
+		
+		for item in flavours:
+			if 'server' in item:
+				lock_flavour=False
+				break
+			elif 'client' in item:
+				client=True
+			elif 'desktop' in item:
+				desktop=True
+				
+		if client:
+			if desktop:
+				if self._check_is_connection_with_server():
+					lock_flavour=True
+			else:
+				lock_flavour=True
+							
+		return lock_flavour
+
+	#def _get_flavour
+
+	def _check_is_connection_with_server(self):
+
+		try:
+			context=ssl._create_unverified_context()
+			client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+			test=client.is_alive('','MirrorManager')
+			return True
+		except Exception as e:
+			return False
+
+	#def _check_is_connection_with_server
+	
+#def LlxUpAutoUpgrade
+
+llxupAutoUpgrade=LlxUpAutoUpgrade()		
+

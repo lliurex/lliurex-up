@@ -21,6 +21,7 @@ class Bridge(QObject):
 		Bridge.llxUpConnect=self.core.llxUpConnect
 		self._showSettingsPanel=False
 		self._isSystrayEnabled=False
+		self._isAutoUpgradeEnabled=False
 		self._showSettingsMsg=False
 	
 	#def __init__
@@ -29,6 +30,7 @@ class Bridge(QObject):
 
 		self.showSettingsPanel=Bridge.llxUpConnect.manageSettingsOptions()
 		self.isSystrayEnabled=Bridge.llxUpConnect.isSystrayEnabled()
+		self.isAutoUpgradeEnabled=Bridge.llxUpConnect.isAutoUpgradeEnabled()
 
 	#def getSettingsInfo
 
@@ -60,6 +62,21 @@ class Bridge(QObject):
 
 	#def _setIsSystrayEnabled
 
+	def _getIsAutoUpgradeEnabled(self):
+
+		return self._isAutoUpgradeEnabled
+
+	#def _getIsAutoUpgradeEnabled
+
+	def _setIsAutoUpgradeEnabled(self,isAutoUpgradeEnabled):
+
+		if self._isAutoUpgradeEnabled!=isAutoUpgradeEnabled:
+			self._isAutoUpgradeEnabled=isAutoUpgradeEnabled
+			self.on_isAutoUpgradeEnabled.emit()
+
+	#def _setIsAutoUpgradeEnabled
+
+
 	def _getShowSettingsMsg(self):
 
 		return self._showSettingsMsg
@@ -80,7 +97,15 @@ class Bridge(QObject):
 		Bridge.llxUpConnect.manageSystray(enable)
 		self.showSettingsMsg=True
 
-	#def manageSystray 
+	#def manageSystray
+
+	@Slot(bool)
+	def manageAutoUpgrade(self,enable):
+		
+		Bridge.llxUpConnect.manageAutoUpgrade(enable)
+		self.showSettingsMsg=True
+
+	#def manageAutoUpgtade 
 		
 
 	on_showSettingsPanel=Signal()
@@ -88,6 +113,9 @@ class Bridge(QObject):
 	
 	on_isSystratryEnabled=Signal()
 	isSystrayEnabled=Property(bool,_getIsSystrayEnabled,_setIsSystrayEnabled,notify=on_isSystratryEnabled)
+
+	on_isAutoUpgradeEnabled=Signal()
+	isAutoUpgradeEnabled=Property(bool,_getIsAutoUpgradeEnabled,_setIsAutoUpgradeEnabled,notify=on_isAutoUpgradeEnabled)
 
 	on_showSettingsMsg=Signal()
 	showSettingsMsg=Property(bool,_getShowSettingsMsg,_setShowSettingsMsg,notify=on_showSettingsMsg)

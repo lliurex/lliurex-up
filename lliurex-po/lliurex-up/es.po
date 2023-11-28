@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-20 12:24+0100\n"
-"PO-Revision-Date: 2023-11-20 12:24+0100\n"
+"POT-Creation-Date: 2023-11-28 16:53+0100\n"
+"PO-Revision-Date: 2023-11-28 16:59+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -309,6 +309,16 @@ msgstr "Los cambios tendrán efecto la próxima vez que inicie sesión"
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:43
 msgid "Show notifications for available updates:"
 msgstr "Mostrar notificaciones de actualizaciones disponibles:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:79
+msgid "Activate automatic system update:"
+msgstr "Activar la actualización automática del sistema:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
+msgid "If it is activated the system will update automatically at login"
+msgstr ""
+"Si está activado el sistema se actualizará automáticamente en el inicio de "
+"sesión"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:201
 msgid "Lliurex-Up is being executed"

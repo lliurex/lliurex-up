@@ -39,27 +39,63 @@ Rectangle{
      		Layout.topMargin:messageLabel.visible?0:55
 
      		Text {
-     			id:textMessageSettings
+     			id:textNotificationSettings
      			text:i18nd("lliurex-up","Show notifications for available updates:")
+				font.family: "Quattrocento Sans Bold"
+				font.pointSize: 10
+				Layout.alignment:Qt.AlignRight
+				Layout.bottomMargin:10
+			}   
+
+			Switch {
+				id:notificationToggleswitch
+				checked: settingStackBridge.isSystrayEnabled
+				Layout.alignment:Qt.AlignLeft
+				Layout.bottomMargin:10
+				indicator: Rectangle {
+					implicitWidth: 40
+					implicitHeight: 10
+					x: notificationToggleswitch.width - width - notificationToggleswitch.rightPadding
+					y: parent.height/2 - height/2 
+					radius: 7
+					color: notificationToggleswitch.checked ? "#3daee9" : "#d3d3d3"
+
+					Rectangle {
+						x: notificationToggleswitch.checked ? parent.width - width : 0
+						width: 20
+						height: 20
+						y:parent.height/2-height/2
+						radius: 10
+						border.color: "#808080"
+				   }
+				}
+				onToggled: {
+					settingStackBridge.manageSystray(notificationToggleswitch.checked);
+				}
+			}
+
+			Text {
+     			id:textAutoUpgradeSettings
+     			text:i18nd("lliurex-up","Activate automatic system update:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				Layout.alignment:Qt.AlignRight
 			}   
 
 			Switch {
-				id:toggleswitch
-				checked: settingStackBridge.isSystrayEnabled
+				id:autoUpgradeToggleswitch
+				checked: settingStackBridge.isAutoUpgradeEnabled
 				Layout.alignment:Qt.AlignLeft
 				indicator: Rectangle {
 					implicitWidth: 40
 					implicitHeight: 10
-					x: toggleswitch.width - width - toggleswitch.rightPadding
+					x: autoUpgradeToggleswitch.width - width - autoUpgradeToggleswitch.rightPadding
 					y: parent.height/2 - height/2 
 					radius: 7
-					color: toggleswitch.checked ? "#3daee9" : "#d3d3d3"
+					color: autoUpgradeToggleswitch.checked ? "#3daee9" : "#d3d3d3"
 
 					Rectangle {
-						x: toggleswitch.checked ? parent.width - width : 0
+						x: autoUpgradeToggleswitch.checked ? parent.width - width : 0
 						width: 20
 						height: 20
 						y:parent.height/2-height/2
@@ -67,9 +103,14 @@ Rectangle{
 						border.color: "#808080"
 				   }
 				}	
+				hoverEnabled:true
+				ToolTip.delay: 1000
+				ToolTip.timeout: 3000
+				ToolTip.visible: hovered
+				ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
 
 				onToggled: {
-					settingStackBridge.manageSystray(toggleswitch.checked);
+					settingStackBridge.manageAutoUpgrade(autoUpgradeToggleswitch.checked);
 				}
 			}
 		}

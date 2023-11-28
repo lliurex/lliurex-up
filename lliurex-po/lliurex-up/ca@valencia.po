@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-20 12:24+0100\n"
-"PO-Revision-Date: 2023-11-20 12:34+0100\n"
+"POT-Creation-Date: 2023-11-28 16:53+0100\n"
+"PO-Revision-Date: 2023-11-28 17:00+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -313,6 +313,15 @@ msgstr "Els canvis tindran efecte la pròxima vegada que us connecteu"
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:43
 msgid "Show notifications for available updates:"
 msgstr "Mostra notificacions d'actualitzacions disponibles:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:79
+msgid "Activate automatic system update:"
+msgstr "Activa l'actualització automàtica del sistema"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
+msgid "If it is activated the system will update automatically at login"
+msgstr ""
+"Si està activat el sistema s'actualitzarà automàticament en l'inici de sessió"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:201
 msgid "Lliurex-Up is being executed"
