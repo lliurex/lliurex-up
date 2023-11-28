@@ -628,8 +628,8 @@ class Bridge(QObject):
 
 	def _getProgress(self):
 
-		totalProgress=self.totalSteps+1.0
-		currentProgress=round(self.loadStep/totalProgress,1)
+		totalProgress=self.totalSteps
+		currentProgress=round((self.loadStep-1)/totalProgress,1)
 
 		return currentProgress
 

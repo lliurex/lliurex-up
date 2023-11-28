@@ -309,8 +309,8 @@ class Bridge(QObject):
 
 	def setProgress(self):
 
-		totalProgress=self._totalUpdateSteps+1.0
-		self.progressBarValue=round(self.updateStep/totalProgress,1)
+		totalProgress=self._totalUpdateSteps
+		self.progressBarValue=round((self.updateStep-1)/totalProgress,1)
 
 	#def setProgress
 
