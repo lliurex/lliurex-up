@@ -1,7 +1,7 @@
 [Unit]
 Description=Lliurex Up Auto Upgrade DAEMON
-Wants=network-online.target,n4d.target
-After=network-online.target,lliurex-auto-upgrade.target
+Wants=network-online.target n4d.target
+After=network-online.target lliurex-auto-upgrade.target
 
 
 [Service]
