@@ -35,8 +35,8 @@ ApplicationWindow {
     	id: mainLayout
     	anchors.fill: parent
     	anchors.margins: margin
-    	Layout.minimumWidth:610	
-    	Layout.maximumWidth:610
+    	Layout.minimumWidth:660
+    	Layout.maximumWidth:660
     	Layout.minimumHeight:170
     	Layout.maximumHeight:170
     	

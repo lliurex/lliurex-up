@@ -27,7 +27,7 @@ class Bridge(QObject):
 		self._currentOptionStack=0
 		self._showProgressBar=False
 		self._progressBarValue=0.0
-		self._totalUpdateSteps=4
+		self._totalUpdateSteps=6
 		self._updateStep=0
 		self._showUpdateBtn=False
 		self._enableUpdateBtn=False
@@ -38,6 +38,7 @@ class Bridge(QObject):
 		self._endCurrentCommand=False
 		self._currentCommand=""
 		self._enableKonsole=False
+		self._progressPkg=0
 
 		self._closeGui=False
 
@@ -266,6 +267,20 @@ class Bridge(QObject):
 
 	#def _setEnableKonsole
 
+	def _getProgressPkg(self):
+
+		return self._progressPkg
+
+	#def _getProgressPkg
+
+	def _setProgressPkg(self,progressPkg):
+
+		if self._progressPkg!=progressPkg:
+			self._progressPkg=progressPkg
+			self.on_progressPkg.emit()
+
+	#def _setProgressPkg
+
 	def _getCloseGui(self):
 
 		return self._closeGui
@@ -310,7 +325,7 @@ class Bridge(QObject):
 	def setProgress(self):
 
 		totalProgress=self._totalUpdateSteps
-		self.progressBarValue=round((self.updateStep-1)/totalProgress,1)
+		self.progressBarValue=round((self.updateStep-1)/totalProgress,2)
 
 	#def setProgress
 
@@ -395,6 +410,9 @@ class Bridge(QObject):
 	
 	on_enableKonsole=Signal()
 	enableKonsole=Property(bool,_getEnableKonsole,_setEnableKonsole,notify=on_enableKonsole)
+
+	on_progressPkg=Signal()
+	progressPkg=Property(int,_getProgressPkg,_setProgressPkg,notify=on_progressPkg)
 
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)

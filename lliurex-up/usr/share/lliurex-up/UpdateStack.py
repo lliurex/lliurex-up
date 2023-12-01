@@ -22,6 +22,15 @@ class UpdateStack(QObject):
 		QObject.__init__(self)
 		self.core=Core.Core.get_core()
 		UpdateStack.llxUpConnect=self.core.llxUpConnect
+		self.maxRetry=2
+		self.timeToCheck=10
+		self.isWorked=False
+		self.aptStop=False
+		self.aptRun=True
+		self.unpackedRun=False
+		self.count=0
+		self.running=False
+		self.countDown=self.maxRetry
 	
 	#def __init__
 
@@ -30,7 +39,9 @@ class UpdateStack(QObject):
 		self._initUpdateProcess()
 		self.updateProcessTimer=QTimer(None)
 		self.updateProcessTimer.timeout.connect(self._updateProcessRet)
-		self.updateProcessTimer.start(100)		
+		self.updateProcessTimer.start(1000)
+		self.checkProgressTimer=QTimer(None)
+		self.checkProgressTimer.timeout.connect(self._checkProgressRet)		
 
 	#def launchedUpdateProcess
 
@@ -59,6 +70,7 @@ class UpdateStack(QObject):
 
 		if self.preActionsDone:
 			if not self.updateLaunched:
+				self.checkProgressTimer.start(1000)
 				self.updateLaunched=True
 				print("  [Lliurex-Up]: Executing dist-upgrade")
 				self.core.mainStack.updateStep=2
@@ -70,7 +82,7 @@ class UpdateStack(QObject):
 				if not self.postActionsLaunched:
 					self.postActionsLaunched=True
 					print("  [Lliurex-Up]: Executing post-actions")
-					self.core.mainStack.updateStep=3
+					self.core.mainStack.updateStep=5
 					self.core.mainStack.setProgress()
 					self.core.mainStack.currentCommand=UpdateStack.llxUpConnect.postActionsScript()
 					self.core.mainStack.endCurrentCommand=True
@@ -79,13 +91,13 @@ class UpdateStack(QObject):
 					if not self.checkFinalFlavourLaunched:
 						self.checkFinalFlavourLaunched=True
 						print("  [Lliurex-Up]: Checking Final metapackage")
-						self.core.mainStack.updateStep=4
+						self.core.mainStack.updateStep=6
 						self.core.mainStack.setProgress()
 						self.core.mainStack.currentCommand=self._checkFinalFlavour()
 						self.core.mainStack.endCurrentCommand=True
 
 					if self.checkFinalFlavourDone:
-						self.updateProcessTimer.stop()	
+						#self.updateProcessTimer.stop()	
 						UpdateStack.llxUpConnect.updatePackagesData()
 						self.core.packageStack.updatePackagesModelInfo()
 						self.core.mainStack.showProgressBar=False
@@ -134,6 +146,52 @@ class UpdateStack(QObject):
 			return command
 
 	#def _checkFinalFlavour
+
+	def _checkProgressRet(self):
+
+		if self.updateLaunched:
+			if not self.isWorked:
+				self.isWorked=True
+				if not self.aptStop:
+					UpdateStack.llxUpConnect.checkLocks()
+					if UpdateStack.llxUpConnect.isDpkgLocked()==3:
+						self.aptRun=True
+					else:
+						self.aptRun=False
+
+				if not self.aptRun:
+					if not self.aptStop:
+						self.aptStop=True
+						self.unpackedRun=True
+
+					if self.countDown==self.maxRetry:
+						self.countDown=0
+						if self.unpackedRun:
+							self.core.mainStack.updateStep=3
+							UpdateStack.llxUpConnect.checkProgressUnpacked()
+							if UpdateStack.llxUpConnect.progressUnpacked!=len(UpdateStack.llxUpConnect.initialNumberPackages):
+								self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressUnpacked
+								self.core.mainStack.progressBarValue=round((2+UpdateStack.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
+							else:
+								self.unpackedRun=False
+								self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
+						else:
+							self.core.mainStack.updateStep=4
+							self.core.mainStack.progressPkg=0
+							UpdateStack.llxUpConnect.checkProgressInstallation()
+							if UpdateStack.llxUpConnect.progressInstallation!=len(UpdateStack.llxUpConnect.initialNumberPackages):
+								self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressInstallation
+								self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
+							else:
+								self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
+								self.updateProcessTimer.stop()	
+					else:
+						self.countDown+=1
+
+				self.isWorked=False					
+
+	#def _checkProgressRet
+
 
 #class UpdateStack
 

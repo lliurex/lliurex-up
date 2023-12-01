@@ -43,6 +43,11 @@ class LliurexUpConnect():
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
 		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
+		self.progressInstallation=0
+		self.progressInstallationPercentage=0.00
+		self.progressUnpacked=0
+		self.progressUnpackedPercentage=0.00
+
 
 	#def __init__	
 
@@ -458,6 +463,9 @@ class LliurexUpConnect():
 
 		self.newPackages=0
 		self.packagesData=[]
+		self.numberPackagesUnpacked=[]
+		self.numberPackagesInstalled=[]
+		self.initialNumberPackages=[]
 
 		for item in packages:
 			tmp={}
@@ -472,6 +480,9 @@ class LliurexUpConnect():
 				tmp["pkgStatus"]=0
 				tmp["showStatus"]=False
 				self.packagesData.append(tmp)
+				self.numberPackagesUnpacked.append(tmpItem[0]+"_"+tmpItem[1])
+				self.numberPackagesInstalled.append(tmpItem[0]+"_"+tmpItem[1])
+				self.initialNumberPackages.append(tmpItem[0]+"_"+tmpItem[1])
 
 	#def getPackagesData
 
@@ -834,5 +845,71 @@ class LliurexUpConnect():
 		return lockUser
 
 	#def checkUser
+
+	def checkProgressUnpacked(self):
+
+		tmpPackages=self.checkUnpackedStatus()
+		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
+			if self.numberPackagesUnpacked[i] in tmpPackages:
+				self.numberPackagesUnpacked.pop(i)
+
+		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
+		self.progressUnpackedPercentage=round(self.progressUnpacked/len(self.initialNumberPackages),2)
+
+	#def checkProgressUnpacked
+
+	def checkProgressInstallation(self):
+
+		tmpPackages=self.checkInstalledStatus()
+		for i in range(len(self.numberPackagesInstalled)-1,-1,-1):
+			if self.numberPackagesInstalled[i] in tmpPackages:
+				self.numberPackagesInstalled.pop(i)
+
+		self.progressInstallation=len(self.initialNumberPackages)-len(self.numberPackagesInstalled)
+		self.progressInstallationPercentage=round(self.progressInstallation/len(self.initialNumberPackages),2)
+
+	#def checkProgressInstallation
+	
+	def checkUnpackedStatus(self):
+		
+		cmd="dpkg -l | awk '/^.U/'"
+		tmpPackages=[]
+
+		try:
+			p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+			for line in iter(p.stdout.readline,b""):
+				if type(line) is bytes:
+					line=line.decode()
+
+				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
+				tmpPackages.append(tmp)
+
+		except Exception as e:
+			print(str(e))
+
+		return tmpPackages
+	
+	#def checkUnpackedStatus
+
+	def checkInstalledStatus(self):
+		
+		cmd='dpkg -l |grep "^i[i]"'
+		tmpPackages=[]
+
+		try:
+			p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+			for line in iter(p.stdout.readline,b""):
+				if type(line) is bytes:
+					line=line.decode()
+
+				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
+				tmpPackages.append(tmp)
+
+		except Exception as e:
+			print(str(e))
+
+		return tmpPackages
+	
+	#def checkInstalledStatus
 
 #class LliurexUpConnect			

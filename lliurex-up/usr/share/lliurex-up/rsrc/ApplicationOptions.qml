@@ -143,7 +143,13 @@ GridLayout{
                 Layout.alignment:Qt.AlignHCenter
                 Text{
                     id:feedBackText
-                    text:getFeedBackText()
+                    text:{
+                        if ((mainStackBridge.updateStep>2)&&(mainStackBridge.updateStep<5)){
+                            getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
+                        }else{
+                            getFeedBackText()
+                        }
+                    }
                     visible:true
                     font.family: "Quattrocento Sans Bold"
                     font.pointSize: 10
@@ -246,12 +252,18 @@ GridLayout{
                 msg=i18nd("lliurex-up","Preparing system to the update...")
                 break;
             case 2:
-                msg=i18nd("lliurex-up","Downloading and installing packages...")
+                msg=i18nd("lliurex-up","Downloading packages...")
                 break;
             case 3:
-                msg=i18nd("lliurex-up","Ending the update...")
+                msg=i18nd("lliurex-up","Unpacking packages")
                 break;
             case 4:
+                msg=i18nd("lliurex-up","Configuring packages")
+                break;
+            case 5:
+                msg=i18nd("lliurex-up","Ending the update...")
+                break;
+            case 6:
                 msg=i18nd("lliurex-up","Checking metapackage...")
                 break;
         }
