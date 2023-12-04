@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 16:53+0100\n"
-"PO-Revision-Date: 2023-11-28 17:00+0100\n"
+"POT-Creation-Date: 2023-12-04 13:09+0100\n"
+"PO-Revision-Date: 2023-12-04 13:12+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -42,42 +42,51 @@ msgstr "Preferències"
 msgid "Help"
 msgstr "Ajuda"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:175
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:148
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:245
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
+msgid "of"
+msgstr "de"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:181
 msgid "Update"
 msgstr "Actualitza"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:224
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 "El procés d'actualització ha finalitzat correctament. El sistema està "
 "actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:227
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:233
 msgid "Your system is update"
 msgstr "El vostre sistema està actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:236
 msgid "The updated process has ended with errors"
 msgstr "El procés d'actualització ha finalitzat amb errors"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:239
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
-msgid "of"
-msgstr "de"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
 msgid "Preparing system to the update..."
 msgstr "S'està preparant el sistema per a l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:249
-msgid "Downloading and installing packages..."
-msgstr "S'estan descarregant i instal·lant paquets..."
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+msgid "Downloading packages"
+msgstr "S'estan descarregant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:258
+msgid "Unpacking packages"
+msgstr "S'estan desempaquetant paquets"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:261
+msgid "Configuring packages"
+msgstr "S'estan configurant paquets"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:264
 msgid "Ending the update..."
 msgstr "Està finalitzant l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:267
 msgid "Checking metapackage..."
 msgstr "S'està comprovant el metapaquet..."
 
@@ -316,7 +325,7 @@ msgstr "Mostra notificacions d'actualitzacions disponibles:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:79
 msgid "Activate automatic system update:"
-msgstr "Activa l'actualització automàtica del sistema"
+msgstr "Activa l'actualització automàtica del sistema:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
 msgid "If it is activated the system will update automatically at login"

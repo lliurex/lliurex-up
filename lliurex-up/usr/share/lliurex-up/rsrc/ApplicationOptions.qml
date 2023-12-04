@@ -144,7 +144,7 @@ GridLayout{
                 Text{
                     id:feedBackText
                     text:{
-                        if ((mainStackBridge.updateStep>2)&&(mainStackBridge.updateStep<5)){
+                        if ((mainStackBridge.updateStep>1)&&(mainStackBridge.updateStep<5)){
                             getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
                         }else{
                             getFeedBackText()
@@ -252,7 +252,7 @@ GridLayout{
                 msg=i18nd("lliurex-up","Preparing system to the update...")
                 break;
             case 2:
-                msg=i18nd("lliurex-up","Downloading packages...")
+                msg=i18nd("lliurex-up","Downloading packages")
                 break;
             case 3:
                 msg=i18nd("lliurex-up","Unpacking packages")

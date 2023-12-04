@@ -43,10 +43,17 @@ class LliurexUpConnect():
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
 		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
+		self.numberPackagesDownloaded=[]
+		self.numberPackagesUnpacked=[]
+		self.numberPackagesInstalled=[]
+		self.initialNumberPackages=[]
+		self.progressDownload=0
+		self.progressDownloadPercentaje=0.00
 		self.progressInstallation=0
 		self.progressInstallationPercentage=0.00
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
+		self.aptCachePath="/var/cache/apt/archives"
 
 
 	#def __init__	
@@ -408,7 +415,8 @@ class LliurexUpConnect():
 					version=packages[item]['candidate']
 					size=self.getSizePackagesToUpdate(item)
 					install=str(packages[item]['install'])
-					packagesParsed.append(item+";"+version+";"+size+";"+install)
+					architecture=str(packages[item]['architecture'])
+					packagesParsed.append(item+";"+version+";"+size+";"+install+";"+architecture)
 					
 			msgLog="Get packages to update. Number of packages: " + str(len(packages)) 
 			self.log(msgLog)		
@@ -463,6 +471,7 @@ class LliurexUpConnect():
 
 		self.newPackages=0
 		self.packagesData=[]
+		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
 		self.initialNumberPackages=[]
@@ -480,6 +489,7 @@ class LliurexUpConnect():
 				tmp["pkgStatus"]=0
 				tmp["showStatus"]=False
 				self.packagesData.append(tmp)
+				self.numberPackagesDownloaded.append(tmpItem[0]+"_"+tmpItem[1]+"_"+tmpItem[4]+".deb")
 				self.numberPackagesUnpacked.append(tmpItem[0]+"_"+tmpItem[1])
 				self.numberPackagesInstalled.append(tmpItem[0]+"_"+tmpItem[1])
 				self.initialNumberPackages.append(tmpItem[0]+"_"+tmpItem[1])
@@ -699,6 +709,7 @@ class LliurexUpConnect():
 
 		except Exception as e:
 			print(str(e))
+			pass
 
 		return packagesStatus						
 
@@ -846,6 +857,17 @@ class LliurexUpConnect():
 
 	#def checkUser
 
+	def checkProgressDownload(self):
+
+		for i in range(len(self.numberPackagesDownloaded)-1,-1,-1):
+			if os.path.exists(os.path.join(self.aptCachePath,self.numberPackagesDownloaded[i])):
+				self.numberPackagesDownloaded.pop(i)
+
+		self.progressDownload=len(self.initialNumberPackages)-len(self.numberPackagesDownloaded)
+		self.progressDownloadPercentage=round(self.progressDownload/len(self.initialNumberPackages),2)
+
+	#def checkProgressDownload
+
 	def checkProgressUnpacked(self):
 
 		tmpPackages=self.checkUnpackedStatus()
@@ -886,6 +908,7 @@ class LliurexUpConnect():
 
 		except Exception as e:
 			print(str(e))
+			pass
 
 		return tmpPackages
 	
@@ -907,6 +930,7 @@ class LliurexUpConnect():
 
 		except Exception as e:
 			print(str(e))
+			pass
 
 		return tmpPackages
 	

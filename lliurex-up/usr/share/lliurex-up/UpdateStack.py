@@ -80,6 +80,7 @@ class UpdateStack(QObject):
 
 			if self.updateDone:
 				if not self.postActionsLaunched:
+					self.updateProcessTimer.stop()
 					self.postActionsLaunched=True
 					print("  [Lliurex-Up]: Executing post-actions")
 					self.core.mainStack.updateStep=5
@@ -149,46 +150,54 @@ class UpdateStack(QObject):
 
 	def _checkProgressRet(self):
 
-		if self.updateLaunched:
-			if not self.isWorked:
-				self.isWorked=True
-				if not self.aptStop:
-					UpdateStack.llxUpConnect.checkLocks()
-					if UpdateStack.llxUpConnect.isDpkgLocked()==3:
-						self.aptRun=True
-					else:
-						self.aptRun=False
-
-				if not self.aptRun:
+		try:
+			if self.updateLaunched:
+				if not self.isWorked:
+					self.isWorked=True
 					if not self.aptStop:
-						self.aptStop=True
-						self.unpackedRun=True
-
-					if self.countDown==self.maxRetry:
-						self.countDown=0
-						if self.unpackedRun:
-							self.core.mainStack.updateStep=3
-							UpdateStack.llxUpConnect.checkProgressUnpacked()
-							if UpdateStack.llxUpConnect.progressUnpacked!=len(UpdateStack.llxUpConnect.initialNumberPackages):
-								self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressUnpacked
-								self.core.mainStack.progressBarValue=round((2+UpdateStack.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
-							else:
-								self.unpackedRun=False
-								self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
+						UpdateStack.llxUpConnect.checkLocks()
+						if UpdateStack.llxUpConnect.isDpkgLocked()==3:
+							self.aptRun=True
+							UpdateStack.llxUpConnect.checkProgressDownload()
+							self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressDownload
+							self.core.mainStack.progressBarValue=round((1+UpdateStack.llxUpConnect.progressDownloadPercentage)/self.core.mainStack._totalUpdateSteps,2)
 						else:
-							self.core.mainStack.updateStep=4
-							self.core.mainStack.progressPkg=0
-							UpdateStack.llxUpConnect.checkProgressInstallation()
-							if UpdateStack.llxUpConnect.progressInstallation!=len(UpdateStack.llxUpConnect.initialNumberPackages):
-								self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressInstallation
-								self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
-							else:
-								self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
-								self.updateProcessTimer.stop()	
-					else:
-						self.countDown+=1
+							self.aptRun=False
 
-				self.isWorked=False					
+					if not self.aptRun:
+						if not self.aptStop:
+							self.aptStop=True
+							self.unpackedRun=True
+
+						if self.countDown==self.maxRetry:
+							self.countDown=0
+							if self.unpackedRun:
+								self.core.mainStack.updateStep=3
+								UpdateStack.llxUpConnect.checkProgressUnpacked()
+								if UpdateStack.llxUpConnect.progressUnpacked!=len(UpdateStack.llxUpConnect.initialNumberPackages):
+									self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressUnpacked
+									self.core.mainStack.progressBarValue=round((2+UpdateStack.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
+								else:
+									self.unpackedRun=False
+									self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
+							else:
+								self.core.mainStack.updateStep=4
+								self.core.mainStack.progressPkg=0
+								UpdateStack.llxUpConnect.checkProgressInstallation()
+								if UpdateStack.llxUpConnect.progressInstallation!=len(UpdateStack.llxUpConnect.initialNumberPackages):
+									self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressInstallation
+									self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
+								else:
+									self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
+									self.updateProcessTimer.stop()	
+						else:
+							self.countDown+=1
+
+					self.isWorked=False	
+									
+		except Exception as e:
+			print(str(e))
+			pass
 
 	#def _checkProgressRet
 

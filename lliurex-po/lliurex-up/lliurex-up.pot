@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 16:53+0100\n"
+"POT-Creation-Date: 2023-12-04 13:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,40 +39,49 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:175
-msgid "Update"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:224
-msgid "The updated process has ended successfully.The system is now update"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:227
-msgid "Your system is update"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
-msgid "The updated process has ended with errors"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:239
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:148
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:245
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
 msgid "of"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
-msgid "Preparing system to the update..."
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:181
+msgid "Update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:249
-msgid "Downloading and installing packages..."
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
+msgid "The updated process has ended successfully.The system is now update"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:233
+msgid "Your system is update"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:236
+msgid "The updated process has ended with errors"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
-msgid "Ending the update..."
+msgid "Preparing system to the update..."
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+msgid "Downloading packages"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:258
+msgid "Unpacking packages"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:261
+msgid "Configuring packages"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:264
+msgid "Ending the update..."
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:267
 msgid "Checking metapackage..."
 msgstr ""
 

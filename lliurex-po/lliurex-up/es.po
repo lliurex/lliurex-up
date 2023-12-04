@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 16:53+0100\n"
-"PO-Revision-Date: 2023-11-28 16:59+0100\n"
+"POT-Creation-Date: 2023-12-04 13:09+0100\n"
+"PO-Revision-Date: 2023-12-04 13:10+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -41,42 +41,51 @@ msgstr "Preferencias"
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:175
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:148
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:245
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
+msgid "of"
+msgstr "de"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:181
 msgid "Update"
 msgstr "Actualizar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:224
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 "El proceso de actualización ha finalizado correctamente. El sistema está "
 "actualizado"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:227
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:233
 msgid "Your system is update"
 msgstr "Tu sistema esta actualizado"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:236
 msgid "The updated process has ended with errors"
 msgstr "El proceso de actualización ha finalizado con errores"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:239
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
-msgid "of"
-msgstr "de"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
 msgid "Preparing system to the update..."
 msgstr "Preparando el sistema para la actualización..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:249
-msgid "Downloading and installing packages..."
-msgstr "Descargando e instalando paquetes..."
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+msgid "Downloading packages"
+msgstr "Descargando paquetes"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:258
+msgid "Unpacking packages"
+msgstr "Desempaquetando paquetes"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:261
+msgid "Configuring packages"
+msgstr "Configurando paquetes"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:264
 msgid "Ending the update..."
 msgstr "Finalizando la actualización..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:267
 msgid "Checking metapackage..."
 msgstr "Comprobando el metapaquete..."
 
