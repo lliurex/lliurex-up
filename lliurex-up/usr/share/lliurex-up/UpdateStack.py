@@ -80,7 +80,7 @@ class UpdateStack(QObject):
 
 			if self.updateDone:
 				if not self.postActionsLaunched:
-					self.updateProcessTimer.stop()
+					self.checkProgressTimer.stop()
 					self.postActionsLaunched=True
 					print("  [Lliurex-Up]: Executing post-actions")
 					self.core.mainStack.updateStep=5
@@ -189,7 +189,7 @@ class UpdateStack(QObject):
 									self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
 								else:
 									self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
-									self.updateProcessTimer.stop()	
+									self.checkProgressTimer.stop()	
 						else:
 							self.countDown+=1
 
@@ -197,6 +197,7 @@ class UpdateStack(QObject):
 									
 		except Exception as e:
 			print(str(e))
+			self.checkProgressTimer.stop()
 			pass
 
 	#def _checkProgressRet
