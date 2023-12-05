@@ -111,7 +111,7 @@ class InformationBox(Gtk.VBox):
 
 
 		if self.core.loadBox.version_available==None:
-			if self.core.llxUpConnect.search_meta('client'):
+			if self.core.llxUpConnect.search_meta('client') and self.core.llxUpConnect.connectionWithServer:
 				self.version_available_info_label.set_text(_("Not available for clients"))
 
 			else:
