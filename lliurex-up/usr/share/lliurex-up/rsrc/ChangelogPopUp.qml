@@ -12,12 +12,14 @@ Popup {
     modal:true
     focus:true
     closePolicy:Popup.AutoClose
+    background:Rectangle{
+        color:"#ebeced"
+    }
 
-    Rectangle{
+    contentItem:Rectangle{
         id:mainContainer
         width:changelogPopUp.width
         height:changelogPopUp.height
-        anchors.centerIn:changelogPopUp.center
         color:"transparent"
         Text{ 
             id:changelogText
@@ -85,8 +87,6 @@ Popup {
         RowLayout{
             anchors.bottom:parent.bottom
             anchors.right:parent.right
-            anchors.bottomMargin:25
-            anchors.rightMargin:25
 
             PC3.Button {
                 id:closeBtn
