@@ -811,7 +811,7 @@ class LliurexUpConnect():
 		
 		match=False
 		try:
-			match=self.llxUpCore.searchMeta(meta)
+			match=self.llxUpCore.search_meta(meta)
 			return match
 		except Exception as e:
 			return match
