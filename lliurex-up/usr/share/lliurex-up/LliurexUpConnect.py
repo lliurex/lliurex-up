@@ -54,7 +54,7 @@ class LliurexUpConnect():
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
-
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 
 	#def __init__	
 
@@ -227,7 +227,8 @@ class LliurexUpConnect():
 			if isMirrorRunningInServer['ismirrorrunning']==True:
 				msgLog="Mirror is being udpated in server. Unable to update the system"
 				self.log(msgLog)
-				
+
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 		return isMirrorRunningInServer['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
@@ -247,6 +248,7 @@ class LliurexUpConnect():
 				msgLog="Mirror not detected on the server"
 				self.log(msgLog)
 				
+		self.connectionWithServer=self.llxUpCore.connectionWithServer
 		return isMirrorExistsInServer['ismirroravailable']
 
 	#def clientCheckingMirrorIsRunning
@@ -591,10 +593,10 @@ class LliurexUpConnect():
 		showSettings=True
 		try:
 			if self.targetMetapackage !=None:
-				if self.searchMeta('client'):
+				if self.searchMeta('client') and self.connectionWithServer:
 					showSettings=False
 			else:
-				if self.searchMeta('client'):	
+				if self.searchMeta('client') and self.connectionWithServer:	
 					showSettings=False
 
 			return showSettings

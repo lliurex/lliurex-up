@@ -7,6 +7,9 @@ import sys
 import grp
 import pwd
 import lliurex.screensaver
+import xmlrpc.client as n4dclient
+import ssl
+
 import gettext
 gettext.textdomain('lliurex-up')
 _= gettext.gettext
@@ -99,20 +102,44 @@ class LlxUpCheckRoot():
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 		result=p.communicate()[0]
 		lock_flavour=False
+		client=False
+		desktop=False
 
 		if type(result) is bytes:
 			result=result.decode()
 		flavours = [ x.strip() for x in result.split(',') ]	
 		
-		
 		for item in flavours:
-			if 'server' in item or 'client' in item:
+			if 'server' in item:
 				lock_flavour=True
 				break
+			elif 'client' in item:
+				client=True
+			elif 'desktop' in item:
+				desktop=True
+				
+		if client:
+			if desktop:
+				if self.check_is_connection_with_server():
+					lock_flavour=True
+			else:
+				lock_flavour=True
 							
 		return lock_flavour
 
 	#def get_flavour
+
+	def check_is_connection_with_server(self):
+
+		try:
+			context=ssl._create_unverified_context()
+			client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+			test=client.is_alive('','MirrorManager')
+			return True
+		except Exception as e:
+			return False
+
+	#def check_is_connection_with_server
 	
 #def LlxUpCheckRoot
 

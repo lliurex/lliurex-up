@@ -42,6 +42,8 @@ class LliurexUpCore(object):
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
 		self.optionsLlxUp=""
+		self.desktopClientized=False
+		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 
 
@@ -234,7 +236,7 @@ class LliurexUpCore(object):
 		self.writeDefaultSourceslistAll()
 
 		#self.addSourcesListLliurex(args)
-
+		self.checkIsDesktopClientize()
 		return self.targetMetapackage
 
 	#def checkInitialFlavour	
@@ -331,13 +333,16 @@ class LliurexUpCore(object):
 		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 
 		if is_client:
-			client=True
-			if args:
-				sourcesref=os.path.join(self.processSourceslist, 'default_all')
+			if self.connectionWithServer:
+				client=True
+				if args:
+					sourcesref=os.path.join(self.processSourceslist, 'default_all')
 
+				else:
+					sourcesref=os.path.join(self.processSourceslist, 'default_mirror')
 			else:
-				sourcesref=os.path.join(self.processSourceslist, 'default_mirror')
-
+				sourcesref=os.path.join(self.processSourceslist, 'default')	
+	
 		else:
 			sourcesref=os.path.join(self.processSourceslist, 'default')	
 
@@ -470,13 +475,14 @@ class LliurexUpCore(object):
 
 		#if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
 		if is_client:
-			if not args:
-				sources=self.readSourcesList()
-				if sources==0:
-					sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
-				else:
-					if not self.canConnectToLliurexNet()['status']:
+			if self.connectionWithServer:
+				if not args:
+					sources=self.readSourcesList()
+					if sources==0:
 						sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
+					else:
+						if not self.canConnectToLliurexNet()['status']:
+							sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
 						
 
 		'''				
@@ -573,7 +579,10 @@ class LliurexUpCore(object):
 				return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
 			
 			except Exception as e:
-				return {'ismirrorrunning':None,'exception':str(e),'data':""}	
+				if not self.desktopClientized:
+					return {'ismirrorrunning':None,'exception':str(e),'data':""}
+				else:
+					self.connectionWithServer=False					
 
 		return {'ismirrorrunning':False,'exception':False,'data':""}	
 
@@ -582,7 +591,7 @@ class LliurexUpCore(object):
 	def clientCheckingMirrorExists(self):
 
 		is_client=self.search_meta("client")
-
+		
 		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
 		if is_client:				
 			try:
@@ -595,11 +604,18 @@ class LliurexUpCore(object):
 					else:
 						return {'ismirroravailable':False,'exception':False,'data':result}
 				except Exception as e :
-					return {'ismirroravailable':False,'exception':False,'data':str(e)}
+					if not self.desktopClientized:
+						return {'ismirroravailable':False,'exception':False,'data':str(e)}
+					else:
+						self.connectionWithServer=False
+						return {'ismirroravailable':True,'exception':False,'data':''}
 				
 			except Exception as e:
-				return {'ismirroravailable':None,'exception':str(e),'data':''}	
-
+				if not self.desktopClientized:
+					return {'ismirroravailable':None,'exception':str(e),'data':''}
+				else:
+					self.connectionWithServer=False
+					return {'ismirroravailable':True,'exception':False,'data':''}					
 		else:
 			return {'ismirroravailable':True,'exception':False,'data':''}	
 
@@ -976,6 +992,15 @@ class LliurexUpCore(object):
 		return 'apt-get install ' + tmp_list + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
       	
 	#def installFinalFlavour
+
+	def checkIsDesktopClientize(self):
+
+		if self.search_meta("client"):
+			if self.search_meta("desktop"):
+				self.desktopClientized=True
+
+
+	#def checkIsDesktopClientize	
 
 	def get_process_list(self):
 		
