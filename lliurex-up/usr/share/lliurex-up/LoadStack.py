@@ -443,7 +443,7 @@ class Bridge(QObject):
 
 		self.core.mainStack.endProcess=True
 
-		if self.updateLliurexUpT.isLliurexUpUpdated:
+		if self.updateLliurexUpT.isLliurexUpInstalled:
 			print("  [Lliurex-Up]: Reboot Lliurex-Up")
 			self.loadStep=12
 			self.waitForRestartTimer=QTimer(None)
