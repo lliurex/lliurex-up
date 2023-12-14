@@ -41,7 +41,11 @@ Rectangle{
                     if (loadStackBridge.loadStep==12){
                         getMsg()+" "+loadStackBridge.countDownValue+" "+i18nd("lliurex-up","seconds")
                     }else{
-                        getMsg()
+            			if (loadStackBridge.loadStep==13){
+            				getMsg()+loadStackBridge.mirrorPercentage+" %"
+            			}else{
+            				getMsg()
+            			}
                     }
                 }
                 font.family: "Quattrocento Sans Bold"
@@ -141,7 +145,7 @@ Rectangle{
                 msg=i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
                 return msg
             case 13:
-                msg=i18nd("lliurex-up","Updating mirror: ")+" "+loadStackBridge.mirrorPercentage+" %"
+                msg=i18nd("lliurex-up","Updating mirror: ")
                 return msg
         }
         msg=headed+". "+msg

@@ -532,7 +532,7 @@ class Bridge(QObject):
 
 		if isMirrorRunning or not self.endLaunchMirror:
 			completed=Bridge.llxUpConnect.getPercentageLliurexMirror()
-			self.mirrorPercentage=format(completed,'.0f')
+			self.mirrorPercentage=int(format(completed,'.0f'))
 			self.progressValue=completed/100.0
 		else:
 			self.waitForMirrorTimer.stop()
