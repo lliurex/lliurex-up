@@ -156,7 +156,7 @@ class Bridge(QObject):
 
 		if self.core.mainStack.updateRequired:
 			self.packagesToUpdate=len(self.core.loadStack.gatherPackagesT.packages)
-			self.newPackagesToUpdate=0
+			self.newPackagesToUpdate=Bridge.llxUpConnect.newPackages
 			self.updateSize=self.core.loadStack.gatherPackagesT.updateSize
 
 		updateSource=self.core.loadStack.getCurrentVersionT.currentVersion["updateSource"]
