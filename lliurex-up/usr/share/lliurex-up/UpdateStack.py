@@ -98,7 +98,7 @@ class UpdateStack(QObject):
 						self.core.mainStack.endCurrentCommand=True
 
 					if self.checkFinalFlavourDone:
-						#self.updateProcessTimer.stop()	
+						self.updateProcessTimer.stop()	
 						UpdateStack.llxUpConnect.updatePackagesData()
 						self.core.packageStack.updatePackagesModelInfo()
 						self.core.mainStack.showProgressBar=False
