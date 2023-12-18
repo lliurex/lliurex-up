@@ -367,7 +367,7 @@ class Bridge(QObject):
 			if self.checkSystemT.canConnect:
 				self.loadStep=2
 				self.progressValue=self._getProgress()
-				if not self.checkSystemT.isMirrorRunningInserver:
+				if self.checkSystemT.isMirrorRunningInserver==False:
 					if not self.checkSystemT.isMirrorExistsInserver:
 						print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
 						self.showRepoDialog=True
