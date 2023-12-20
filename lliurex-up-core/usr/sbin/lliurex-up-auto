@@ -6,30 +6,35 @@ import subprocess
 import sys
 import xmlrpc.client as n4dclient
 import ssl
+import time
+import random
 
 
 class LlxUpAutoUpgrade():
 
 	def __init__(self):
 
-		self.launch_upgrade()
+		self.interval=3600
+		self.launchUpgrade()
 
 	#def __init__ 	
 
 
-	def launch_upgrade(self):
+	def launchUpgrade(self):
 
-		if not self._get_flavour():
+		waitTime=random.randint(0,self.interval)
+		time.sleep(waitTime)
+		if not self._getLockFlavour():
 			os.system("lliurex-upgrade -u -n")
 
-	#def launch_upgrade
+	#def launchUpgrade
 
-	def _get_flavour(self):
+	def _getLockFlavour(self):
 
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 		result=p.communicate()[0]
-		lock_flavour=False
+		lockFlavour=False
 		client=False
 		desktop=False
 
@@ -39,7 +44,7 @@ class LlxUpAutoUpgrade():
 		
 		for item in flavours:
 			if 'server' in item:
-				lock_flavour=False
+				lockFlavour=False
 				break
 			elif 'client' in item:
 				client=True
@@ -48,16 +53,16 @@ class LlxUpAutoUpgrade():
 				
 		if client:
 			if desktop:
-				if self._check_is_connection_with_server():
-					lock_flavour=True
+				if self._checkIsConnectionWithServer():
+					lockFlavour=True
 			else:
-				lock_flavour=True
+				lockFlavour=True
 							
-		return lock_flavour
+		return lockFlavour
 
-	#def _get_flavour
+	#def _getLockFlavour
 
-	def _check_is_connection_with_server(self):
+	def _checkIsConnectionWithServer(self):
 
 		try:
 			context=ssl._create_unverified_context()
@@ -67,7 +72,7 @@ class LlxUpAutoUpgrade():
 		except Exception as e:
 			return False
 
-	#def _check_is_connection_with_server
+	#def _checkIsConnectionWithServer
 	
 #def LlxUpAutoUpgrade
 
