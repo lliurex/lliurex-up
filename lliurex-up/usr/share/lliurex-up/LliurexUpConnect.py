@@ -47,6 +47,7 @@ class LliurexUpConnect():
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
 		self.initialNumberPackages=[]
+		self.packagesInstalled=[]
 		self.progressDownload=0
 		self.progressDownloadPercentaje=0.00
 		self.progressInstallation=0
@@ -696,10 +697,10 @@ class LliurexUpConnect():
 
 	#def checkErrorDistUpgrade
 	
-	def getStatusPackage(self):
+	def checkInstalledStatus(self):
 
 		command='dpkg -l |grep "^i[i]"'
-		packagesStatus=[]
+		self.packagesInstalled=[]
 		try:
 			p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 			for line in iter(p.stdout.readline,b""):
@@ -707,13 +708,14 @@ class LliurexUpConnect():
 					line=line.decode()
 
 				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
-				packagesStatus.append(tmp)
+				self.packagesInstalled.append(tmp)
 
 		except Exception as e:
 			print(str(e))
 			pass
 
-		return packagesStatus						
+
+	#def checkInstalledStatus						
 
 	def checkFinalFlavour(self):
 
@@ -769,18 +771,23 @@ class LliurexUpConnect():
 
 	#def checkFinalN4dStatus
 
-	def updatePackagesData(self):
+	def updatePackagesData(self,finalUpdate=False):
 
-		pkgStatus=self.getStatusPackage()
+		if finalUpdate:
+			self.checkInstalledStatus()
 
 		for item in self.packagesData:
 			pkgName=item["pkgId"]
 			pkgVersion=item["pkgVersion"]
 			tmpName=pkgName+"_"+pkgVersion
-			if tmpName not in pkgStatus:
-				item["pkgStatus"]=-1
+			if finalUpdate:
+				if tmpName not in self.packagesInstalled:
+					item["pkgStatus"]=-1
 
-			item["showStatus"]=True
+				item["showStatus"]=True
+			else:
+				if tmpName in self.packagesInstalled:
+					item["showStatus"]=True
 
 	#def updatePackagesData		
 
@@ -876,7 +883,7 @@ class LliurexUpConnect():
 		tmpPackagesUnpacked=self.checkUnpackedStatus()
 
 		if self.progressUnpacked>=len(self.numberPackagesUnpacked):
-			tmpPackagesInstalled=self.checkInstalledStatus()
+			self.checkInstalledStatus()
 			checkInstalledPkg=True
 		
 		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
@@ -884,7 +891,7 @@ class LliurexUpConnect():
 				self.numberPackagesUnpacked.pop(i)
 			else:
 				if checkInstalledPkg:
-					if self.numberPackagesUnpacked[i] in tmpPackagesInstalled:
+					if self.numberPackagesUnpacked[i] in self.packagesInstalled:
 						self.numberPackagesUnpacked.pop(i)
 
 		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
@@ -894,9 +901,9 @@ class LliurexUpConnect():
 
 	def checkProgressInstallation(self):
 
-		tmpPackages=self.checkInstalledStatus()
+		self.checkInstalledStatus()
 		for i in range(len(self.numberPackagesInstalled)-1,-1,-1):
-			if self.numberPackagesInstalled[i] in tmpPackages:
+			if self.numberPackagesInstalled[i] in self.packagesInstalled:
 				self.numberPackagesInstalled.pop(i)
 
 		self.progressInstallation=len(self.initialNumberPackages)-len(self.numberPackagesInstalled)
@@ -925,27 +932,5 @@ class LliurexUpConnect():
 		return tmpPackages
 	
 	#def checkUnpackedStatus
-
-	def checkInstalledStatus(self):
-		
-		cmd='dpkg -l |grep "^i[i]"'
-		tmpPackages=[]
-
-		try:
-			p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-			for line in iter(p.stdout.readline,b""):
-				if type(line) is bytes:
-					line=line.decode()
-
-				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
-				tmpPackages.append(tmp)
-
-		except Exception as e:
-			print(str(e))
-			pass
-
-		return tmpPackages
-	
-	#def checkInstalledStatus
 
 #class LliurexUpConnect			

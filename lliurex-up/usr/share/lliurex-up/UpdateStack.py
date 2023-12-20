@@ -98,8 +98,9 @@ class UpdateStack(QObject):
 						self.core.mainStack.endCurrentCommand=True
 
 					if self.checkFinalFlavourDone:
+						self.checkProgressTimer.stop()
 						self.updateProcessTimer.stop()	
-						UpdateStack.llxUpConnect.updatePackagesData()
+						UpdateStack.llxUpConnect.updatePackagesData(True)
 						self.core.packageStack.updatePackagesModelInfo()
 						self.core.mainStack.showProgressBar=False
 						self.core.mainStack.endProcess=True
@@ -189,7 +190,9 @@ class UpdateStack(QObject):
 									self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
 								else:
 									self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
-									self.checkProgressTimer.stop()	
+									self.checkProgressTimer.stop()
+								UpdateStack.llxUpConnect.updatePackagesData()
+								self.core.packageStack.updatePackagesModelInfo()
 						else:
 							self.countDown+=1
 

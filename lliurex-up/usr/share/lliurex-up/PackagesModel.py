@@ -76,8 +76,9 @@ class PackagesModel(QtCore.QAbstractListModel):
 			for item in valuesToUpdate:
 				for param in item:
 					if param in ["pkgStatus","showStatus"]:
-						self._entries[row][param]=item[param]
-						self.dataChanged.emit(index,index)
+						if self._entries[row][param]!=item[param]:
+							self._entries[row][param]=item[param]
+							self.dataChanged.emit(index,index)
 
 	#def setData
 

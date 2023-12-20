@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.15
 
 Item {
 	id:menuItem
-	Layout.preferredWidth: 190
+	Layout.preferredWidth: 180
 	Layout.preferredHeight: 35
 
 	property alias optionIcon:menuOptionIcon.source
@@ -15,7 +15,7 @@ Item {
 
 	Rectangle{
 		id:menuOption
-		width:190
+		width:180
 		height:35
 		color:"transparent"
 		border.color:"transparent"
