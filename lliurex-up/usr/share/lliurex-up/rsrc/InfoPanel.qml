@@ -45,6 +45,13 @@ Rectangle{
                         i18nd("lliurex-up","Not available")
                     }
                 }
+                color:{
+                    if (infoStackBridge.currentVersion==""){
+                        "red"
+                    }else{
+                        "black"
+                    }
+                }
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignLeft
@@ -73,6 +80,13 @@ Rectangle{
                         }
                     }
                 }
+                color:{
+                    if ((infoStackBridge.availableVersion=="Client")||(infoStackBridge.availableVersion=="Connection")){
+                        "red"
+                    }else{
+                        "black"
+                    }
+                }
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignLeft
@@ -95,6 +109,13 @@ Rectangle{
                         infoStackBridge.candidateVersion
                     }else{
                         i18nd("lliurex-up","Not available")
+                    }
+                }
+                color:{
+                    if (infoStackBridge.candidateVersion==""){
+                        "red"
+                    }else{
+                        "black"
                     }
                 }
                 Layout.maximumWidth:390
@@ -160,6 +181,13 @@ Rectangle{
                         infoStackBridge.updateSource
                     }else{
                         i18nd("lliurex-up","Not available")
+                    }
+                }
+               color:{
+                    if (infoStackBridge.updateSource==""){
+                        "red"
+                    }else{
+                        "black"
                     }
                 }
                 font.family: "Quattrocento Sans Bold"
