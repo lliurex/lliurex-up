@@ -869,7 +869,7 @@ class LliurexUpConnect():
 	def checkProgressDownload(self):
 
 		for i in range(len(self.numberPackagesDownloaded)-1,-1,-1):
-			if os.path.exists(os.path.join(self.aptCachePath,self.numberPackagesDownloaded[i])):
+			if os.path.exists(os.path.join(self.aptCachePath,self.numberPackagesDownloaded[i].replace(":","%3a"))):
 				self.numberPackagesDownloaded.pop(i)
 
 		self.progressDownload=len(self.initialNumberPackages)-len(self.numberPackagesDownloaded)
