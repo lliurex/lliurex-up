@@ -14,7 +14,7 @@ class LlxUpAutoUpgrade():
 
 	def __init__(self):
 
-		self.interval=3600
+		self.interval=1800
 		self.launchUpgrade()
 
 	#def __init__ 	
@@ -22,8 +22,10 @@ class LlxUpAutoUpgrade():
 
 	def launchUpgrade(self):
 
-		waitTime=random.randint(0,self.interval)
-		time.sleep(waitTime)
+		waitTime1=random.randint(0,self.interval)
+		waitTime2=random.randint(0,self.interval)
+		sleepTime=waitTime1+waitTime2
+		time.sleep(sleepTime)
 		if not self._getLockFlavour():
 			os.system("lliurex-upgrade -u -n")
 

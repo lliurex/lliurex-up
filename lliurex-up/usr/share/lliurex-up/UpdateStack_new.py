@@ -20,11 +20,12 @@ class CheckProgressWorker(QThread):
 		QThread.__init__(self)
 		self.core=Core.Core.get_core()
 		self.llxUpConnect=self.core.llxUpConnect
-		self.maxRetry=4
+		self.maxRetry=9
 		self.isWorked=False
 		self.aptStop=False
 		self.aptRun=True
 		self.unpackedRun=False
+		self.installationRun=False
 		self.count=0
 		self.countDown=self.maxRetry
 		self.isRunning=True
@@ -34,7 +35,7 @@ class CheckProgressWorker(QThread):
 	def run (self,*args):
 
 		while self.isRunning:
-			time.sleep(0.5)
+			time.sleep(0.2)
 			self._checkProgressRet()
 
 	#def run
@@ -48,6 +49,7 @@ class CheckProgressWorker(QThread):
 					if not self.aptStop:
 						self.llxUpConnect.checkProgressDownload()
 						self.core.mainStack.progressPkg=self.llxUpConnect.progressDownload
+						self.core.mainStack.progressBarValue=round((1+self.llxUpConnect.progressDownloadPercentage)/self.core.mainStack._totalUpdateSteps,2)
 						self.llxUpConnect.checkLocks()
 						if self.llxUpConnect.isDpkgLocked()==3:
 							self.aptRun=True
@@ -71,8 +73,10 @@ class CheckProgressWorker(QThread):
 									self.unpackedRun=False
 									self.core.mainStack.progressPkg=len(self.llxUpConnect.initialNumberPackages)
 							else:
-								self.core.mainStack.updateStep=4
-								self.core.mainStack.progressPkg=0
+								if not self.installationRun:
+									self.core.mainStack.updateStep=4
+									self.core.mainStack.progressPkg=self.llxUpConnect.progressInstallation
+									self.installationRun=True
 								self.llxUpConnect.checkProgressInstallation()
 								if self.llxUpConnect.progressInstallation!=len(self.llxUpConnect.initialNumberPackages):
 									self.core.mainStack.progressPkg=self.llxUpConnect.progressInstallation
@@ -206,48 +210,6 @@ class UpdateStack(QObject):
 					self.checkFinalFlavourDone=True
 
 	#def _updateProcessRet
-
-	def _updateDownloadedProgress(self):
-
-		self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressDownload
-		self.core.mainStack.progressBarValue=round((1+UpdateStack.llxUpConnect.progressDownloadPercentage)/self.core.mainStack._totalUpdateSteps,2)
-
-	#def _updateDownloadedProgress
-
-	def _updateUnpackedProgress(self):
-
-		self.core.mainStack.updateStep=3
-
-		if UpdateStack.llxUpConnect.progressUnpacked!=len(UpdateStack.llxUpConnect.initialNumberPackages):
-			self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressUnpacked
-			self.core.mainStack.progressBarValue=round((2+UpdateStack.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
-		else:
-			self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
-
-	#def _updateUnpackedProgress
-
-	def _updateInstalledProgress(self):
-
-		self.core.mainStack.updateStep=4
-		self.core.mainStack.progressPkg=0
-
-		if UpdateStack.llxUpConnect.progressInstallation!=len(UpdateStack.llxUpConnect.initialNumberPackages):
-			self.core.mainStack.progressPkg=UpdateStack.llxUpConnect.progressInstallation
-			self.core.mainStack.progressBarValue=round((3+UpdateStack.llxUpConnect.progressInstallationPercentage)/self.core.mainStack._totalUpdateSteps,2)
-		else:
-			self.core.mainStack.progressPkg=len(UpdateStack.llxUpConnect.initialNumberPackages)
-		
-		self.core.packageStack.updatePackagesModelInfo()
-	
-	#def _updateInstalledProgress
-
-	def _stopProgressWorker(self):
-
-		self.checkProgressWorker.finished()
-		self.checkProgressT.quit()
-		self.checkProgressT.wait()
-
-	#def _stopProgressWorker
 
 	def _checkFinalFlavour(self):
 
