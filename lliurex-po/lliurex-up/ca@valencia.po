@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-04 13:09+0100\n"
-"PO-Revision-Date: 2023-12-04 13:12+0100\n"
+"POT-Creation-Date: 2024-01-26 08:39+0100\n"
+"PO-Revision-Date: 2024-01-26 08:43+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -18,97 +18,104 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:29
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
 msgstr "Informació"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:41
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:40
 msgid "Packages list"
 msgstr "Llista de paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:53
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:52
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/KonsolePanel.qml:10
 msgid "Update process"
 msgstr "Procés d'actualització"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:66
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:10
 msgid "Settings"
 msgstr "Preferències"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:79
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:78
 msgid "Help"
 msgstr "Ajuda"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:148
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:245
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:147
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:112
 msgid "of"
 msgstr "de"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:181
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:180
 msgid "Update"
 msgstr "Actualitza"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:230
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:229
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 "El procés d'actualització ha finalitzat correctament. El sistema està "
 "actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:233
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:232
 msgid "Your system is update"
 msgstr "El vostre sistema està actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:236
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:235
 msgid "The updated process has ended with errors"
 msgstr "El procés d'actualització ha finalitzat amb errors"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:252
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:238
+msgid ""
+"dpkg --configure -a must be executed. You can use dpkg-unlocker for this"
+msgstr ""
+"És necessari executar dpkg --configure -a. Pot usar l'aplicació Dpkg-"
+"Unlocker per a això"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:253
 msgid "Preparing system to the update..."
 msgstr "S'està preparant el sistema per a l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:255
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:256
 msgid "Downloading packages"
 msgstr "S'estan descarregant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:258
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:259
 msgid "Unpacking packages"
 msgstr "S'estan desempaquetant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:261
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:262
 msgid "Configuring packages"
 msgstr "S'estan configurant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:264
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:265
 msgid "Ending the update..."
 msgstr "Està finalitzant l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:267
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:268
 msgid "Checking metapackage..."
 msgstr "S'està comprovant el metapaquet..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:24
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:25
 msgid "Changelog"
 msgstr "Control de canvis"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:56
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:57
 msgid "Searching changelog. Wait a oment..."
 msgstr "S'èstà buscant el control de canvis. Espereu un moment..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:97
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:96
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
 msgid "Close"
 msgstr "Tanca"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:54
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:60
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:109
 msgid "Yes"
 msgstr "Si"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:68
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:82
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
 msgid "No"
 msgstr "No"
@@ -148,49 +155,49 @@ msgstr ""
 "L'actualització s'ha interromput perquè s'han detectat metapaquets "
 "incorrectes en l'actualització"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:12
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:10
 msgid "Update information"
 msgstr "Informació sobre l'actualització"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:36
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:34
 msgid "Current version:"
 msgstr "Versió actual:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:47
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:99
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:164
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:45
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:111
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:183
 msgid "Not available"
 msgstr "No està disponible"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:60
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:65
 msgid "Available version (lliurex.net):"
 msgstr "Versió disponible (lliurex.net):"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:69
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:74
 msgid "Not available for clients"
 msgstr "No està disponible per a clients"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:72
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:77
 msgid "Not available. Check conexion to lliurex.net"
 msgstr "No està disponible. Comproveu la connexió a lliurex.net"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:88
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:100
 msgid "Candidate version (to install):"
 msgstr "Versió candidata (a instal·lar):"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:114
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:133
 msgid "Number of packages:"
 msgstr "Nombre de paquets:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:122
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:141
 msgid "news"
 msgstr "nous"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:134
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:153
 msgid "Size of update (aprox):"
 msgstr "Grandària de l'actualització (aprox.):"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:151
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:170
 msgid "Update source:"
 msgstr "Origen de l'actualització:"
 
@@ -221,8 +228,8 @@ msgid "The unlocking process is running. Wait a moment..."
 msgstr "El procés de desbloqueig està en execució. Espereu un moment..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:153
-#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:69
-#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:78
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:72
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:81
 msgid "You need administration privileges to run this application."
 msgstr ""
 "Necessiteu privilegis d'administració per a executar aquesta aplicació."
@@ -235,11 +242,11 @@ msgstr "El procés de desbloqueig ha fallat"
 msgid "seconds"
 msgstr "segons"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:70
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:74
 msgid "Repository configuration"
 msgstr "Configuració del repositori"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:71
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:75
 msgid ""
 "Mirror not detected on the server.\n"
 "Do you want to add the repositories of lliurex.net?"
@@ -247,67 +254,67 @@ msgstr ""
 "No s'ha detectat cap rèplica en el servidor.\n"
 "Voleu afegir els repositoris de lliurex.net?"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:89
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:93
 msgid "Mirror management"
 msgstr "Gestió de la rèplica"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:90
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:94
 msgid "Your mirror is not update. Do you want to update it?"
 msgstr "La vostra rèplica no està actualitzada. Voleu actualitzar-la?"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:111
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:115
 msgid "Checking sytem..."
 msgstr "S'està comprovant el sistema..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:114
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:118
 msgid "Checking mirror..."
 msgstr "S'està comprovant la rèplica..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:117
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:121
 msgid "Executing init-actions..."
 msgstr "S'estan executant les accions d'inici..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:120
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:124
 msgid "Looking for new version of Lliurex-Up..."
 msgstr "S'està buscant una nova versió del Lliurex-Up..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:123
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:127
 msgid "Updating Lliurex-Up..."
 msgstr "S'està actualitzant el Lliurex-Up..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:126
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:130
 msgid "Checking if mirror exist and there is updated..."
 msgstr "S'està comprovant si la rèplica existeix i hi ha actualitzacions..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:129
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:133
 msgid "Looking for new version to update..."
 msgstr "S'està buscant una nova versió per a actualitzar..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:132
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:136
 msgid "Looking for new version available..."
 msgstr "S'està buscant una nova versió disponible..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:135
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:139
 msgid "Checking if installation of metapackage is required..."
 msgstr "S'està comprovant si cal una instal·lació del metapaquet..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:138
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:142
 msgid "Looking for new updates..."
 msgstr "S'estan buscant noves actualitzacions..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:141
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:145
 msgid "Lliurex-Up is now updated and will be reboot in "
 msgstr "Lliurex-Up està ara actualitzat i es reiniciarà en "
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:144
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:148
 msgid "Updating mirror: "
 msgstr "S'està actualitzant la rèplica: "
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/PackagesList.qml:32
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/PackagesList.qml:31
 msgid "Search..."
 msgstr "Busca..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/PackagesList.qml:88
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/PackagesList.qml:87
 msgid "Packages not found"
 msgstr "No s'ha trobat cap paquet"
 
@@ -332,22 +339,22 @@ msgid "If it is activated the system will update automatically at login"
 msgstr ""
 "Si està activat el sistema s'actualitzarà automàticament en l'inici de sessió"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:201
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:223
 msgid "Lliurex-Up is being executed"
 msgstr "El Lliurex-Up està en execució"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:217
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:239
 msgid "Update the system now"
 msgstr "Actualitza el sistema ara"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:366
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:388
 msgid "The upgrade process has ended"
 msgstr "El procés d'actualització ha finalitzat"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:474
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:496
 msgid "There are new packages ready to be updated or installed"
 msgstr "Hi ha nous paquets preparats per a actualitzar-los i/o instal·lar-los"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:490
+#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:512
 msgid "Lliurex-Up"
 msgstr "Lliurex-Up"

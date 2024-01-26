@@ -50,10 +50,10 @@ Rectangle{
                 msg=i18nd("lliurex-up","Unable to connect with server")
                 break;
             case -5:
-                msg=i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")
+                msg=i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")+ " "+mainStackBridge.showErrorMessage[2]
                 break;
             case -6:
-                msg=i18nd("lliurex-up","Updated abort. An error occurred in the search for updates")
+                msg=i18nd("lliurex-up","Updated abort. An error occurred in the search for updates")+" "+mainStackBridge.showErrorMessage[2]
                 break;
             case -7:
                 msg=i18nd("lliurex-up","Updated abort for incorrect metapackages detected in update")

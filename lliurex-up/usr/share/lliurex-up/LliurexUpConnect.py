@@ -200,18 +200,27 @@ class LliurexUpConnect():
 
 	def initActionsScript(self):
 
+		error=""
+		result=True
 		arg="initActions"
 		command="DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high " + self.llxUpCore.initActionsScript(arg)
-		
+		token="dpkg --configure -a"
 		try:
-		 	os.system(command)
-		 	msgLog="Exec Init-Actions"
+		 	p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+		 	poutput,perror=p.communicate()
+		 	if len(perror)>0:
+		 		error=perror.decode()
+		 		msgLog="Exec Init-Actions.Error: %s"%str(error)
+		 		result=False
+		 	else:
+		 		msgLog="Exec Init-Actions"
+
 		 	self.log(msgLog)
-		 	return True
+		 	return [result,error]
 		except Exception as e:
 		 	msgLog="Exec Init-Actions.Error: " +str(e)
 		 	self.log(msgLog)
-		 	return False		
+		 	return [False,error]	
 
 	#def initActionsScript	
 
@@ -277,6 +286,7 @@ class LliurexUpConnect():
 
 	def installLliurexUp(self):
 
+		error=""
 		try:
 			isLliurexupInstalled=self.llxUpCore.installLliurexUp()
 			returncode=isLliurexupInstalled['returncode']
@@ -284,18 +294,18 @@ class LliurexUpConnect():
 			msgLog="Installing lliurex-up. Returncode: " + str(returncode) + ". Error: " + str(error)
 			self.log(msgLog)
 			if returncode==0:
-				return True 
+				return [True,""] 
 			else:
 				isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
 				if isLliurexupUpdated:
-					return True
+					return [True,""]
 				else:
-					return False
+					return [False,error]
 			
 		except Exception as e:
 			msgLog="Installing lliurex-up. Error: " + str(e)
 			self.log(msgLog)
-			return True
+			return [True,error]
 
 	#def installLliurexUp	
 
@@ -397,7 +407,7 @@ class LliurexUpConnect():
 			error=isFlavourInstalled['stderrs']
 			msgLog="Install initial metapackage:" + str(flavourToInstall) + ": Returncode: " + str(returncode) + " Error: " + str(error)
 			self.log(msgLog)
-			return returncode
+			return [returncode,error]
 		except Exception as e:
 			print(str(e))
 			msgLog="Install initial metapackage: " + str(flavourToInstall) + ". Error: " + str(e)

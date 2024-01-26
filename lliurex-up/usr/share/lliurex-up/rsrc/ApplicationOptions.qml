@@ -234,6 +234,8 @@ GridLayout{
             case -1:
                 msg=i18nd("lliurex-up","The updated process has ended with errors")
                 break;
+            case -8:
+                msg=i18nd("lliurex-up","dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
         }
         return msg
     }

@@ -48,6 +48,7 @@ class LaunchInitActions(QThread):
 		QThread.__init__(self)
 		self.addRepos=args[0]
 		self.addAllRepos=args[1]
+		self.ret=[False,""]
 
 	#def __init__
 
@@ -56,7 +57,7 @@ class LaunchInitActions(QThread):
 		if self.addRepos:
 			Bridge.llxUpConnect.addSourcesListLliurex(self.addAllRepos)
 
-		Bridge.llxUpConnect.initActionsScript()
+		self.ret=Bridge.llxUpConnect.initActionsScript()
 
 	#def run
 
@@ -84,7 +85,7 @@ class UpdateLliurexUp(QThread):
 	def __init__(self,*args):
 
 		QThread.__init__(self)
-		self.isLliurexUpInstalled=False
+		self.isLliurexUpInstalled=[False,""]
 
 	#def __init__
 
@@ -172,7 +173,7 @@ class CheckInitialFlavourToInstall(QThread):
 	def __init__(self,*args):
 
 		QThread.__init__(self)
-		self.isFlavourInstalled=0
+		self.isFlavourInstalled=[0,""]
 		self.targetMetapackage=""
 
 	#def __init__
@@ -220,6 +221,7 @@ class Bridge(QObject):
 	UPDATE_LLIUREXUP_ERROR=-5
 	SEARCH_UPDATES_ERROR=-6
 	INCORRECT_METAPACKAGE_ERROR=-7
+	DPKG_CONFIGURE_ERROR=-8
 
 
 	def __init__(self):
@@ -377,19 +379,19 @@ class Bridge(QObject):
 					abort=True
 					if self.checkSystemT.isMirrorRunningInserver:
 						print("  [Lliurex-Up]: Mirror is being updated in server")
-						self.core.mainStack.showErrorMessage=[Bridge.MIRROR_IS_RUNNING_ERROR,"Warning"]
+						self.core.mainStack.showErrorMessage=[Bridge.MIRROR_IS_RUNNING_ERROR,"Warning",""]
 					else:
 						print("  [Lliurex-Up]: Unable to connect with server")
-						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_SERVER,"Error"]
+						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_SERVER,"Error",""]
 			else:
 				abort=True
 				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
-				self.core.mainStack.showErrorMessage=[Bridge.INTERNET_CONNECTION_ERROR,"Error"]
+				self.core.mainStack.showErrorMessage=[Bridge.INTERNET_CONNECTION_ERROR,"Error",""]
 				self.core.mainStack.currentStack=2
 		else:
 			abort=True
 			print("  [Lliurex-Up]: Not enough space on disk")
-			self.core.mainStack.showErrorMessage=[Bridge.FREESPACE_ERROR,"Error"]
+			self.core.mainStack.showErrorMessage=[Bridge.FREESPACE_ERROR,"Error",""]
 		
 		if abort:
 			self.core.mainStack.endProcess=True
@@ -443,7 +445,7 @@ class Bridge(QObject):
 
 		self.core.mainStack.endProcess=True
 
-		if self.updateLliurexUpT.isLliurexUpInstalled:
+		if self.updateLliurexUpT.isLliurexUpInstalled[0]:
 			print("  [Lliurex-Up]: Reboot Lliurex-Up")
 			self.loadStep=12
 			self.waitForRestartTimer=QTimer(None)
@@ -452,7 +454,7 @@ class Bridge(QObject):
 			self.waitForRestartTimer.start(10)
 		else:
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
-			self.core.mainStack.showErrorMessage=[Bridge.UPDATE_LLIUREXUP_ERROR,"Error"]
+			self.core.mainStack.showErrorMessage=[Bridge.UPDATE_LLIUREXUP_ERROR,"Error",self.updateLliurexUpT.isLliurexUpInstalled[1]]
 			self.core.mainStack.currentStack=1
 
 
@@ -587,12 +589,14 @@ class Bridge(QObject):
 	def _gatherPackagesRet(self):
 
 		self.core.mainStack.endProcess=True
+		error=""
 		
 		if len(self.gatherPackagesT.packages)==0:
 			self.core.mainStack.updateRequired=False
 
-			if self.checkInitialFlavourToInstallT.isFlavourInstalled!=0:
+			if self.checkInitialFlavourToInstallT.isFlavourInstalled[0]!=0:
 				self.core.mainStack.updateRequired=True
+				error=self.checkInitialFlavourToInstallT.isFlavourInstalled[1]
 			else:	
 				if self.getCurrentVersionT.currentVersion["candidate"]!=None:
 					if self.getCurrentVersionT.currentVersion["installed"]!=self.getCurrentVersionT.currentVersion["candidate"]:
@@ -605,23 +609,27 @@ class Bridge(QObject):
 				logMsg="Updated abort. An error occurred in the search for updates"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: Error in search for updates")
-				self.core.mainStack.showErrorMessage=[Bridge.SEARCH_UPDATES_ERROR,"Error"]
+				self.core.mainStack.showErrorMessage=[Bridge.SEARCH_UPDATES_ERROR,"Error",error]
 				self.core.mainStack.currentStack=1
 			else:
 				logMsg="System update. Nothing to do"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: System update. Nothing to do")
 				self.core.mainStack.loadInfo()
+				if self.launchInitActionsT.ret[1]!="":
+					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
 		else:
 			if not self.gatherPackagesT.incorrectFlavours['status']:
 				self.core.mainStack.updateRequired=True
 				print("  [Lliurex-Up]: System nor update")
 				self.core.mainStack.loadInfo()
+				if self.launchInitActionsT.ret[1]!="":
+					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
 			else:
 				logMsg="Updated abort for incorrect metapackages detected in update"
 				Bridge.llxUpConnect.log(log_msg)
 				print("  [Lliurex-Up]: Update abort. Detect incorrect metapackages in new updates")
-				self.core.mainStack.showErrorMessage=[Bridge.INCORRECT_METAPACKAGE_ERROR,"Error"]
+				self.core.mainStack.showErrorMessage=[Bridge.INCORRECT_METAPACKAGE_ERROR,"Error",""]
 				self.core.mainStack.currentStack=1
 
 	#def _gatherPackagesRet

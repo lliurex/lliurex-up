@@ -23,7 +23,7 @@ class Bridge(QObject):
 		self.core=Core.Core.get_core()
 		Bridge.llxUpConnect=self.core.llxUpConnect
 		self._currentStack=0
-		self._showErrorMessage=["","Warning"]
+		self._showErrorMessage=["","Warning",""]
 		self._currentOptionStack=0
 		self._showProgressBar=False
 		self._progressBarValue=0.0
