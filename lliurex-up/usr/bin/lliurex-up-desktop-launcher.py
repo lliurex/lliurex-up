@@ -109,7 +109,6 @@ class LlxUpCheckRoot():
 			result=result.decode()
 		flavours = [ x.strip() for x in result.split(',') ]	
 		
-		
 		for item in flavours:
 			if 'server' in item:
 				lock_flavour=True
