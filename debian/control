@@ -29,7 +29,7 @@ Description: Python library for lliurex-up; pre-actions and postactions
 Package: lliurex-up
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends},${misc:Depends}, python3, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version}), debconf-kde-helper,python3-screensaver-manager,qml-module-qmltermwidget,python3-pyside2.qtqml, python3-pyside2.qtquick, python3-pyside2.qtgui, python3-pyside2.qtwidgets, python3-pyside2.qtquickwidgets, python3-pyside2.qtsvg
-Recommends: lliurex-up-indicator (> 24.04.61})
+Recommends: lliurex-up-indicator (> 24.04.61)
 Description: Graphical interface to update system
  Interface to update system.
 
