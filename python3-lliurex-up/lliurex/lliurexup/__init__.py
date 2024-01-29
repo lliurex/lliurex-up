@@ -836,9 +836,19 @@ class LliurexUpCore(object):
 			if raw[0].startswith('['):
 				self.packageInfo[package]['install'] = raw[0][1:-1]
 				self.packageInfo[package]['candidate'] = raw[1][1:]
+				#self.packageInfo[package]['architecture']=raw[-1:][0][1:][:-2]
+				for item in raw:
+					if item.endswith(')'):
+						self.packageInfo[package]['architecture']=item[1:-1][:-1]
+						
 			elif raw[0].startswith('('):
 				self.packageInfo[package]['install'] = None
 				self.packageInfo[package]['candidate'] = raw[0][1:]
+				#self.packageInfo[package]['architecture']=raw[-1:][0][1:][:-2]
+				for item in raw:
+					if item.endswith(')'):
+						self.packageInfo[package]['architecture']=item[1:-1][:-1]
+
 			self.packageInfo[package].pop('raw')
 		
 		return self.packageInfo

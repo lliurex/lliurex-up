@@ -23,6 +23,7 @@ class LliurexUpCli(object):
 		signal.signal(signal.SIGINT,self.handler_signal)
 		self.lliurexcore.checkLocks()
 		self.checkingBlock=True
+		self.configureRequired=False
 	
 	
 	#def __init__
@@ -153,6 +154,7 @@ class LliurexUpCli(object):
 	def initActionsScript(self,extra_args=None):
 
 		print("  [Lliurex-Up]: Executing init actions...")
+		self.configureRequired=False
 
 		if extra_args["unattendend_upgrade"]:
 			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.initActionsScript(self.initActionsArg)
@@ -170,6 +172,8 @@ class LliurexUpCli(object):
 				output_err=output[1]	
 			error=self.readErrorOutput(output_err)
 			if error:
+				if 'dpkg --configure -a' in output_err:
+					self.configureRequired=True
 				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output_err))
 				log_msg="Exec Init-Actions. Error: %s"%str(output_err)
 			else:
@@ -204,7 +208,7 @@ class LliurexUpCli(object):
 				if not is_lliurexup_updated:
 					log_msg="Unable to update Lliurex-Up"
 					self.log(log_msg)
-					print("  [Lliurex-Up]: Unable to update Lliurex-Up")
+					print("  [Lliurex-Up]: Unable to update Lliurex-Up. Error: %s"%str(is_lliurexup_installed['stderrs']))
 					restart=False
 				else:
 					restart=True
@@ -837,7 +841,8 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.version_available["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.version_update["candidate"]))
 				print("  [Lliurex-Up]: Update source:                   " +str(self.version_update["updateSource"]))
-				
+				if self.configureRequired:
+					print("  [Lliurex-Up]: dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
 				if not extra_args["unattendend_upgrade"]:
 					response=input('  [Lliurex-Up]: Do you want to update the system (yes/no)): ').lower()
 				else:
