@@ -73,46 +73,7 @@ Rectangle{
 					settingStackBridge.manageSystray(notificationToggleswitch.checked);
 				}
 			}
-
-			Text {
-     			id:textAutoUpgradeSettings
-     			text:i18nd("lliurex-up","Activate automatic system update:")
-				font.family: "Quattrocento Sans Bold"
-				font.pointSize: 10
-				Layout.alignment:Qt.AlignRight
-			}   
-
-			Switch {
-				id:autoUpgradeToggleswitch
-				checked: settingStackBridge.isAutoUpgradeEnabled
-				Layout.alignment:Qt.AlignLeft
-				indicator: Rectangle {
-					implicitWidth: 40
-					implicitHeight: 10
-					x: autoUpgradeToggleswitch.width - width - autoUpgradeToggleswitch.rightPadding
-					y: parent.height/2 - height/2 
-					radius: 7
-					color: autoUpgradeToggleswitch.checked ? "#3daee9" : "#d3d3d3"
-
-					Rectangle {
-						x: autoUpgradeToggleswitch.checked ? parent.width - width : 0
-						width: 20
-						height: 20
-						y:parent.height/2-height/2
-						radius: 10
-						border.color: "#808080"
-				   }
-				}	
-				hoverEnabled:true
-				ToolTip.delay: 1000
-				ToolTip.timeout: 3000
-				ToolTip.visible: hovered
-				ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
-
-				onToggled: {
-					settingStackBridge.manageAutoUpgrade(autoUpgradeToggleswitch.checked);
-				}
-			}
+			
 		}
 
 	}

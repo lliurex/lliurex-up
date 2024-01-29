@@ -42,7 +42,6 @@ class LliurexUpConnect():
 		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
-		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
 		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
@@ -234,7 +233,7 @@ class LliurexUpConnect():
 			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
 			self.log(msgLog)
 		else:
-<			if isMirrorRunningInServer['ismirrorrunning']==True:
+			if isMirrorRunningInServer['ismirrorrunning']==True:
 				msgLog="Mirror is being udpated in server. Unable to update the system"
 				self.log(msgLog)
 
@@ -640,26 +639,6 @@ class LliurexUpConnect():
 				f.close()
 
 	#def manageSystray
-
-	def isAutoUpgradeEnabled(self):
-
-		if os.path.exists(self.enabledAutoUpgradeToken):
-			return True
-		else:
-			return False
-
-	#de isAutoUpgradeEnabled
-
-	def manageAutoUpgrade(self,enable):
-
-		if enable:
-			cmd="systemctl enable lliurex-up-auto-upgrade.service"
-		else:
-			cmd="systemctl disable lliurex-up-auto-upgrade.service"
-
-		os.system(cmd)
-
-	#def manageAutoUpgrade	
 
 	def preActionsScript(self):
 
