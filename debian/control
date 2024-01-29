@@ -28,8 +28,8 @@ Description: Python library for lliurex-up; pre-actions and postactions
 
 Package: lliurex-up
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, python3, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version}), debconf-kde-helper,python3-screensaver-manager,gir1.2-vte-2.91
-Recommends: lliurex-up-indicator (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends},${misc:Depends}, python3, lliurex-up-core (= ${binary:Version}), lliurex-up-cli (= ${binary:Version}), debconf-kde-helper,python3-screensaver-manager,qml-module-qmltermwidget,python3-pyside2.qtqml, python3-pyside2.qtquick, python3-pyside2.qtgui, python3-pyside2.qtwidgets, python3-pyside2.qtquickwidgets, python3-pyside2.qtsvg
+Recommends: lliurex-up-indicator (> 24.04.61})
 Description: Graphical interface to update system
  Interface to update system.
 
@@ -38,12 +38,6 @@ Architecture: all
 Depends: lliurex-up-core (= ${binary:Version}), python3, python3-clint
 Description: Command line interface to update system
  CLI Interface to update system.
-
-Package: lliurex-up-indicator
-Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, python3, python3-aptdaemon, python3-pyinotify,lliurex-up (= ${binary:Version}), python3-screensaver-manager,gir1.2-appindicator3-0.1
-Description: Menu indicator to show new updates availables and remote executions of lliureX-Up
- Menu Indicator.
 
 Package: lliurex-up-pool-tools
 Architecture: all
