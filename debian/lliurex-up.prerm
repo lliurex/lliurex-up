@@ -27,6 +27,11 @@ case $1 in
 		if  [ -e "${INDICATOR_TOKEN}" ]; then
 			rm -f "${INDICATOR_TOKEN}"
 		fi	
+
+		tokenDir=/var/lib/lliurex-up
+        if [ -d "$tokenDir" ];then
+            rm -rf "$tokenDir" || true
+        fi
 		
 		
      ;;

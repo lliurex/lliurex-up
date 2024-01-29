@@ -1,3 +1,9 @@
+lliurex-up (24.05.01) jammy; urgency=medium
+
+  * Fixed debian folder
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 29 Jan 2024 09:24:12 +0100
+
 lliurex-up (24.05) jammy; urgency=medium
 
   * Migrated UI to PySide2-QML
