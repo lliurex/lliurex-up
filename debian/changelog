@@ -1,3 +1,9 @@
+lliurex-up (24.05.02) jammy; urgency=medium
+
+  * Fixed feedback during upgrade
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 27 Feb 2024 10:35:56 +0100
+
 lliurex-up (24.05.01) jammy; urgency=medium
 
   * Fixed debian folder
