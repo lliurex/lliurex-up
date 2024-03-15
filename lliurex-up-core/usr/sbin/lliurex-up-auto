@@ -8,6 +8,7 @@ import xmlrpc.client as n4dclient
 import ssl
 import time
 import random
+import datetime
 
 
 class LlxUpAutoUpgrade():
@@ -15,6 +16,7 @@ class LlxUpAutoUpgrade():
 	def __init__(self):
 
 		self.interval=1800
+		self.tokenPath="/var/run/lliurex-up-auto.token"
 		self.launchUpgrade()
 
 	#def __init__ 	
@@ -22,12 +24,24 @@ class LlxUpAutoUpgrade():
 
 	def launchUpgrade(self):
 
-		waitTime1=random.randint(0,self.interval)
-		waitTime2=random.randint(0,self.interval)
-		sleepTime=waitTime1+waitTime2
-		time.sleep(sleepTime)
+		if os.path.exists(self.tokenPath):
+			os.remove(self.tokenPath)
+		
 		if not self._getLockFlavour():
+			currenTime=datetime.datetime.now()
+			waitTime1=random.randint(0,self.interval)
+			waitTime2=random.randint(0,self.interval)
+			sleepTime=waitTime1+waitTime2
+			updateTime=currenTime+datetime.timedelta(seconds=sleepTime)
+			formatTime=updateTime.strftime("%H:%M:%S")
+			with open(self.tokenPath,'w') as fd:
+				fd.write(str(formatTime))
+			
+			time.sleep(sleepTime)
 			os.system("lliurex-upgrade -u -n")
+			
+			if os.path.exists(self.tokenPath):
+				os.remove(self.tokenPath)
 
 	#def launchUpgrade
 
