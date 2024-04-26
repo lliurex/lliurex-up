@@ -1,3 +1,9 @@
+lliurex-up (24.05.03) jammy; urgency=medium
+
+  * Fixed scroll when search is applied
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 26 Apr 2024 12:50:21 +0200
+
 lliurex-up (24.05.02) jammy; urgency=medium
 
   * Fixed feedback during upgrade
