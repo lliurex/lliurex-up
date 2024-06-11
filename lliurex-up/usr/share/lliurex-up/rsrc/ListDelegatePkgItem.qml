@@ -18,14 +18,8 @@ Components.ListItem{
     enabled:true
 
     onContainsMouseChanged: {
-         if (containsMouse) {
-            let i=0
-            do{
-                listPkg.currentIndex=index-i
-                i+=1
-
-            }while (!listPkgItem.ListView.isCurrentItem)
-
+        if (containsMouse) {
+            listPkg.currentIndex=filterModel.visibleElements.indexOf(index)
         } else {
             listPkg.currentIndex = -1
         }
