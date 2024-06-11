@@ -17,6 +17,7 @@ class LlxUpAutoUpgrade():
 
 		self.interval=1800
 		self.tokenPath="/var/run/lliurex-up-auto.token"
+		self.lockPath="/var/run/lliurex-up-auto.lock"
 		self.launchUpgrade()
 
 	#def __init__ 	
@@ -24,12 +25,11 @@ class LlxUpAutoUpgrade():
 
 	def launchUpgrade(self):
 
-		if os.path.exists(self.tokenPath):
-			os.remove(self.tokenPath)
+		self._cleanEnvironment()
 		
 		if not self._getLockFlavour():
 			currenTime=datetime.datetime.now()
-			waitTime1=random.randint(0,self.interval)
+			waitTime1=random.randint(600,self.interval)
 			waitTime2=random.randint(0,self.interval)
 			sleepTime=waitTime1+waitTime2
 			updateTime=currenTime+datetime.timedelta(seconds=sleepTime)
@@ -38,10 +38,13 @@ class LlxUpAutoUpgrade():
 				fd.write(str(formatTime))
 			
 			time.sleep(sleepTime)
+
+			with open(self.lockPath,'w') as fd:
+				fd.close()
+
 			os.system("lliurex-upgrade -u -n")
 			
-			if os.path.exists(self.tokenPath):
-				os.remove(self.tokenPath)
+			self._cleanEnvironment()
 
 	#def launchUpgrade
 
@@ -89,6 +92,16 @@ class LlxUpAutoUpgrade():
 			return False
 
 	#def _checkIsConnectionWithServer
+
+	def _cleanEnvironment(self):
+
+		if os.path.exists(self.lockPath):
+			os.remove(self.lockPath)
+
+		if os.path.exists(self.tokenPath):
+			os.remove(self.tokenPath)
+
+	#def _cleanEnvironment
 	
 #def LlxUpAutoUpgrade
 
