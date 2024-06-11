@@ -21,8 +21,8 @@ Rectangle{
 		
 		Kirigami.InlineMessage {
             id: messageLabel
-            visible:settingStackBridge.showSettingsMsg
-            text:i18nd("lliurex-up","Changes will take effect the next time you log in")
+            visible:settingStackBridge.showSettingsMsg[0]
+            text:getMsg()
             type:Kirigami.MessageType.Positive
             Layout.minimumWidth:580
             Layout.fillWidth:true
@@ -84,7 +84,8 @@ Rectangle{
 
 			Switch {
 				id:autoUpgradeToggleswitch
-				checked: settingStackBridge.isAutoUpgradeEnabled
+				checked:settingStackBridge.isAutoUpgradeEnabled
+				enabled:!settingStackBridge.isAutoUpgradeRun
 				Layout.alignment:Qt.AlignLeft
 				indicator: Rectangle {
 					implicitWidth: 40
@@ -115,5 +116,22 @@ Rectangle{
 			}
 		}
 
+	}
+
+	function getMsg(){
+
+		var msg=""
+		switch(settingStackBridge.showSettingsMsg[1]){
+			case 0:
+				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
+				break;
+			case 1:
+				msg=i18nd("lliurex-up","Changes will take effect the next time the computer is restarted")
+				break;
+			case 2:
+				msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
+				break;
+         }
+        return msg
 	}
 }

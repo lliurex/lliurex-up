@@ -43,6 +43,8 @@ class LliurexUpConnect():
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
 		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
+		self.autoUpgradeRunToken="/var/run/lliurex-up-auto.lock"
+		self.lliurexUpAutoToken="/var/run/lliurex-up-auto.token"
 		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
@@ -654,12 +656,39 @@ class LliurexUpConnect():
 
 		if enable:
 			cmd="systemctl enable lliurex-up-auto-upgrade.service"
+			p=subprocess.run(cmd,shell=True,check=True)
+			return self.isAutoUpgradeEnabled()
 		else:
-			cmd="systemctl disable lliurex-up-auto-upgrade.service"
+			if not os.path.exists(self.autoUpgradeRunToken):
+				cmd="systemctl disable lliurex-up-auto-upgrade.service"
+				p=subprocess.run(cmd,shell=True,check=True)
+				returnCode=p.returncode
+				if returnCode==0:
+					if not self.isAutoUpgradeEnabled():
+						cmd="systemctl stop lliurex-up-auto-upgrade.service"
+						p=subprocess.run(cmd,shell=True,check=True)
+						returnCode=p.returncode
+						if returnCode==0:
+							if os.path.exists(self.lliurexUpAutoToken):
+								os.remove(self.lliurexUpAutoToken)
+								return True
+						else:
+							return False
+					else:
+						return False
+				else:
+					result=False
 
-		os.system(cmd)
+	#def manageAutoUpgrade
 
-	#def manageAutoUpgrade	
+	def isAutoUpgradeRun(self):
+
+		if os.path.exists(self.autoUpgradeRunToken):
+			return True
+		else:
+			return False
+
+	#def isAutoUpgradeRun	
 
 	def preActionsScript(self):
 

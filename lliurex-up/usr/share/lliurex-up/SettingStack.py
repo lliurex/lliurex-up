@@ -14,6 +14,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Bridge(QObject):
 
+	SYSTRAY_MSG=0
+	AUTOUPDATE_ENABLE=1
+	AUTOUPDATE_DISABLE=2
+
 	def __init__(self):
 
 		QObject.__init__(self)
@@ -22,7 +26,8 @@ class Bridge(QObject):
 		self._showSettingsPanel=False
 		self._isSystrayEnabled=False
 		self._isAutoUpgradeEnabled=False
-		self._showSettingsMsg=False
+		self._showSettingsMsg=[False,""]
+		self._isAutoUpgradeRun=False
 	
 	#def __init__
 
@@ -31,6 +36,7 @@ class Bridge(QObject):
 		self.showSettingsPanel=Bridge.llxUpConnect.manageSettingsOptions()
 		self.isSystrayEnabled=Bridge.llxUpConnect.isSystrayEnabled()
 		self.isAutoUpgradeEnabled=Bridge.llxUpConnect.isAutoUpgradeEnabled()
+		self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
 
 	#def getSettingsInfo
 
@@ -76,7 +82,6 @@ class Bridge(QObject):
 
 	#def _setIsAutoUpgradeEnabled
 
-
 	def _getShowSettingsMsg(self):
 
 		return self._showSettingsMsg
@@ -91,19 +96,36 @@ class Bridge(QObject):
 
 	#def _setShowSettingsMsg
 
+	def _getIsAutoUpgradeRun(self):
+
+		return self._isAutoUpgradeRun
+
+	#def _getIsAutoUpgradeRun
+
+	def _setIsAutoUpgradeRun(self,isAutoUpgradeRun):
+
+		if self._isAutoUpgradeRun!=isAutoUpgradeRun:
+			self._isAutoUpgradeRun=isAutoUpgradeRun
+			self.on_isAutoUpgradeRun.emit()
+
+	#def _setIsAutoUpgradeRun
+
 	@Slot(bool)
 	def manageSystray(self,enable):
 
 		Bridge.llxUpConnect.manageSystray(enable)
-		self.showSettingsMsg=True
+		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG]
 
 	#def manageSystray
 
 	@Slot(bool)
 	def manageAutoUpgrade(self,enable):
 		
-		Bridge.llxUpConnect.manageAutoUpgrade(enable)
-		self.showSettingsMsg=True
+		ret=Bridge.llxUpConnect.manageAutoUpgrade(enable)
+		if enable:
+			self.showSettingsMsg=[True,Bridge.AUTOUPDATE_ENABLE]
+		else:
+			self.showSettingsMsg=[True,Bridge.AUTOUPDATE_DISABLE]
 
 	#def manageAutoUpgtade 
 		
@@ -118,7 +140,10 @@ class Bridge(QObject):
 	isAutoUpgradeEnabled=Property(bool,_getIsAutoUpgradeEnabled,_setIsAutoUpgradeEnabled,notify=on_isAutoUpgradeEnabled)
 
 	on_showSettingsMsg=Signal()
-	showSettingsMsg=Property(bool,_getShowSettingsMsg,_setShowSettingsMsg,notify=on_showSettingsMsg)
+	showSettingsMsg=Property('QVariantList',_getShowSettingsMsg,_setShowSettingsMsg,notify=on_showSettingsMsg)
+
+	on_isAutoUpgradeRun=Signal()
+	isAutoUpgradeRun=Property(bool,_getIsAutoUpgradeRun,_setIsAutoUpgradeRun,notify=on_isAutoUpgradeRun)
 
 #class Bridge
 
