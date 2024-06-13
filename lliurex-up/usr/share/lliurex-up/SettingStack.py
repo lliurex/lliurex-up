@@ -15,8 +15,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 class Bridge(QObject):
 
 	SYSTRAY_MSG=0
-	AUTOUPDATE_ENABLE=1
-	AUTOUPDATE_DISABLE=2
+	AUTOUPGRADE_ENABLE_ERROR=-1
+	AUTOUPGRADE_DISABLE_ERROR=-2
+	AUTOUPGRADE_ENABLE=1
+	AUTOUPGRADE_DISABLE=2
 
 	def __init__(self):
 
@@ -26,7 +28,7 @@ class Bridge(QObject):
 		self._showSettingsPanel=False
 		self._isSystrayEnabled=False
 		self._isAutoUpgradeEnabled=False
-		self._showSettingsMsg=[False,""]
+		self._showSettingsMsg=[False,"","Ok"]
 		self._isAutoUpgradeRun=False
 	
 	#def __init__
@@ -114,7 +116,7 @@ class Bridge(QObject):
 	def manageSystray(self,enable):
 
 		Bridge.llxUpConnect.manageSystray(enable)
-		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG]
+		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG,"Ok2"]
 
 	#def manageSystray
 
@@ -123,9 +125,15 @@ class Bridge(QObject):
 		
 		ret=Bridge.llxUpConnect.manageAutoUpgrade(enable)
 		if enable:
-			self.showSettingsMsg=[True,Bridge.AUTOUPDATE_ENABLE]
+			if ret:
+				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_ENABLE,"Ok"]
+			else:
+				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_ENABLE_ERROR,"Error"]
 		else:
-			self.showSettingsMsg=[True,Bridge.AUTOUPDATE_DISABLE]
+			if ret:
+				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_DISABLE,"Ok"]
+			else:
+				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_DISABLE_ERROR,"Error"]
 
 	#def manageAutoUpgtade 
 		

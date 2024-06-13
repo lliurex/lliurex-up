@@ -672,12 +672,14 @@ class LliurexUpConnect():
 							if os.path.exists(self.lliurexUpAutoToken):
 								os.remove(self.lliurexUpAutoToken)
 								return True
+							else:
+								return True
 						else:
 							return False
 					else:
 						return False
 				else:
-					result=False
+					return False
 
 	#def manageAutoUpgrade
 

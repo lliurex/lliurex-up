@@ -23,7 +23,7 @@ Rectangle{
             id: messageLabel
             visible:settingStackBridge.showSettingsMsg[0]
             text:getMsg()
-            type:Kirigami.MessageType.Positive
+            type:getMsgType()
             Layout.minimumWidth:580
             Layout.fillWidth:true
             Layout.topMargin: 40
@@ -122,6 +122,12 @@ Rectangle{
 
 		var msg=""
 		switch(settingStackBridge.showSettingsMsg[1]){
+			case -1:
+				msg=i18nd("lliurex-up","Unable to activate automatic updates")
+				break;
+			case -2:
+				msg=i18nd("lliurex-up","Unable to deactivate automatic updates")
+				break;
 			case 0:
 				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
 				break;
@@ -133,5 +139,15 @@ Rectangle{
 				break;
          }
         return msg
+	}
+
+	function getMsgType(){
+
+		switch(settingStackBridge.showSettingsMsg[2]){
+			case "Ok":
+				return Kirigami.MessageType.Positive;
+			case "Error":
+				return Kirigami.MessageType.Error;
+		}	
 	}
 }
