@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-26 08:39+0100\n"
+"POT-Creation-Date: 2024-06-13 12:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,6 +188,7 @@ msgid "Update source:"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:141
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:135
 msgid "Press to view pkg changelog"
 msgstr ""
 
@@ -303,6 +304,7 @@ msgid "List of packages to update/install"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:25
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:132
 msgid "Changes will take effect the next time you log in"
 msgstr ""
 
@@ -315,6 +317,7 @@ msgid "Activate automatic system update:"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:111
 msgid "If it is activated the system will update automatically at login"
 msgstr ""
 
@@ -336,4 +339,33 @@ msgstr ""
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:512
 msgid "Lliurex-Up"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
+msgid "Unable to activate automatic updates"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
+msgid "Unable to deactivate automatic updates"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
+msgid "Changes will take effect the next time the computer is restarted"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:138
+msgid "Automatic system update has been successfully disabled"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
+msgid "Unable to activate the automatic system update"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
+msgid "Unable to deactivate automatic system update"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
+msgid ""
+"Changes will take effect the next time the computer turns on or restarts"
 msgstr ""

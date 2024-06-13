@@ -123,16 +123,16 @@ Rectangle{
 		var msg=""
 		switch(settingStackBridge.showSettingsMsg[1]){
 			case -1:
-				msg=i18nd("lliurex-up","Unable to activate automatic updates")
+				msg=i18nd("lliurex-up","Unable to activate the automatic system update")
 				break;
 			case -2:
-				msg=i18nd("lliurex-up","Unable to deactivate automatic updates")
+				msg=i18nd("lliurex-up","Unable to deactivate automatic system update")
 				break;
 			case 0:
 				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
 				break;
 			case 1:
-				msg=i18nd("lliurex-up","Changes will take effect the next time the computer is restarted")
+				msg=i18nd("lliurex-up","Changes will take effect the next time the computer turns on or restarts")
 				break;
 			case 2:
 				msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
