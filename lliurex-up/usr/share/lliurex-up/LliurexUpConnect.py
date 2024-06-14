@@ -42,9 +42,6 @@ class LliurexUpConnect():
 		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
-		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
-		self.autoUpgradeRunToken="/var/run/lliurex-up-auto.lock"
-		self.lliurexUpAutoToken="/var/run/lliurex-up-auto.token"
 		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
@@ -645,52 +642,28 @@ class LliurexUpConnect():
 
 	def isAutoUpgradeEnabled(self):
 
-		if os.path.exists(self.enabledAutoUpgradeToken):
-			return True
-		else:
-			return False
+		return self.llxUpCore.isAutoUpgradeEnabled()
 
 	#de isAutoUpgradeEnabled
 
 	def manageAutoUpgrade(self,enable):
 
-		if enable:
-			cmd="systemctl enable lliurex-up-auto-upgrade.service"
-			p=subprocess.run(cmd,shell=True,check=True)
-			return self.isAutoUpgradeEnabled()
-		else:
-			if not os.path.exists(self.autoUpgradeRunToken):
-				cmd="systemctl disable lliurex-up-auto-upgrade.service"
-				p=subprocess.run(cmd,shell=True,check=True)
-				returnCode=p.returncode
-				if returnCode==0:
-					if not self.isAutoUpgradeEnabled():
-						cmd="systemctl stop lliurex-up-auto-upgrade.service"
-						p=subprocess.run(cmd,shell=True,check=True)
-						returnCode=p.returncode
-						if returnCode==0:
-							if os.path.exists(self.lliurexUpAutoToken):
-								os.remove(self.lliurexUpAutoToken)
-								return True
-							else:
-								return True
-						else:
-							return False
-					else:
-						return False
-				else:
-					return False
+		return self.llxUpCore.manageAutoUpgrade(enable)
 
 	#def manageAutoUpgrade
 
 	def isAutoUpgradeRun(self):
 
-		if os.path.exists(self.autoUpgradeRunToken):
-			return True
-		else:
-			return False
+		return self.llxUpCore.isAutoUpgradeRun()
 
-	#def isAutoUpgradeRun	
+	#def isAutoUpgradeRun
+
+	def stopAutoUpgrade(self):
+
+		if self.llxUpCore.isAutoUpgradeActive():
+			ret=self.llxUpCore.stopAutoUpgrade()
+
+	#def stopAutoUpgrade	
 
 	def preActionsScript(self):
 

@@ -45,7 +45,9 @@ class LliurexUpCore(object):
 		self.desktopClientized=False
 		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
-
+		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
+		self.autoUpgradeRunToken="/var/run/lliurex-up-auto.lock"
+		self.lliurexUpAutoToken="/var/run/lliurex-up-auto.token"
 
 	#def __init__	
 
@@ -1088,7 +1090,57 @@ class LliurexUpCore(object):
 	
 	#def search_meta
 
+	def isAutoUpgradeEnabled(self):
+
+		result = self.n4d.is_auto_update_enabled('','LliurexUpManager')
+		
+		return result['return']
+	
+	#def isAutoUpgradeEnabled
+
+	def isAutoUpgradeRun(self):
+
+		result = self.n4d.is_auto_update_running('','LliurexUpManager')
+		
+		return result['return']
+
+	#def isAutoUpgradeRun
+
+	def isAutoUpgradeActive(self):
+
+		result = self.n4d.is_auto_update_active('','LliurexUpManager')
+		
+		return result['return']
+
+	#def isAutoUpgradeActive 	
+
+	def manageAutoUpgrade(self,enable):
+
+		try:
+			with open('/etc/n4d/key','r') as fd:
+				n4dKey=fd.readlines()[0].strip()
+
+			result=self.n4d.manage_auto_update_service(n4dKey,"LliurexUpManager",enable)
+
+			if result['return'] and not enable:
+				return self.stopAutoUpgrade()
+			else:
+				return result['return']
+
+		except:
+			return False
+
+	#def manageAutoUpgrade
+
+	def stopAutoUpgrade(self):
+
+		result = self.n4d.stop_auto_update_service('','LliurexUpManager')
+		
+		return result['return']
+
+	#def stopAutoUpgrade
 
 #def LliurexUpCore
+
 if __name__ == '__main__':
 	x = LliurexUpCore()
