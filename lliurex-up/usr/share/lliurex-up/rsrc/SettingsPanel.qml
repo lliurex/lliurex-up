@@ -79,6 +79,7 @@ Rectangle{
      			text:i18nd("lliurex-up","Activate automatic system update:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
+				visible:settingStackBridge.isAutoUpgradeAvailable
 				Layout.alignment:Qt.AlignRight
 			}   
 
@@ -86,6 +87,7 @@ Rectangle{
 				id:autoUpgradeToggleswitch
 				checked:settingStackBridge.isAutoUpgradeEnabled
 				enabled:!settingStackBridge.isAutoUpgradeRun
+				visible:settingStackBridge.isAutoUpgradeAvailable
 				Layout.alignment:Qt.AlignLeft
 				indicator: Rectangle {
 					implicitWidth: 40

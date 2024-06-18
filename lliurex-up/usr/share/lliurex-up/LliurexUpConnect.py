@@ -640,6 +640,12 @@ class LliurexUpConnect():
 
 	#def manageSystray
 
+	def isAutoUpgradeAvailable(self):
+
+		return self.llxUpCore.isAutoUpgradeEnabled()
+
+	#def isAutoUpgradeAvailable
+
 	def isAutoUpgradeEnabled(self):
 
 		return self.llxUpCore.isAutoUpgradeEnabled()

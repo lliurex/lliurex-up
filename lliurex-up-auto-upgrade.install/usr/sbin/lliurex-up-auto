@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import subprocess
+import sys
+import xmlrpc.client as n4dclient
+import ssl
+import time
+import random
+import datetime
+
+
+class LlxUpAutoUpgrade():
+
+	def __init__(self):
+
+		self.interval=1800
+		self.tokenPath="/var/run/lliurex-up-auto.token"
+		self.lockPath="/var/run/lliurex-up-auto.lock"
+		self.launchUpgrade()
+
+	#def __init__ 	
+
+
+	def launchUpgrade(self):
+
+		self._cleanEnvironment()
+		
+		if not self._getLockFlavour():
+			currenTime=datetime.datetime.now()
+			waitTime1=random.randint(0,self.interval)
+			waitTime2=random.randint(0,self.interval)
+			sleepTime=waitTime1+waitTime2
+			updateTime=currenTime+datetime.timedelta(seconds=sleepTime)
+			formatTime=updateTime.strftime("%H:%M:%S")
+			with open(self.tokenPath,'w') as fd:
+				fd.write(str(formatTime))
+			
+			time.sleep(sleepTime)
+
+			with open(self.lockPath,'w') as fd:
+				fd.close()
+
+			os.system("lliurex-upgrade -u -n")
+			
+			self._cleanEnvironment()
+
+	#def launchUpgrade
+
+	def _getLockFlavour(self):
+
+		cmd='lliurex-version -v'
+		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+		result=p.communicate()[0]
+		lockFlavour=False
+		client=False
+		desktop=False
+
+		if type(result) is bytes:
+			result=result.decode()
+		flavours = [ x.strip() for x in result.split(',') ]	
+		
+		for item in flavours:
+			if 'server' in item:
+				lockFlavour=True
+				break
+			elif 'client' in item:
+				client=True
+			elif 'desktop' in item:
+				desktop=True
+				
+		if client:
+			if desktop:
+				if self._checkIsConnectionWithServer():
+					lockFlavour=True
+			else:
+				lockFlavour=True
+							
+		return lockFlavour
+
+	#def _getLockFlavour
+
+	def _checkIsConnectionWithServer(self):
+
+		try:
+			context=ssl._create_unverified_context()
+			client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+			test=client.is_alive('','MirrorManager')
+			return True
+		except Exception as e:
+			return False
+
+	#def _checkIsConnectionWithServer
+
+	def _cleanEnvironment(self):
+
+		if os.path.exists(self.lockPath):
+			os.remove(self.lockPath)
+
+		if os.path.exists(self.tokenPath):
+			os.remove(self.tokenPath)
+
+	#def _cleanEnvironment
+	
+#def LlxUpAutoUpgrade
+
+llxupAutoUpgrade=LlxUpAutoUpgrade()		
+
