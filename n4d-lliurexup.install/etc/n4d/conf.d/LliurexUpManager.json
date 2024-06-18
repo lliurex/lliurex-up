@@ -36,6 +36,12 @@
                 "admins",
                 "teachers"
             ]
+        },
+
+        "can_cancel_auto_upgrade":{
+            "allowed_groups":[
+                "anonymous"
+            ]
         }
          
     }

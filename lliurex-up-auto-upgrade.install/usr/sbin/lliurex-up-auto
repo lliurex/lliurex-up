@@ -9,6 +9,7 @@ import ssl
 import time
 import random
 import datetime
+import json
 
 
 class LlxUpAutoUpgrade():
@@ -18,6 +19,7 @@ class LlxUpAutoUpgrade():
 		self.interval=1800
 		self.tokenPath="/var/run/lliurex-up-auto.token"
 		self.lockPath="/var/run/lliurex-up-auto.lock"
+		self.lliurexUpAutoControlFile="/etc/lliurex-up-auto-upgrade/lliurex-up-auto.json"
 		self.launchUpgrade()
 
 	#def __init__ 	
@@ -27,24 +29,25 @@ class LlxUpAutoUpgrade():
 
 		self._cleanEnvironment()
 		
-		if not self._getLockFlavour():
-			currenTime=datetime.datetime.now()
-			waitTime1=random.randint(0,self.interval)
-			waitTime2=random.randint(0,self.interval)
-			sleepTime=waitTime1+waitTime2
-			updateTime=currenTime+datetime.timedelta(seconds=sleepTime)
-			formatTime=updateTime.strftime("%H:%M:%S")
-			with open(self.tokenPath,'w') as fd:
-				fd.write(str(formatTime))
+		if self._canLaunchUpgrade():
+			if not self._getLockFlavour():
+				currentTime=datetime.datetime.now()
+				waitTime1=random.randint(0,self.interval)
+				waitTime2=random.randint(0,self.interval)
+				sleepTime=waitTime1+waitTime2
+				updateTime=currentTime+datetime.timedelta(seconds=sleepTime)
+				formatTime=updateTime.strftime("%H:%M:%S")
+				with open(self.tokenPath,'w') as fd:
+					fd.write(str(formatTime))
 			
-			time.sleep(sleepTime)
+				time.sleep(sleepTime)
 
-			with open(self.lockPath,'w') as fd:
-				fd.close()
+				with open(self.lockPath,'w') as fd:
+					fd.close()
 
-			os.system("lliurex-upgrade -u -n")
+				os.system("lliurex-upgrade -u -n")
 			
-			self._cleanEnvironment()
+				self._cleanEnvironment()
 
 	#def launchUpgrade
 
@@ -102,6 +105,23 @@ class LlxUpAutoUpgrade():
 			os.remove(self.tokenPath)
 
 	#def _cleanEnvironment
+
+	def _canLaunchUpgrade(self):
+
+		if os.path.exists(self.lliurexUpAutoControlFile):
+			try:
+				with open(self.lliurexUpAutoControlFile,'r') as fd:
+					currentContent=json.load(fd)
+				today=datetime.date.today()
+				today=today.isoformat()
+				if today<currentContent["dateToUpdate"]:
+					return False
+			except:
+				pass
+
+		return True
+
+	#def _canLaunchUpgrade	
 	
 #def LlxUpAutoUpgrade
 

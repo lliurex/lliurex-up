@@ -1148,12 +1148,24 @@ class LliurexUpCore(object):
 	def stopAutoUpgrade(self):
 
 		try:
-			result = self.n4d.stop_auto_update_service('','LliurexUpManager')
+			result = self.n4d.stop_auto_update_service('','LliurexUpManager',True)
 			return result['return']
 		except:
 			return True
 
 	#def stopAutoUpgrade
+
+	def initializeAutoUpgradeControl(self):
+
+		try:
+			with open('/etc/n4d/key','r') as fd:
+				n4dKey=fd.readlines()[0].strip()
+
+			result=self.n4d.initialize_control_file(n4dKey,"LliurexUpManager")
+
+			return result['return']
+		except:
+			return False
 
 #def LliurexUpCore
 
