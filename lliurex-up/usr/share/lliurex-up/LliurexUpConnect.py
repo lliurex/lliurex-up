@@ -642,7 +642,7 @@ class LliurexUpConnect():
 
 	def isAutoUpgradeAvailable(self):
 
-		return self.llxUpCore.isAutoUpgradeEnabled()
+		return self.llxUpCore.isAutoUpgradeAvailable()
 
 	#def isAutoUpgradeAvailable
 

@@ -12,10 +12,10 @@ class LliurexUpManager:
 	def __init__(self):
 
 		self.enabledAutoUpgradeToken="/etc/systemd/system/multi-user.target.wants/lliurex-up-auto-upgrade.service"
-		self.lliurexUpAutoToken="/var/run/lliurex-up-auto.token"
-		self.lliurexUpAutoRunToken="/var/run/lliurex-up-auto.lock"
+		self.lliurexUpAutoToken="/var/run/lliurex-up-auto-upgrade.token"
+		self.lliurexUpAutoRunToken="/var/run/lliurex-up-auto-upgrade.lock"
 		self.lliurexUpAutoControlPath="/etc/lliurex-up-auto-upgrade"
-		self.lliurexUpAutoControlFile=os.path.join(self.lliurexUpAutoControlPath,"lliurex-up-auto.json")
+		self.lliurexUpAutoControlFile=os.path.join(self.lliurexUpAutoControlPath,"lliurex-up-auto-upgrade.json")
 		self._createEnvironment()
 
 	#def __init__
@@ -31,14 +31,14 @@ class LliurexUpManager:
 			createFile=True
 
 		if createFile:
-			self._create_control_file()
+			self._create_control_file(3)
 
 	#def _createEnvironment
 
-	def _create_control_file(self):
+	def _create_control_file(self,attemps):
 
 		tmp={}
-		tmp["atttempsAvailables"]=3
+		tmp["atttempsAvailables"]=attemps
 		today=datetime.date.today()
 		nextDay=today+datetime.timedelta(days=1)
 		nextDay=nextDay.isoformat()
@@ -71,19 +71,11 @@ class LliurexUpManager:
 		currentContent=self._read_control_file()
 
 		if len(currentContent)==0:
-			self._create_control_file()
+			attemps=3
 		else:
-			tmp={}
-			tmp["atttempsAvailables"]=currentContent["atttempsAvailables"]-1
-			today=datetime.date.today()
-			nextDay=today+datetime.timedelta(days=1)
-			nextDay=nextDay.isoformat()
-			tmp["dateToUpdate"]=nextDay
-			try:
-				with open(self.lliurexUpAutoControlFile,'w') as fd:
-					json.dump(tmp,fd)
-			except:
-				pass
+			attemps=currentContent["atttempsAvailables"]-1
+		
+		self._create_control_file(attemps)
 
 	#def update_control_file
 
@@ -106,7 +98,7 @@ class LliurexUpManager:
 				result=True
 
 			if result:
-				self._create_control_file()
+				self._create_control_file(3)
 		else:
 			if os.path.exists(self.enabledAutoUpgradeToken):
 				cmd="systemctl disable lliurex-up-auto-upgrade.service"
@@ -139,7 +131,7 @@ class LliurexUpManager:
 				if os.path.exists(self.lliurexUpAutoToken):
 					os.remove(self.lliurexUpAutoToken)
 					if isSystemUpdate:
-						self._create_control_file()
+						self._create_control_file(3)
 					else:
 						self._update_control_file()
 			else:

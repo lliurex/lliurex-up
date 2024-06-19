@@ -17,9 +17,9 @@ class LlxUpAutoUpgrade():
 	def __init__(self):
 
 		self.interval=1800
-		self.tokenPath="/var/run/lliurex-up-auto.token"
-		self.lockPath="/var/run/lliurex-up-auto.lock"
-		self.lliurexUpAutoControlFile="/etc/lliurex-up-auto-upgrade/lliurex-up-auto.json"
+		self.tokenPath="/var/run/lliurex-up-auto-upgrade.token"
+		self.lockPath="/var/run/lliurex-up-auto-upgrade.lock"
+		self.lliurexUpAutoControlFile="/etc/lliurex-up-auto-upgrade/lliurex-up-auto-upgrade.json"
 		self.launchUpgrade()
 
 	#def __init__ 	
@@ -32,7 +32,7 @@ class LlxUpAutoUpgrade():
 		if self._canLaunchUpgrade():
 			if not self._getLockFlavour():
 				currentTime=datetime.datetime.now()
-				waitTime1=random.randint(0,self.interval)
+				waitTime1=random.randint(600,self.interval)
 				waitTime2=random.randint(0,self.interval)
 				sleepTime=waitTime1+waitTime2
 				updateTime=currentTime+datetime.timedelta(seconds=sleepTime)

@@ -6,7 +6,7 @@ After=network-online.target lliurex-auto-upgrade.target
 
 [Service]
 User=root
-ExecStart=/usr/sbin/lliurex-up-auto
+ExecStart=/usr/sbin/lliurex-up-auto-upgrade
 StandardOutput=journal
 
 [Install]
