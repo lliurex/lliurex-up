@@ -666,8 +666,7 @@ class LliurexUpConnect():
 
 	def stopAutoUpgrade(self):
 
-		if self.llxUpCore.isAutoUpgradeActive():
-			ret=self.llxUpCore.stopAutoUpgrade()
+		ret=self.llxUpCore.stopAutoUpgrade()
 
 	#def stopAutoUpgrade	
 
