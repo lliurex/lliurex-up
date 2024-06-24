@@ -849,6 +849,7 @@ class LliurexUpCli(object):
 					response="yes"
 
 				if response.startswith('y'):
+					self.lliurexcore.stopAutoUpgrade()
 					self.preActionsScript(extra_args)
 					self.distUpgrade(extra_args)
 					self.postActionsScript(extra_args)
@@ -856,13 +857,10 @@ class LliurexUpCli(object):
 					self.checkingFinalFlavourToInstall()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
-					self.lliurexcore.stopAutoUpgrade()
 					if self.distUpgrade_OK:
 						return 0
 					else:
 						return 1
-
-
 				else:
 					log_msg="Cancel the update"
 					self.log(log_msg)

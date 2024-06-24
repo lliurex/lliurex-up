@@ -37,9 +37,7 @@ class Bridge(QObject):
 		self._endProcess=True
 		self._endCurrentCommand=False
 		self._currentCommand=""
-		self._enableKonsole=False
 		self._progressPkg=0
-
 		self._closeGui=False
 
 	#def __init__
@@ -306,9 +304,10 @@ class Bridge(QObject):
 				if self.enableUpdateBtn:
 					self.enableUpdateBtn=False
 			else:
-				if self.updateRequired:
-					if not self.enableUpdateBtn:
-						self.enableUpdateBtn=True
+				if not self.enableKonsole:
+					if self.updateRequired:
+						if not self.enableUpdateBtn:
+							self.enableUpdateBtn=True
 
 	#de manageTransitions
 
