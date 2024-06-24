@@ -300,7 +300,15 @@ class Bridge(QObject):
 
 		if self.currentOptionStack!=stack:
 			self.currentOptionStack=stack
-			self.core.settingStack.showSettingsMsg=False
+			self.core.settingStack.showSettingsMsg=[False,"","Ok"]
+			if stack==3:
+				self.core.settingStack.getSettingsInfo()
+				if self.enableUpdateBtn:
+					self.enableUpdateBtn=False
+			else:
+				if self.updateRequired:
+					if not self.enableUpdateBtn:
+						self.enableUpdateBtn=True
 
 	#de manageTransitions
 

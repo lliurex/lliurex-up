@@ -856,7 +856,7 @@ class LliurexUpCli(object):
 					self.checkingFinalFlavourToInstall()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
-
+					self.lliurexcore.stopAutoUpgrade()
 					if self.distUpgrade_OK:
 						return 0
 					else:
