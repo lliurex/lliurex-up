@@ -183,6 +183,7 @@ class UpdateStack(QObject):
 						self.core.mainStack.showProgressBar=False
 						self.core.mainStack.endProcess=True
 						self.core.mainStack.updateStep=0
+						UpdateStack.llxUpConnect.stopAutoUpgrade()
 
 						if not UpdateStack.llxUpConnect.checkErrorDistUpgrade():
 							self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_OK,"Ok"]

@@ -21,9 +21,9 @@ Rectangle{
 		
 		Kirigami.InlineMessage {
             id: messageLabel
-            visible:settingStackBridge.showSettingsMsg
-            text:i18nd("lliurex-up","Changes will take effect the next time you log in")
-            type:Kirigami.MessageType.Positive
+            visible:settingStackBridge.showSettingsMsg[0]
+            text:getMsg()
+            type:getMsgType()
             Layout.minimumWidth:580
             Layout.fillWidth:true
             Layout.topMargin: 40
@@ -73,8 +73,83 @@ Rectangle{
 					settingStackBridge.manageSystray(notificationToggleswitch.checked);
 				}
 			}
-			
+
+			Text {
+     			id:textAutoUpgradeSettings
+     			text:i18nd("lliurex-up","Activate automatic system update:")
+				font.family: "Quattrocento Sans Bold"
+				font.pointSize: 10
+				visible:settingStackBridge.isAutoUpgradeAvailable
+				Layout.alignment:Qt.AlignRight
+			}   
+
+			Switch {
+				id:autoUpgradeToggleswitch
+				checked:settingStackBridge.isAutoUpgradeEnabled
+				enabled:!settingStackBridge.isAutoUpgradeRun
+				visible:settingStackBridge.isAutoUpgradeAvailable
+				Layout.alignment:Qt.AlignLeft
+				indicator: Rectangle {
+					implicitWidth: 40
+					implicitHeight: 10
+					x: autoUpgradeToggleswitch.width - width - autoUpgradeToggleswitch.rightPadding
+					y: parent.height/2 - height/2 
+					radius: 7
+					color: autoUpgradeToggleswitch.checked ? "#3daee9" : "#d3d3d3"
+
+					Rectangle {
+						x: autoUpgradeToggleswitch.checked ? parent.width - width : 0
+						width: 20
+						height: 20
+						y:parent.height/2-height/2
+						radius: 10
+						border.color: "#808080"
+				   }
+				}	
+				hoverEnabled:true
+				ToolTip.delay: 1000
+				ToolTip.timeout: 3000
+				ToolTip.visible: hovered
+				ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
+
+				onToggled: {
+					settingStackBridge.manageAutoUpgrade(autoUpgradeToggleswitch.checked);
+				}
+			}
 		}
 
+	}
+
+	function getMsg(){
+
+		var msg=""
+		switch(settingStackBridge.showSettingsMsg[1]){
+			case -1:
+				msg=i18nd("lliurex-up","Unable to activate the automatic system update")
+				break;
+			case -2:
+				msg=i18nd("lliurex-up","Unable to deactivate automatic system update")
+				break;
+			case 0:
+				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
+				break;
+			case 1:
+				msg=i18nd("lliurex-up","Changes will take effect the next time the computer turns on or restarts")
+				break;
+			case 2:
+				msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
+				break;
+         }
+        return msg
+	}
+
+	function getMsgType(){
+
+		switch(settingStackBridge.showSettingsMsg[2]){
+			case "Ok":
+				return Kirigami.MessageType.Positive;
+			case "Error":
+				return Kirigami.MessageType.Error;
+		}	
 	}
 }

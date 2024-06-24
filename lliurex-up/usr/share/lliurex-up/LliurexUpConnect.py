@@ -640,6 +640,36 @@ class LliurexUpConnect():
 
 	#def manageSystray
 
+	def isAutoUpgradeAvailable(self):
+
+		return self.llxUpCore.isAutoUpgradeAvailable()
+
+	#def isAutoUpgradeAvailable
+
+	def isAutoUpgradeEnabled(self):
+
+		return self.llxUpCore.isAutoUpgradeEnabled()
+
+	#de isAutoUpgradeEnabled
+
+	def manageAutoUpgrade(self,enable):
+
+		return self.llxUpCore.manageAutoUpgrade(enable)
+
+	#def manageAutoUpgrade
+
+	def isAutoUpgradeRun(self):
+
+		return self.llxUpCore.isAutoUpgradeRun()
+
+	#def isAutoUpgradeRun
+
+	def stopAutoUpgrade(self):
+
+		ret=self.llxUpCore.stopAutoUpgrade()
+
+	#def stopAutoUpgrade	
+
 	def preActionsScript(self):
 
 		self.preActions=self.llxUpCore.preActionsScript()
@@ -886,7 +916,7 @@ class LliurexUpConnect():
 		if checkInstalledPkg and len(self.numberPackagesUnpacked)<5:
 			if len(self.packagesInstalled)>len(self.numberPackagesUnpacked):
 				self.numberPackagesUnpacked=[]
-				
+
 		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
 		self.progressUnpackedPercentage=round(self.progressUnpacked/len(self.initialNumberPackages),2)
 
