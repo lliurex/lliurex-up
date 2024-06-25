@@ -1,3 +1,9 @@
+lliurex-up (24.05.04) jammy; urgency=medium
+
+  * Added support to manage auto-upgrades
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 25 Jun 2024 09:17:25 +0200
+
 lliurex-up (24.05.03) jammy; urgency=medium
 
   * Fixed scroll when search is applied
