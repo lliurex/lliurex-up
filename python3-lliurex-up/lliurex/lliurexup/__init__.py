@@ -1090,8 +1090,20 @@ class LliurexUpCore(object):
 
 	def isAutoUpgradeAvailable(self):
 
-		if os.path.exists(self.autoUpgradeService):
-			return True
+		check=False
+
+		if self.search_meta("desktop"):
+			if self.desktopClientized:
+				if not self.connectionWithServer:
+					check=True
+			else:
+				check=True
+
+		if check:
+			if os.path.exists(self.autoUpgradeService):
+				return True
+			else:
+				return False
 		else:
 			return False
 
