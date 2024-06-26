@@ -36,6 +36,9 @@ case $1 in
 		fi
 
 	fi
+	 newVersion=$(dpkg-query --showformat='${Version}' --show lliurex-up)
+     tokenDir=/var/lib/lliurex-up/version
+     echo "$newVersion" > "$tokenDir" || true
 
      ;;
 esac
