@@ -1,3 +1,9 @@
+lliurex-up (21.05.1) focal; urgency=medium
+
+  * Fixed control file
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 28 Jun 2024 09:33:27 +0200
+
 lliurex-up (21.05) focal; urgency=medium
 
   * Migrated to PySide2-QML
