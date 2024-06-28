@@ -1,3 +1,9 @@
+lliurex-up (21.05.2) focal; urgency=medium
+
+  * Fixed depends in control file
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 28 Jun 2024 11:41:56 +0200
+
 lliurex-up (21.05.1) focal; urgency=medium
 
   * Fixed control file
