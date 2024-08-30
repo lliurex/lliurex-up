@@ -1,3 +1,9 @@
+lliurex-up (24.05.06) jammy; urgency=medium
+
+  * Fixed unpacked countdown
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 30 Aug 2024 11:22:02 +0200
+
 lliurex-up (24.05.05) jammy; urgency=medium
 
   * Fixed function to enable auto-update setting
