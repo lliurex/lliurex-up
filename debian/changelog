@@ -1,3 +1,9 @@
+lliurex-up (21.05.6) focal; urgency=medium
+
+  * Fixed unpacked countdown
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 30 Aug 2024 11:39:50 +0200
+
 lliurex-up (21.05.5) focal; urgency=medium
 
   * Fixed control file
