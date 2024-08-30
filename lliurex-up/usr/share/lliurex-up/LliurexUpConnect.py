@@ -902,7 +902,7 @@ class LliurexUpConnect():
 		tmpPackagesUnpacked=self.checkUnpackedStatus()
 
 		if self.progressUnpacked>=len(self.numberPackagesUnpacked):
-			self.checkInstalledStatus()
+			self.checkProgressInstallation()
 			checkInstalledPkg=True
 		
 		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
@@ -913,9 +913,8 @@ class LliurexUpConnect():
 					if self.numberPackagesUnpacked[i] in self.packagesInstalled:
 						self.numberPackagesUnpacked.pop(i)
 
-		if checkInstalledPkg and len(self.numberPackagesUnpacked)<5:
-			if len(self.packagesInstalled)>len(self.numberPackagesUnpacked):
-				self.numberPackagesUnpacked=[]
+		if checkInstalledPkg and (self.progressInstallation>len(self.numberPackagesUnpacked)):
+			self.numberPackagesUnpacked=[]
 
 		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
 		self.progressUnpackedPercentage=round(self.progressUnpacked/len(self.initialNumberPackages),2)
