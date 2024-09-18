@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools","setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python3-lliurexup"
+version = "0.1"
+description = "lliurex-up library"
+authors = [
+	{ name = "Raul Rodrigo Segura", email="raurodse@gmail.com" },
+	{ name = "LliureX Team"}
+]
+license = {text="GPL-3"}
+urls = {repository="https://github.com/lliurex/lliurex-up"}
+
+[tool.setuptools]
+package-dir={""="python3-lliurex-up"}
+

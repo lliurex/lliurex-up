@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import org.kde.plasma.components 3.0 as PC3
+//import org.kde.plasma.components 3.0 as PC3
 import org.kde.kirigami 2.16 as Kirigami
 
 GridLayout{
@@ -25,7 +25,8 @@ GridLayout{
 
             MenuOptionBtn {
                 id:infoOption
-                optionText:i18nd("lliurex-up","Information")
+                //optionText:i18nd("lliurex-up","Information")
+                optionText:"Information"
                 optionIcon:"/usr/share/icons/breeze/status/22/update-low.svg"
                 visible:true
                 Connections{
@@ -37,7 +38,8 @@ GridLayout{
 
             MenuOptionBtn {
                 id:pkgOption
-                optionText:i18nd("lliurex-up","Packages list")
+                //optionText:i18nd("lliurex-up","Packages list")
+                optionText:"Packages list"
                 optionIcon:"/usr/share/icons/breeze/actions/22/view-list-details.svg"
                 visible:mainStackBridge.updateRequired
                 Connections{
@@ -49,7 +51,8 @@ GridLayout{
 
             MenuOptionBtn {
                 id:konsoleOption
-                optionText:i18nd("lliurex-up","Update process")
+                //optionText:i18nd("lliurex-up","Update process")
+                optionText:"Update process"
                 optionIcon:"/usr/share/icons/breeze/apps/22/utilities-terminal.svg"
                 visible:mainStackBridge.enableKonsole
                 enabled:true
@@ -62,7 +65,8 @@ GridLayout{
 
             MenuOptionBtn {
                 id:settingsOption
-                optionText:i18nd("lliurex-up","Settings")
+                //optionText:i18nd("lliurex-up","Settings")
+                optionText:"Settings"
                 optionIcon:"/usr/share/icons/breeze/actions/22/configure.svg"
                 visible:settingStackBridge.showSettingsPanel
                 enabled:true
@@ -75,7 +79,8 @@ GridLayout{
 
             MenuOptionBtn {
                 id:helpOption
-                optionText:i18nd("lliurex-up","Help")
+                //optionText:i18nd("lliurex-up","Help")
+                optionText:"Help"
                 optionIcon:"/usr/share/icons/breeze/actions/22/help-contents.svg"
                 Connections{
                     function onMenuOptionClicked(){
@@ -144,7 +149,8 @@ GridLayout{
                     id:feedBackText
                     text:{
                         if ((mainStackBridge.updateStep>1)&&(mainStackBridge.updateStep<5)){
-                            getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
+                            //getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
+                            getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" of"+ " "+infoStackBridge.packagesToUpdate+" )..."
                         }else{
                             getFeedBackText()
                         }
@@ -171,14 +177,17 @@ GridLayout{
                 
             }
                
-            PC3.Button {
+            //PC3.Button {
+            Button{
                 id:updateBtn
                 visible:mainStackBridge.showUpdateBtn
                 focus:true
                 display:AbstractButton.TextBesideIcon
-                icon.name:"view-refresh"
-                text:i18nd("lliurex-up","Update")
-                enabled:mainStackBridge.enableUpdateBtn
+                //icon.name:"view-refresh"
+                icon.source:"/usr/share/icons/breeze/actions/22/view-refresh.svg"
+                //text:i18nd("lliurex-up","Update")
+                text:"Update"
+                 enabled:mainStackBridge.enableUpdateBtn
                 Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
@@ -226,16 +235,21 @@ GridLayout{
         switch(mainStackBridge.showFeedbackMessage[1]){
 
             case 1:
-                msg=i18nd("lliurex-up","The updated process has ended successfully.The system is now update")
+                //msg=i18nd("lliurex-up","The updated process has ended successfully.The system is now update")
+                msg="The updated process has ended successfully.The system is now update"
                 break;
             case 2:
-                msg=i18nd("lliurex-up","Your system is update")
+                //msg=i18nd("lliurex-up","Your system is update")
+                msg="Your system is update"
                 break;
             case -1:
-                msg=i18nd("lliurex-up","The updated process has ended with errors")
+                //msg=i18nd("lliurex-up","The updated process has ended with errors")
+                msg="The updated process has ended with errors"
                 break;
             case -8:
-                msg=i18nd("lliurex-up","dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
+                //msg=i18nd("lliurex-up","dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
+                msg="dpkg --configure -a must be executed. You can use dpkg-unlocker for this"
+                break;
         }
         return msg
     }
@@ -243,29 +257,35 @@ GridLayout{
     function getFeedBackText(){
 
         var msg=""
-        var headed=mainStackBridge.updateStep+" "+i18nd("lliurex-up","of")+" "+mainStackBridge.totalUpdateSteps
-
+        //var headed=mainStackBridge.updateStep+" "+i18nd("lliurex-up","of")+" "+mainStackBridge.totalUpdateSteps
+        var headed=mainStackBridge.updateStep+" of"+" "+mainStackBridge.totalUpdateSteps
         switch(mainStackBridge.updateStep){
             case 0:
                 msg=""
                 return msg
             case 1:
-                msg=i18nd("lliurex-up","Preparing system to the update...")
+                //msg=i18nd("lliurex-up","Preparing system to the update...")
+                msg="Preparing system to the update..."
                 break;
             case 2:
-                msg=i18nd("lliurex-up","Downloading packages")
+                //msg=i18nd("lliurex-up","Downloading packages")
+                msg="Downloading packages"
                 break;
             case 3:
-                msg=i18nd("lliurex-up","Unpacking packages")
+                //msg=i18nd("lliurex-up","Unpacking packages")
+                msg="Unpacking packages"
                 break;
             case 4:
-                msg=i18nd("lliurex-up","Configuring packages")
+                //msg=i18nd("lliurex-up","Configuring packages")
+                msg="Configuring packages"
                 break;
             case 5:
-                msg=i18nd("lliurex-up","Ending the update...")
+                //msg=i18nd("lliurex-up","Ending the update...")
+                msg="Ending the update..."
                 break;
             case 6:
-                msg=i18nd("lliurex-up","Checking metapackage...")
+                //msg=i18nd("lliurex-up","Checking metapackage...")
+                msg="Checking metapackage..."
                 break;
         }
         msg=headed+". "+msg
