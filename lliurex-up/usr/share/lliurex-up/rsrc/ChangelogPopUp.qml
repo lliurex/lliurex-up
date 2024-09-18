@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import org.kde.plasma.components 3.0 as PC3
+//import org.kde.plasma.components 3.0 as PC3
 
 Popup {
     id:changelogPopUp
@@ -22,7 +22,8 @@ Popup {
         color:"transparent"
         Text{ 
             id:changelogText
-            text:i18nd("lliurex-up","Changelog")
+            //text:i18nd("lliurex-up","Changelog")
+            text:"Changelog"
             font.family: "Quattrocento Sans Bold"
             font.pointSize: 16
             anchors.top:changelogPopUp.bottom
@@ -46,7 +47,8 @@ Popup {
                     height:215
                     clip:true
 
-                    PC3.ScrollView{
+                    //PC3.ScrollView{
+                    ScrollView{
                         implicitWidth:container.width
                         implicitHeight:container.height
                         anchors.leftMargin:11
@@ -54,7 +56,8 @@ Popup {
                             id:pkgChangelogText
                             text:{
                                 if (packageStackBridge.pkgChangelog[1]==""){
-                                    i18nd("lliurex-up","Searching changelog. Wait a oment...")
+                                    //i18nd("lliurex-up","Searching changelog. Wait a oment...")
+                                    "Searching changelog. Wait a oment..."
                                  }else{
                                      packageStackBridge.pkgChangelog[1]
                                  }
@@ -87,13 +90,16 @@ Popup {
             anchors.bottom:parent.bottom
             anchors.right:parent.right
 
-            PC3.Button {
+            //PC3.Button {
+            Button{
                 id:closeBtn
                 visible:true
                 focus:true
                 display:AbstractButton.TextBesideIcon
-                icon.name:"dialog-close"
-                text:i18nd("lliurex-up","Close")
+                //icon.name:"dialog-close"
+                icon.source:"/usr/share/icons/breeze/actions/22/dialog-close.svg"
+                //text:i18nd("lliurex-up","Close")
+                text:"Close"
                 Layout.preferredHeight: 40
                 enabled:true
                 Keys.onReturnPressed:closeBtn.clicked()

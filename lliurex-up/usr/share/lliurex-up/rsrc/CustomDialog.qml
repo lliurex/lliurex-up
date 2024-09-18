@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs 1.3
-import org.kde.plasma.components 3.0 as PC3
+//import org.kde.plasma.components 3.0 as PC3
 
 
 Dialog {
@@ -53,11 +53,14 @@ Dialog {
         
         }
       
-        PC3.Button {
+        //PC3.Button {
+        Button{
             id:dialogApplyBtn
             display:AbstractButton.TextBesideIcon
-            icon.name:"dialog-ok"
-            text: i18nd("lliurex-up","Yes")
+            //icon.name:"dialog-ok"
+            icon.source:"/usr/share/icons/breeze/actions/22/dialog-ok.svg"
+            //text: i18nd("lliurex-up","Yes")
+            text:"Yes"
             focus:true
             visible:true
             font.pointSize: 11
@@ -75,11 +78,14 @@ Dialog {
             
         }
 
-        PC3.Button {
+        //PC3.Button {
+        Button{
             id:dialogCancelBtn
             display:AbstractButton.TextBesideIcon
-            icon.name:"dialog-cancel"
-            text: i18nd("lliurex-up","No")
+            //icon.name:"dialog-cancel"
+            icon.source:"/usr/share/icons/breeze/actions/22/dialog-cancel.svg"
+            //text: i18nd("lliurex-up","No")
+            text:"No"
             focus:true
             font.pointSize: 11
             anchors.bottom:parent.bottom

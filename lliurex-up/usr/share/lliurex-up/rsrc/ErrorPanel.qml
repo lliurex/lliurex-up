@@ -38,25 +38,32 @@ Rectangle{
         var msg=""
         switch (mainStackBridge.showErrorMessage[0]){
             case -1:
-                msg=i18nd("lliurex-up","There's not enough space on disk to upgrade (2 GB needed)");
+                //msg=i18nd("lliurex-up","There's not enough space on disk to upgrade (2 GB needed)");
+                msg="There's not enough space on disk to upgrade (2 GB needed)";
                 break;
             case -2:
-                msg=i18nd("lliurex-up","Unable to connect to lliurex.net")
+                //msg=i18nd("lliurex-up","Unable to connect to lliurex.net")
+                msg="Unable to connect to lliurex.net"
                 break;
             case -3:
-                msg=i18nd("lliurex-up","Mirror is being updated in server. Unable to update the system")
+                //msg=i18nd("lliurex-up","Mirror is being updated in server. Unable to update the system")
+                msg="Mirror is being updated in server. Unable to update the system"
                 break;
             case -4:
-                msg=i18nd("lliurex-up","Unable to connect with server")
+                //msg=i18nd("lliurex-up","Unable to connect with server")
+                msg="Unable to connect with server"
                 break;
             case -5:
-                msg=i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")+ " "+mainStackBridge.showErrorMessage[2]
+                //msg=i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")+ " "+mainStackBridge.showErrorMessage[2]
+                msg="Unable to update Lliurex-Up. See /var/log/lliurex-up.log"+ " "+mainStackBridge.showErrorMessage[2]
                 break;
             case -6:
-                msg=i18nd("lliurex-up","Updated abort. An error occurred in the search for updates")+" "+mainStackBridge.showErrorMessage[2]
+                //msg=i18nd("lliurex-up","Updated abort. An error occurred in the search for updates")+" "+mainStackBridge.showErrorMessage[2]
+                msg="Updated abort. An error occurred in the search for updates"+" "+mainStackBridge.showErrorMessage[2]
                 break;
             case -7:
-                msg=i18nd("lliurex-up","Updated abort for incorrect metapackages detected in update")
+                //msg=i18nd("lliurex-up","Updated abort for incorrect metapackages detected in update")
+                msg="Updated abort for incorrect metapackages detected in update"
                 break;
         }
         return msg

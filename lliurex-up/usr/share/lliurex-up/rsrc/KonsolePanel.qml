@@ -7,7 +7,8 @@ import QMLTermWidget 1.0
 Rectangle{
     color:"transparent"
     Text{ 
-        text:i18nd("lliurex-up","Update process")
+        //text:i18nd("lliurex-up","Update process")
+        text:"Update process"
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }

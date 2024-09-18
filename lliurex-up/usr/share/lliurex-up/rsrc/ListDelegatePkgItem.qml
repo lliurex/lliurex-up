@@ -1,12 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQml.Models 2.8
-import org.kde.plasma.components 2.0 as Components
-import org.kde.plasma.components 3.0 as PC3
+//import org.kde.plasma.components 2.0 as Components
+//import org.kde.plasma.components 3.0 as PC3
 
 
-Components.ListItem{
-
+//Components.ListItem{
+ItemDelegate{
     id: listPkgItem
     property string pkgId
     property string pkgVersion
@@ -16,19 +16,21 @@ Components.ListItem{
     property bool showStatus
   
     enabled:true
+    height:60
 
-    onContainsMouseChanged: {
+    /*onContainsMouseChanged: {
         if (containsMouse) {
             listPkg.currentIndex=filterModel.visibleElements.indexOf(index)
         } else {
             listPkg.currentIndex = -1
         }
-    }
+    }*/
 
     Item{
        id: menuItem
        height:visible?60:0
-       width:parent.width-15
+       //width:parent.width-15
+       width:parent.width-35
 
        Image {
             id:packageIcon
@@ -111,15 +113,17 @@ Components.ListItem{
             anchors.verticalCenter:parent.verticalCenter
         }
 
-        PC3.Button{
+        //PC3.Button{
+        Button{
             id:showChangelogBtn
             display:AbstractButton.IconOnly
-            icon.name:"help-about"
+            //icon.name:"help-about"
+            icon.source:"/usr/share/icons/breeze/actions/22/help-about"
             anchors.rightMargin:10
             anchors.right:parent.right
             anchors.verticalCenter:parent.verticalCenter
             visible:{
-                if (listPkgItem.ListView.isCurrentItem){
+                /*if (listPkgItem.ListView.isCurrentItem){
                     if (mainStackBridge.endProcess){
                         true
                     }else{
@@ -127,12 +131,18 @@ Components.ListItem{
                     }
                 }else{
                     false
+                }*/
+                if (mainStackBridge.endProcess){
+                    true
+                }else{
+                    false
                 }
             }
             ToolTip.delay: 1000
             ToolTip.timeout: 3000
             ToolTip.visible: hovered
-            ToolTip.text:i18nd("lliurex-up","Press to view pkg changelog")
+            //ToolTip.text:i18nd("lliurex-up","Press to view pkg changelog")
+            ToolTip.text:"Press to view pkg changelog"
             onClicked:{
                 packageStackBridge.showPkgChangelog(pkgId)
                 changelogPopUp.open()

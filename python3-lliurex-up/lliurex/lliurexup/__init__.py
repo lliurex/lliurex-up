@@ -21,8 +21,8 @@ class LliurexUpCore(object):
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
 		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite", "lliurex-meta-desktop-lite"] 
-		self.defaultMirror = 'llx23'
-		self.defaultVersion = 'jammy'
+		self.defaultMirror = 'llx25'
+		self.defaultVersion = 'noble'
 		self.defaultUrltoCheck="http://lliurex.net/jammy"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
