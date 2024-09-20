@@ -1,3 +1,9 @@
+lliurex-up (24.05.07) jammy; urgency=medium
+
+  * Minor fixes
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 20 Sep 2024 11:04:31 +0200
+
 lliurex-up (24.05.06) jammy; urgency=medium
 
   * Fixed unpacked countdown
