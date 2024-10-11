@@ -1,14 +1,13 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import org.kde.kirigami 2.16 as Kirigami
 
 
 Rectangle{
     color:"transparent"
     Text{ 
-		//text:i18nd("lliurex-up","Settings")
-		text:"Settings"
+		text:i18nd("lliurex-up","Settings")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }
@@ -41,8 +40,7 @@ Rectangle{
 
      		Text {
      			id:textNotificationSettings
-     			//text:i18nd("lliurex-up","Show notifications for available updates:")
-				text:"Show notifications for available updates:"
+     			text:i18nd("lliurex-up","Show notifications for available updates:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				Layout.alignment:Qt.AlignRight
@@ -78,8 +76,7 @@ Rectangle{
 
 			Text {
      			id:textAutoUpgradeSettings
-     			//text:i18nd("lliurex-up","Activate automatic system update:")
-				text:"Activate automatic system update:"
+     			text:i18nd("lliurex-up","Activate automatic system update:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				visible:settingStackBridge.isAutoUpgradeAvailable
@@ -113,8 +110,7 @@ Rectangle{
 				ToolTip.delay: 1000
 				ToolTip.timeout: 3000
 				ToolTip.visible: hovered
-				//ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
-				ToolTip.text:"If it is activated the system will update automatically at login"
+				ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
 
 				onToggled: {
 					settingStackBridge.manageAutoUpgrade(autoUpgradeToggleswitch.checked);
@@ -129,24 +125,19 @@ Rectangle{
 		var msg=""
 		switch(settingStackBridge.showSettingsMsg[1]){
 			case -1:
-				//msg=i18nd("lliurex-up","Unable to activate the automatic system update")
-				msg="Unable to activate the automatic system update"
+				msg=i18nd("lliurex-up","Unable to activate the automatic system update")
 				break;
 			case -2:
-				//msg=i18nd("lliurex-up","Unable to deactivate automatic system update")
-				msg="Unable to deactivate automatic system update"
+				msg=i18nd("lliurex-up","Unable to deactivate automatic system update")
 				break;
 			case 0:
-				//msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
-				msg="Changes will take effect the next time you log in"
+				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
 				break;
 			case 1:
-				//msg=i18nd("lliurex-up","Changes will take effect the next time the computer turns on or restarts")
-				msg="Changes will take effect the next time the computer turns on or restarts"
+				msg=i18nd("lliurex-up","Changes will take effect the next time the computer turns on or restarts")
 				break;
 			case 2:
-				//msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
-				msg="Automatic system update has been successfully disabled"
+				msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
 				break;
          }
         return msg

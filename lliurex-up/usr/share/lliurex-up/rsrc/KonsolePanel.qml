@@ -1,14 +1,13 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import QMLTermWidget 1.0
 
 
 Rectangle{
     color:"transparent"
     Text{ 
-        //text:i18nd("lliurex-up","Update process")
-        text:"Update process"
+        text:i18nd("lliurex-up","Update process")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }

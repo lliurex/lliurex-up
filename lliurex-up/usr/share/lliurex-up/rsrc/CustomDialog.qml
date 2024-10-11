@@ -1,8 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
-//import org.kde.plasma.components 3.0 as PC3
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import org.kde.plasma.components as PC
 
 
 Dialog {
@@ -17,7 +17,8 @@ Dialog {
 
     visible:dialogVisible
     title:dialogTitle
-    modality:Qt.WindowModal
+    modal:true
+    anchors.centerIn:Overlay.overlay
 
     onVisibleChanged:{
         if (!this.visible && xButton){
@@ -53,14 +54,11 @@ Dialog {
         
         }
       
-        //PC3.Button {
-        Button{
+        PC.Button {
             id:dialogApplyBtn
             display:AbstractButton.TextBesideIcon
-            //icon.name:"dialog-ok"
-            icon.source:"/usr/share/icons/breeze/actions/22/dialog-ok.svg"
-            //text: i18nd("lliurex-up","Yes")
-            text:"Yes"
+            icon.name:"dialog-ok"
+            text: i18nd("lliurex-up","Yes")
             focus:true
             visible:true
             font.pointSize: 11
@@ -78,14 +76,11 @@ Dialog {
             
         }
 
-        //PC3.Button {
-        Button{
+        PC.Button {
             id:dialogCancelBtn
             display:AbstractButton.TextBesideIcon
-            //icon.name:"dialog-cancel"
-            icon.source:"/usr/share/icons/breeze/actions/22/dialog-cancel.svg"
-            //text: i18nd("lliurex-up","No")
-            text:"No"
+            icon.name:"dialog-cancel"
+            text: i18nd("lliurex-up","No")
             focus:true
             font.pointSize: 11
             anchors.bottom:parent.bottom

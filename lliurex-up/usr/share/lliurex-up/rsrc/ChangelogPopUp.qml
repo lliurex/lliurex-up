@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-//import org.kde.plasma.components 3.0 as PC3
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import org.kde.plasma.components as PC
 
 Popup {
     id:changelogPopUp
@@ -13,6 +13,7 @@ Popup {
     closePolicy:Popup.AutoClose
     background:Rectangle{
         color:"#ebeced"
+	border.color:"black"
     }
 
     contentItem:Rectangle{
@@ -20,10 +21,9 @@ Popup {
         width:changelogPopUp.width
         height:changelogPopUp.height
         color:"transparent"
-        Text{ 
+	Text{ 
             id:changelogText
-            //text:i18nd("lliurex-up","Changelog")
-            text:"Changelog"
+            text:i18nd("lliurex-up","Changelog")
             font.family: "Quattrocento Sans Bold"
             font.pointSize: 16
             anchors.top:changelogPopUp.bottom
@@ -36,6 +36,7 @@ Popup {
             rowSpacing:10
             anchors.top:changelogText.bottom
             anchors.topMargin:25
+	    anchors.leftMargin:10
             anchors.left:mainContainer.left
             anchors.horizontalCenter:mainContainer.horizontalCenter
         
@@ -43,12 +44,11 @@ Popup {
                 Rectangle{
                     id:container
                     color:"transparent"
-                    width:575
+                    width:565
                     height:215
                     clip:true
 
-                    //PC3.ScrollView{
-                    ScrollView{
+                    PC.ScrollView{
                         implicitWidth:container.width
                         implicitHeight:container.height
                         anchors.leftMargin:11
@@ -56,8 +56,7 @@ Popup {
                             id:pkgChangelogText
                             text:{
                                 if (packageStackBridge.pkgChangelog[1]==""){
-                                    //i18nd("lliurex-up","Searching changelog. Wait a oment...")
-                                    "Searching changelog. Wait a oment..."
+                                    i18nd("lliurex-up","Searching changelog. Wait a oment...")
                                  }else{
                                      packageStackBridge.pkgChangelog[1]
                                  }
@@ -78,8 +77,8 @@ Popup {
                                     Text.AlignTop
                                 }
                              }
-                             width:container.width
-                             height:container.height
+                             width:container.width-10
+                             height:container.height-10
                              wrapMode: Text.WordWrap
                          }
                     }
@@ -89,17 +88,16 @@ Popup {
         RowLayout{
             anchors.bottom:parent.bottom
             anchors.right:parent.right
+	    anchors.bottomMargin:10
+	    anchors.rightMargin:10
 
-            //PC3.Button {
-            Button{
+            PC.Button {
                 id:closeBtn
                 visible:true
                 focus:true
                 display:AbstractButton.TextBesideIcon
-                //icon.name:"dialog-close"
-                icon.source:"/usr/share/icons/breeze/actions/22/dialog-close.svg"
-                //text:i18nd("lliurex-up","Close")
-                text:"Close"
+                icon.name:"dialog-close"
+                text:i18nd("lliurex-up","Close")
                 Layout.preferredHeight: 40
                 enabled:true
                 Keys.onReturnPressed:closeBtn.clicked()

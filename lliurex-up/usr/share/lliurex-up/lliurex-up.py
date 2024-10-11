@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-from PySide2.QtWidgets import QApplication
-from PySide2.QtCore import QUrl
-from PySide2.QtGui import QIcon
-from PySide2.QtQml import QQmlApplicationEngine
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QIcon
+from PySide6.QtQml import QQmlApplicationEngine
 
 import sys
 import os
@@ -50,7 +50,7 @@ if not engine.rootObjects():
 
 engine.quit.connect(QApplication.quit)
 app.setWindowIcon(QIcon("/usr/share/icons/hicolor/scalable/apps/lliurex-up.svg"));
-ret=app.exec_()
+ret=app.exec()
 del engine
 del app
 

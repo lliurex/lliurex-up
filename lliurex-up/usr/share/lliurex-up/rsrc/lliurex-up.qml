@@ -1,8 +1,8 @@
-//import org.kde.plasma.core 2.1 as PlasmaCore
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
+import org.kde.plasma.core as PlasmaCore
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
 
 ApplicationWindow {
 
@@ -20,7 +20,7 @@ ApplicationWindow {
         x = Screen.width / 2 - width / 2
         y = Screen.height / 2 - height / 2
     }
-    onClosing: {
+    onClosing:(close)=> {
         close.accepted=closing;
         mainStackBridge.closeApplication()
         delay(100, function() {

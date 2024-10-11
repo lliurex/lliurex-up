@@ -1,14 +1,13 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 
 Rectangle{
     color:"transparent"
 
     Text{ 
-        //text:i18nd("lliurex-up","Update information")
-        text:"Update information"
+        text:i18nd("lliurex-up","Update information")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }
@@ -32,8 +31,7 @@ Rectangle{
                 id:currentVersionText
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                //text:i18nd("lliurex-up","Current version:")
-                text:"Current version:"
+                text:i18nd("lliurex-up","Current version:")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -44,8 +42,7 @@ Rectangle{
                     if (infoStackBridge.currentVersion!=""){
                         infoStackBridge.currentVersion
                     }else{
-                        //i18nd("lliurex-up","Not available")
-                        "Not available"
+                        i18nd("lliurex-up","Not available")
                     }
                 }
                 color:{
@@ -65,8 +62,7 @@ Rectangle{
                 id:availableVersionText
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                //text:i18nd("lliurex-up","Available version (lliurex.net):")
-                text:"Available version (lliurex.net):"
+                text:i18nd("lliurex-up","Available version (lliurex.net):")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -75,12 +71,10 @@ Rectangle{
                 id:availableVersionValue
                 text:{
                     if (infoStackBridge.availableVersion=="Client"){
-                        //i18nd("lliurex-up","Not available for clients")
-                        "Not available for clients"
+                        i18nd("lliurex-up","Not available for clients")
                     }else{
                         if (infoStackBridge.availableVersion=="Connection"){
-                            //i18nd("lliurex-up","Not available. Check conexion to lliurex.net")
-                            "Not available. Check conexion to lliurex.net"
+                            i18nd("lliurex-up","Not available. Check conexion to lliurex.net")
                         }else{
                             infoStackBridge.availableVersion
                         }
@@ -103,8 +97,7 @@ Rectangle{
                 id:candiateVersionText
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                //text:i18nd("lliurex-up","Candidate version (to install):")
-                text:"Candidate version (to install):"
+                text:i18nd("lliurex-up","Candidate version (to install):")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -115,8 +108,7 @@ Rectangle{
                     if (infoStackBridge.candidateVersion!=""){
                         infoStackBridge.candidateVersion
                     }else{
-                        //i18nd("lliurex-up","Not available")
-                        "Not available"
+                        i18nd("lliurex-up","Not available")
                     }
                 }
                 color:{
@@ -138,8 +130,7 @@ Rectangle{
                 visible:mainStackBridge.updateRequired
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                //text:i18nd("lliurex-up","Number of packages:")
-                text:"Number of packages:"
+                text:i18nd("lliurex-up","Number of packages:")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -147,8 +138,7 @@ Rectangle{
             Text{
                 id:numberPackagesValue
                 visible:mainStackBridge.updateRequired
-                //text:infoStackBridge.packagesToUpdate+" ( "+infoStackBridge.newPackagesToUpdate+ " "+i18nd("lliurex-up","news")+" )"
-                text:infoStackBridge.packagesToUpdate+" ( "+infoStackBridge.newPackagesToUpdate+ " news )"
+                text:infoStackBridge.packagesToUpdate+" ( "+infoStackBridge.newPackagesToUpdate+ " "+i18nd("lliurex-up","news")+" )"
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignLeft
@@ -160,8 +150,7 @@ Rectangle{
                 visible:mainStackBridge.updateRequired
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                //text:i18nd("lliurex-up","Size of update (aprox):")
-                text:"Size of update (aprox):"
+                text:i18nd("lliurex-up","Size of update (aprox):")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -178,8 +167,7 @@ Rectangle{
            
             Text{
                 id:sourceText
-                //text:i18nd("lliurex-up","Update source:")
-                text:"Update source:"
+                text:i18nd("lliurex-up","Update source:")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignRight
@@ -192,8 +180,7 @@ Rectangle{
                     if (infoStackBridge.updateSource!=""){
                         infoStackBridge.updateSource
                     }else{
-                        //i18nd("lliurex-up","Not available")
-                        "Not available"
+                        i18nd("lliurex-up","Not available")
                     }
                 }
                color:{

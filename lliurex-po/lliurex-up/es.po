@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-13 12:13+0200\n"
-"PO-Revision-Date: 2024-06-13 12:15+0200\n"
+"PO-Revision-Date: 2024-10-11 10:53+0200\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -293,7 +293,7 @@ msgstr "Buscando nueva versión disponible..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:139
 msgid "Checking if installation of metapackage is required..."
-msgstr "Comprobando si es necesrio instalar el metapaquete..."
+msgstr "Comprobando si es necesario instalar el metapaquete..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:142
 msgid "Looking for new updates..."
