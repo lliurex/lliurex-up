@@ -1,8 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
-
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Dialogs
 
 Rectangle{
     visible: true
@@ -39,8 +38,7 @@ Rectangle{
                 id:loadtext
                 text:{
                     if (loadStackBridge.loadStep==12){
-                        //getMsg()+" "+loadStackBridge.countDownValue+" "+i18nd("lliurex-up","seconds")
-                         getMsg()+" "+loadStackBridge.countDownValue+" seconds"
+                        getMsg()+" "+loadStackBridge.countDownValue+" "+i18nd("lliurex-up","seconds")
                     }else{
             			if (loadStackBridge.loadStep==13){
             				getMsg()+loadStackBridge.mirrorPercentage+" %"
@@ -72,10 +70,8 @@ Rectangle{
 
     CustomDialog{
         id:repoDialog
-        //dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Repository configuration")
-        dialogTitle:"LliureX-Up - Repository configuration"
-        //dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
-        dialogMsg:"Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?"
+        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Repository configuration")
+        dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
         dialogVisible:loadStackBridge.showRepoDialog
         dialogWidth:500
         Connections{
@@ -93,10 +89,8 @@ Rectangle{
 
      CustomDialog{
         id:mirrorDialog
-        //dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
-        dialogTitle:"LliureX-Up - Mirror management"
-        //dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
-        dialogMsg:"Your mirror is not update. Do you want to update it?"
+        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
+        dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
         dialogVisible:loadStackBridge.showMirrorDialog
         dialogWidth:500
         Connections{
@@ -114,56 +108,43 @@ Rectangle{
     function getMsg(){
 
         var msg=""
-        //var headed=loadStackBridge.loadStep+" "+i18nd("lliurex-up","of")+" "+loadStackBridge.totalSteps
-        var headed=loadStackBridge.loadStep+" of"+" "+loadStackBridge.totalSteps
+        var headed=loadStackBridge.loadStep+" "+i18nd("lliurex-up","of")+" "+loadStackBridge.totalSteps
         switch(loadStackBridge.loadStep){
             case 1:
-                //msg=i18nd("lliurex-up","Checking sytem...")
-                msg="Checking sytem..."
+                msg=i18nd("lliurex-up","Checking sytem...")
                 break;
             case 2:
-                //msg=i18nd("lliurex-up","Checking mirror...")
-                msg="Checking mirror..."
+                msg=i18nd("lliurex-up","Checking mirror...")
                 break;
             case 3:
-                //msg=i18nd("lliurex-up","Executing init-actions...")
-                msg="Executing init-actions..."
+                msg=i18nd("lliurex-up","Executing init-actions...")
                 break;
             case 4:
-                //msg=i18nd("lliurex-up","Looking for new version of Lliurex-Up...")
-                msg="Looking for new version of Lliurex-Up..."
+                msg=i18nd("lliurex-up","Looking for new version of Lliurex-Up...")
                 break;
             case 5:
-                //msg=i18nd("lliurex-up","Updating Lliurex-Up...")
-                msg="Updating Lliurex-Up..."
+                msg=i18nd("lliurex-up","Updating Lliurex-Up...")
                 break;
             case 6:
-                //msg=i18nd("lliurex-up","Checking if mirror exist and there is updated...")
-                msg="Checking if mirror exist and there is updated..."
+                msg=i18nd("lliurex-up","Checking if mirror exist and there is updated...")
                 break;
             case 7:
-                //msg=i18nd("lliurex-up","Looking for new version to update...")
-                msg="Looking for new version to update..."
+                msg=i18nd("lliurex-up","Looking for new version to update...")
                 break;
             case 8:
-                //msg=i18nd("lliurex-up","Looking for new version available...")
-                msg="Looking for new version available..."
+                msg=i18nd("lliurex-up","Looking for new version available...")
                 break;
             case 9:
-                //msg=i18nd("lliurex-up","Checking if installation of metapackage is required...")
-                msg="Checking if installation of metapackage is required..."
+                msg=i18nd("lliurex-up","Checking if installation of metapackage is required...")
                 break;
             case 10:
-                //msg=i18nd("lliurex-up","Looking for new updates...")
-                msg="Looking for new updates..."
+                msg=i18nd("lliurex-up","Looking for new updates...")
                 break;
             case 12:
-                //msg=i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
-                msg="Lliurex-Up is now updated and will be reboot in "
+                msg=i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
                 return msg
             case 13:
-                //msg=i18nd("lliurex-up","Updating mirror: ")
-                msg="Updating mirror: "
+                msg=i18nd("lliurex-up","Updating mirror: ")
                 return msg
         }
         msg=headed+". "+msg

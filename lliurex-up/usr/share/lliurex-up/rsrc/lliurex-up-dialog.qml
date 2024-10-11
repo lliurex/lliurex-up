@@ -1,9 +1,9 @@
-//import org.kde.plasma.core 2.1 as PlasmaCore
-//import org.kde.plasma.components 3.0 as PC3
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PC
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
 
 ApplicationWindow {
 	id:window
@@ -23,7 +23,7 @@ ApplicationWindow {
 
     }
 
-    onClosing: {
+    onClosing:(close)=> {
      	if (launchStackBridge.closed(true))
      		close.accepted=true;
         else
@@ -98,18 +98,15 @@ ApplicationWindow {
 	   			Layout.rightMargin:10
 	   			height:60
 
-	   			//PC3.Button{
-	   			Button{
+	   			PC.Button{
 	   				id:applyBtn
 	   				height: 40
 	   				anchors.right: cancelBtn.left
 	   				anchors.rightMargin:15
 	   				anchors.verticalCenter:parent.verticalCenter
 	   				display:AbstractButton.TextBesideIcon
-	   				//icon.name:"dialog-ok"
-					icon.source:"/usr/share/icons/breeze/actions/22/dialog-ok.svg"
-	   				//text:i18nd("lliurex-up","Yes")
-	   				text:"Yes"
+	   				icon.name:"dialog-ok"
+	   				text:i18nd("lliurex-up","Yes")
 					visible:launchStackBridge.showApplyBtn
 	   				Keys.onReturnPressed: applyBtn.clicked()
 	                Keys.onEnterPressed: applyBtn.clicked()
@@ -117,17 +114,14 @@ ApplicationWindow {
 	                   launchStackBridge.launchUnlockProcess()
 	                } 
 				}	
-	   			//PC3.Button {
-	   			Button{
+	   			PC.Button {
 	   				id:cancelBtn
 	   				height: 40
 	   				anchors.right: parent.right
 	   				anchors.verticalCenter:parent.verticalCenter
 	   				display:AbstractButton.TextBesideIcon
-	   				//icon.name:launchStackBridge.showApplyBtn?"dialog-cancel":"dialog-close"
-	   				icon.source:launchStackBridge.showApplyBtn?"/usr/share/icons/breeze/actions/22/dialog-cancel.svg":"/usr/share/icons/breeze/actions/22/dialog-close.svg"
-	   				//text:launchStackBridge.showApplyBtn?i18nd("lliurex-up","No"):i18nd("lliurex-up","Close")
-					text:launchStackBridge.showApplyBtn?"No":"Close"
+	   				icon.name:launchStackBridge.showApplyBtn?"dialog-cancel":"dialog-close"
+	   				text:launchStackBridge.showApplyBtn?i18nd("lliurex-up","No"):i18nd("lliurex-up","Close")
 	   				Keys.onReturnPressed: cancelBtn.clicked()
 	                Keys.onEnterPressed: cancelBtn.clicked()
 	                onClicked:{
@@ -144,28 +138,22 @@ ApplicationWindow {
 	 	var msg=""
 	 	switch(launchStackBridge.dialogTextCode){
 	 		case 1:
-	 			//msg=launchStackBridge.lockedService+" "+i18nd("lliurex-up","is now running. Wait a moment and try again")
-				msg=launchStackBridge.lockedService+" is now running. Wait a moment and try again"
+	 			msg=launchStackBridge.lockedService+" "+i18nd("lliurex-up","is now running. Wait a moment and try again")
 	 			break;
 	 		case 2:
-	 			//msg=i18nd("lliurex-up","Some process are running. Wait a moment and try again")
-				msg="Some process are running. Wait a moment and try again"
+	 			msg=i18nd("lliurex-up","Some process are running. Wait a moment and try again")
 	 			break;
 	 		case 3:
-	 			//msg=launchStackBridge.lockedService+" "+i18nd("lliurex-up","seems blocked by a failed previous execution.\nLliurex-Up can not continue if this block is maintained.\nDo you want to try to unlock it?")
-				msg=launchStackBridge.lockedService+" seems blocked by a failed previous execution.\nLliurex-Up can not continue if this block is maintained.\nDo you want to try to unlock it?"
+	 			msg=launchStackBridge.lockedService+" "+i18nd("lliurex-up","seems blocked by a failed previous execution.\nLliurex-Up can not continue if this block is maintained.\nDo you want to try to unlock it?")
 	 			break; 
 	 		case 4:
-	 			//msg=i18nd("lliurex-up","The unlocking process is running. Wait a moment...")
-				msg="The unlocking process is running. Wait a moment..."
+	 			msg=i18nd("lliurex-up","The unlocking process is running. Wait a moment...")
 	 			break;
 	 		case -1:
-	 			//msg=i18nd("lliurex-up","You need administration privileges to run this application.")
-				msg="You need administration privileges to run this application."
+	 			msg=i18nd("lliurex-up","You need administration privileges to run this application.")
 	 			break;
 	 		case -2:
-	 			//msg=i18nd("lliurex-up","The unlocking process has failed")
-				msg="The unlocking process has failed"
+	 			msg=i18nd("lliurex-up","The unlocking process has failed")
 	 			break;
 	 	}
 	 	return msg;
