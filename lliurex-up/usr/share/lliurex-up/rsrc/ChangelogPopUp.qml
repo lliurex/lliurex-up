@@ -13,7 +13,9 @@ Popup {
     closePolicy:Popup.AutoClose
     background:Rectangle{
         color:"#ebeced"
-	border.color:"black"
+        border.color:"#b8b9ba"
+        border.width:1
+        radius:0,5
     }
 
     contentItem:Rectangle{
@@ -21,7 +23,7 @@ Popup {
         width:changelogPopUp.width
         height:changelogPopUp.height
         color:"transparent"
-	Text{ 
+        Text{
             id:changelogText
             text:i18nd("lliurex-up","Changelog")
             font.family: "Quattrocento Sans Bold"
