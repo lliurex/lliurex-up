@@ -1,3 +1,9 @@
+lliurex-up (24.05.08) jammy; urgency=medium
+
+  * Catched error when is exec without root
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 13 Nov 2024 10:04:41 +0100
+
 lliurex-up (24.05.07) jammy; urgency=medium
 
   * Minor fixes
