@@ -1,3 +1,9 @@
+lliurex-up (25.05.10) noble; urgency=medium
+
+  * Catched error when run without root
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 13 Nov 2024 10:33:58 +0100
+
 lliurex-up (25.05.09) noble; urgency=medium
 
   * Minor fixes in style
