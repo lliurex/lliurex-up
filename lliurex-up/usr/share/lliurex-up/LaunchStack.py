@@ -78,27 +78,30 @@ class Bridge(QObject):
 		cachePath1="/root/.cache/liurex-up"
 		installedVersion=self.getPackageVersion()
 
-		if not os.path.exists(versionFile):
-			with open(versionFile,'w') as fd:
-				fd.write(installedVersion)
-				fd.close()
-
-			clear=True
-
-		else:
-			with open(versionFile,'r') as fd:
-				fileVersion=fd.readline()
-				fd.close()
-
-			if fileVersion!=installedVersion:
+		try:
+			if not os.path.exists(versionFile):
 				with open(versionFile,'w') as fd:
 					fd.write(installedVersion)
 					fd.close()
+
 				clear=True
+
+			else:
+				with open(versionFile,'r') as fd:
+					fileVersion=fd.readline()
+					fd.close()
+
+				if fileVersion!=installedVersion:
+					with open(versionFile,'w') as fd:
+						fd.write(installedVersion)
+						fd.close()
+					clear=True
 		
-		if clear:
-			if os.path.exists(cachePath1):
-				shutil.rmtree(cachePath1)
+			if clear:
+				if os.path.exists(cachePath1):
+					shutil.rmtree(cachePath1)
+		except:
+			pass
 
 	#def clearCache
 
