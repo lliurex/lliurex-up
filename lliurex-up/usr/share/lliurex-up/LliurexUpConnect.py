@@ -54,7 +54,7 @@ class LliurexUpConnect():
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
+		self.connectionWithADI=self.llxUpCore.connectionWitADI
 
 	#def __init__	
 
@@ -189,11 +189,14 @@ class LliurexUpConnect():
 		else:
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
-			isClient=self.searchMeta("client")
-			if not isClient:
+			isDesktop=self.searchMeta("desktop")
+			if not isDesktop:
 				return False
 			else:
-				return True		
+				if self.connectionWithADI:
+					return True
+				else:
+					return False		
 
 	#def canConnectToLliurexNet
 
@@ -225,40 +228,40 @@ class LliurexUpConnect():
 
 	def clientCheckingMirrorIsRunning(self):
 
-		isMirrorRunningInServer=self.llxUpCore.clientCheckingMirrorIsRunning()
-		msgLog="Checking if mirrror in server is being updated. MirrorManager response: %s"%isMirrorRunningInServer['data']
+		isMirrorRunningInADI=self.llxUpCore.clientCheckingMirrorIsRunning()
+		msgLog="Checking if mirrror in ADI is being updated. MirrorManager response: %s"%isMirrorRunningInADI['data']
 		self.log(msgLog)		
 		
-		if isMirrorRunningInServer['ismirrorrunning'] ==None:
-			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
+		if isMirrorRunningInADI['ismirrorrunning'] ==None:
+			msgLog="Checking if mirror in ADI is being updated. Error: " + str(isMirrorRunningInADI['exception'])
 			self.log(msgLog)
 		else:
-			if isMirrorRunningInServer['ismirrorrunning']==True:
-				msgLog="Mirror is being udpated in server. Unable to update the system"
+			if isMirrorRunningInADI['ismirrorrunning']==True:
+				msgLog="Mirror is being udpated in ADI. Unable to update the system"
 				self.log(msgLog)
 
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
-		return isMirrorRunningInServer['ismirrorrunning']
+		self.connectionWithADI=self.llxUpCore.connectionWithADI
+		return isMirrorRunningInADI['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
 
 	def clientCheckingMirrorExists(self):
 
-		isMirrorExistsInServer=self.llxUpCore.clientCheckingMirrorExists()
-		msgLog="Checking if mirrror exists in server. MirrorManager response: %s"%isMirrorExistsInServer['data']
+		isMirrorExistsInADI=self.llxUpCore.clientCheckingMirrorExists()
+		msgLog="Checking if mirrror exists in ADI. MirrorManager response: %s"%isMirrorExistsInADI['data']
 		self.log(msgLog)
 	
-		if isMirrorExistsInServer['ismirroravailable'] ==None:
-			msgLog="Checking if mirror exists in server. Error: " + str(isMirrorExistsInServer['exception'])
+		if isMirrorExistsInADI['ismirroravailable'] ==None:
+			msgLog="Checking if mirror exists in ADI. Error: " + str(isMirrorExistsInADI['exception'])
 			self.log(msgLog)
 
 		else:
-			if not isMirrorExistsInServer['ismirroravailable']:
-				msgLog="Mirror not detected on the server"
+			if not isMirrorExistsInADI['ismirroravailable']:
+				msgLog="Mirror not detected on the ADI"
 				self.log(msgLog)
 				
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
-		return isMirrorExistsInServer['ismirroravailable']
+		self.connectionWithADI=self.llxUpCore.connectionWithADI
+		return isMirrorExistsInADI['ismirroravailable']
 
 	#def clientCheckingMirrorIsRunning
 
@@ -603,10 +606,10 @@ class LliurexUpConnect():
 		showSettings=True
 		try:
 			if self.targetMetapackage !=None:
-				if self.searchMeta('client') and self.connectionWithServer:
+				if self.searchMeta('desktop') and self.connectionWithADI:
 					showSettings=False
 			else:
-				if self.searchMeta('client') and self.connectionWithServer:	
+				if self.searchMeta('desktop') and self.connectionWithADI:	
 					showSettings=False
 
 			return showSettings
@@ -874,7 +877,7 @@ class LliurexUpConnect():
 						flavours = [ x.strip() for x in result.split(',') ]	
 					
 					for item in flavours:
-						if 'server' in item or 'client' in item:
+						if 'adi' in item:
 							lockUser=True
 							break
 		

@@ -20,7 +20,7 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite", "lliurex-meta-desktop-lite"] 
+		self.flavourReference=["lliurex-meta-home-adi","lliurex-meta-home-desktop"] 
 		self.defaultMirror = 'llx25'
 		self.defaultVersion = 'noble'
 		self.defaultUrltoCheck="http://lliurex.net/jammy"
@@ -32,18 +32,18 @@ class LliurexUpCore(object):
 		self.origsourcesfile=os.path.join(self.sourcesListPath,"sources.list")
 		self.origsourcesfileback=os.path.join(self.sourcesListPath,"lliurexup_sources.list")
 		self.targetMetapackagePath=os.path.join(self.processPath,"targetMetapackage")
-		self.previousflavourspath = os.path.join(self.processPath,'previousflavours')
-		self.errorpostaction_token=os.path.join(self.processPath,'errorpostaction_token')
-		self.errorfinalmetapackage_token=os.path.join(self.processPath,'errorfinalmetapackage_token')
-		self.errorupgrade_token=os.path.join(self.processPath,'errorupgrade_token')
-		self.finalupgrade_token=os.path.join(self.processPath,'finalupgrade_token')
+		self.previousFlavoursPath = os.path.join(self.processPath,'previousflavours')
+		self.errorPostActionToken=os.path.join(self.processPath,'errorpostaction_token')
+		self.errorFinalMetapackageToken=os.path.join(self.processPath,'errorfinalmetapackage_token')
+		self.errorUpgradeToken=os.path.join(self.processPath,'errorupgrade_token')
+		self.finalUpgradeToken=os.path.join(self.processPath,'finalupgrade_token')
 
 		self.initActionsPath='/usr/share/lliurex-up/initActions'
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
 		self.optionsLlxUp=""
 		self.desktopClientized=False
-		self.connectionWithServer=True
+		self.connectionWithADI=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
 
@@ -56,9 +56,8 @@ class LliurexUpCore(object):
 		self.n4dStatus=True
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		editImage=self.checkImageBeingEdited()
-		if not editImage:
-			self.checkN4dStatus()
+
+		self.checkN4dStatus()
 		
 		self.haveLliurexMirror = False
 		self.metapackageRef=[]
@@ -69,10 +68,9 @@ class LliurexUpCore(object):
 		self.lastFlavours=[]
 		self.getPreviousFlavours()
 
-		if not editImage: 
-			if self.n4dStatus:
-				if len(self.n4d.get_methods('MirrorManager')) > 0:
-					self.haveLliurexMirror = True
+		if self.n4dStatus:
+			if len(self.n4d.get_methods('MirrorManager')) > 0:
+				self.haveLliurexMirror = True
 			
 		self.retryN4d=True
 		self.prepareEnvironment()
@@ -106,7 +104,6 @@ class LliurexUpCore(object):
 		'''
 		return self.locks_info["Apt"]	
 
-
 	#def isAptLocked
 		
 	def isDpkgLocked(self):
@@ -118,19 +115,15 @@ class LliurexUpCore(object):
 		 3: Apt is running
 
 		 ''' 
-
 		return self.locks_info["Dpkg"]		
-			
 
 	#def isAptLocked			
 
 	def unlockerCommand(self):
 
-
 		return "/usr/sbin/dpkg-unlocker-cli unlock -u"
 
 	#def unlockeCommand				
-
 
 	def createLockToken(self):
 
@@ -142,22 +135,10 @@ class LliurexUpCore(object):
 
 	#def createLockToken		
 
-	def checkImageBeingEdited(self):
-
-		imageEdited=False
-		if os.path.exists('/var/lib/lmd/semi'):
-			if not os.path.exists('/run/lmd/semi'):
-				imageEdited=True
-		
-		return imageEdited
-
-	#def checkImagesBeingEdited
-	
-
 	def getPreviousFlavours(self):
 		
-		if os.path.exists(self.previousflavourspath):
-			aux = open(self.previousflavourspath,'r')
+		if os.path.exists(self.previousFlavoursPath):
+			aux = open(self.previousFlavoursPath,'r')
 			lines = aux.readlines()
 			for x in lines:
 				self.previousFlavours.append(x.strip())
@@ -188,7 +169,6 @@ class LliurexUpCore(object):
 		
 	#def checkN4dStatus		
 			
-				
 	def getTargetMetapackage(self):
 
 		if os.path.exists(self.targetMetapackagePath):
@@ -204,14 +184,9 @@ class LliurexUpCore(object):
 
 		aux=open(self.targetMetapackagePath,'w')
 		for x in targetMetapackage:
-			if 'minimal-client' not in x:
-				if 'lite' in x:
-					x=x.split("-")[2]+"-lite"
-				else:
-					x=x.split("-")[2]	
-				aux.write(x+"\n")
-			else:
-				aux.write(x+"\n")
+			x=x.split("-")[2]	
+			aux.write(x+"\n")
+
 		x="edu"
 		aux.write(x+"\n")
 		aux.close()
@@ -235,8 +210,6 @@ class LliurexUpCore(object):
 		self.writeDefaultSourceslistMirror()
 		self.writeDefaultSourceslistAll()
 
-		#self.addSourcesListLliurex(args)
-		self.checkIsDesktopClientize()
 		return self.targetMetapackage
 
 	#def checkInitialFlavour	
@@ -256,9 +229,9 @@ class LliurexUpCore(object):
 				else:
 					if x.strip() not in self.flavours:
 						self.flavours.append(x.strip())
-			#self.flavours = [ x.strip() for x in result.split(',') ]
+
 			if len(self.flavours) > 0:
-				aux = open(self.previousflavourspath,'w')
+				aux = open(self.previousFlavoursPath,'w')
 				for x in self.flavours:
 					aux.write(x+"\n")
 				aux.close()
@@ -290,7 +263,6 @@ class LliurexUpCore(object):
 		f.close()	
 
 	#def writeDefaultSourceslistMirror	
-
 
 	def writeDefaultSourceslistAll(self):
 		
@@ -325,19 +297,16 @@ class LliurexUpCore(object):
 		newsourcesfile=os.path.join(self.sourcesListPath,'sources.list')
 		extrasources=[]
 		client=False
-		textsearch_mirror="/mirror/"+str(self.defaultMirror)
-		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
+		textSearchMirror="/mirror/"+str(self.defaultMirror)
+		textSearchLliureX="/lliurex.net/"+str(self.defaultVersion)
 		
-		is_client=self.search_meta("client")		
+		isDesktop=self.searchMeta("desktop")		
 
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-
-		if is_client:
-			if self.connectionWithServer:
+		if isDesktop:
+			if self.connectionWithADI:
 				client=True
 				if args:
 					sourcesref=os.path.join(self.processSourceslist, 'default_all')
-
 				else:
 					sourcesref=os.path.join(self.processSourceslist, 'default_mirror')
 			else:
@@ -351,17 +320,16 @@ class LliurexUpCore(object):
 			origsources=open(self.origsourcesfileback,'r')
 			if not client:
 				for line in origsources:
-					if not textsearch_lliurex in line:
+					if not textSearchLliureX in line:
 						extrasources.append(line.strip())
 			else:
 				for line in origsources:
 					if args:
-						if (not textsearch_lliurex in line) and (not textsearch_mirror in line):
+						if (not textSearchLliureX in line) and (not textSearchMirror in line):
 							extrasources.append(line.strip())
 					else:
-						if not textsearch_mirror in line:
+						if not textSearchMirror in line:
 							extrasources.append(line.strip())		
-												
 
 			origsources.close()
 				
@@ -421,7 +389,6 @@ class LliurexUpCore(object):
 
 	#def updateCacheApt	
 
-
 	def getPackageVersionAvailable(self,package,options="",checkRepo=False):
 		'''
 			Args :
@@ -471,11 +438,10 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
-		is_client=self.search_meta("client")		
+		isDesktop=self.searchMeta("desktop")		
 
-		#if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
-		if is_client:
-			if self.connectionWithServer:
+		if isDesktop:
+			if self.connectionWithADI:
 				if not args:
 					sources=self.readSourcesList()
 					if sources==0:
@@ -485,10 +451,6 @@ class LliurexUpCore(object):
 							sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
 						
 
-		'''				
-		options = ""
-		if self.canConnectToLliurexNet():
-		'''
 		self.optionsLlxUp = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
 
 		self.updateCacheApt(self.optionsLlxUp)
@@ -519,11 +481,11 @@ class LliurexUpCore(object):
 
 		if len(poutput)>0:
 			if type(poutput) is bytes:
-					poutput=poutput.decode()
+				poutput=poutput.decode()
 
 		if len(perror)>0:
 			if type(perror) is bytes:
-					perror=perror.decode()
+				perror=perror.decode()
 								
 		return {'returncode':p.returncode,'stdout':poutput,'stderrs':perror}
 
@@ -536,9 +498,9 @@ class LliurexUpCore(object):
 			result.msg : message of status
 			result.action : Action to launch
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
+		isADI=self.searchMeta("adi")
+
+		if self.haveLliurexMirror and (isADI):
 			result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
 			if result['status_code']==0:
 				if result["return"]["action"]=="update":
@@ -556,9 +518,9 @@ class LliurexUpCore(object):
 		'''
 			return Boolean
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
+		isADI=self.searchMeta("adi")
+
+		if self.haveLliurexMirror and (isADI):
 			result = self.n4d.is_alive('','MirrorManager')
 			return result['return']['status']
 		return False
@@ -567,11 +529,9 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorIsRunning(self):
 
-		is_client=self.search_meta("client")
+		isDesktop=self.searchMeta("desktop")
 
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-		if is_client:
-
+		if isDesktop:
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -579,10 +539,7 @@ class LliurexUpCore(object):
 				return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
 			
 			except Exception as e:
-				if not self.desktopClientized:
-					return {'ismirrorrunning':None,'exception':str(e),'data':""}
-				else:
-					self.connectionWithServer=False					
+				self.connectionWithADI=False					
 
 		return {'ismirrorrunning':False,'exception':False,'data':""}	
 
@@ -590,10 +547,9 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		is_client=self.search_meta("client")
+		isDesktop=self.searchMeta("desktop")
 		
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-		if is_client:				
+		if isDesktop:				
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -604,31 +560,24 @@ class LliurexUpCore(object):
 					else:
 						return {'ismirroravailable':False,'exception':False,'data':result}
 				except Exception as e :
-					if not self.desktopClientized:
-						return {'ismirroravailable':False,'exception':False,'data':str(e)}
-					else:
-						self.connectionWithServer=False
-						return {'ismirroravailable':True,'exception':False,'data':''}
+					self.connectionWithADI=False
+					return {'ismirroravailable':False,'exception':False,'data':''}
 				
 			except Exception as e:
-				if not self.desktopClientized:
-					return {'ismirroravailable':None,'exception':str(e),'data':''}
-				else:
-					self.connectionWithServer=False
-					return {'ismirroravailable':True,'exception':False,'data':''}					
+				self.connectionWithADI=False
+				return {'ismirroravailable':False,'exception':False,'data':''}					
 		else:
 			return {'ismirroravailable':True,'exception':False,'data':''}	
 
 	#def clientCheckingMirrorExists	
 
-
 	def getPercentageLliurexMirror(self):
 		'''
 			return int | None
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
+		isADI=self.searchMeta("adi")
+
+		if self.haveLliurexMirror and (isADI):
 	
 			try:
 				result = self.n4d.get_percentage('','MirrorManager',self.defaultMirror)['return']
@@ -653,11 +602,8 @@ class LliurexUpCore(object):
 			recoveryMeta=False
 			if 'None' in self.flavours:
 				recoveryMeta=True
-			else:
-				if len(self.flavours)==1 and 'minimal-client' in self.flavours:
-					recoveryMeta=True
+
 			if recoveryMeta:
-				# get last flavour
 				cmd='lliurex-version --history'
 				p=subprocess.Popen(cmd,shell=True, stdout=subprocess.PIPE)
 				result=p.communicate()[0]
@@ -669,9 +615,8 @@ class LliurexUpCore(object):
 					history = [ x for x in history if not 'lliurex-meta-live' in x ]
 					for x in reversed(history):
 						if x.startswith('-'):
-							if 'lliurex-meta-minimal-client' not in x:
-								targetMetapackage.append(x[2:])
-								break
+							targetMetapackage.append(x[2:])
+							break
 
 			if len(targetMetapackage)>0:
 				self.saveTargetMetapackage(targetMetapackage)				
@@ -697,24 +642,21 @@ class LliurexUpCore(object):
 					if 'None' not in self.metapackageRef:
 						tmp=list(set(tmp+self.metapackageRef))
 				else:
-					#tmp=[]
 					tmp=self.flavours
 					if 'None' not in self.previousFlavours:
 						tmp=list(set(tmp+self.previousFlavours))
 					if 'None' not in self.metapackageRef:
 						tmp=list(set(tmp+self.metapackageRef))
 				targetMetapackage=list(set(tmp)-set(self.lastFlavours))
-			tmp_list=[]
+			tmpList=[]
 			for item in targetMetapackage:
 				if item not in ['edu','live']:
 					if "lliurex-meta" not in item:
 						tmp="lliurex-meta-"+item
-					tmp_list.append(tmp)	
+					tmpList.append(tmp)	
 			
-			return tmp_list		
+			return tmpList		
 					
-					
-
 	#def checkFlavour	
 
 	def canConnectToLliurexNet(self):
@@ -741,6 +683,7 @@ class LliurexUpCore(object):
 		if self.canConnectToLliurexNet()['status']:
 			options = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
 		self.updateCacheApt(options)
+		
 		return self.getPackageVersionAvailable('lliurex-version-timestamp',options)
 
 	#def getLliurexVersionLliurexNet	
@@ -748,13 +691,13 @@ class LliurexUpCore(object):
 	def getLliurexVersionLocal(self):
 		
 		self.updateCacheApt('')
+		
 		return self.getPackageVersionAvailable('lliurex-version-timestamp','',True)		
 
 	#def getLliurexVersionLocal
 
 	def initActionsScript(self,arg):
 		
-		#return 'run-parts --arg="initActions" ' + self.initActionsPath
 		return 'run-parts --arg=' +str(arg) + ' ' + self.initActionsPath
 
 	#def initActionsScript
@@ -769,7 +712,6 @@ class LliurexUpCore(object):
 		
 		return 'run-parts --arg="postActions" ' + self.postActionsPath
 
-		
 	#def postActionsScript
 
 	def installInitialFlavour(self,flavourToInstall,options=""):
@@ -785,9 +727,9 @@ class LliurexUpCore(object):
 
 			This function install lliurex-up
 		'''
-		tmp_list=""
+		tmpList=""
 		for item in flavourToInstall:
-			tmp_list=tmp_list+item+" "
+			tmpList=tmpList+item+" "
 		self.updateCacheApt(options)
 		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + tmp_list + "{options} ".format(options=options)
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -836,7 +778,6 @@ class LliurexUpCore(object):
 			if raw[0].startswith('['):
 				self.packageInfo[package]['install'] = raw[0][1:-1]
 				self.packageInfo[package]['candidate'] = raw[1][1:]
-				#self.packageInfo[package]['architecture']=raw[-1:][0][1:][:-2]
 				for item in raw:
 					if item.endswith(')'):
 						self.packageInfo[package]['architecture']=item[1:-1][:-1]
@@ -844,7 +785,6 @@ class LliurexUpCore(object):
 			elif raw[0].startswith('('):
 				self.packageInfo[package]['install'] = None
 				self.packageInfo[package]['candidate'] = raw[0][1:]
-				#self.packageInfo[package]['architecture']=raw[-1:][0][1:][:-2]
 				for item in raw:
 					if item.endswith(')'):
 						self.packageInfo[package]['architecture']=item[1:-1][:-1]
@@ -857,64 +797,48 @@ class LliurexUpCore(object):
 		
 	def checkIncorrectFlavours(self):
 		
-		self.incorrect_flavours=[]
-		other_flavours=[]
+		self.incorrectFlavours=[]
+		otherFlavours=[]
 		count=0
 		stopMeta=True
-		error_flavours=['edu','live']
-		cdd_flavours=["lliurex-meta-infantil","lliurex-meta-music","lliurex-meta-pyme"]
-		cdd_path="/usr/share/lliurex-cdd"
-		count_cdd=0
+		errorFlavours=['edu','live']
 
 		for item in self.packageInfo:
 			if item in self.flavourReference:
-				self.incorrect_flavours.append(item)
+				self.incorrectFlavours.append(item)
 
-
-		if len(self.incorrect_flavours)>0:
+		if len(self.incorrectFlavours)>0:
 			if len(self.flavours)>0:
-				if len(self.flavours)==1 and self.flavours[0] in error_flavours:
+				if len(self.flavours)==1 and self.flavours[0] in errorFlavours:
 					stopMeta=False
-			else:
-				for item in cdd_flavours:
-					if os.path.exists(os.path.join(cdd_path,item)):
-						count_cdd+=1
-
-			if count_cdd>0:
-				stopMeta=False
 
 			if stopMeta:	
-				for item in self.incorrect_flavours:
+				for item in self.incorrectFlavours:
 					if len(self.targetMetapackage)>0:
 						if item not in self.targetMetapackage:
 							count=count+1
-							other_flavours.append(item)
+							otherFlavours.append(item)
 
 					else:
-						meta_split=item.split("-")
-						meta=meta_split[2]
-						if meta=='minimal':
-							meta=meta+"-client"
-						else:
-							if len(meta_split)==4:
-								meta=meta+"-"+meta_split[3]
+						metaSplit=item.split("-")
+						meta=metaSplit[2]
+						if len(metaSplit)==4:
+							meta=meta+"-"+metaSplit[3]
 								
 						if 'None' in self.previousFlavours:
 							if not meta in self.metapackageRef:
 								count=count+1
-								other_flavours.append(meta)
+								otherFlavours.append(meta)
 
 						else:		
 							if not meta in self.previousFlavours:
 								count=count+1
-								other_flavours.append(meta)
-
+								otherFlavours.append(meta)
 
 		if count>0:
-			return {"status":True,"data":other_flavours}
-
+			return {"status":True,"data":otherFlavours}
 		else:
-			return {"status":False,"data":other_flavours}	
+			return {"status":False,"data":otherFlavours}	
 
 	#def checkIncorrectFlavours
 
@@ -929,12 +853,12 @@ class LliurexUpCore(object):
 		countPostaction=0
 		countMetapackage=0
 		error=False
-		error_details=""
+		errorDetails=""
 		lines=""
-		pkgs_not_installed=[]
+		pkgsNotInstalled=[]
 
-		if os.path.exists(self.errorpostaction_token):
-			aux = open(self.errorpostaction_token,'r')
+		if os.path.exists(self.errorPostActionToken):
+			aux = open(self.errorPostActionToken,'r')
 			lines = aux.readlines()
 			for x in lines:
 				if 'E: ' in x:
@@ -943,8 +867,8 @@ class LliurexUpCore(object):
 
 		if countPostaction==0:
 
-			if os.path.exists(self.errorfinalmetapackage_token):
-				aux = open(self.errorfinalmetapackage_token,'r')
+			if os.path.exists(self.errorFinalMetapackageToken):
+				aux = open(self.errorFinalMetapackageToken,'r')
 				lines = aux.readlines()
 				for x in lines:
 					if 'E: ' in x:
@@ -952,63 +876,54 @@ class LliurexUpCore(object):
 				aux.close()
 			if countMetapackage==0:
 				
-				cmd='dpkg -l | grep "^i[^i]" >' + self.errorupgrade_token
+				cmd='dpkg -l | grep "^i[^i]" >' + self.errorUpgradeToken
 				os.system(cmd)
 			
-				if os.path.exists(self.errorupgrade_token):
-					aux = open(self.errorupgrade_token,'r')
+				if os.path.exists(self.errorUpgradeToken):
+					aux = open(self.errorUpgradeToken,'r')
 					lines = aux.readlines()
 					aux.close()
 				
 					if len(lines)>0:
 						error=True
-						error_details="There are packages that have not been configured correctly. Details: "+str(lines)
+						errorDetails="There are packages that have not been configured correctly. Details: "+str(lines)
 						
 					else:
 						j=0
-						cmd='apt-get dist-upgrade -sV >' + self.finalupgrade_token
+						cmd='apt-get dist-upgrade -sV >' + self.finalUpgradeToken
 						os.system(cmd)
-						if os.path.exists(self.finalupgrade_token):
-							aux = open(self.finalupgrade_token,'r')
+						if os.path.exists(self.finalUpgradeToken):
+							aux = open(self.finalUpgradeToken,'r')
 							lines = aux.readlines()
 							aux.close()
 
 							for x in lines:
 								if 'Inst' in x:
 									j=j+1
-									pkgs_not_installed.append(x)
+									pkgsNotInstalled.append(x)
 							if j>0:
 								error=True
-								error_details="There are packages that have not been updated/installed. Details: "+str(pkgs_not_installed)
+								errorDetails="There are packages that have not been updated/installed. Details: "+str(pkgsNotInstalled)
 			else:
 				error=True
-				error_details="Error when installing metapackage. Details: "+str(lines)					
+				errorDetails="Error when installing metapackage. Details: "+str(lines)					
 		else:
 			error=True
-			error_details="Error when running Postactions.Details: "+str(lines)
+			errorDetails="Error when running Postactions.Details: "+str(lines)
 
-		return [error,error_details]	
+		return [error,errorDetails]	
 
 	#def checkErrorDistUpgrade	
 
 	def installFinalFlavour(self,flavourToInstall):
 
-		tmp_list=""
+		tmpList=""
 		for item in flavourToInstall:
-			tmp_list=tmp_list+item +" "
+			tmpList=tmpList+item +" "
 		
-		return 'apt-get install ' + tmp_list + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
+		return 'apt-get install ' + tmpList + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
       	
 	#def installFinalFlavour
-
-	def checkIsDesktopClientize(self):
-
-		if self.search_meta("client"):
-			if self.search_meta("desktop"):
-				self.desktopClientized=True
-
-
-	#def checkIsDesktopClientize	
 
 	def get_process_list(self):
 		
@@ -1071,33 +986,31 @@ class LliurexUpCore(object):
 
 	#def find_process	
 
-	def search_meta(self,meta):
+	def searchMeta(self,meta):
 
-
-		meta_list=list(self.targetMetapackage)
-		meta_list.extend(x for x in self.previousFlavours if x not in meta_list)
-		meta_list.extend(x for x in self.metapackageRef if x not in meta_list)
-		meta_list.extend(x for x in self.flavours if x not in meta_list)
+		metaList=list(self.targetMetapackage)
+		metaList.extend(x for x in self.previousFlavours if x not in metaList)
+		metaList.extend(x for x in self.metapackageRef if x not in metaList)
+		metaList.extend(x for x in self.flavours if x not in metaList)
 		match=False
-		for item in meta_list:
+		for item in metaList:
 			if meta in item:
 				match=True
 				break
 
 		return match
 	
-	#def search_meta
+	#def searchMeta
 
 	def isAutoUpgradeAvailable(self):
 
 		check=False
 
-		if self.search_meta("desktop"):
-			if self.desktopClientized:
-				if not self.connectionWithServer:
-					check=True
-			else:
+		if self.searchMeta("desktop"):
+			if not self.connectionWithADI:
 				check=True
+		else:
+			check=True
 
 		if check:
 			if os.path.exists(self.autoUpgradeService):
