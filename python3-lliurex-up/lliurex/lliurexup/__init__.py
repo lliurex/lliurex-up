@@ -300,9 +300,9 @@ class LliurexUpCore(object):
 		textSearchMirror="/mirror/"+str(self.defaultMirror)
 		textSearchLliureX="/lliurex.net/"+str(self.defaultVersion)
 		
-		isDesktop=self.searchMeta("desktop")		
+		isADI=self.searchMeta("adi")		
 
-		if isDesktop:
+		if not isADI:
 			if self.connectionWithADI:
 				client=True
 				if args:
@@ -438,9 +438,9 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
-		isDesktop=self.searchMeta("desktop")		
+		isADI=self.searchMeta("adi")		
 
-		if isDesktop:
+		if not isADI:
 			if self.connectionWithADI:
 				if not args:
 					sources=self.readSourcesList()
@@ -529,9 +529,9 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorIsRunning(self):
 
-		isDesktop=self.searchMeta("desktop")
+		isADI=self.searchMeta("adi")
 
-		if isDesktop:
+		if not isADI:
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -547,9 +547,9 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		isDesktop=self.searchMeta("desktop")
+		isADI=self.searchMeta("adi")
 		
-		if isDesktop:				
+		if not isADI:				
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -1006,7 +1006,7 @@ class LliurexUpCore(object):
 
 		check=False
 
-		if self.searchMeta("desktop"):
+		if not self.searchMeta("adi"):
 			if not self.connectionWithADI:
 				check=True
 		else:

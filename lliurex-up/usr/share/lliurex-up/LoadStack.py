@@ -21,8 +21,8 @@ class CheckSystem(QThread):
 		self.freeSpace=False
 		self.statusN4d=""
 		self.canConnect=False
-		self.isMirrorExistsInserver=False
-		self.isMirrorRunningInserver=False
+		self.isMirrorExistsInADI=False
+		self.isMirrorRunningInADI=False
 
 	#def __init__
 
@@ -35,8 +35,8 @@ class CheckSystem(QThread):
 			Bridge.llxUpConnect.checkInitialFlavour()
 			self.canConnect=Bridge.llxUpConnect.canConnectToLliurexNet()
 			if self.canConnect:
-				self.isMirrorExistsInserver=Bridge.llxUpConnect.clientCheckingMirrorExists()
-				self.isMirrorRunningInserver=Bridge.llxUpConnect.clientCheckingMirrorIsRunning()
+				self.isMirrorExistsInADI=Bridge.llxUpConnect.clientCheckingMirrorExists()
+				self.isMirrorRunningInADI=Bridge.llxUpConnect.clientCheckingMirrorIsRunning()
 	#def run
 
 #class CheckSystem
@@ -217,7 +217,7 @@ class Bridge(QObject):
 	FREESPACE_ERROR=-1
 	INTERNET_CONNECTION_ERROR=-2
 	MIRROR_IS_RUNNING_ERROR=-3
-	UNABLE_CONNECTION_TO_SERVER=-4
+	UNABLE_CONNECTION_TO_ADI=-4
 	UPDATE_LLIUREXUP_ERROR=-5
 	SEARCH_UPDATES_ERROR=-6
 	INCORRECT_METAPACKAGE_ERROR=-7
@@ -237,7 +237,6 @@ class Bridge(QObject):
 		self._mirrorPercentage=0
 		self.maxSeconds=5.0
 		self.currentSecond=0.0
-		self._showRepoDialog=False
 		self._showMirrorDialog=False
 		self.addRepos=True
 		self.addAllRepos=False
@@ -307,20 +306,6 @@ class Bridge(QObject):
 
 	#def _setCountDownValue
 
-	def _getShowRepoDialog(self):
-
-		return self._showRepoDialog
-
-	#def _getShowRepoDialog
-
-	def _setShowRepoDialog(self,showRepoDialog):
-
-		if self._showRepoDialog!=showRepoDialog:
-			self._showRepoDialog=showRepoDialog
-			self.on_showRepoDialog.emit()
-
-	#def _setShowRepoDialog
-
 	def _getShowMirrorDialog(self):
 
 		return self._showMirrorDialog
@@ -369,20 +354,16 @@ class Bridge(QObject):
 			if self.checkSystemT.canConnect:
 				self.loadStep=2
 				self.progressValue=self._getProgress()
-				if self.checkSystemT.isMirrorRunningInserver==False:
-					if not self.checkSystemT.isMirrorExistsInserver:
-						print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
-						self.showRepoDialog=True
-					else:
-						self._launchInitActions()
+				if self.checkSystemT.isMirrorRunningInADI==False:
+					self._launchInitActions()
 				else:
 					abort=True
-					if self.checkSystemT.isMirrorRunningInserver:
-						print("  [Lliurex-Up]: Mirror is being updated in server")
+					if self.checkSystemT.isMirrorRunningInADI:
+						print("  [Lliurex-Up]: Mirror is being updated in ADI")
 						self.core.mainStack.showErrorMessage=[Bridge.MIRROR_IS_RUNNING_ERROR,"Warning",""]
 					else:
-						print("  [Lliurex-Up]: Unable to connect with server")
-						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_SERVER,"Error",""]
+						print("  [Lliurex-Up]: Unable to connect with ADI")
+						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_ADI,"Error",""]
 			else:
 				abort=True
 				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
@@ -644,23 +625,6 @@ class Bridge(QObject):
 	#def _getProgress
 
 	@Slot(str)
-	def manageRepoDialog(self,response):
-
-		self.showRepoDialog=False
-		if response=="Yes":
-			self.addAllRepos=True
-			logMsg="Adding the repositories of lliurex.net on client. Response: Yes"
-		else:
-			self.addRepos=False
-			logMsg="Adding the repositories of lliurex.net on client. Response: No"
-			
-		Bridge.llxUpConnect.log(logMsg)
-		print("  [Lliurex-Up]: "+logMsg)
-		self._launchInitActions()
-
-	#def manageRepoDialog
-
-	@Slot(str)
 	def manageMirrorDialog(self,response):
 
 		self.showMirrorDialog=False
@@ -673,7 +637,7 @@ class Bridge(QObject):
 			Bridge.llxUpConnect.log(logMsg)
 			self._getCurrentVersion()
 			
-	#def manageRepoDialog
+	#def manageMirrorDialog
 	
 
 	on_loadStep=Signal()
@@ -688,9 +652,6 @@ class Bridge(QObject):
 	on_countDownValue=Signal()
 	countDownValue=Property(int,_getCountDownValue,_setCountDownValue,notify=on_countDownValue)
 	
-	on_showRepoDialog=Signal()
-	showRepoDialog=Property(bool,_getShowRepoDialog,_setShowRepoDialog,notify=on_showRepoDialog)
-
 	on_showMirrorDialog=Signal()
 	showMirrorDialog=Property(bool,_getShowMirrorDialog,_setShowMirrorDialog,notify=on_showMirrorDialog)
 

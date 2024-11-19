@@ -108,13 +108,6 @@ class LliurexUpCli(object):
 					if not isMirrorExists["ismirroravailable"]:
 						logMsg="Mirror not detected in ADI"
 						self.log(logMsg)
-						response=input('  [Lliurex-Up]: Mirror not detected on the ADI.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
-						if response.startswith('y'):
-							self.allRepos=True
-							logMsg="Adding the repositories of lliurex.net on desktop. Response: Yes"
-						else:
-							logMsg="Adding the repositories of lliurex.net on desktop. Response : No"	
-						self.log(logMsg)	
 					else:
 						print("  [Lliurex-Up]: Nothing to do with mirror")
 
@@ -780,9 +773,9 @@ class LliurexUpCli(object):
 		
 		if clientCheckingMirror!=False:
 			if clientCheckingMirror:
-				print("  [Lliurex-Up]: Mirror is being updated in server. Unable to update the system")
+				print("  [Lliurex-Up]: Mirror is being updated in ADI. Unable to update the system")
 			else:
-				print("  [Lliurex-Up]: Unable to connect with server")
+				print("  [Lliurex-Up]: Unable to connect with ADI")
 
 			self.cleanEnvironment()
 			return 1

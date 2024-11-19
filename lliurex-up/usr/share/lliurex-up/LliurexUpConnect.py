@@ -54,7 +54,7 @@ class LliurexUpConnect():
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
-		self.connectionWithADI=self.llxUpCore.connectionWitADI
+		self.connectionWithADI=self.llxUpCore.connectionWithADI
 
 	#def __init__	
 
@@ -189,8 +189,8 @@ class LliurexUpConnect():
 		else:
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
-			isDesktop=self.searchMeta("desktop")
-			if not isDesktop:
+			isADI=self.searchMeta("adi")
+			if not isADI:
 				return False
 			else:
 				if self.connectionWithADI:
@@ -606,10 +606,10 @@ class LliurexUpConnect():
 		showSettings=True
 		try:
 			if self.targetMetapackage !=None:
-				if self.searchMeta('desktop') and self.connectionWithADI:
+				if not self.searchMeta('adi') and self.connectionWithADI:
 					showSettings=False
 			else:
-				if self.searchMeta('desktop') and self.connectionWithADI:	
+				if not self.searchMeta('adi') and self.connectionWithADI:	
 					showSettings=False
 
 			return showSettings
