@@ -1,3 +1,9 @@
+lliurex-up (25.05.11) noble; urgency=medium
+
+  * Fixed launcher to show app icon in Wayland
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 22 Nov 2024 10:47:22 +0100
+
 lliurex-up (25.05.10) noble; urgency=medium
 
   * Catched error when run without root
