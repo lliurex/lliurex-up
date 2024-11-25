@@ -14,6 +14,7 @@ ret=launchStack.canRunUpdate()
 
 if not ret:
 	app = QApplication()
+	app.setDesktopFileName("lliurex-up")
 	engine = QQmlApplicationEngine()
 	engine.clearComponentCache()
 	context=engine.rootContext()
@@ -27,6 +28,7 @@ else:
 	import Core
 	c=Core.Core.get_core()
 	app = QApplication()
+	app.setDesktopFileName("lliurex-up")
 	engine = QQmlApplicationEngine()
 	engine.clearComponentCache()
 	context=engine.rootContext()
@@ -49,7 +51,6 @@ if not engine.rootObjects():
 	sys.exit(-1)
 
 engine.quit.connect(QApplication.quit)
-app.setWindowIcon(QIcon("/usr/share/icons/hicolor/scalable/apps/lliurex-up.svg"));
 ret=app.exec()
 del engine
 del app

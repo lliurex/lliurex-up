@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from clint import arguments
-from clint.textui import puts, indent, colored
 import lliurex.lliurexup
 import os
 import subprocess
@@ -856,65 +854,7 @@ class LliurexUpCli(object):
 				self.cleanEnvironment()
 
 				return 1
+
 	#def main
 
-#class LliurexUpCli			
-					
-def	usage():
-	puts("Usage")
-	with indent(4):
-		puts("lliurex-upgrade [FLAGS...]")
-		puts("Flags")
-		with indent(4):
-			puts("-h --help:		Show help")
-			puts("-s --sai:		Update the system without pinning and enable try to update without conection to lliurex.net")	
-			puts("-u --unattended:	Update the system in unattended mode. Does not require confirmation to update mirror and system")
-			puts("-n --no-mirror:		Update the system without checking mirror")
-			puts("-r --repositories:	Update the system adding mirror and lliurex.net repositories (only valid for clients)")
-
-
-	sys.exit(1)		
-
-#def usage
-
-if __name__ == '__main__':
-	
-	if os.geteuid() != 0:
-		print("  [Lliurex-Up]: You need be root!")
-		sys.exit(1)
-
-	mode=None
-	options=0	
-	extra_args={}
-	extra_args["mirror"]=True
-	extra_args["unattended_mirror"]=False
-	extra_args["unattendend_upgrade"]=False
-	extra_args["repositories"]=False
-
-	args=arguments.Args().copy
-	
-	if args.contains(["-h", "--help"]):
-		usage()
-	
-	if args.contains(["-s", "--sai"]):
-		mode="sai"
-		options=1
-
-	if args.contains(["-u", "--unattended"]):
-		extra_args["unattendend_upgrade"]=True
-		extra_args["unattended_mirror"]=True
-		options=1
-
-	if args.contains(["-r","--repositories"]):
-		extra_args["repositories"]=True
-		options=1
-	
-	if args.contains(["-n", "--no-mirror"]):
-		extra_args["mirror"]=False
-		options=1
-	else:
-		if len(args)>0 and options==0:
-			usage()	
-	
-	lliurexupcli = LliurexUpCli()	
-	sys.exit(lliurexupcli.main(mode,extra_args))
+#class LliurexUpCli

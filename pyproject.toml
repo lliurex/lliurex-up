@@ -3,7 +3,7 @@ requires = ["setuptools","setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "python3-lliurexup"
+name = "lliurexup"
 version = "0.1"
 description = "lliurex-up library"
 authors = [
@@ -14,5 +14,14 @@ license = {text="GPL-3"}
 urls = {repository="https://github.com/lliurex/lliurex-up"}
 
 [tool.setuptools]
-package-dir={""="python3-lliurex-up"}
+packages=["lliurexup","lliurexupcli"]
 
+[tool.setuptools.package-dir]
+lliurexup = "python3-lliurex-up"
+lliurexupcli = "lliurex-up-cli"
+
+[tool.setuptools.exclude-package-data]
+lliurexupcli = ["lliurex-upgrade"]
+
+[tool.setuptools.data-files]
+"sbin" = ["lliurex-up-cli/lliurex-upgrade"]
