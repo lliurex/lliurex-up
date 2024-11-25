@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from lliurex.lliurexup import LliurexUpCore
+import lliurex.lliurexup
 import os
 import subprocess
 import multiprocessing
@@ -16,7 +16,7 @@ signal.signal(signal.SIGINT,signal.SIG_IGN)
 class LliurexUpCli(object):
 	def __init__(self):
 
-		self.lliurexcore = LliureXUpCore.LliurexUpCore()
+		self.lliurexcore = lliurex.lliurexup.LliurexUpCore()
 		self.defaultMirror = self.lliurexcore.defaultMirror
 		signal.signal(signal.SIGINT,self.handler_signal)
 		self.lliurexcore.checkLocks()
