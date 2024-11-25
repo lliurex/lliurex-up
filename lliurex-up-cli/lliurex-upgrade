@@ -7,8 +7,6 @@ from lliurex.lliurexupcli import LliurexUpCli
 import os
 import sys
 
-signal.signal(signal.SIGINT,signal.SIG_IGN)
-
 def	usage():
 	puts("Usage")
 	with indent(4):
