@@ -14,6 +14,7 @@
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 export PYBUILD_NAME=lliurexup
+export PYBUILD_DESTDIR_python3=debian/output
 %:
 	dh $@ --with llxsrc,python3,zero,i18n --buildsystem pybuild
 
