@@ -20,10 +20,10 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-home-adi","lliurex-meta-home-desktop"] 
+		self.flavourReference=["lliurex-meta-adi","lliurex-meta-desktop"] 
 		self.defaultMirror = 'llx25'
 		self.defaultVersion = 'noble'
-		self.defaultUrltoCheck="http://lliurex.net/jammy"
+		self.defaultUrltoCheck="http://lliurex.net/noble"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
@@ -42,7 +42,6 @@ class LliurexUpCore(object):
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
 		self.optionsLlxUp=""
-		self.desktopClientized=False
 		self.connectionWithADI=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
