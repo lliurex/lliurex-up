@@ -1,3 +1,9 @@
+lliurex-up (24.05.09) jammy; urgency=medium
+
+  * Fixed msg type in Settings panel
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 07 Jan 2025 09:43:28 +0100
+
 lliurex-up (24.05.08) jammy; urgency=medium
 
   * Catched error when is exec without root
