@@ -133,7 +133,7 @@ class Bridge(QObject):
 	def manageSystray(self,enable):
 
 		Bridge.llxUpConnect.manageSystray(enable)
-		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG,"Ok2"]
+		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG,"Ok"]
 
 	#def manageSystray
 
