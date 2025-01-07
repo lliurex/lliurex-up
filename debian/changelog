@@ -1,3 +1,9 @@
+lliurex-up (21.05.9) focal; urgency=medium
+
+  * Fixed msg type in Settings panel
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 07 Jan 2025 09:47:56 +0100
+
 lliurex-up (21.05.8) focal; urgency=medium
 
   * Catched error when run without root
