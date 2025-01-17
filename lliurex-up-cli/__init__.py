@@ -16,10 +16,10 @@ signal.signal(signal.SIGINT,signal.SIG_IGN)
 class LliurexUpCli(object):
 	def __init__(self):
 
-		self.lliurexcore = lliurex.lliurexup.LliurexUpCore()
-		self.defaultMirror = self.lliurexcore.defaultMirror
-		signal.signal(signal.SIGINT,self.handler_signal)
-		self.lliurexcore.checkLocks()
+		self.lliurexUpCore = lliurex.lliurexup.LliurexUpCore()
+		self.defaultMirror = self.lliurexUpCore.defaultMirror
+		signal.signal(signal.SIGINT,self.handlerSignal)
+		self.lliurexUpCore.checkLocks()
 		self.checkingBlock=True
 		self.configureRequired=False
 	
@@ -29,7 +29,7 @@ class LliurexUpCli(object):
 	def startLliurexUp(self,mode):
 
 		self.checkingBlock=False
-		self.lliurexcore.startLliurexUp()
+		self.lliurexUpCore.startLliurexUp()
 
 		if mode=="sai":
 			self.mode=mode
@@ -41,31 +41,27 @@ class LliurexUpCli(object):
 
 
 		print("  [Lliurex-Up]: Checking n4d service status...")
-		self.free_space_check()
+		self.freeSpaceCheck()
 		self.checkInitialN4dStatus()
 
 
 	def checkInitialN4dStatus(self):
 
 
-		self.statusN4d=self.lliurexcore.n4dStatus
+		self.statusN4d=self.lliurexUpCore.n4dStatus
 		
 		if not self.statusN4d:
-			log_msg="N4d is not working"
-			print("  [Lliurex-Up]: %s"%log_msg)
-			self.log(log_msg)
-			'''
-			self.cleanEnvironment()
-			sys.exit(1)
-			'''
+			msgLog="N4d is not working"
+			print("  [Lliurex-Up]: %s"%msgLog)
+			self.log(msgLog)
+	
+	def checkInitialFlavour(self):
 
-	def checkInitialFlavour(self,extra_args=None):
-
-		self.targetMetapackage=self.lliurexcore.checkInitialFlavour()
-		log_msg="Initial check metapackage. Metapackage to install: " + str(self.targetMetapackage)
-		self.log(log_msg)
-		log_msg="Get initial flavours: " + str(self.lliurexcore.previousFlavours)
-		self.log(log_msg)
+		self.targetMetapackage=self.lliurexUpCore.checkInitialFlavour()
+		msgLog="Initial check metapackage. Metapackage to install: " + str(self.targetMetapackage)
+		self.log(msgLog)
+		msgLog="Get initial flavours: " + str(self.lliurexUpCore.previousFlavours)
+		self.log(msgLog)
 		
 	#def checkInitialFlavour	
 		
@@ -74,19 +70,19 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
 
-		can_connect=self.lliurexcore.canConnectToLliurexNet()
-		log_msg="Checking connection to lliurex.net: %s"%can_connect
-		self.log(log_msg)
-		if can_connect['status']:
-				log_msg="Can connect to lliurex.net: True"
-				self.log(log_msg)
+		canConnect=self.lliurexUpCore.canConnectToLliurexNet()
+		msgLog="Checking connection to lliurex.net: %s"%canConnect
+		self.log(msgLog)
+		if canConnect['status']:
+				msgLog="Can connect to lliurex.net: True"
+				self.log(msgLog)
 				return True
 		else:
-			log_msg="Can connect to lliurex.net: False"
-			self.log(log_msg)
+			msgLog="Can connect to lliurex.net: False"
+			self.log(msgLog)
 
-			is_client=self.lliurexcore.search_meta("client")
-			if not is_client:
+			isClient=self.lliurexUpCore.search_meta("client")
+			if not isClient:
 				if self.initActionsArg !="initActionsSai":
 					return False
 				
@@ -95,70 +91,70 @@ class LliurexUpCli(object):
 				
 	#def canConnectToLliurexNet		
 
-	def clientCheckingMirrorExists(self,extra_args=None):
+	def clientCheckingMirrorExists(self):
 
 		self.allRepos=False
 
-		if extra_args["repositories"]:
+		if self.extraArgs["repositories"]:
 			self.allRepos=True
 		
-		if not extra_args["unattendend_upgrade"]:
+		if not self.extraArgs["unattendend_upgrade"]:
 			if not self.allRepos:
 				print("  [Lliurex-Up]: Checking if mirror exists in server...")
-				is_mirror_exists=self.lliurexcore.clientCheckingMirrorExists()
-				log_msg="Checking if mirrror exists in server. MirrorManager response: %s"%is_mirror_exists['data']
-				self.log(log_msg)
-				if is_mirror_exists["ismirroravailable"]==None:
-					log_msg="Checking if mirror exists in server. Error: "+str(is_mirror_exists['exception'])
-					self.log(log_msg)
-					print("  [Lliurex-Up]: %s"%log_msg)
+				isMirrorExists=self.lliurexUpCore.clientCheckingMirrorExists()
+				msgLog="Checking if mirrror exists in server. MirrorManager response: %s"%isMirrorExists['data']
+				self.log(msgLog)
+				if isMirrorExists["ismirroravailable"]==None:
+					msgLog="Checking if mirror exists in server. Error: "+str(isMirrorExists['exception'])
+					self.log(msgLog)
+					print("  [Lliurex-Up]: %s"%msgLog)
 
 				else:
-					if not is_mirror_exists["ismirroravailable"]:
-						log_msg="Mirror not detected in server"
-						self.log(log_msg)
+					if not isMirrorExists["ismirroravailable"]:
+						msgLog="Mirror not detected in server"
+						self.log(msgLog)
 						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
 						if response.startswith('y'):
 							self.allRepos=True
-							log_msg="Adding the repositories of lliurex.net on client. Response: Yes"
+							msgLog="Adding the repositories of lliurex.net on client. Response: Yes"
 						else:
-							log_msg="Adding the repositories of lliurex.net on client. Response : No"	
-						self.log(log_msg)	
+							msgLog="Adding the repositories of lliurex.net on client. Response : No"	
+						self.log(msgLog)	
 					else:
 						print("  [Lliurex-Up]: Nothing to do with mirror")
 
-		self.lliurexcore.addSourcesListLliurex(self.allRepos)						
+		self.lliurexUpCore.addSourcesListLliurex(self.allRepos)						
 	
 	#def clientCheckingMirrorExists
 				
 	def clientCheckingMirrorIsRunning(self):
 		
-		is_mirror_running_inserver=self.lliurexcore.clientCheckingMirrorIsRunning()
-		log_msg="Checking if mirrror in server is being updated. MirrorManager response: %s"%is_mirror_running_inserver['data']
-		self.log(log_msg)		
-		if is_mirror_running_inserver['ismirrorrunning'] ==None:
-			log_msg="Checking if mirror in server is being updated. Error: " + str(is_mirror_running_inserver['exception'])
-			self.log(log_msg)
+		isMirrorRunningInServer=self.lliurexUpCore.clientCheckingMirrorIsRunning()
+		msgLog="Checking if mirrror in server is being updated. MirrorManager response: %s"%isMirrorRunningInServer['data']
+		self.log(msgLog)		
+		if isMirrorRunningInServer['ismirrorrunning'] ==None:
+			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
+			self.log(msgLog)
 		else:
-			if is_mirror_running_inserver['ismirrorrunning']:
-				log_msg="Mirror is being updated in server. Unable to update the system"
-				self.log(log_msg)
+			if isMirrorRunningInServer['ismirrorrunning']:
+				msgLog="Mirror is being updated in server. Unable to update the system"
+				self.log(msgLog)
 		
-		return is_mirror_running_inserver['ismirrorrunning']
+		return isMirrorRunningInServer['ismirrorrunning']
 		
 			
 	#def clientCheckingMirrorIsRunning		
 	
-	def initActionsScript(self,extra_args=None):
+	def initActionsScript(self):
 
 		print("  [Lliurex-Up]: Executing init actions...")
 		self.configureRequired=False
 
-		if extra_args["unattendend_upgrade"]:
-			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.initActionsScript(self.initActionsArg)
+		if self.extraArgs["unattendend_upgrade"]:
+			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexUpCore.initActionsScript(self.initActionsArg)
 		
 		else:
-			command=self.lliurexcore.initActionsScript(self.initActionsArg)
+			command=self.lliurexUpCore.initActionsScript(self.initActionsArg)
 		
 		try:
 			
@@ -173,16 +169,16 @@ class LliurexUpCli(object):
 				if 'dpkg --configure -a' in output_err:
 					self.configureRequired=True
 				print("  [Lliurex-Up]: Executing init actions. Error: " +'\n'+str(output_err))
-				log_msg="Exec Init-Actions. Error: %s"%str(output_err)
+				msgLog="Exec Init-Actions. Error: %s"%str(output_err)
 			else:
-				log_msg="Exec Init-Actions. OK"
+				msgLog="Exec Init-Actions. OK"
 			
 		except Exception as e:
-			log_msg="Exec Init-Actions.Error: " +str(e)
+			msgLog="Exec Init-Actions.Error: " +str(e)
 			print("  [Lliurex-Up]: Checking system. Error: " +'\n'+str(e))
 
 			
-		self.log(log_msg)	
+		self.log(msgLog)	
 			
 	#def initActionsScript
 	
@@ -191,22 +187,22 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Looking for new version of Lliurex Up...")
 
 
-		is_lliurexup_updated=self.lliurexcore.isLliurexUpIsUpdated(self.allRepos)
+		isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated(self.allRepos)
 		restart=False
 
-		if not is_lliurexup_updated:
+		if not isLliurexUpUpdated:
 			print("  [Lliurex-Up]: Updating Lliurex-Up...")
-			is_lliurexup_installed=self.lliurexcore.installLliurexUp()
-			log_msg="Installing Lliurex-Up. Returncode: " + str(is_lliurexup_installed['returncode']) + ". Error: " + str(is_lliurexup_installed['stderrs'])
-			self.log(log_msg)
-			if is_lliurexup_installed['returncode']==0:
+			isLliurexUpInstalled=self.lliurexUpCore.installLliurexUp()
+			msgLog="Installing Lliurex-Up. Returncode: " + str(isLliurexUpInstalled['returncode']) + ". Error: " + str(isLliurexUpInstalled['stderrs'])
+			self.log(msgLog)
+			if isLliurexUpInstalled['returncode']==0:
 				restart=True
 			else:
-				is_lliurexup_updated=self.lliurexcore.isLliurexUpIsUpdated(self.allRepos)
-				if not is_lliurexup_updated:
-					log_msg="Unable to update Lliurex-Up"
-					self.log(log_msg)
-					print("  [Lliurex-Up]: Unable to update Lliurex-Up. Error: %s"%str(is_lliurexup_installed['stderrs']))
+				isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated(self.allRepos)
+				if not isLliurexUpUpdated:
+					msgLog="Unable to update Lliurex-Up"
+					self.log(msgLog)
+					print("  [Lliurex-Up]: Unable to update Lliurex-Up. Error: %s"%str(isLliurexUpInstalled['stderrs']))
 					restart=False
 				else:
 					restart=True
@@ -214,94 +210,94 @@ class LliurexUpCli(object):
 			if restart:
 				print("  [Lliurex-Up]: Lliurex-Up is now update and will be reboot now..." )
 				time.sleep(3)
-				self.lliurexcore.cleanLliurexUpLock()
+				self.lliurexUpCore.cleanLliurexUpLock()
 				os.execv("/usr/sbin/lliurex-upgrade",sys.argv)
 			else:
 				return False
 
 		else:
-			log_msg="Checking Lliurex-Up. Is Lliurex-Up updated: "+ str(is_lliurexup_updated)
-			self.log(log_msg)
+			msgLog="Checking Lliurex-Up. Is Lliurex-Up updated: "+ str(isLliurexUpUpdated)
+			self.log(msgLog)
 			print("  [Lliurex-Up]: Lliurex-Up is updated.Nothing to do")
 			return True	
 			
 	#def checkLliurexUp		
 
-	def checkMirror(self,extra_args=None):
+	def checkMirror(self):
 
 		print("  [Lliurex-Up]: Checking if mirror is updated...")
 
 		try:
-			is_mirror_updated=self.lliurexcore.lliurexMirrorIsUpdated()
+			isMirrorUpdated=self.lliurexUpCore.lliurexMirrorIsUpdated()
 
-			if is_mirror_updated !=None:
-				log_msg="Checking mirror. MirrorManager response: %s"%is_mirror_updated['data']
-				self.log(log_msg)
+			if isMirrorUpdated !=None:
+				msgLog="Checking mirror. MirrorManager response: %s"%isMirrorUpdated['data']
+				self.log(msgLog)
 				try:
-					is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
-					if is_mirror_running:
+					isMirrorRunning=self.lliurexUpCore.lliurexMirrorIsRunning()
+					if isMirrorRunning:
 						print("  [Lliurex-Up]: Updating mirror. Wait a moment please...")
 						self.updateMirrorProgress()
 					else:
-						if is_mirror_updated['action']=='update':
-							if not is_mirror_running:
-								log_msg="Checking mirror. Is mirror update: False"
-								self.log(log_msg)
-								if not extra_args["unattended_mirror"]:
+						if isMirrorUpdated['action']=='update':
+							if not isMirrorRunning:
+								msgLog="Checking mirror. Is mirror update: False"
+								self.log(msgLog)
+								if not self.extraArgs["unattended_mirror"]:
 									response=input('  [Lliurex-Up]: Do you want update mirror (yes/no): ').lower()
 								else:
 									response="yes"
 
 								if response.startswith('y'):
-									log_msg="Update lliurex-mirror. Response: Yes"
-									self.log(log_msg)
+									msgLog="Update lliurex-mirror. Response: Yes"
+									self.log(msgLog)
 									print("  [Lliurex-Up]: Updating mirror. Wait a moment please...")
 									command='lliurex-mirror update %s'%self.defaultMirror
 									subprocess.Popen(command,shell=True).communicate()
 
 								else:
-									log_msg="Update lliurex-mirror. Response: No"
-									self.log(log_msg)
+									msgLog="Update lliurex-mirror. Response: No"
+									self.log(msgLog)
 									print("  [Lliurex-Up]: Mirror update. Not update")	
 						else:
-							log_msg="Checking mirror. Is mirror update: nothing-to-do"
-							self.log(log_msg)
-							print("  [Lliurex-Up]: %s"%log_msg)
+							msgLog="Checking mirror. Is mirror update: nothing-to-do"
+							self.log(msgLog)
+							print("  [Lliurex-Up]: %s"%msgLog)
 				
 				except Exception as e:
-					log_msg="Updating mirror. Error: " + str(e)
-					self.log(log_msg)	
+					msgLog="Updating mirror. Error: " + str(e)
+					self.log(msgLog)	
 					print("  [Lliurex-Up]: Updating mirror. Error: " +str(e))
 											
 			else:
-				log_msg="Checking mirror. Is mirror update: None"
-				self.log(log_msg)
+				msgLog="Checking mirror. Is mirror update: None"
+				self.log(msgLog)
 				print("  [Lliurex-Up]: Nothing to do with mirror")
 		
 		except Exception as e:
-			log_msg="Checking mirror. Error: " + str(e)
-			self.log(log_msg)	
+			msgLog="Checking mirror. Error: " + str(e)
+			self.log(msgLog)	
 			print("  [Lliurex-Up]: Checking mirror. Error: " +str(e)) 	
 			
 	#def checkMirror		
 
 	def updateMirrorProgress(self):
 
-		is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
+		isMirrorRunning=self.lliurexUpCore.lliurexMirrorIsRunning()
 		counter = 0
 		percentage = 0
 		clockpercentage = 0
 		clock = ['—','/','|','\\']
 
-		while is_mirror_running:
+		while isMirrorRunning:
 			if  counter ==  0:
-				percentage=self.lliurexcore.getPercentageLliurexMirror()
+				percentage=self.lliurexUpCore.getPercentageLliurexMirror()
 				
 				if percentage!=None:
-					is_mirror_running=self.lliurexcore.lliurexMirrorIsRunning()
+					isMirrorRunning=self.lliurexUpCore.lliurexMirrorIsRunning()
 					
 				else:
-					is_mirror_running=False	
+					isMirrorRunning=False	
 
 			progress = clock[clockpercentage%4]
 			print("{} % {}".format(percentage,progress),end='\r')
@@ -312,19 +308,20 @@ class LliurexUpCli(object):
 			clockpercentage +=1
 			if clockpercentage == 30:
 				clockpercentage = 0	
+	
 	#def updateMirrorProgress			
 		
 	def getLliurexVersionLocal(self):
 
 		print("  [Lliurex-Up]: Looking for LliurexVersion from local repository...")
 		
-		self.version_update=self.lliurexcore.getLliurexVersionLocal()
-		log_msg="Get LliurexVersion installed: " + str(self.version_update["installed"])
-		self.log(log_msg)
-		log_msg="Get LliurexVersion candidate from local repository: " + str(self.version_update["candidate"])
-		self.log(log_msg)
-		log_msg="Get Update source: "+str(self.version_update["updateSource"])
-		self.log(log_msg)
+		self.versionToUpdate=self.lliurexUpCore.getLliurexVersionLocal()
+		msgLog="Get LliurexVersion installed: " + str(self.versionToUpdate["installed"])
+		self.log(msgLog)
+		msgLog="Get LliurexVersion candidate from local repository: " + str(self.versionToUpdate["candidate"])
+		self.log(msgLog)
+		msgLog="Get Update source: "+str(self.versionToUpdate["updateSource"])
+		self.log(msgLog)
 
 	#def getLliurexVersionLocal	
 	
@@ -333,9 +330,9 @@ class LliurexUpCli(object):
 	
 		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
 
-		self.version_available=self.lliurexcore.getLliurexVersionLliurexNet()
-		log_msg="Get LliurexVersion candidate from lliurex.net: " + str(self.version_available["candidate"])
-		self.log(log_msg)
+		self.versionAvailable=self.lliurexUpCore.getLliurexVersionLliurexNet()
+		msgLog="Get LliurexVersion candidate from lliurex.net: " + str(self.versionAvailable["candidate"])
+		self.log(msgLog)
 	
 	#def getLliurexVersionLliurexNet		
 
@@ -343,36 +340,36 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Checking if installation of metapackage is required...")
 
-		self.returncode_initflavour=0
+		self.returnCodeInitFlavour=0
 		if len(self.targetMetapackage)==0:
 			
 			print("  [Lliurex-Up]: Installation of metapackage is not required")
 			
 		else:
 			print("  [Lliurex-Up]: Installation of metapackage is required: " + str(self.targetMetapackage))
-			is_flavour_installed=self.lliurexcore.installInitialFlavour(self.targetMetapackage)	
-			self.returncode_initflavour=is_flavour_installed['returncode']
-			error=is_flavour_installed['stderrs']
-			log_msg="Install initial metapackage:" + str(self.targetMetapackage) + ": Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error)
-			self.log(log_msg)
-			print("  [Lliurex-Up]: Metapackage is now installed: Returncode: " + str(self.returncode_initflavour) + " Error: " + str(error))
+			isFlavourInstalled=self.lliurexUpCore.installInitialFlavour(self.targetMetapackage)	
+			self.returnCodeInitFlavour=isFlavourInstalled['returncode']
+			error=isFlavourInstalled['stderrs']
+			msgLog="Install initial metapackage:" + str(self.targetMetapackage) + ": Returncode: " + str(self.returnCodeInitFlavour) + " Error: " + str(error)
+			self.log(msgLog)
+			print("  [Lliurex-Up]: Metapackage is now installed: Returncode: " + str(self.returnCodeInitFlavour) + " Error: " + str(error))
 			
 	#def checkingInitialFlavourToInstall		
 	
 	def getPackagesToUpdate(self):
 
 		print("  [Lliurex-Up]: Looking for new updates...")
-		packages=self.lliurexcore.getPackagesToUpdate()
-		log_msg="Get packages to update. Number of packages: "+ str(len(packages))
-		self.log(log_msg)
+		packages=self.lliurexUpCore.getPackagesToUpdate()
+		msgLog="Get packages to update. Number of packages: "+ str(len(packages))
+		self.log(msgLog)
 
-		self.newpackages=0
-		self.listpackages=""
+		self.newPackages=0
+		self.packagesList=""
 		if (len(packages))>0:
 			for item in packages:
 				if packages[item]["install"]==None:
-						self.newpackages=int(self.newpackages) + 1
-				self.listpackages=str(self.listpackages) + item +" "		
+						self.newPackages=int(self.newPackages) + 1
+				self.packagesList=str(self.packagesList) + item +" "		
 
 		return packages
 
@@ -380,10 +377,10 @@ class LliurexUpCli(object):
 			
 	def checkingIncorrectFlavours(self):
 		
-		incorrectFlavours=self.lliurexcore.checkIncorrectFlavours()
+		incorrectFlavours=self.lliurexUpCore.checkIncorrectFlavours()
 		self.aditionalFlavours=incorrectFlavours["data"]
-		log_msg="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours["status"])+". Detected Flavours: "+str(self.aditionalFlavours)
-		self.log(log_msg)
+		msgLog="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours["status"])+". Detected Flavours: "+str(self.aditionalFlavours)
+		self.log(msgLog)
 
 		return incorrectFlavours['status']
 	
@@ -392,29 +389,29 @@ class LliurexUpCli(object):
 	def checkPreviousUpgrade(self):
 		
 		error=False
-		if self.returncode_initflavour!=0:
+		if self.returnCodeInitFlavour!=0:
 			error=True
 
 		else:
-			if self.version_update["candidate"]!=None:
-				if self.version_update["installed"]!=self.version_update["candidate"]:
+			if self.versionToUpdate["candidate"]!=None:
+				if self.versionToUpdate["installed"]!=self.versionToUpdate["candidate"]:
 					error=True
 			else:
-				if self.version_update["installed"]!=self.version_available["candidate"]:	
+				if self.versionToUpdate["installed"]!=self.versionAvailable["candidate"]:	
 					error=True
 
 		return error
 
 	#def checkPreviousUpgrade		
 
-	def preActionsScript(self,extra_args):
+	def preActionsScript(self):
 
 		print("  [Lliurex-Up]: Preparing system to update...")
 
-		if extra_args["unattendend_upgrade"]:
-			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.preActionsScript()
+		if self.extraArgs["unattendend_upgrade"]:
+			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexUpCore.preActionsScript()
 		else:
-			command=self.lliurexcore.preActionsScript()		
+			command=self.lliurexUpCore.preActionsScript()		
 		
 		try:
 			#os.system(command)
@@ -427,27 +424,27 @@ class LliurexUpCli(object):
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Preparing system to update. Error: " +'\n'+str(output_err))
-				log_msg="Exec Pre-Actions. Error: %s"%str(output_err)
+				msgLog="Exec Pre-Actions. Error: %s"%str(output_err)
 			else:
-				log_msg="Exec Pre-Actions. OK"
+				msgLog="Exec Pre-Actions. OK"
 
 		except Exception as e:
 			print("  [Lliurex-Up]: Preparing system to update. Error: " +'\n'+str(e))
-			log_msg="Exec Pre-Actions. Error " +str(e)
+			msgLog="Exec Pre-Actions. Error " +str(e)
 			
 
-		self.log(log_msg)	
+		self.log(msgLog)	
 
 	#def preActionsScript			
 
-	def distUpgrade(self,extra_args):
+	def distUpgrade(self):
 
 		print("  [Lliurex-Up]: Downloading and installing packages...")
 
-		if extra_args["unattendend_upgrade"]:
-			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.distUpgradeProcess()
+		if self.extraArgs["unattendend_upgrade"]:
+			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexUpCore.distUpgradeProcess()
 		else:
-			command=self.lliurexcore.distUpgradeProcess()
+			command=self.lliurexUpCore.distUpgradeProcess()
 
 		try:
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
@@ -459,28 +456,28 @@ class LliurexUpCli(object):
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Downloading and installing packages. Error: "+ '\n' +str(output_err))
-				log_msg="Exec Dist-upgrade. Error: %s"%str(output_err)
+				msgLog="Exec Dist-upgrade. Error: %s"%str(output_err)
 			else:
-				log_msg="Exec Dist-upgrade. OK"
+				msgLog="Exec Dist-upgrade. OK"
 		
 		except Exception as e:
 			print("  [Lliurex-Up]: Downloading and installing packages. Error: " + '\n' +str(e))
-			log_msg="Exec Dist-uggrade.Error : " +str(e)
+			msgLog="Exec Dist-uggrade.Error : " +str(e)
 
-		self.log(log_msg)	
+		self.log(msgLog)	
 			
 	#def distUpgrade		
 
-	def postActionsScript(self,extra_args):
+	def postActionsScript(self):
 
 		print("  [Lliurex-Up]: Ending the update...")
 
-		self.errorpostaction=False
+		self.postActionError=False
 
-		if extra_args["unattendend_upgrade"]:
-			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.postActionsScript() 
+		if self.extraArgs["unattendend_upgrade"]:
+			command="DEBIAN_FRONTEND=noninteractive " + self.lliurexUpCore.postActionsScript() 
 		else:
-			command=self.lliurexcore.postActionsScript()
+			command=self.lliurexUpCore.postActionsScript()
 	
 		try:
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
@@ -492,18 +489,18 @@ class LliurexUpCli(object):
 			error=self.readErrorOutput(output_err)
 			if error:
 				print("  [Lliurex-Up]: Ending the update. Error: " +'\n'+str(output_err))
-				self.errorpostaction=True
-				log_msg="Exec Post-Actions. Error: %s"%str(output_err)
+				self.postActionError=True
+				msgLog="Exec Post-Actions. Error: %s"%str(output_err)
 			else:
-				log_msg="Exec Post-Actions.OK"
+				msgLog="Exec Post-Actions.OK"
 
 			
 		except Exception as e:
-			self.errorpostaction=True
+			self.postActionError=True
 			print("  [Lliurex-Up]: Ending the update. Error: " +'\n'+str(e))
-			log_msg="Exec Post-Actions.Error:%s"%str(e)
+			msgLog="Exec Post-Actions.Error:%s"%str(e)
 
-		self.log(log_msg)	
+		self.log(msgLog)	
 
 	#def postActionsScript			
 
@@ -526,33 +523,33 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Checking N4d status...")
 
-		self.lliurexcore.checkN4dStatus()
+		self.lliurexUpCore.checkN4dStatus()
 		
-		if not self.lliurexcore.n4dStatus:
-			log_msg="N4d is not working"
-			self.log(log_msg)
+		if not self.lliurexUpCore.n4dStatus:
+			msgLog="N4d is not working"
+			self.log(msgLog)
 
 	#def checkFinalN4dStatus		
 
 	def checkingFinalFlavourToInstall(self):
 		
 		print("  [Lliurex-Up]: Checking final metapackage...")
-		self.errorfinalmetapackage=False
+		self.finalMetaPackageError=False
 		self.checkFinalN4dStatus()
 
 		try:
-			self.flavourToInstall=self.lliurexcore.checkFlavour(True)
+			self.flavourToInstall=self.lliurexUpCore.checkFlavour(True)
 
-			log_msg="Final check metapackage. Metapackage to install:%s"%str(self.flavourToInstall)
-			self.log(log_msg)
+			msgLog="Final check metapackage. Metapackage to install:%s"%str(self.flavourToInstall)
+			self.log(msgLog)
 							
 			if len(self.flavourToInstall)>0:
 				print("  [Lliurex-Up]: Install of metapackage is required:%s"%str(self.flavourToInstall))
 			
-				if extra_args["unattendend_upgrade"]:
-					command="DEBIAN_FRONTEND=noninteractive " + self.lliurexcore.installFinalFlavour(self.flavourToInstall)
+				if self.extraArgs["unattendend_upgrade"]:
+					command="DEBIAN_FRONTEND=noninteractive " + self.lliurexUpCore.installFinalFlavour(self.flavourToInstall)
 				else:
-					command=self.lliurexcore.installFinalFlavour(self.flavourToInstall)
+					command=self.lliurexUpCore.installFinalFlavour(self.flavourToInstall)
 
 				try:
 
@@ -564,29 +561,29 @@ class LliurexUpCli(object):
 						output_err=output[1]	
 					error=self.readErrorOutput(output_err)
 					if error:
-						self.errorfinalmetapackage=True
+						self.finalMetaPackageError=True
 						print("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(output_err))
-						log_msg="Final install metapackage. Error %s"%str(output_err)
+						msgLog="Final install metapackage. Error %s"%str(output_err)
 					else:
-						log_msg="Final install metapackage.OK"
+						msgLog="Final install metapackage.OK"
 
 
 				except Exception as e:
-					self.errorfinalmetapackage=True
+					self.finalMetaPackageError=True
 					print("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(e))
-					log_msg="Install of metapackage. Error:%s"%str(e)
+					msgLog="Install of metapackage. Error:%s"%str(e)
 
-				self.log(log_msg)	
+				self.log(msgLog)	
 					
 							
 			else:
 				print("  [Lliurex-Up]: Metapackage is correct. Nothing to do")
 
 		except Exception as e:	
-			self.errorfinalmetapackage=True
+			self.finalMetaPackageError=True
 			print("  [Lliurex-Up]: Checking Metapackage. Error:" +'\n'+str(e))
-			log_msg="Final check metapackage. Error:%s"%str(e)	
-			self.log(log_msg)	
+			msgLog="Final check metapackage. Error:%s"%str(e)	
+			self.log(msgLog)	
 			
 	#def checkingFinalFlavourToInstall		
 					
@@ -594,28 +591,28 @@ class LliurexUpCli(object):
 
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
-		error=self.lliurexcore.checkErrorDistUpgrade()
+		error=self.lliurexUpCore.checkErrorDistUpgrade()
 		errorDetails=str(error[1])
 
-		if error[0] or self.errorfinalmetapackage or self.errorpostaction :
+		if error[0] or self.finalMetaPackageError or self.postActionError :
 			print("  [Lliurex-Up]: The updated process is endend with errors")
-			log_msg="Dist-upgrade process ending with errors. "+errorDetails
-			self.distUpgrade_OK=False
+			msgLog="Dist-upgrade process ending with errors. "+errorDetails
+			self.distUpgradeOK=False
 		
 		else:					
 			print("  [Lliurex-Up]: The system is now update")	
-			log_msg="Dist-upgrade process ending OK"
-			self.distUpgrade_OK=True
+			msgLog="Dist-upgrade process ending OK"
+			self.distUpgradeOK=True
 
 		
-		self.log(log_msg)
+		self.log(msgLog)
 		
 	#def checkFinalUpgrade	
 
 	def cleanEnvironment(self):
 
-		self.lliurexcore.cleanEnvironment()
-		self.lliurexcore.cleanLliurexUpLock()
+		self.lliurexUpCore.cleanEnvironment()
+		self.lliurexUpCore.cleanLliurexUpLock()
 
 		if self.initActionsArg =="initActionsSai":
 			origPinningPath="/usr/share/lliurex-up/lliurex-pinning.cfg"
@@ -626,65 +623,65 @@ class LliurexUpCli(object):
 
 	#def cleanEnvironment		
 
-	def handler_signal(self,signal,frame):
+	def handlerSignal(self,signal,frame):
 		
 		print("\n  [Lliurex-Up]: Cancel process with Ctrl+C signal")
-		log_msg="Cancel process with Ctrl+C signal"
-		self.log(log_msg)
+		msgLog="Cancel process with Ctrl+C signal"
+		self.log(msgLog)
 		if not self.checkingBlock:
 			self.cleanEnvironment()
 		
 		sys.exit(0)
 	
-	#def handler_signal
+	#def handlerSignal
 
 	def log(self,msg):
 		
-		log_file="/var/log/lliurex-up.log"
-		f=open(log_file,"a+")
+		logFile="/var/log/lliurex-up.log"
+		f=open(logFile,"a+")
 		f.write(msg + '\n')
 		f.close()	
 	
 	#def log
 
 
-	def free_space_check(self):
+	def freeSpaceCheck(self):
 		
-		free_space=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
 
-		if (free_space) < 2: #less than 2GB available?
+		if (freeSpace) < 2: #less than 2GB available?
 			print("  [Lliurex-Up]: There's not enough space on disk to upgrade (2 GB needed)")
-			log_msg="There's not enough space on disk to upgrade: "+str(free_space)+ " GB available"
-			self.log(log_msg)
+			msgLog="There's not enough space on disk to upgrade: "+str(freeSpace)+ " GB available"
+			self.log(msgLog)
 			self.cleanEnvironment()
 			sys.exit(1)
 
-	#def free_space_check		
+	#def freeSpaceCheck		
 
-	def isLliurexUpLocked(self,extra_args):
+	def isLliurexUpLocked(self):
 
 		print("  [Lliurex-Up]: Checking if LliureX-Up is running...")
 
-		code=self.lliurexcore.isLliurexUpLocked()
-		log_msg="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
+		code=self.lliurexUpCore.isLliurexUpLocked()
+		msgLog="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
 
 		
 		if code !=0:
 			if code!=1:
-				self.log(log_msg)
+				self.log(msgLog)
 			self.manageLocker(code,"Lliurex-Up")	
 		else:
-			self.log(log_msg)
+			self.log(msgLog)
 							
 		
 	#def islliurexup_running	
 
 
-	def isAptLocked(self,extra_args):
+	def isAptLocked(self):
 
 		print("  [Lliurex-Up]: Checking if Apt is running...")
 
-		code=self.lliurexcore.isAptLocked()
+		code=self.lliurexUpCore.isAptLocked()
 		
 		if code !=0:
 			self.manageLocker(code,"Apt")	
@@ -692,12 +689,12 @@ class LliurexUpCli(object):
 	#def isAptLocked		
 
 	
-	def isDpkgLocked(self,extra_args):
+	def isDpkgLocked(self):
 
 
 		print("  [Lliurex-Up]: Checking if Dpkg is running...")
 
-		code=self.lliurexcore.isDpkgLocked()
+		code=self.lliurexUpCore.isDpkgLocked()
 
 		if code !=0:
 			self.manageLocker(code,"Dpkg")	
@@ -710,22 +707,22 @@ class LliurexUpCli(object):
 		unlocker=True
 		if code==1:
 			if action!="Lliurex-Up":
-				log_msg=action+" is running"
-				self.log(log_msg)
+				msgLog=action+" is running"
+				self.log(msgLog)
 			print("  [Lliurex-Up]: "+action+" is now running. Wait a moment and try again")
 		
 		elif code==3:
-			log_msg="Apt is running"
-			self.log(log_msg)
+			msgLog="Apt is running"
+			self.log(msgLog)
 			print("  [Lliurex-Up]: Apt is now running. Wait a moment and try again")
 		
 		elif code==2:
-			log_msg=action+" is locked"
-			self.log(log_msg)
-			if not extra_args["unattendend_upgrade"]:
+			msgLog=action+" is locked"
+			self.log(msgLog)
+			if not self.extraArgs["unattendend_upgrade"]:
 				response=input( '  [Lliurex-Up]: '+action+' seems blocked by a failed previous execution. Lliurex-Up can not continue if this block is maintained.You want to try to unlock it (yes/no)?')
 				if response.startswith('y'):
-					self.pulsate_unlocking_process()
+					self.pulsate_unlockingProcess()
 				else:
 					unlocker=False
 			else:
@@ -737,12 +734,12 @@ class LliurexUpCli(object):
 		sys.exit(1)			
 
 
-	def pulsate_unlocking_process(self):
+	def pulsate_unlockingProcess(self):
 
 		self.endProcess=False
 		
-		result_queue=multiprocessing.Queue()
-		self.unlocking_t=multiprocessing.Process(target=self.unlocking_process,args=(result_queue,))
+		resultQueue=multiprocessing.Queue()
+		self.unlocking_t=multiprocessing.Process(target=self.unlockingProcess,args=(resultQueue,))
 		self.unlocking_t.start()
 		
 
@@ -755,48 +752,49 @@ class LliurexUpCli(object):
 
 			i+=1
 
-		result=result_queue.get()
+		result=resultQueue.get()
 		
 		if result ==0:
 			sys.stdout.flush()
-			log_msg="The unlocking process finished successfully"
-			self.log(log_msg)
+			msgLog="The unlocking process finished successfully"
+			self.log(msgLog)
 			os.execv("/usr/sbin/lliurex-upgrade",sys.argv)
 		else:
 			if result==1:
 				print("  [Lliurex-Up]: The unlocking process has failed")
-				log_msg="The unlocking process has failed"
+				msgLog="The unlocking process has failed"
 			else:
 				print("  [Lliurex-Up]: Some process are running. Wait a moment and try again")
-				log_msg="Some process are running. Wait a moment and try again"
+				msgLog="Some process are running. Wait a moment and try again"
 	
-			self.log(log_msg)
+			self.log(msgLog)
 			sys.exit(1)
 
 
-	#def pulsate_unlocking_process
+	#def pulsate_unlockingProcess
 
-	def unlocking_process(self,result_queue):
+	def unlockingProcess(self,resultQueue):
 
-		cmd=self.lliurexcore.unlockerCommand()
+		cmd=self.lliurexUpCore.unlockerCommand()
 		p=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
-		result_queue.put(p)
+		resultQueue.put(p)
 
-	#def unlocking_process	
+	#def unlockingProcess	
 		
 	
-	def main(self,mode,extra_args=None):
+	def main(self,mode,extraArgs=None):
 
-		self.isLliurexUpLocked(extra_args)
-		self.isAptLocked(extra_args)
-		self.isDpkgLocked(extra_args)
+		self.extraArgs=extraArgs
+		self.isLliurexUpLocked()
+		self.isAptLocked()
+		self.isDpkgLocked()
 		self.startLliurexUp(mode)
 		self.checkInitialFlavour()
 
-		log_msg="Mode of execution: " + str(self.mode)
-		self.log(log_msg)
-		log_msg="Extra args: " + str(extra_args)
-		self.log(log_msg)
+		msgLog="Mode of execution: " + str(self.mode)
+		self.log(msgLog)
+		msgLog="Extra args: " + str(self.extraArgs)
+		self.log(msgLog)
 			
 		if not self.canConnectToLliurexNet():
 			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
@@ -816,15 +814,15 @@ class LliurexUpCli(object):
 			self.cleanEnvironment()
 			return 1
 		else:
-			self.clientCheckingMirrorExists(extra_args)
+			self.clientCheckingMirrorExists()
 				
-		self.initActionsScript(extra_args)
+		self.initActionsScript()
 		if not self.checkLliurexUp():
 			self.cleanEnvironment()
 			return 1
 
-		if extra_args["mirror"]:
-			self.checkMirror(extra_args)
+		if self.extraArgs["mirror"]:
+			self.checkMirror()
 
 		self.getLliurexVersionLocal()
 		self.getLliurexVersionLliurexNet()
@@ -833,62 +831,62 @@ class LliurexUpCli(object):
 
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
-				print("  [Lliurex-Up]: List of packages to update:\n"+str(self.listpackages))
-				print("  [Lliurex-Up]: Number of packages to update:    " +str(len(self.packages)) + " (" + str(self.newpackages) + " news)" )
-				print("  [Lliurex-Up]: Current version:                 " +str(self.version_update["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.version_available["candidate"]))
-				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.version_update["candidate"]))
-				print("  [Lliurex-Up]: Update source:                   " +str(self.version_update["updateSource"]))
+				print("  [Lliurex-Up]: List of packages to update:\n"+str(self.packagesList))
+				print("  [Lliurex-Up]: Number of packages to update:    " +str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
+				print("  [Lliurex-Up]: Current version:                 " +str(self.versionToUpdate["installed"]))
+				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.versionToUpdate["candidate"]))
+				print("  [Lliurex-Up]: Update source:                   " +str(self.versionToUpdate["updateSource"]))
 				if self.configureRequired:
 					print("  [Lliurex-Up]: dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
-				if not extra_args["unattendend_upgrade"]:
+				if not self.extraArgs["unattendend_upgrade"]:
 					response=input('  [Lliurex-Up]: Do you want to update the system (yes/no)): ').lower()
 				else:
 					response="yes"
 
 				if response.startswith('y'):
-					self.lliurexcore.stopAutoUpgrade()
-					self.preActionsScript(extra_args)
-					self.distUpgrade(extra_args)
-					self.postActionsScript(extra_args)
+					self.lliurexUpCore.stopAutoUpgrade()
+					self.preActionsScript()
+					self.distUpgrade()
+					self.postActionsScript()
 					time.sleep(5)
 					self.checkingFinalFlavourToInstall()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
-					if self.distUpgrade_OK:
+					if self.distUpgradeOK:
 						return 0
 					else:
 						return 1
 				else:
-					log_msg="Cancel the update"
-					self.log(log_msg)
+					msgLog="Cancel the update"
+					self.log(msgLog)
 					print("  [Lliurex-Up]: Cancel the update")
 					self.cleanEnvironment()
 
 					return 0
 			else:
 				print("[Lliurex-Up]: Updated abort for incorrect flavours detected in new update. Detected flavours: "+str(self.aditionalFlavours))
-				log_msg="Updated abort for incorrect flavours detected in new update"
-				self.log(log_msg)
+				msgLog="Updated abort for incorrect flavours detected in new update"
+				self.log(msgLog)
 				self.cleanEnvironment()
 
 				return 1			
 		else:
 			if not self.checkPreviousUpgrade():
-				print("  [Lliurex-Up]: Current version:                 " +str(self.version_update["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.version_available["candidate"]))
-				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.version_update["candidate"]))
-				print("  [Lliurex-Up]: Update source:                   " +str(self.version_update["updateSource"]))
+				print("  [Lliurex-Up]: Current version:                 " +str(self.versionToUpdate["installed"]))
+				print("  [Lliurex-Up]: Available version (lliurex.net): " +str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Candidate version (to install):  " +str(self.versionToUpdate["candidate"]))
+				print("  [Lliurex-Up]: Update source:                   " +str(self.versionToUpdate["updateSource"]))
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
-				log_msg="System updated. Nothing to do"
-				self.log(log_msg)
+				msgLog="System updated. Nothing to do"
+				self.log(msgLog)
 				self.cleanEnvironment()
 
 				return 0
 			else:
 				print("  [Lliurex-Up]: Updated abort. An error occurred checking new updates")
-				log_msg=" Updated abort. An error occurred checking new updates"
-				self.log(log_msg)
+				msgLog=" Updated abort. An error occurred checking new updates"
+				self.log(msgLog)
 				self.cleanEnvironment()
 
 				return 1
