@@ -1,3 +1,9 @@
+lliurex-up (25.05.14) noble; urgency=medium
+
+  * Fixed code of lliurex-upgrade
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 17 Jan 2025 10:08:10 +0100
+
 lliurex-up (25.05.13) noble; urgency=medium
 
   * Fixed lliurex-upgrade imports
