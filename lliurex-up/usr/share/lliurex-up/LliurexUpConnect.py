@@ -19,6 +19,9 @@ import lliurex.lliurexup as LliurexUpCore
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+import gettext
+gettext.textdomain("lliurex-up")
+_=gettext.gettext
 
 class LliurexUpConnect():
 
@@ -42,6 +45,7 @@ class LliurexUpConnect():
 		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
+		self.isSystrayEnabled=True
 		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
@@ -55,6 +59,18 @@ class LliurexUpConnect():
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
 		self.connectionWithServer=self.llxUpCore.connectionWithServer
+		self.isAutoUpgradeAvailable=False
+		self.isAutoUpgradeEnabled=False
+		self.dateToUpdate=self.llxUpCore.dateToUpdate
+		self.weeksOfPause=self.llxUpCore.weeksOfPause
+		self.isWeekPauseActive=False
+		self.canExtendedPause=False
+		week=_("week")
+		weeks=_("weeks")
+		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%week,"value":4},{"name":"5 %s"%week,"value":5}]
+		self.extensionPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%week,"value":4},{"name":"5 %s"%week,"value":5}]
+		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause]
+		self.currentConfig=[self.isSystrayEnabled,self.weeksOfPauseInfo]
 
 	#def __init__	
 
@@ -616,12 +632,12 @@ class LliurexUpConnect():
 
 	#def manageSettinsgOptions
 
-	def isSystrayEnabled(self):
+	def getSystrayStatus(self):
 
 		if os.path.exists(self.disableSystrayToken):
-			return False
+			self.isSystrayEnabled=False
 		else:
-			return True
+			self.isSystrayEnabled=True
 
 	#de isSystrayEnabled
 
@@ -639,36 +655,6 @@ class LliurexUpConnect():
 				f.close()
 
 	#def manageSystray
-
-	def isAutoUpgradeAvailable(self):
-
-		return self.llxUpCore.isAutoUpgradeAvailable()
-
-	#def isAutoUpgradeAvailable
-
-	def isAutoUpgradeEnabled(self):
-
-		return self.llxUpCore.isAutoUpgradeEnabled()
-
-	#de isAutoUpgradeEnabled
-
-	def manageAutoUpgrade(self,enable):
-
-		return self.llxUpCore.manageAutoUpgrade(enable)
-
-	#def manageAutoUpgrade
-
-	def isAutoUpgradeRun(self):
-
-		return self.llxUpCore.isAutoUpgradeRun()
-
-	#def isAutoUpgradeRun
-
-	def stopAutoUpgrade(self):
-
-		ret=self.llxUpCore.stopAutoUpgrade()
-
-	#def stopAutoUpgrade	
 
 	def preActionsScript(self):
 
@@ -955,5 +941,59 @@ class LliurexUpConnect():
 		return tmpPackages
 	
 	#def checkUnpackedStatus
+
+	def getAutoUpgradeInfo(self):
+
+		self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
+		if self.isAutoUpgradeAvailable:
+			self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
+			if self.isAutoUpgradeEnabled:
+				self.llxUpCore.getAutoUpgradeConfig()
+				weeksOfPause=self.llxUpCore.weeksOfPause
+				self.dateToUpdate=self.llxUpCore.dateToUpdate
+				extensionPause=self.llxUpCore.extensionPause
+				if weeksOfPause>0:
+					self.isWeekPauseActive=True
+					self.weeksOfPauseInfo[0]=self.isWeekPauseActive
+					for i in range(len(self.weeksOfPauseCombo)):
+						if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
+							self.weeksOfPause=i
+							self.weeksOfPauseInfo[1]=self.weeksOfPause
+							break;
+					self.currentConfig[1]=self.weeksOfPauseInfo
+					if weeksOfPause<5:
+						self.canExtendedPause=True
+						self._getExtensionPauseCombo(extensionPause)
+
+	#def getAutoUpgradeInfo
+
+	def _getExtensionPauseCombo(self,extensionPause):
+
+		self.extensionPauseCombo=[]
+		for item in self.weeksOfPauseCombo:
+			if item["value"]>extensionPause:
+				pass
+			else:
+				self.extensionPauseCombo.append(item)
+
+	#def _getextensionPauseCombo
+
+	def manageAutoUpgrade(self,enable):
+
+		return self.llxUpCore.manageAutoUpgrade(enable)
+
+	#def manageAutoUpgrade
+
+	def isAutoUpgradeRun(self):
+
+		return self.llxUpCore.isAutoUpgradeRun()
+
+	#def isAutoUpgradeRun
+
+	def stopAutoUpgrade(self):
+
+		ret=self.llxUpCore.stopAutoUpgrade()
+
+	#def stopAutoUpgrade
 
 #class LliurexUpConnect			

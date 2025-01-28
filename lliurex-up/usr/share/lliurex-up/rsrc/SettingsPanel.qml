@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.16 as Kirigami
+import org.kde.plasma.components 3.0 as PC3
 
 
 Rectangle{
@@ -40,82 +41,133 @@ Rectangle{
 
      		Text {
      			id:textNotificationSettings
-     			text:i18nd("lliurex-up","Show notifications for available updates:")
+     			text:i18nd("lliurex-up","Notifications:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				Layout.alignment:Qt.AlignRight
 				Layout.bottomMargin:10
 			}   
 
-			Switch {
-				id:notificationToggleswitch
+			PC3.CheckBox {
+				id:notificationCB
 				checked: settingStackBridge.isSystrayEnabled
-				Layout.alignment:Qt.AlignLeft
+				text:i18nd("lliurex-up","Show notifications for available updates")
+				enabled:true
+				font.family: "Quattrocento Sans Bold"
+				font.pointSize: 10
+				focusPolicy: Qt.NoFocus
+				onToggled:settingsStackBridge.manageAutoStart(autoStartValue.checked);
 				Layout.bottomMargin:10
-				indicator: Rectangle {
-					implicitWidth: 40
-					implicitHeight: 10
-					x: notificationToggleswitch.width - width - notificationToggleswitch.rightPadding
-					y: parent.height/2 - height/2 
-					radius: 7
-					color: notificationToggleswitch.checked ? "#3daee9" : "#d3d3d3"
-
-					Rectangle {
-						x: notificationToggleswitch.checked ? parent.width - width : 0
-						width: 20
-						height: 20
-						y:parent.height/2-height/2
-						radius: 10
-						border.color: "#808080"
-				   }
-				}
-				onToggled: {
-					settingStackBridge.manageSystray(notificationToggleswitch.checked);
-				}
+				Layout.alignment:Qt.AlignLeft
 			}
 
 			Text {
      			id:textAutoUpgradeSettings
-     			text:i18nd("lliurex-up","Activate automatic system update:")
+     			text:i18nd("lliurex-up","Updates:")
+				font.family: "Quattrocento Sans Bold"
+				font.pointSize: 10
+				visible:true
+				Layout.bottomMargin:10
+				Layout.alignment:Qt.AlignRight
+			} 
+
+			PC3.CheckBox {
+				id:autoUpgradeCB
+				checked: settingStackBridge.isAutoUpgradeEnabled
+				text:i18nd("lliurex-up","Activate automatic system updates")
+				enabled:true
+				visible:true
+				font.family: "Quattrocento Sans Bold"
+				font.pointSize: 10
+				focusPolicy: Qt.NoFocus
+				Layout.bottomMargin:10
+				Layout.alignment:Qt.AlignLeft
+			}  
+
+			Text {
+     			id:textPauseAutoSettings
+     			text:i18nd("lliurex-up","Pause updates:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				visible:settingStackBridge.isAutoUpgradeAvailable
+				Layout.bottomMargin:10
 				Layout.alignment:Qt.AlignRight
-			}   
+			} 
+			RowLayout{
+				id:PauseRow
+				PC3.CheckBox {
+					id:pauseUpgradeCB
+					checked: settingStackBridge.isWeekPauseActive
+					text:i18nd("lliurex-up","Pause automatic updates for: ")
+					enabled:true
+					font.family: "Quattrocento Sans Bold"
+					font.pointSize: 10
+					focusPolicy: Qt.NoFocus
+					Layout.bottomMargin:10
+					Layout.alignment:Qt.AlignLeft
+				} 
 
-			Switch {
-				id:autoUpgradeToggleswitch
-				checked:settingStackBridge.isAutoUpgradeEnabled
-				enabled:!settingStackBridge.isAutoUpgradeRun
-				visible:settingStackBridge.isAutoUpgradeAvailable
-				Layout.alignment:Qt.AlignLeft
-				indicator: Rectangle {
-					implicitWidth: 40
-					implicitHeight: 10
-					x: autoUpgradeToggleswitch.width - width - autoUpgradeToggleswitch.rightPadding
-					y: parent.height/2 - height/2 
-					radius: 7
-					color: autoUpgradeToggleswitch.checked ? "#3daee9" : "#d3d3d3"
+				PC3.ComboBox{
+					id:pauseValues
+					currentIndex:settingStackBridge.weeksOfPause
+					textRole:"name"
+					model:settingStackBridge.weeksOfPauseCombo
+					Layout.alignment:Qt.AlignVCenter
+					Layout.bottomMargin:10
+					Layout.preferredWidth:100
+            }
 
-					Rectangle {
-						x: autoUpgradeToggleswitch.checked ? parent.width - width : 0
-						width: 20
-						height: 20
-						y:parent.height/2-height/2
-						radius: 10
-						border.color: "#808080"
-				   }
-				}	
-				hoverEnabled:true
-				ToolTip.delay: 1000
-				ToolTip.timeout: 3000
-				ToolTip.visible: hovered
-				ToolTip.text:i18nd("lliurex-up","If it is activated the system will update automatically at login")
+            PC3.Button {
+            	id:openFolderBtn
+            	display:AbstractButton.IconOnly
+            	icon.name:"document-edit"
+            	ToolTip.delay: 1000
+            	ToolTip.timeout: 3000
+            	ToolTip.visible: hovered
+            	ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
+            	hoverEnabled:true
+            	enabled:settingStackBridge.canExtendedPause
+            	Layout.preferredHeight: 35
+            	Layout.alignment:Qt.AlignVCenter
+            	Layout.bottomMargin:10
+            	onClicked:{
+            		extensionText.visible=!extensionText.visible
+            		extensionRow.visible=!extensionRow.visible
+               }
+            }
+            
+         }
+         Text{
+         	id:extensionText
+         	visible:false
 
-				onToggled: {
-					settingStackBridge.manageAutoUpgrade(autoUpgradeToggleswitch.checked);
-				}
-			}
+         }
+         RowLayout{
+         	id:extensionRow
+         	visible:false
+
+         	Text {
+         		id:textExtendedPause
+         		text:i18nd("lliurex-up","Extended pause of automatic updates for:")
+         		font.family: "Quattrocento Sans Bold"
+         		font.pointSize: 10
+         		Layout.bottomMargin:10
+         		Layout.alignment:Qt.AlignRight
+				} 
+
+				PC3.ComboBox{
+               id:extendedValues
+               currentIndex:0
+               textRole:"name"
+               model:settingStackBridge.extensionPauseCombo
+               Layout.alignment:Qt.AlignVCenter
+               Layout.bottomMargin:10
+               Layout.preferredWidth:100
+            }
+
+         }
+
+			
 		}
 
 	}

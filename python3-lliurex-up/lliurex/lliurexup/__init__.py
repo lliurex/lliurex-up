@@ -46,7 +46,10 @@ class LliurexUpCore(object):
 		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
-
+		self.dateToUpdate=""
+		self.weeksOfPause=0
+		self.extensionPause=5
+	
 	#def __init__	
 
 	def startLliurexUp(self):
@@ -1118,7 +1121,7 @@ class LliurexUpCore(object):
 			return False
 	
 	#def isAutoUpgradeEnabled
-
+	
 	def isAutoUpgradeRun(self):
 
 		try:
@@ -1137,7 +1140,21 @@ class LliurexUpCore(object):
 		except:
 			return False
 
-	#def isAutoUpgradeActive 	
+	#def isAutoUpgradeActive 
+
+	def getAutoUpgradeConfig(self):
+
+		try:
+			ret=self.n4d.read_current_config('','LliurexUpManager')["return"]
+			if ret[0]:
+				if len(ret[1]):
+					self.dateToUpdate=ret[1]["dateToUpdate"]
+					self.weeksOfPause=ret[1]["weeksOfPause"]
+					self.extensionPause=ret[1]["extensionPause"]
+		except:
+			pass
+			
+	#def getAutoUpgradeConfig	
 
 	def manageAutoUpgrade(self,enable):
 
@@ -1147,10 +1164,7 @@ class LliurexUpCore(object):
 
 			result=self.n4d.manage_auto_update_service(n4dKey,"LliurexUpManager",enable)
 
-			if result['return'] and not enable:
-				return self.stopAutoUpgrade()
-			else:
-				return result['return']
+			return result['return']
 
 		except:
 			return False
