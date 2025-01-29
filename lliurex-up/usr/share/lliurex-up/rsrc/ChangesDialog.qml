@@ -70,7 +70,7 @@ Dialog {
             onClicked:{
                 xButton=false
                 dialogApplyClicked()
-                settingStackBridge.managePendingChangesDialog("Accept")
+                settingStackBridge.managePendingChangesDialog("Apply")
             }
         }
 
