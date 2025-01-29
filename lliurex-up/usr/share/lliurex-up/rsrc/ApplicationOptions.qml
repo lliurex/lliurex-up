@@ -173,7 +173,17 @@ GridLayout{
                
             PC3.Button {
                 id:updateBtn
-                visible:mainStackBridge.showUpdateBtn
+                visible:{
+                    if (mainStackBridge.showUpdateBtn){
+                        if (mainStackBridge.currentOptionStack!=3){
+                            true
+                        }else{
+                            false
+                        }
+                    }else{
+                        false
+                    }
+                }
                 focus:true
                 display:AbstractButton.TextBesideIcon
                 icon.name:"view-refresh"
@@ -188,6 +198,55 @@ GridLayout{
                     konsolePanel.runCommand('history -c\n')
                     updateSystem()
                     mainStackBridge.launchUpdateProcess()
+                }
+                
+            }
+
+            PC3.Button {
+                id:applyBtn
+                visible:{
+                    if (mainStackBridge.currentOptionStack==3){
+                        true
+                    }else{
+                        false
+                    }
+                }
+                focus:true
+                display:AbstractButton.TextBesideIcon
+                icon.name:"dialog-ok"
+                text:i18nd("lliurex-up","Apply")
+                enabled:settingStackBridge.settingsAutoUpgradeChanged
+                Layout.preferredHeight:40
+                Layout.leftMargin:10
+                Layout.rightMargin:10
+                Keys.onReturnPressed: applyBtn.clicked()
+                Keys.onEnterPressed: applyBtn.clicked()
+                onClicked:{
+                    settingStackBridge.applyChanges()
+                }
+                
+            }
+            PC3.Button {
+                id:cancelBtn
+                visible:{
+                    if (mainStackBridge.currentOptionStack==3){
+                        true
+                    }else{
+                        false
+                    }
+                }
+                focus:true
+                display:AbstractButton.TextBesideIcon
+                icon.name:"dialog-cancel"
+                text:i18nd("lliurex-up","Cancel")
+                enabled:settingStackBridge.settingsAutoUpgradeChanged
+                Layout.preferredHeight:40
+                Layout.leftMargin:10
+                Layout.rightMargin:10
+                Keys.onReturnPressed: cancelBtn.clicked()
+                Keys.onEnterPressed: cancelBtn.clicked()
+                onClicked:{
+                    settingStackBridge.discardChanges()
                 }
                 
             }

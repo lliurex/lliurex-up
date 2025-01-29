@@ -12,13 +12,27 @@ import pwd
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class Bridge(QObject):
+class ApplyChanges(QThread):
 
-	SYSTRAY_MSG=0
-	AUTOUPGRADE_ENABLE_ERROR=-1
-	AUTOUPGRADE_DISABLE_ERROR=-2
-	AUTOUPGRADE_ENABLE=1
-	AUTOUPGRADE_DISABLE=2
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+		self.core=Core.Core.get_core()
+		self.llxUpConnect=self.core.llxUpConnect
+		self.newConfig=args[0]
+		self.ret=[]
+
+	#def __init__
+
+	def run(self,*args):
+		
+		self.ret=self.llxUpConnect.applySettingsChanges(self.newConfig)
+
+	#def run
+
+#class SetChanges
+
+class Bridge(QObject):
 
 	def __init__(self):
 
@@ -31,12 +45,16 @@ class Bridge(QObject):
 		self._isAutoUpgradeEnabled=False
 		self._showSettingsMsg=[False,"","Ok"]
 		self._isAutoUpgradeRun=False
+		self._canPauseUpdate=False
 		self._isWeekPauseActive=False
 		self._canExtendedPause=False
 		self._weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 		self._weeksOfPauseCombo=Bridge.llxUpConnect.weeksOfPauseCombo
 		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
+		self._settingsAutoUpgradeChanged=False
+		self._showPendingChangesDialog=False
+		self._closePopUp=True
 
 	#def __init__
 
@@ -46,12 +64,15 @@ class Bridge(QObject):
 		self.isSystrayEnabled=Bridge.llxUpConnect.isSystrayEnabled
 		self.isAutoUpgradeAvailable=Bridge.llxUpConnect.isAutoUpgradeAvailable
 		self.isAutoUpgradeEnabled=Bridge.llxUpConnect.isAutoUpgradeEnabled
+		
 		if self.isAutoUpgradeEnabled:
 			self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
+			self.canPauseUpdate=Bridge.llxUpConnect.canPauseUpdate
 			self.weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 			self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
 			self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
 			self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
+		
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		
 	#def getSettingsInfo
@@ -111,6 +132,20 @@ class Bridge(QObject):
 			self.on_isAutoUpgradeEnabled.emit()
 
 	#def _setIsAutoUpgradeEnabled
+
+	def _getCanPauseUpdate(self):
+
+		return self._canPauseUpdate
+
+	#def _getCanPauseUpdate
+
+	def _setCanPauseUpdate(self,canPauseUpdate):
+
+		if self._canPauseUpdate!=canPauseUpdate:
+			self._canPauseUpdate=canPauseUpdate
+			self.on_canPauseUpdate.emit()
+
+	#def _setIsWeekPauseActive
 
 	def _getIsWeekPauseActive(self):
 
@@ -202,6 +237,48 @@ class Bridge(QObject):
 
 	#def _setIsAutoUpgradeRun
 
+	def _getSettingsAutoUpgradeChanged(self):
+
+		return self._settingsAutoUpgradeChanged
+
+	#def _getSettingsAutoUpgradeChanged 
+
+	def _setSettingsAutoUpgradeChanged(self,settingsAutoUpgradeChanged):
+
+		if self._settingsAutoUpgradeChanged!=settingsAutoUpgradeChanged:
+			self._settingsAutoUpgradeChanged=settingsAutoUpgradeChanged
+			self.on_settingsAutoUpgradeChanged.emit()
+
+	#def _setSettingsAutoUpgradeChanged 
+
+	def _getShowPendingChangesDialog(self):
+
+		return self._showPendingChangesDialog
+
+	#def _getShowPendingChangesDialog
+
+	def _setShowPendingChangesDialog(self,showPendingChangesDialog):
+
+		if self._showPendingChangesDialog!=showPendingChangesDialog:
+			self._showPendingChangesDialog=showPendingChangesDialog
+			self.on_showPendingChangesDialog.emit()
+
+	#def _setShowPendingChangesDialog
+	
+	def _getClosePopUp(self):
+
+		return self._closePopUp
+
+	#def _getClosePopUp
+
+	def _setClosePopUp(self,closePopUp):
+
+		if self._closePopUp!=closePopUp:
+			self._closePopUp=closePopUp
+			self.on_closePopUp.emit()
+
+	#def _setClosePopUp
+	
 	@Slot(bool)
 	def manageSystray(self,enable):
 
@@ -211,22 +288,65 @@ class Bridge(QObject):
 	#def manageSystray
 
 	@Slot(bool)
-	def manageAutoUpgrade(self,enable):
+	def manageAutoUpgrade(self,value):
 		
-		ret=Bridge.llxUpConnect.manageAutoUpgrade(enable)
-		if enable:
-			if ret:
-				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_ENABLE,"Ok"]
-			else:
-				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_ENABLE_ERROR,"Error"]
+		self.showSettingsMsg=[False,"","Ok"]
+		
+		if value!=self.isAutoUpgradeEnabled:
+			self.isAutoUpgradeEnabled=value
+			self.initialConfig[1]=value
+		
+		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
+			self.settingsAutoUpgradeChanged=True
 		else:
-			if ret:
-				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_DISABLE,"Ok"]
-			else:
-				self.showSettingsMsg=[True,Bridge.AUTOUPGRADE_DISABLE_ERROR,"Error"]
+			self.settingsAutoUpgradeChanged=False
 
 	#def manageAutoUpgtade 
+
+	@Slot(str)
+	def managePendingChangesDialog(self,action):
+
+		if action=="Apply":
+			self.showPendingChangesDialog=False
+			self.applyChanges()			
+		elif action=="Discard":
+			print("Discard")
+		elif action=="Cancel":
+			self.showPendingChangesDialog=False
+	
+	#def managePendingChangesDialog
+
+	@Slot()
+	def applyChanges(self):
 		
+		self.closePopUp=False
+		self.core.mainStack.closeGui=False
+		self.showSettingsMsg=[False,"","OK"]
+		self.applyChangesT=ApplyChanges(self.initialConfig)
+		self.applyChangesT.start()
+		self.applyChangesT.finished.connect(self._applyChangesRet)
+
+	#def applyChanges
+
+	def _applyChangesRet(self):
+
+		self.closePopUp=True
+		self.getSettingsInfo()
+
+		if not self.applyChangesT.ret[0]:
+			self.core.mainStack.closeGui=True
+			self.settingsAutoUpgradeChanged=False
+			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
+
+	#def _applyChangesRet
+
+	@Slot()
+	def discardChanges(self):
+		print("Descartando cambios")
+
+	#def discardChanges
+
+
 	on_showSettingsPanel=Signal()
 	showSettingsPanel=Property(bool,_getShowSettingsPanel,_setShowSettingsPanel,notify=on_showSettingsPanel)
 	
@@ -245,6 +365,9 @@ class Bridge(QObject):
 	on_isAutoUpgradeRun=Signal()
 	isAutoUpgradeRun=Property(bool,_getIsAutoUpgradeRun,_setIsAutoUpgradeRun,notify=on_isAutoUpgradeRun)
 
+	on_canPauseUpdate=Signal()
+	canPauseUpdate=Property(bool,_getCanPauseUpdate,_setCanPauseUpdate,notify=on_canPauseUpdate)
+
 	on_isWeekPauseActive=Signal()
 	isWeekPauseActive=Property(bool,_getIsWeekPauseActive,_setIsWeekPauseActive,notify=on_isWeekPauseActive)
 
@@ -256,6 +379,15 @@ class Bridge(QObject):
 
 	on_extensionPauseCombo=Signal()
 	extensionPauseCombo=Property('QVariant',_getExtensionPauseCombo,_setExtensionPauseCombo,notify=on_extensionPauseCombo)
+
+	on_settingsAutoUpgradeChanged=Signal()
+	settingsAutoUpgradeChanged=Property(bool,_getSettingsAutoUpgradeChanged,_setSettingsAutoUpgradeChanged,notify=on_settingsAutoUpgradeChanged)
+
+	on_showPendingChangesDialog=Signal()
+	showPendingChangesDialog=Property(bool,_getShowPendingChangesDialog,_setShowPendingChangesDialog,notify=on_showPendingChangesDialog)
+
+	on_closePopUp=Signal()
+	closePopUp=Property(bool,_getClosePopUp,_setClosePopUp,notify=on_closePopUp)
 
 	weeksOfPauseCombo=Property('QVariant',_getWeeksOfPauseCombo,constant=True)
 	

@@ -39,6 +39,7 @@ class Bridge(QObject):
 		self._currentCommand=""
 		self._progressPkg=0
 		self._closeGui=False
+		self.moveToStack=""
 
 	#def __init__
 
@@ -297,17 +298,25 @@ class Bridge(QObject):
 	def manageTransitions(self,stack):
 
 		if self.currentOptionStack!=stack:
-			self.currentOptionStack=stack
-			self.core.settingStack.showSettingsMsg=[False,"","Ok"]
-			if stack==3:
-				self.core.settingStack.getSettingsInfo()
-				if self.enableUpdateBtn:
-					self.enableUpdateBtn=False
+			if self.core.settingStack.settingsAutoUpgradeChanged:
+				self.moveToStack=stack
+				self.core.settingStack.showPendingChangesDialog=True
 			else:
-				if not self.enableKonsole:
-					if self.updateRequired:
-						if not self.enableUpdateBtn:
-							self.enableUpdateBtn=True
+				self.moveToStack=""
+				self.currentOptionStack=stack
+				self.core.settingStack.showSettingsMsg=[False,"","Ok"]
+				if stack==3:
+					self.core.settingStack.getSettingsInfo()
+					if self.showProgressBar:
+						self.showProgressBar=False
+				else:
+					if not self.endProcess:
+						if not self.showProgressBar:
+							self.showProgressBar=True
+					if not self.enableKonsole:
+						if self.updateRequired:
+							if not self.enableUpdateBtn:
+								self.enableUpdateBtn=True
 
 	#de manageTransitions
 

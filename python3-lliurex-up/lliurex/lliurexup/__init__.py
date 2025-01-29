@@ -1146,11 +1146,11 @@ class LliurexUpCore(object):
 
 		try:
 			ret=self.n4d.read_current_config('','LliurexUpManager')["return"]
-			if ret[0]:
-				if len(ret[1]):
-					self.dateToUpdate=ret[1]["dateToUpdate"]
-					self.weeksOfPause=ret[1]["weeksOfPause"]
-					self.extensionPause=ret[1]["extensionPause"]
+			if ret['status']:
+				if len(ret['data']):
+					self.dateToUpdate=ret['data']["dateToUpdate"]
+					self.weeksOfPause=ret['data']["weeksOfPause"]
+					self.extensionPause=ret['data']["extensionPause"]
 		except:
 			pass
 			

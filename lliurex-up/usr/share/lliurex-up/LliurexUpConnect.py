@@ -64,14 +64,16 @@ class LliurexUpConnect():
 		self.dateToUpdate=self.llxUpCore.dateToUpdate
 		self.weeksOfPause=self.llxUpCore.weeksOfPause
 		self.isWeekPauseActive=False
+		self.canPauseUpdate=False
 		self.canExtendedPause=False
 		week=_("week")
 		weeks=_("weeks")
-		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%week,"value":4},{"name":"5 %s"%week,"value":5}]
-		self.extensionPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%week,"value":4},{"name":"5 %s"%week,"value":5}]
+		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
+		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
 		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause]
-		self.currentConfig=[self.isSystrayEnabled,self.weeksOfPauseInfo]
+		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.weeksOfPauseInfo]
 
+	
 	#def __init__	
 
 	def checkLocks(self):
@@ -639,6 +641,8 @@ class LliurexUpConnect():
 		else:
 			self.isSystrayEnabled=True
 
+		self.currentConfig[0]=self.isSystrayEnabled
+
 	#de isSystrayEnabled
 
 	def manageSystray(self,enable):
@@ -947,12 +951,15 @@ class LliurexUpConnect():
 		self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
 		if self.isAutoUpgradeAvailable:
 			self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
+			self.currentConfig[1]=self.isAutoUpgradeEnabled
 			if self.isAutoUpgradeEnabled:
 				self.llxUpCore.getAutoUpgradeConfig()
 				weeksOfPause=self.llxUpCore.weeksOfPause
 				self.dateToUpdate=self.llxUpCore.dateToUpdate
 				extensionPause=self.llxUpCore.extensionPause
+
 				if weeksOfPause>0:
+					self.canPauseUpdate=False
 					self.isWeekPauseActive=True
 					self.weeksOfPauseInfo[0]=self.isWeekPauseActive
 					for i in range(len(self.weeksOfPauseCombo)):
@@ -960,16 +967,24 @@ class LliurexUpConnect():
 							self.weeksOfPause=i
 							self.weeksOfPauseInfo[1]=self.weeksOfPause
 							break;
-					self.currentConfig[1]=self.weeksOfPauseInfo
+					self.currentConfig[2]=self.weeksOfPauseInfo
 					if weeksOfPause<5:
 						self.canExtendedPause=True
 						self._getExtensionPauseCombo(extensionPause)
+					else:
+						self.canExtendedPause=False
+				else:
+					self.isWeekPauseActive=False
+					self.canPauseUpdate=True
+					self.canExtendedPause=False
+
+				print("PAUSE: %s"%str(self.canPauseUpdate))
 
 	#def getAutoUpgradeInfo
 
 	def _getExtensionPauseCombo(self,extensionPause):
 
-		self.extensionPauseCombo=[]
+		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0}]
 		for item in self.weeksOfPauseCombo:
 			if item["value"]>extensionPause:
 				pass
@@ -978,11 +993,55 @@ class LliurexUpConnect():
 
 	#def _getextensionPauseCombo
 
+	def applySettingsChanges(self,newConfig):
+
+		SYSTRAY_MSG=0
+		AUTOUPGRADE_ENABLE_ERROR=-1
+		AUTOUPGRADE_DISABLE_ERROR=-2
+		AUTOUPGRADE_ENABLE=1
+		AUTOUPGRADE_DISABLE=2
+		
+		retSystray=True
+		retEnableService=True
+		retPauseUpdate=True
+		changesInAutoUpdate=True
+
+		if newConfig[0]!=self.currentConfig[0]:
+			retSystray=self.manageSystray(newConfig[0])
+			self.getSystrayStatus()
+
+		if newConfig[1]!=self.currentConfig[1]:
+			retEnableService=self.manageAutoUpgrade(newConfig[1])
+			self.changesInAutoUpdate=True
+
+		'''
+		if newConfig[2]!=self.currentConfig[2]:
+			if newConfig[1] and not errorEnableService:
+				errorPauseUpdate=self.manageAutoUpgradePause(newConfig[2])
+				self.changesInAutoUpdate=True
+		'''
+		if self.changesInAutoUpdate:
+			self.getAutoUpgradeInfo()
+
+		if retSystray and retEnableService and retPauseUpdate:
+			return [False,SYSTRAY_MSG]
+
+	#def applySettingsChanges
+
 	def manageAutoUpgrade(self,enable):
 
 		return self.llxUpCore.manageAutoUpgrade(enable)
 
 	#def manageAutoUpgrade
+
+	'''
+	def manageAutoUpgradePause(self,newConfig):
+
+		enablePause=newConfig[0]
+		weeksOfPause=newConfig[1]
+
+	#def manageAutoUpgradePause
+	'''
 
 	def isAutoUpgradeRun(self):
 

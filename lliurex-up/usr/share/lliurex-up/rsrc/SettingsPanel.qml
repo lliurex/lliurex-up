@@ -80,8 +80,11 @@ Rectangle{
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				focusPolicy: Qt.NoFocus
-				Layout.bottomMargin:10
-				Layout.alignment:Qt.AlignLeft
+            			Layout.bottomMargin:10
+            			Layout.alignment:Qt.AlignLeft
+			    	onToggled:{
+			    		settingStackBridge.manageAutoUpgrade(checked)
+			    	}
 			}  
 
 			Text {
@@ -89,50 +92,73 @@ Rectangle{
      			text:i18nd("lliurex-up","Pause updates:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
-				visible:settingStackBridge.isAutoUpgradeAvailable
+				visible:settingStackBridge.isAutoUpgradeEnabled
 				Layout.bottomMargin:10
 				Layout.alignment:Qt.AlignRight
 			} 
 			RowLayout{
-				id:PauseRow
+				id:pauseRow
+				visible:settingStackBridge.isAutoUpgradeEnabled
+
 				PC3.CheckBox {
 					id:pauseUpgradeCB
 					checked: settingStackBridge.isWeekPauseActive
 					text:i18nd("lliurex-up","Pause automatic updates for: ")
-					enabled:true
+					enabled:{
+						if (!mainStackBridge.updateRequired){
+							true
+						}else{
+							settingStackBridge.canPauseUpdate
+						}
+					}
 					font.family: "Quattrocento Sans Bold"
 					font.pointSize: 10
 					focusPolicy: Qt.NoFocus
-					Layout.bottomMargin:10
-					Layout.alignment:Qt.AlignLeft
+	            			Layout.bottomMargin:10
+	           	 		Layout.alignment:Qt.AlignLeft
+	            			onToggled:{
+               					if (checked && settingStackBridge.canPauseUpdate){
+               						pauseValues.enabled=true
+               					}else{
+               						pauseValues.enabled=false
+               					}
+               				}
+
 				} 
-
 				PC3.ComboBox{
-					id:pauseValues
-					currentIndex:settingStackBridge.weeksOfPause
-					textRole:"name"
-					model:settingStackBridge.weeksOfPauseCombo
-					Layout.alignment:Qt.AlignVCenter
-					Layout.bottomMargin:10
-					Layout.preferredWidth:100
-            }
+				       id:pauseValues
+				       currentIndex:settingStackBridge.weeksOfPause
+				       textRole:"name"
+				       model:settingStackBridge.weeksOfPauseCombo
+				       enabled:false
+				       Layout.alignment:Qt.AlignVCenter
+				       Layout.bottomMargin:10
+				       Layout.preferredWidth:100
+            			}
 
+            
             PC3.Button {
-            	id:openFolderBtn
-            	display:AbstractButton.IconOnly
-            	icon.name:"document-edit"
-            	ToolTip.delay: 1000
-            	ToolTip.timeout: 3000
-            	ToolTip.visible: hovered
-            	ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
-            	hoverEnabled:true
-            	enabled:settingStackBridge.canExtendedPause
-            	Layout.preferredHeight: 35
-            	Layout.alignment:Qt.AlignVCenter
-            	Layout.bottomMargin:10
-            	onClicked:{
-            		extensionText.visible=!extensionText.visible
-            		extensionRow.visible=!extensionRow.visible
+               id:extendedPauseBtn
+               display:AbstractButton.IconOnly
+               icon.name:"document-edit"
+               ToolTip.delay: 1000
+               ToolTip.timeout: 3000
+               ToolTip.visible: hovered
+               ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
+               hoverEnabled:true
+               enabled:{
+               	if (pauseUpgradeCB.checked && settingStackBridge.canExtendedPause){
+               		true
+               	}else{
+               		false
+               	}
+               }
+               Layout.preferredHeight: 35
+               Layout.alignment:Qt.AlignVCenter
+               Layout.bottomMargin:10
+               onClicked:{
+               	extensionText.visible=!extensionText.visible
+               	extensionRow.visible=!extensionRow.visible
                }
             }
             
@@ -147,23 +173,24 @@ Rectangle{
          	visible:false
 
          	Text {
-         		id:textExtendedPause
-         		text:i18nd("lliurex-up","Extended pause of automatic updates for:")
-         		font.family: "Quattrocento Sans Bold"
-         		font.pointSize: 10
-         		Layout.bottomMargin:10
-         		Layout.alignment:Qt.AlignRight
-				} 
+	     		id:textExtendedPause
+	     		text:i18nd("lliurex-up","Extended pause for:")
+			font.family: "Quattrocento Sans Bold"
+			font.pointSize: 10
+			Layout.bottomMargin:10
+			Layout.alignment:Qt.AlignRight
+		} 
 
-				PC3.ComboBox{
-               id:extendedValues
-               currentIndex:0
-               textRole:"name"
-               model:settingStackBridge.extensionPauseCombo
-               Layout.alignment:Qt.AlignVCenter
-               Layout.bottomMargin:10
-               Layout.preferredWidth:100
-            }
+		PC3.ComboBox{
+		       id:extendedValues
+		       currentIndex:0
+		       textRole:"name"
+
+		       model:settingStackBridge.extensionPauseCombo
+		       Layout.alignment:Qt.AlignVCenter
+		       Layout.bottomMargin:10
+		       Layout.preferredWidth:130
+		}
 
          }
 
@@ -172,7 +199,77 @@ Rectangle{
 
 	}
 
-	function getMsg(){
+	ChangesDialog{
+
+		id:pendingChangesDialog
+		dialogVisible:settingStackBridge.showPendingChangesDialog
+		
+		Connections{
+			target:pendingChangesDialog
+			function onDialogApplyClicked(){
+				applyChanges()
+			}
+			function onDiscardDialogClicked(){
+				discardChanges()
+			}
+			function onCancelDialogClicked(){
+				closeTimer.stop()
+				settingStackBridge.managePendingChangesDialog("Cancel")
+			}
+		}
+	}
+	
+	CustomPopup{
+		id:waitPopup
+	}
+
+	Timer{
+		id:delayTimer
+	}
+
+	function delay(delayTime,cb){
+		delayTimer.interval=delayTime;
+		delayTimer.repeat=true;
+		delayTimer.triggered.connect(cb);
+		delayTimer.start()
+	}
+
+	Timer{
+		id:waitTimer
+	}
+
+	function wait(delayTime,cb){
+		waitTimer.interval=delayTime;
+		waitTimer.repeat=true;
+		waitTimer.triggered.connect(cb);
+		waitTimer.start()
+	}
+
+	function applyChanges(){
+		waitPopup.open()
+		waitPopup.popupMessage=i18nd("lliurex-up", "Apply changes. Wait a moment...")
+		delayTimer.stop()
+		delay(500, function() {
+			if (settingStackBridge.closePopUp){
+				waitPopup.close(),
+				delayTimer.stop()
+			}
+		})
+   }
+
+   function discardChanges(){
+    	waitPopup.open()
+    	waitPopup.popupMessage=i18nd("lliurex-up", "Restoring previous values. Wait a moment...")
+    	delayTimer.stop()
+    	delay(1000, function() {
+    		if (settingStackBridge.closePopUp){
+    			waitPopup.close(),
+    			delayTimer.stop()
+    		}
+    	})
+   } 
+   
+   function getMsg(){
 
 		var msg=""
 		switch(settingStackBridge.showSettingsMsg[1]){
