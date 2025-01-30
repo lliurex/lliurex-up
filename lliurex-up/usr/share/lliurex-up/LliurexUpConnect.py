@@ -68,9 +68,10 @@ class LliurexUpConnect():
 		self.canExtendedPause=False
 		week=_("week")
 		weeks=_("weeks")
+		self.extendedWeekPause=0
 		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
 		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
-		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause]
+		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extendedWeekPause]
 		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.weeksOfPauseInfo]
 
 	
@@ -957,6 +958,7 @@ class LliurexUpConnect():
 				weeksOfPause=self.llxUpCore.weeksOfPause
 				self.dateToUpdate=self.llxUpCore.dateToUpdate
 				extensionPause=self.llxUpCore.extensionPause
+				self.weeksOfPause=0
 
 				if weeksOfPause>0:
 					self.canPauseUpdate=False
@@ -967,6 +969,7 @@ class LliurexUpConnect():
 							self.weeksOfPause=i
 							self.weeksOfPauseInfo[1]=self.weeksOfPause
 							break;
+					self.weeksOfPauseInfo[2]=self.weeksOfPause
 					self.currentConfig[2]=self.weeksOfPauseInfo
 					if weeksOfPause<5:
 						self.canExtendedPause=True

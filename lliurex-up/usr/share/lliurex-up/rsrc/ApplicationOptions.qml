@@ -222,6 +222,7 @@ GridLayout{
                 Keys.onReturnPressed: applyBtn.clicked()
                 Keys.onEnterPressed: applyBtn.clicked()
                 onClicked:{
+                    applyChanges()
                     settingStackBridge.applyChanges()
                 }
                 
@@ -246,12 +247,83 @@ GridLayout{
                 Keys.onReturnPressed: cancelBtn.clicked()
                 Keys.onEnterPressed: cancelBtn.clicked()
                 onClicked:{
+                    discardChanges()
                     settingStackBridge.discardChanges()
                 }
                 
             }
         }
     }
+
+    ChangesDialog{
+
+        id:pendingChangesDialog
+        dialogVisible:mainStackBridge.showPendingChangesDialog
+        
+        Connections{
+            target:pendingChangesDialog
+            function onDialogApplyClicked(){
+                applyChanges()
+            }
+            function onDiscardDialogClicked(){
+                discardChanges()
+            }
+            function onCancelDialogClicked(){
+                closeTimer.stop()
+                mainStackBridge.managePendingChangesDialog("Cancel")
+            }
+        }
+    }
+    
+    CustomPopup{
+        id:waitPopup
+    }
+
+    Timer{
+        id:delayTimer
+    }
+
+    function delayT(delayTime,cb){
+        delayTimer.interval=delayTime;
+        delayTimer.repeat=true;
+        delayTimer.triggered.connect(cb);
+        delayTimer.start()
+    }
+
+    Timer{
+        id:waitTimer
+    }
+
+    function wait(delayTime,cb){
+        waitTimer.interval=delayTime;
+        waitTimer.repeat=true;
+        waitTimer.triggered.connect(cb);
+        waitTimer.start()
+    }
+
+    function applyChanges(){
+        waitPopup.open()
+        waitPopup.popupMessage=i18nd("lliurex-up", "Apply changes. Wait a moment...")
+        delayTimer.stop()
+        delayT(500, function() {
+            if (mainStackBridge.closePopUp){
+                waitPopup.close(),
+                delayTimer.stop()
+            }
+        })
+   }
+
+   function discardChanges(){
+        waitPopup.open()
+        waitPopup.popupMessage=i18nd("lliurex-up", "Restoring previous values. Wait a moment...")
+        delayTimer.stop()
+        delayT(1000, function() {
+            if (mainStackBridge.closePopUp){
+                waitPopup.close(),
+                delayTimer.stop()
+            }
+        })
+   } 
    
     Timer{
         id:timer

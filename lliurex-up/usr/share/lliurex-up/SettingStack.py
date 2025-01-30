@@ -53,9 +53,7 @@ class Bridge(QObject):
 		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		self._settingsAutoUpgradeChanged=False
-		self._showPendingChangesDialog=False
-		self._closePopUp=True
-
+		
 	#def __init__
 
 	def getSettingsInfo(self):
@@ -251,34 +249,8 @@ class Bridge(QObject):
 
 	#def _setSettingsAutoUpgradeChanged 
 
-	def _getShowPendingChangesDialog(self):
-
-		return self._showPendingChangesDialog
-
-	#def _getShowPendingChangesDialog
-
-	def _setShowPendingChangesDialog(self,showPendingChangesDialog):
-
-		if self._showPendingChangesDialog!=showPendingChangesDialog:
-			self._showPendingChangesDialog=showPendingChangesDialog
-			self.on_showPendingChangesDialog.emit()
-
-	#def _setShowPendingChangesDialog
 	
-	def _getClosePopUp(self):
 
-		return self._closePopUp
-
-	#def _getClosePopUp
-
-	def _setClosePopUp(self,closePopUp):
-
-		if self._closePopUp!=closePopUp:
-			self._closePopUp=closePopUp
-			self.on_closePopUp.emit()
-
-	#def _setClosePopUp
-	
 	@Slot(bool)
 	def manageSystray(self,enable):
 
@@ -303,25 +275,12 @@ class Bridge(QObject):
 
 	#def manageAutoUpgtade 
 
-	@Slot(str)
-	def managePendingChangesDialog(self,action):
-
-		if action=="Apply":
-			self.showPendingChangesDialog=False
-			self.applyChanges()			
-		elif action=="Discard":
-			print("Discard")
-		elif action=="Cancel":
-			self.showPendingChangesDialog=False
-	
-	#def managePendingChangesDialog
-
 	@Slot()
 	def applyChanges(self):
 		
-		self.closePopUp=False
+		self.core.mainStack.closePopUp=False
 		self.core.mainStack.closeGui=False
-		self.showSettingsMsg=[False,"","OK"]
+		self.showSettingsMsg=[False,"","Ok"]
 		self.applyChangesT=ApplyChanges(self.initialConfig)
 		self.applyChangesT.start()
 		self.applyChangesT.finished.connect(self._applyChangesRet)
@@ -330,21 +289,39 @@ class Bridge(QObject):
 
 	def _applyChangesRet(self):
 
-		self.closePopUp=True
 		self.getSettingsInfo()
-
+		self.core.mainStack.closePopUp=True
+		
 		if not self.applyChangesT.ret[0]:
 			self.core.mainStack.closeGui=True
 			self.settingsAutoUpgradeChanged=False
 			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
+			if self.core.mainStack.moveToStack !="":
+				self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
 
 	#def _applyChangesRet
 
 	@Slot()
 	def discardChanges(self):
-		print("Descartando cambios")
+		
+		self.core.mainStack.closePopUp=False
+		self.core.mainStack.closeGui=False
+		self.showSettingsMsg=[False,"","Ok"]
+		self._discardChangesRet()
 
 	#def discardChanges
+
+	def _discardChangesRet(self):
+
+		print("terminado")
+		self.getSettingsInfo()
+		self.core.mainStack.closePopUp=True
+		self.settingsAutoUpgradeChanged=False
+		self.core.mainStack.closeGui=False
+		if self.core.mainStack.moveToStack !="":
+			self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
+
+	# def _discardChangesRet
 
 
 	on_showSettingsPanel=Signal()
@@ -382,12 +359,6 @@ class Bridge(QObject):
 
 	on_settingsAutoUpgradeChanged=Signal()
 	settingsAutoUpgradeChanged=Property(bool,_getSettingsAutoUpgradeChanged,_setSettingsAutoUpgradeChanged,notify=on_settingsAutoUpgradeChanged)
-
-	on_showPendingChangesDialog=Signal()
-	showPendingChangesDialog=Property(bool,_getShowPendingChangesDialog,_setShowPendingChangesDialog,notify=on_showPendingChangesDialog)
-
-	on_closePopUp=Signal()
-	closePopUp=Property(bool,_getClosePopUp,_setClosePopUp,notify=on_closePopUp)
 
 	weeksOfPauseCombo=Property('QVariant',_getWeeksOfPauseCombo,constant=True)
 	

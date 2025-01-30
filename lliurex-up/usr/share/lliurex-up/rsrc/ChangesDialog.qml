@@ -69,8 +69,8 @@ Dialog {
             Keys.onEnterPressed: dialogApplyBtn.clicked()
             onClicked:{
                 xButton=false
+                mainStackBridge.managePendingChangesDialog("Apply")
                 dialogApplyClicked()
-                settingStackBridge.managePendingChangesDialog("Apply")
             }
         }
 
@@ -91,8 +91,8 @@ Dialog {
             Keys.onEnterPressed: dialogDiscardBtn.clicked()
             onClicked:{
                 xButton=false
+                mainStackBridge.managePendingChangesDialog("Discard")
                 discardDialogClicked()
-                settingStackBridge.managePendingChangesDialog("Discard")
             }
         }
 
