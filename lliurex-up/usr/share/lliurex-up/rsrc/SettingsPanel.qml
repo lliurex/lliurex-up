@@ -114,31 +114,42 @@ Rectangle{
 					font.family: "Quattrocento Sans Bold"
 					font.pointSize: 10
 					focusPolicy: Qt.NoFocus
-	            			Layout.bottomMargin:10
-	           	 		Layout.alignment:Qt.AlignLeft
-	            			onToggled:{
-               					if (checked && settingStackBridge.canPauseUpdate){
-               						pauseValues.enabled=true
-               					}else{
-               						pauseValues.enabled=false
-               					}
-               				}
+	            Layout.bottomMargin:10
+	            Layout.alignment:Qt.AlignLeft
+	            onToggled:{
+	            	settingStackBridge.manageUpdatePause(checked)
+               	/*
+               	if (checked && settingStackBridge.canPauseUpdate){
+               		pauseValues.enabled=true
+               	}else{
+               		pauseValues.enabled=false
+               	}*/
+               }
 
 				} 
 				PC3.ComboBox{
-				       id:pauseValues
-				       currentIndex:settingStackBridge.weeksOfPause
-				       textRole:"name"
-				       model:settingStackBridge.weeksOfPauseCombo
-				       enabled:false
-				       Layout.alignment:Qt.AlignVCenter
-				       Layout.bottomMargin:10
-				       Layout.preferredWidth:100
-            			}
+               id:pauseValues
+               currentIndex:settingStackBridge.weeksOfPause
+               textRole:"name"
+               model:settingStackBridge.weeksOfPauseCombo
+               enabled:{
+               	if (settingStackBridge.isWeekPauseActive && !settingStackBridge.canExtendedPause){
+               		true
+               	}else{
+               		false
+               	}
+               }
+               Layout.alignment:Qt.AlignVCenter
+               Layout.bottomMargin:10
+               Layout.preferredWidth:100
+               onActivated:{
+               	settingStackBridge.manageWeeksOfPause(pauseValues.currentIndex)
+               }
+            }
 
             
             PC3.Button {
-               id:extendedPauseBtn
+               id:extensionPauseBtn
                display:AbstractButton.IconOnly
                icon.name:"document-edit"
                ToolTip.delay: 1000
@@ -157,20 +168,19 @@ Rectangle{
                Layout.alignment:Qt.AlignVCenter
                Layout.bottomMargin:10
                onClicked:{
-               	extensionText.visible=!extensionText.visible
-               	extensionRow.visible=!extensionRow.visible
+               	settingStackBridge.manageExtensionPauseBtn(extensionRow.visible)
                }
             }
             
          }
          Text{
          	id:extensionText
-         	visible:false
+         	visible:settingStackBridge.showExtensionPauseCombo
 
          }
          RowLayout{
          	id:extensionRow
-         	visible:false
+         	visible:settingStackBridge.showExtensionPauseCombo
 
          	Text {
 	     		id:textExtendedPause
@@ -181,16 +191,18 @@ Rectangle{
 			Layout.alignment:Qt.AlignRight
 		} 
 
-		PC3.ComboBox{
-		       id:extendedValues
-		       currentIndex:0
-		       textRole:"name"
-
-		       model:settingStackBridge.extensionPauseCombo
-		       Layout.alignment:Qt.AlignVCenter
-		       Layout.bottomMargin:10
-		       Layout.preferredWidth:130
-		}
+				PC3.ComboBox{
+               id:extendedValues
+               currentIndex:0
+               textRole:"name"
+               model:settingStackBridge.extensionPauseCombo
+               Layout.alignment:Qt.AlignVCenter
+               Layout.bottomMargin:10
+               Layout.preferredWidth:130
+               onActivated:{
+               	settingStackBridge.manageExtensionPause(extendedValues.currentIndex)
+               }
+            }
 
          }
 

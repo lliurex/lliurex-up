@@ -1184,6 +1184,21 @@ class LliurexUpCore(object):
 
 	#def stopAutoUpgrade
 
+	def manageUpdatePause(self,enablePause,weeksOfPause):
+
+		try:
+			with open('/etc/n4d/key','r') as fd:
+				n4dKey=fd.readlines()[0].strip()
+
+			result=self.n4d.manage_auto_update_pause(n4dKey,"LliurexUpManager",enablePause,weeksOfPause)
+			return result['return']
+
+		except Exception as e:
+			print("ERRROR: %s"%e)
+			return False
+
+	#def manageUpdatePause
+
 #def LliurexUpCore
 
 if __name__ == '__main__':

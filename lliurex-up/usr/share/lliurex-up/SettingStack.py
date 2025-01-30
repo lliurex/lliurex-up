@@ -51,8 +51,10 @@ class Bridge(QObject):
 		self._weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 		self._weeksOfPauseCombo=Bridge.llxUpConnect.weeksOfPauseCombo
 		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		self._settingsAutoUpgradeChanged=False
+		self._showExtensionPauseCombo=False
+		self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
+		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		
 	#def __init__
 
@@ -71,6 +73,7 @@ class Bridge(QObject):
 			self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
 			self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
 		
+		self.showExtensionPauseCombo=False
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		
 	#def getSettingsInfo
@@ -207,6 +210,20 @@ class Bridge(QObject):
 
 	#def _setExtensionPauseCombo
 
+	def _getShowExtensionPauseCombo(self):
+
+		return self._showExtensionPauseCombo
+
+	#def _getShowExtensionPauseCombo
+
+	def _setShowExtensionPauseCombo(self,showExtensionPauseCombo):
+
+		if self._showExtensionPauseCombo!=showExtensionPauseCombo:
+			self._showExtensionPauseCombo=showExtensionPauseCombo
+			self.on_showExtensionPauseCombo.emit()
+
+	#def _setShowExtensionPauseCombo
+
 	def _getShowSettingsMsg(self):
 
 		return self._showSettingsMsg
@@ -249,8 +266,6 @@ class Bridge(QObject):
 
 	#def _setSettingsAutoUpgradeChanged 
 
-	
-
 	@Slot(bool)
 	def manageSystray(self,enable):
 
@@ -274,6 +289,64 @@ class Bridge(QObject):
 			self.settingsAutoUpgradeChanged=False
 
 	#def manageAutoUpgtade 
+
+	@Slot(bool)
+	def manageUpdatePause(self,value):
+
+		self.showSettingsMsg=[False,"","Ok"]
+		if value!=self.isWeekPauseActive:
+			self.isWeekPauseActive=value
+			self.initialConfig[2]=value
+
+		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
+			self.settingsAutoUpgradeChanged=True
+		else:
+			self.settingsAutoUpgradeChanged=False
+
+		self.showExtensionPauseCombo=False
+
+	#def manageUpdatePause
+
+	@Slot(int)
+	def manageWeeksOfPause(self,value):
+
+		self.showSettingsMsg=[False,"","Ok"]
+
+		if value!=self.weeksOfPause:
+			self.weeksOfPause=value
+			self.initialConfig[3]=value
+
+		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
+			self.settingsAutoUpgradeChanged=True
+		else:
+			self.settingsAutoUpgradeChanged=False
+
+	#def manageWeeksOfPause
+
+	@Slot(bool)
+	def manageExtensionPauseBtn(self,isVisible):
+
+		print("cambiando:%s"%str(isVisible))
+		if isVisible:
+			self.showExtensionPauseCombo=False
+		else:
+			self.showExtensionPauseCombo=True
+
+	#def manageExtensionPauseBtn
+
+	@Slot(int)
+	def manageExtensionPause(self,value):
+
+		if value!=self.extensionWeekPause:
+			self.extensionWeekPause=value
+			self.initialConfig[4]=value
+
+		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
+			self.settingsAutoUpgradeChanged=True
+		else:
+			self.settingsAutoUpgradeChanged=False
+
+	#def manageExtensionPause
 
 	@Slot()
 	def applyChanges(self):
@@ -356,6 +429,9 @@ class Bridge(QObject):
 
 	on_extensionPauseCombo=Signal()
 	extensionPauseCombo=Property('QVariant',_getExtensionPauseCombo,_setExtensionPauseCombo,notify=on_extensionPauseCombo)
+
+	on_showExtensionPauseCombo=Signal()
+	showExtensionPauseCombo=Property(bool,_getShowExtensionPauseCombo,_setShowExtensionPauseCombo,notify=on_showExtensionPauseCombo)
 
 	on_settingsAutoUpgradeChanged=Signal()
 	settingsAutoUpgradeChanged=Property(bool,_getSettingsAutoUpgradeChanged,_setSettingsAutoUpgradeChanged,notify=on_settingsAutoUpgradeChanged)
