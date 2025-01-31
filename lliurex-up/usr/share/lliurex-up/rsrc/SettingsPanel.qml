@@ -202,7 +202,7 @@ Rectangle{
 					model:settingStackBridge.extensionPauseCombo
 					Layout.alignment:Qt.AlignVCenter
 					Layout.bottomMargin:10
-					Layout.preferredWidth:130
+					Layout.preferredWidth:150
 					onActivated:{
 						settingStackBridge.manageExtensionPause(extensionValues.currentIndex)
 					}
@@ -218,22 +218,23 @@ Rectangle{
 		var msg=""
 		switch(settingStackBridge.showSettingsMsg[1]){
 			case -1:
-				msg=i18nd("lliurex-up","Unable to activate the automatic system update")
+				msg=i18nd("lliurex-up","It is not possible to change notifications setting")
 				break;
 			case -2:
-				msg=i18nd("lliurex-up","Unable to deactivate automatic system update")
+				msg=i18nd("lliurex-up","It is not possible to change automatic updates setting")
+				break;
+			case -3:
+				msg=i18nd("lliurex-up","It is not possible to change automatic updates pause setting")
+				break;
+			case -4:
+				msg=i18nd("lliurex-up","It is not posible to change settings")
 				break;
 			case 0:
-				msg=i18nd("lliurex-up","Changes will take effect the next time you log in")
-				break;
-			case 1:
 				msg=i18nd("lliurex-up","Changes will take effect the next time the computer turns on or restarts")
 				break;
-			case 2:
-				msg=i18nd("lliurex-up","Automatic system update has been successfully disabled")
-				break;
-         }
-        return msg
+		}
+
+      return msg
 	}
 
 	function getMsgType(){

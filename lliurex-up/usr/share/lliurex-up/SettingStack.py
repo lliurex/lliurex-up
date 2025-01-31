@@ -396,11 +396,15 @@ class Bridge(QObject):
 		
 		if not self.applyChangesT.ret[0]:
 			self.core.mainStack.closeGui=True
-			self.settingsChanged=False
 			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
 			if self.core.mainStack.moveToStack !="":
 				self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
+		else:
+			self.core.mainStack.moveToStack=""
+			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Error"]
 
+		self.settingsChanged=False
+	
 	#def _applyChangesRet
 
 	@Slot()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 12:13+0200\n"
+"POT-Creation-Date: 2025-01-31 14:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "Update process"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:10
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:12
 msgid "Settings"
 msgstr ""
 
@@ -40,53 +40,69 @@ msgid "Help"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:147
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:378
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:112
 msgid "of"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:180
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:190
 msgid "Update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:229
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:217
+msgid "Apply"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:242
+msgid "Cancel"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:306
+msgid "Apply changes. Wait a moment..."
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:318
+msgid "Restoring previous values. Wait a moment..."
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:360
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:232
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:363
 msgid "Your system is update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:235
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:366
 msgid "The updated process has ended with errors"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:238
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:369
 msgid ""
 "dpkg --configure -a must be executed. You can use dpkg-unlocker for this"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:253
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:385
 msgid "Preparing system to the update..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:256
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:388
 msgid "Downloading packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:259
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:391
 msgid "Unpacking packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:262
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:394
 msgid "Configuring packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:265
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:397
 msgid "Ending the update..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:268
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:400
 msgid "Checking metapackage..."
 msgstr ""
 
@@ -187,7 +203,10 @@ msgstr ""
 msgid "Update source:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:141
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:201
+msgid "Auto update paused until:"
+msgstr ""
+
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:135
 msgid "Press to view pkg changelog"
 msgstr ""
@@ -303,69 +322,68 @@ msgstr ""
 msgid "List of packages to update/install"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:25
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:132
-msgid "Changes will take effect the next time you log in"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:45
+msgid "Notifications:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:43
-msgid "Show notifications for available updates:"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
+msgid "Show notifications for available updates"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:79
-msgid "Activate automatic system update:"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:67
+msgid "Updates:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:111
-msgid "If it is activated the system will update automatically at login"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:84
+msgid "Activate automatic system updates"
 msgstr ""
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:223
-msgid "Lliurex-Up is being executed"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:105
+msgid "Pause updates:"
 msgstr ""
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:239
-msgid "Update the system now"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:119
+msgid "Pause automatic updates for: "
 msgstr ""
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:388
-msgid "The upgrade process has ended"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:162
+msgid "Click to extend the pause of automatic updates"
 msgstr ""
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:496
-msgid "There are new packages ready to be updated or installed"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:191
+msgid "Extended pause for:"
 msgstr ""
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:512
-msgid "Lliurex-Up"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:221
+msgid "It is not possible to change notifications setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate automatic updates"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:224
+msgid "It is not possible to change automatic updates setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic updates"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:227
+msgid "It is not possible to change automatic updates pause setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
-msgid "Changes will take effect the next time the computer is restarted"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:230
+msgid "It is not posible to change settings"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:138
-msgid "Automatic system update has been successfully disabled"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate the automatic system update"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic system update"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:233
 msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+msgid "week"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
+msgid "weeks"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:978
+msgid "Select a value"
 msgstr ""

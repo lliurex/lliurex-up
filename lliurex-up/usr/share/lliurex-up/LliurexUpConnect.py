@@ -986,36 +986,72 @@ class LliurexUpConnect():
 	#def _getextensionPauseCombo
 
 	def applySettingsChanges(self,newConfig):
-
-		SYSTRAY_MSG=0
-		AUTOUPGRADE_ENABLE_ERROR=-1
-		AUTOUPGRADE_DISABLE_ERROR=-2
-		AUTOUPGRADE_ENABLE=1
-		AUTOUPGRADE_DISABLE=2
+		
+		'''
+			-0: Systray
+			-1: AutoUpdate
+			-2: Pause
+			-3: WeeksOfPause
+			-4: ExtensionPause
+		'''
+		CHANGES_APPLY_OK=0
+		SYSTRAY_ERROR=-1
+		AUTOUPGRADE_ERROR=-2
+		AUTOUPGRADE_PAUSE_ERROR=-3
+		CHANGES_APPLY_ERROR=-4
 		
 		retSystray=True
 		retEnableService=True
 		retPauseUpdate=True
-		changesInAutoUpdate=True
+		changesInSystray=False
+		changesInAutoUpdate=False
+		pauseNeedUpdate=False
+		error=False
 
 		if newConfig[0]!=self.currentConfig[0]:
 			retSystray=self.manageSystray(newConfig[0])
-			self.getSystrayStatus()
+			if retSystray:
+				changesInSystray=True
 
 		if newConfig[1]!=self.currentConfig[1]:
 			retEnableService=self.manageAutoUpgrade(newConfig[1])
-			self.changesInAutoUpdate=True
+			if retEnableService:
+				changesInAutoUpdate=True
 
-		if (newConfig[2]!=self.currentConfig[2]) or (newConfig[3]!=self.currentConfig[3]) or (newConfig[4]!=self.currentConfig[4]):
-			if newConfig[1] and retEnableService:
-				retUpdatePause=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
-				changesInAutoUpdate
+		if retEnableService:
+			if newConfig[2]!=self.currentConfig[2]:
+				pauseNeedUpdate=True
+			elif newConfig[3]!=self.currentConfig[3]:
+				pauseNeedUpdate=True
+			elif newConfig[4]!=self.currentConfig[4]:
+				pauseNeedUpdate=True
 
+		if pauseNeedUpdate:
+			retUpdatePause=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
+			if retUpdatePause:
+				changesInAutoUpdate=True
+
+		if changesInSystray:
+			self.getSystrayStatus()
+		
 		if changesInAutoUpdate:
 			self.getAutoUpgradeInfo()
 		
 		if retSystray and retEnableService and retPauseUpdate:
-			return [False,SYSTRAY_MSG]
+			return [error,CHANGES_APPLY_OK]
+
+		elif not retSystray and retEnableService and retPauseUpdate:
+			error=True
+			return [error,SYSTRAY__ERROR]
+		elif retSystray and not retEnableService and retPauseUpdate:
+			error=True
+			return [error,AUTOUPGRADE_ERROR]
+		elif retSystray and retEnableService and not retPauseUpdate:
+			error=True
+			return [error,AUTOUPGRADE_PAUSE_ERROR]
+		else:
+			error=True
+			return [error,CHANGES_APPLY_ERROR]
 
 	#def applySettingsChanges
 
