@@ -328,15 +328,16 @@ class Bridge(QObject):
 	def manageTransitions(self,stack):
 
 		if self.currentOptionStack!=stack:
-			if self.core.settingStack.settingsAutoUpgradeChanged:
+			if self.core.settingStack.settingsChanged:
 				self.moveToStack=stack
 				self.showPendingChangesDialog=True
 			else:
 				self.moveToStack=""
 				self.currentOptionStack=stack
-				self.core.settingStack.showSettingsMsg=[False,"","Ok"]
 				if stack==3:
-					self.core.settingStack.getSettingsInfo()
+					self.core.settingStack.showSettingsMsg=[False,"","Ok"]
+					self.showFeedbackMessage=[False,"","Ok"]
+					#self.core.settingStack.getSettingsInfo()
 				else:
 					if not self.enableKonsole:
 						if self.updateRequired:
@@ -405,7 +406,6 @@ class Bridge(QObject):
 			self.showPendingChangesDialog=False
 			self.core.settingStack.applyChanges()			
 		elif action=="Discard":
-			print("Descartando")
 			self.showPendingChangesDialog=False
 			self.core.settingStack.discardChanges()
 		elif action=="Cancel":
@@ -417,9 +417,13 @@ class Bridge(QObject):
 	def closeApplication(self):
 
 		if self.endProcess:
-			Bridge.llxUpConnect.cleanEnvironment()
-			Bridge.llxUpConnect.cleanLliurexUpLock()
-			self.closeGui=True
+			if self.core.settingStack.settingsChanged:
+				self.showPendingChangesDialog=True
+				self.closeGui=False
+			else:
+				Bridge.llxUpConnect.cleanEnvironment()
+				Bridge.llxUpConnect.cleanLliurexUpLock()
+				self.closeGui=True
 		else:
 			self.closeGui=False
 

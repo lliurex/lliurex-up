@@ -7,6 +7,7 @@ import org.kde.plasma.components 3.0 as PC3
 
 Rectangle{
     color:"transparent"
+    enabled:mainStackBridge.endProcess
     Text{ 
        text:i18nd("lliurex-up","Settings")
         font.family: "Quattrocento Sans Bold"
@@ -37,7 +38,7 @@ Rectangle{
      		Layout.bottomMargin: 10
      		columnSpacing:10
      		Layout.alignment:Qt.AlignHCenter
-     		Layout.topMargin:messageLabel.visible?0:55
+     		Layout.topMargin:messageLabel.visible?5:50
 
      		Text {
      			id:textNotificationSettings
@@ -56,7 +57,7 @@ Rectangle{
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				focusPolicy: Qt.NoFocus
-				onToggled:settingsStackBridge.manageAutoStart(autoStartValue.checked);
+				onToggled:settingStackBridge.manageSystray(notificationCB.checked);
 				Layout.bottomMargin:10
 				Layout.alignment:Qt.AlignLeft
 			}
@@ -66,7 +67,13 @@ Rectangle{
      			text:i18nd("lliurex-up","Updates:")
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
-				visible:true
+				visible:{
+					if (settingStackBridge.isAutoUpgradeAvailable && settingStackBridge.isAdmin){
+						true
+					}else{
+						false
+					}
+				}
 				Layout.bottomMargin:10
 				Layout.alignment:Qt.AlignRight
 			} 
@@ -76,7 +83,13 @@ Rectangle{
 				checked: settingStackBridge.isAutoUpgradeEnabled
 				text:i18nd("lliurex-up","Activate automatic system updates")
 				enabled:true
-				visible:true
+				visible:{
+					if (settingStackBridge.isAutoUpgradeAvailable && settingStackBridge.isAdmin){
+						true
+					}else{
+						false
+					}
+				}
 				font.family: "Quattrocento Sans Bold"
 				font.pointSize: 10
 				focusPolicy: Qt.NoFocus
@@ -114,105 +127,92 @@ Rectangle{
 					font.family: "Quattrocento Sans Bold"
 					font.pointSize: 10
 					focusPolicy: Qt.NoFocus
-	            Layout.bottomMargin:10
-	            Layout.alignment:Qt.AlignLeft
-	            onToggled:{
-	            	settingStackBridge.manageUpdatePause(checked)
-               	/*
-               	if (checked && settingStackBridge.canPauseUpdate){
-               		pauseValues.enabled=true
-               	}else{
-               		pauseValues.enabled=false
-               	}*/
-               }
-
+					Layout.bottomMargin:10
+					Layout.alignment:Qt.AlignLeft
+					onToggled:{
+						settingStackBridge.manageUpdatePause(checked)
+					}
 				} 
 				PC3.ComboBox{
-               id:pauseValues
-               currentIndex:settingStackBridge.weeksOfPause
-               textRole:"name"
-               model:settingStackBridge.weeksOfPauseCombo
-               enabled:{
-               	if (settingStackBridge.isWeekPauseActive && !settingStackBridge.canExtendedPause){
-               		true
-               	}else{
-               		false
-               	}
-               }
-               Layout.alignment:Qt.AlignVCenter
-               Layout.bottomMargin:10
-               Layout.preferredWidth:100
-               onActivated:{
-               	settingStackBridge.manageWeeksOfPause(pauseValues.currentIndex)
-               }
-            }
+					id:pauseValues
+					currentIndex:settingStackBridge.weeksOfPause
+					textRole:"name"
+					model:settingStackBridge.weeksOfPauseCombo
+					enabled:{
+						if (settingStackBridge.isWeekPauseActive && !settingStackBridge.canExtendedPause){
+							true
+						}else{
+							false
+						}
+					}
+					Layout.alignment:Qt.AlignVCenter
+					Layout.bottomMargin:10
+					Layout.preferredWidth:100
+					onActivated:{
+						settingStackBridge.manageWeeksOfPause(pauseValues.currentIndex)
+					}
+				}
+				PC3.Button {
+					id:extensionPauseBtn
+					display:AbstractButton.IconOnly
+					icon.name:"document-edit"
+					ToolTip.delay: 1000
+					ToolTip.timeout: 3000
+					ToolTip.visible: hovered
+					ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
+					hoverEnabled:true
+					enabled:{
+						if (pauseUpgradeCB.checked && settingStackBridge.canExtendedPause){
+							true
+						}else{
+							false
+						}
+					}
+					Layout.preferredHeight: 35
+					Layout.alignment:Qt.AlignVCenter
+					Layout.bottomMargin:10
+					onClicked:{
+						settingStackBridge.manageExtensionPauseBtn(extensionRow.visible)
+					}
+				}
+			}
 
-            
-            PC3.Button {
-               id:extensionPauseBtn
-               display:AbstractButton.IconOnly
-               icon.name:"document-edit"
-               ToolTip.delay: 1000
-               ToolTip.timeout: 3000
-               ToolTip.visible: hovered
-               ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
-               hoverEnabled:true
-               enabled:{
-               	if (pauseUpgradeCB.checked && settingStackBridge.canExtendedPause){
-               		true
-               	}else{
-               		false
-               	}
-               }
-               Layout.preferredHeight: 35
-               Layout.alignment:Qt.AlignVCenter
-               Layout.bottomMargin:10
-               onClicked:{
-               	settingStackBridge.manageExtensionPauseBtn(extensionRow.visible)
-               }
-            }
-            
-         }
-         Text{
-         	id:extensionText
-         	visible:settingStackBridge.showExtensionPauseCombo
+			Text{
+				id:extensionText
+				visible:settingStackBridge.showExtensionPauseCombo
+			}
 
-         }
-         RowLayout{
-         	id:extensionRow
-         	visible:settingStackBridge.showExtensionPauseCombo
+			RowLayout{
+				id:extensionRow
+				visible:settingStackBridge.showExtensionPauseCombo
 
-         	Text {
-	     		id:textExtendedPause
-	     		text:i18nd("lliurex-up","Extended pause for:")
-			font.family: "Quattrocento Sans Bold"
-			font.pointSize: 10
-			Layout.bottomMargin:10
-			Layout.alignment:Qt.AlignRight
-		} 
+				Text{
+					id:textExtensionPause
+					text:i18nd("lliurex-up","Extended pause for:")
+					font.family: "Quattrocento Sans Bold"
+					font.pointSize: 10
+					Layout.bottomMargin:10
+					Layout.alignment:Qt.AlignRight
+				} 
 
 				PC3.ComboBox{
-               id:extendedValues
-               currentIndex:0
-               textRole:"name"
-               model:settingStackBridge.extensionPauseCombo
-               Layout.alignment:Qt.AlignVCenter
-               Layout.bottomMargin:10
-               Layout.preferredWidth:130
-               onActivated:{
-               	settingStackBridge.manageExtensionPause(extendedValues.currentIndex)
-               }
-            }
-
-         }
-
-			
+					id:extensionValues
+					currentIndex:0
+					textRole:"name"
+					model:settingStackBridge.extensionPauseCombo
+					Layout.alignment:Qt.AlignVCenter
+					Layout.bottomMargin:10
+					Layout.preferredWidth:130
+					onActivated:{
+						settingStackBridge.manageExtensionPause(extensionValues.currentIndex)
+					}
+				}
+			}
 		}
 
 	}
 
-	
-   
+	 
    function getMsg(){
 
 		var msg=""

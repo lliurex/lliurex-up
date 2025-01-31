@@ -65,7 +65,7 @@ GridLayout{
                 optionText:i18nd("lliurex-up","Settings")
                 optionIcon:"/usr/share/icons/breeze/actions/22/configure.svg"
                 visible:settingStackBridge.showSettingsPanel
-                enabled:true
+                enabled:mainStackBridge.endProcess
                 Connections{
                     function onMenuOptionClicked(){
                         mainStackBridge.manageTransitions(3)
@@ -215,7 +215,7 @@ GridLayout{
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-ok"
                 text:i18nd("lliurex-up","Apply")
-                enabled:settingStackBridge.settingsAutoUpgradeChanged
+                enabled:settingStackBridge.settingsChanged
                 Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
@@ -240,7 +240,7 @@ GridLayout{
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-cancel"
                 text:i18nd("lliurex-up","Cancel")
-                enabled:settingStackBridge.settingsAutoUpgradeChanged
+                enabled:settingStackBridge.settingsChanged
                 Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10

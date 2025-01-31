@@ -5,7 +5,7 @@ import os
 import threading
 import signal
 import copy
-import time
+import datetime
 import sys
 import pwd
 
@@ -51,8 +51,10 @@ class Bridge(QObject):
 		self._weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 		self._weeksOfPauseCombo=Bridge.llxUpConnect.weeksOfPauseCombo
 		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-		self._settingsAutoUpgradeChanged=False
+		self._settingsChanged=False
 		self._showExtensionPauseCombo=False
+		self._dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
+		self._isAdmin=Bridge.llxUpConnect.checkUser()
 		self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		
@@ -72,10 +74,12 @@ class Bridge(QObject):
 			self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
 			self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
 			self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
+			self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
+			self.dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
 		
 		self.showExtensionPauseCombo=False
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
-		
+	
 	#def getSettingsInfo
 
 	def _getShowSettingsPanel(self):
@@ -252,25 +256,51 @@ class Bridge(QObject):
 
 	#def _setIsAutoUpgradeRun
 
-	def _getSettingsAutoUpgradeChanged(self):
+	def _getSettingsChanged(self):
 
-		return self._settingsAutoUpgradeChanged
+		return self._settingsChanged
 
-	#def _getSettingsAutoUpgradeChanged 
+	#def _getSettingsChanged 
 
-	def _setSettingsAutoUpgradeChanged(self,settingsAutoUpgradeChanged):
+	def _setSettingsChanged(self,settingsChanged):
 
-		if self._settingsAutoUpgradeChanged!=settingsAutoUpgradeChanged:
-			self._settingsAutoUpgradeChanged=settingsAutoUpgradeChanged
-			self.on_settingsAutoUpgradeChanged.emit()
+		if self._settingsChanged!=settingsChanged:
+			self._settingsChanged=settingsChanged
+			self.on_settingsChanged.emit()
 
-	#def _setSettingsAutoUpgradeChanged 
+	#def _setSettingsChanged 
+
+	def _getDateToUpdate(self):
+
+		return self._dateToUpdate
+
+	#def _getDateToUpdate
+
+	def _setDateToUpdate(self,dateToUpdate):
+
+		if self._dateToUpdate!=dateToUpdate:
+			self._dateToUpdate=dateToUpdate
+			self.on_dateToUpdate.emit()
+
+	#def _setDateToUpdate
+
+	def _getIsAdmin(self):
+
+		return self._isAdmin
+
+	#def _getIsAdmin
 
 	@Slot(bool)
 	def manageSystray(self,enable):
 
-		Bridge.llxUpConnect.manageSystray(enable)
-		self.showSettingsMsg=[True,Bridge.SYSTRAY_MSG,"Ok"]
+		if enable!=self.isSystrayEnabled:
+			self.isSystrayEnabled=enable
+			self.initialConfig[0]=enable
+
+		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
+			self.settingsChanged=True
+		else:
+			self.settingsChanged=False
 
 	#def manageSystray
 
@@ -284,9 +314,9 @@ class Bridge(QObject):
 			self.initialConfig[1]=value
 		
 		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsAutoUpgradeChanged=True
+			self.settingsChanged=True
 		else:
-			self.settingsAutoUpgradeChanged=False
+			self.settingsChanged=False
 
 	#def manageAutoUpgtade 
 
@@ -299,9 +329,9 @@ class Bridge(QObject):
 			self.initialConfig[2]=value
 
 		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsAutoUpgradeChanged=True
+			self.settingsChanged=True
 		else:
-			self.settingsAutoUpgradeChanged=False
+			self.settingsChanged=False
 
 		self.showExtensionPauseCombo=False
 
@@ -317,16 +347,15 @@ class Bridge(QObject):
 			self.initialConfig[3]=value
 
 		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsAutoUpgradeChanged=True
+			self.settingsChanged=True
 		else:
-			self.settingsAutoUpgradeChanged=False
+			self.settingsChanged=False
 
 	#def manageWeeksOfPause
 
 	@Slot(bool)
 	def manageExtensionPauseBtn(self,isVisible):
 
-		print("cambiando:%s"%str(isVisible))
 		if isVisible:
 			self.showExtensionPauseCombo=False
 		else:
@@ -342,9 +371,9 @@ class Bridge(QObject):
 			self.initialConfig[4]=value
 
 		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsAutoUpgradeChanged=True
+			self.settingsChanged=True
 		else:
-			self.settingsAutoUpgradeChanged=False
+			self.settingsChanged=False
 
 	#def manageExtensionPause
 
@@ -367,7 +396,7 @@ class Bridge(QObject):
 		
 		if not self.applyChangesT.ret[0]:
 			self.core.mainStack.closeGui=True
-			self.settingsAutoUpgradeChanged=False
+			self.settingsChanged=False
 			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
 			if self.core.mainStack.moveToStack !="":
 				self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
@@ -376,7 +405,7 @@ class Bridge(QObject):
 
 	@Slot()
 	def discardChanges(self):
-		
+
 		self.core.mainStack.closePopUp=False
 		self.core.mainStack.closeGui=False
 		self.showSettingsMsg=[False,"","Ok"]
@@ -386,11 +415,10 @@ class Bridge(QObject):
 
 	def _discardChangesRet(self):
 
-		print("terminado")
 		self.getSettingsInfo()
 		self.core.mainStack.closePopUp=True
-		self.settingsAutoUpgradeChanged=False
-		self.core.mainStack.closeGui=False
+		self.settingsChanged=False
+		self.core.mainStack.closeGui=True
 		if self.core.mainStack.moveToStack !="":
 			self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
 
@@ -433,8 +461,13 @@ class Bridge(QObject):
 	on_showExtensionPauseCombo=Signal()
 	showExtensionPauseCombo=Property(bool,_getShowExtensionPauseCombo,_setShowExtensionPauseCombo,notify=on_showExtensionPauseCombo)
 
-	on_settingsAutoUpgradeChanged=Signal()
-	settingsAutoUpgradeChanged=Property(bool,_getSettingsAutoUpgradeChanged,_setSettingsAutoUpgradeChanged,notify=on_settingsAutoUpgradeChanged)
+	on_settingsChanged=Signal()
+	settingsChanged=Property(bool,_getSettingsChanged,_setSettingsChanged,notify=on_settingsChanged)
+
+	on_dateToUpdate=Signal()
+	dateToUpdate=Property(str,_getDateToUpdate,_setDateToUpdate,notify=on_dateToUpdate)
+
+	isAdmin=Property(bool,_getIsAdmin,constant=True)
 
 	weeksOfPauseCombo=Property('QVariant',_getWeeksOfPauseCombo,constant=True)
 	

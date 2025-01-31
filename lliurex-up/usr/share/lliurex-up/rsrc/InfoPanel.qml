@@ -195,6 +195,38 @@ Rectangle{
                 Layout.alignment:Qt.AlignLeft
                 Layout.bottomMargin:10
             }
+
+            Text{
+                id:dateToUpdateText
+                text:i18nd("lliurex-up","Auto update paused until:")
+                visible:{
+                    if (settingStackBridge.isAutoUpgradeEnabled && settingStackBridge.isWeekPauseActive){
+                        true
+                    }else{
+                        false
+                    }
+                }
+                font.family: "Quattrocento Sans Bold"
+                font.pointSize: 10
+                Layout.alignment:Qt.AlignRight
+                Layout.bottomMargin:10
+            }
+
+            Text{
+                id:dateToUpdateValue
+                text:settingStackBridge.dateToUpdate
+                visible:{
+                    if (settingStackBridge.isAutoUpgradeEnabled && settingStackBridge.isWeekPauseActive){
+                        true
+                    }else{
+                        false
+                    }
+                }
+                font.pointSize: 10
+                Layout.alignment:Qt.AlignLeft
+                Layout.bottomMargin:10
+
+            }
       
         }
     }

@@ -13,7 +13,9 @@ import psutil
 import struct, fcntl
 import ssl
 import dpkgunlocker.dpkgunlockermanager as DpkgUnlockerManager
-
+import datetime
+import pwd
+import grp
 
 
 class LliurexUpCore(object):
@@ -46,7 +48,7 @@ class LliurexUpCore(object):
 		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
-		self.dateToUpdate=""
+		self.dateToUpdate=datetime.date.today().isoformat()
 		self.weeksOfPause=0
 		self.extensionPause=5
 	
@@ -1194,10 +1196,51 @@ class LliurexUpCore(object):
 			return result['return']
 
 		except Exception as e:
-			print("ERRROR: %s"%e)
 			return False
 
 	#def manageUpdatePause
+
+	def isUserAdmin(self):
+		
+		isAdmin=False
+
+		try:
+			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
+			gid = pwd.getpwnam(user).pw_gid
+			groupsGids = os.getgrouplist(user, gid)
+			userGroups = [ grp.getgrgid(x).gr_name for x in groupsGids ]
+
+			if 'sudo' in userGroups or 'admins' in userGroups:
+				isAdmin=True
+
+		except Exception as e:
+			isAdmin=True
+
+		return isAdmin
+
+	#def isUserAdmin
+
+	def checkDesktop(self):
+
+		flavours=[]
+		isDesktop=False
+
+		cmd='lliurex-version -v'
+		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+		result=p.communicate()[0]
+		if type(result) is bytes:
+			result=result.decode()
+			flavours = [ x.strip() for x in result.split(',') ]	
+			for item in flavours:
+				if 'server' in item or 'client' in item:
+					isDesktop=False
+					break
+				elif 'desktop' in item:
+					isDesktop=True
+
+		return isDesktop
+
+	#def canUpdatSystem
 
 #def LliurexUpCore
 

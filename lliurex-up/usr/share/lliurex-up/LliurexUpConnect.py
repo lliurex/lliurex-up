@@ -66,9 +66,9 @@ class LliurexUpConnect():
 		self.isWeekPauseActive=False
 		self.canPauseUpdate=False
 		self.canExtendedPause=False
+		self.extensionWeekPause=0
 		week=_("week")
 		weeks=_("weeks")
-		self.extensionWeekPause=0
 		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
 		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
 		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
@@ -648,16 +648,20 @@ class LliurexUpConnect():
 
 	def manageSystray(self,enable):
 
-		if enable:
-			if os.path.exists(self.disableSystrayToken):
-				os.remove(self.disableSystrayToken)
-		else:
-			if not os.path.exists(self.disableSystrayToken):
-				if not os.path.exists(self.disableSystrayPath):
-					os.mkdir(self.disableSystrayPath)
-			
-				f=open(self.disableSystrayToken,'w')
-				f.close()
+		try:
+			if enable:
+				if os.path.exists(self.disableSystrayToken):
+					os.remove(self.disableSystrayToken)
+			else:
+				if not os.path.exists(self.disableSystrayToken):
+					if not os.path.exists(self.disableSystrayPath):
+						os.mkdir(self.disableSystrayPath)
+				
+					f=open(self.disableSystrayToken,'w')
+					f.close()
+			return True
+		except:
+			return False
 
 	#def manageSystray
 
@@ -846,35 +850,15 @@ class LliurexUpConnect():
 
 	def checkUser(self):
 		
-		lockUser=False
-		flavours=[]
-
-		try:
-			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
-			gid = pwd.getpwnam(user).pw_gid
-			groupsGids = os.getgrouplist(user, gid)
-			userGroups = [ grp.getgrgid(x).gr_name for x in groupsGids ]
-
-			if 'teachers' in userGroups:
-				if 'sudo' not in userGroups and 'admins' not in userGroups:
-					cmd='lliurex-version -v'
-					p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-					result=p.communicate()[0]
-					if type(result) is bytes:
-						result=result.decode()
-						flavours = [ x.strip() for x in result.split(',') ]	
-					
-					for item in flavours:
-						if 'server' in item or 'client' in item:
-							lockUser=True
-							break
-		
-		except Exception as e:
-			pass
-
-		return lockUser
+		return self.llxUpCore.isUserAdmin()
 
 	#def checkUser
+
+	def checkDesktop(self):
+
+		return self.llxUpCore.checkDesktop()
+
+	#def isDesktop
 
 	def checkProgressDownload(self):
 
@@ -949,42 +933,44 @@ class LliurexUpConnect():
 
 	def getAutoUpgradeInfo(self):
 
-		self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
-		
-		if self.isAutoUpgradeAvailable:
-			self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
-			self.currentConfig[1]=self.isAutoUpgradeEnabled
+		if self.checkDesktop():
+			self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
 			
-			if self.isAutoUpgradeEnabled:
-				self.llxUpCore.getAutoUpgradeConfig()
-				weeksOfPause=self.llxUpCore.weeksOfPause
-				self.dateToUpdate=self.llxUpCore.dateToUpdate
-				extensionPause=self.llxUpCore.extensionPause
-				self.weeksOfPause=0
+			if self.isAutoUpgradeAvailable:
+				self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
+				self.currentConfig[1]=self.isAutoUpgradeEnabled
+				
+				if self.isAutoUpgradeEnabled:
+					self.llxUpCore.getAutoUpgradeConfig()
+					weeksOfPause=self.llxUpCore.weeksOfPause
+					self.dateToUpdate=self.llxUpCore.dateToUpdate
+					extensionPause=self.llxUpCore.extensionPause
+					self.weeksOfPause=0
+					self.extensionWeekPause=0
 
-				if weeksOfPause>0:
-					self.canPauseUpdate=False
-					self.isWeekPauseActive=True
-										
-					for i in range(len(self.weeksOfPauseCombo)):
-						if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
-							self.weeksOfPause=i
-							break;
-					
-					if weeksOfPause<5:
-						self.canExtendedPause=True
+					if weeksOfPause>0:
+						self.canPauseUpdate=False
+						self.isWeekPauseActive=True
+											
+						for i in range(len(self.weeksOfPauseCombo)):
+							if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
+								self.weeksOfPause=i
+								break;
+						
+						if weeksOfPause<5:
+							self.canExtendedPause=True
+						else:
+							self.canExtendedPause=False
+
 					else:
+						self.isWeekPauseActive=False
+						self.canPauseUpdate=True
 						self.canExtendedPause=False
 
-				else:
-					self.isWeekPauseActive=False
-					self.canPauseUpdate=True
-					self.canExtendedPause=False
-
-				self._getExtensionPauseCombo(extensionPause)
-				self.currentConfig[2]=self.isWeekPauseActive
-				self.currentConfig[3]=self.weeksOfPause
-				self.currentConfig[4]=self.extensionWeekPause
+					self._getExtensionPauseCombo(extensionPause)
+					self.currentConfig[2]=self.isWeekPauseActive
+					self.currentConfig[3]=self.weeksOfPause
+					self.currentConfig[4]=self.extensionWeekPause
 
 	#def getAutoUpgradeInfo
 
@@ -1039,7 +1025,7 @@ class LliurexUpConnect():
 
 	#def manageAutoUpgrade
 	
-	def manageUpdatePause(self,enablePause,weeksOfPause,extensionWeekPause):
+	def manageUpdatePause(self,enablePause,weeksOfPause,extensionWeekPause=0):
 
 		if enablePause:
 			weeksOfPause=self.weeksOfPauseCombo[weeksOfPause]["value"]
