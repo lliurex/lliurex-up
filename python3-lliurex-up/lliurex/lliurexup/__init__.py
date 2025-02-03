@@ -51,6 +51,9 @@ class LliurexUpCore(object):
 		self.dateToUpdate=datetime.date.today().isoformat()
 		self.weeksOfPause=0
 		self.extensionPause=5
+		self.cancellationsAvailables=3
+		context=ssl._create_unverified_context()
+		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
 	
 	#def __init__	
 
@@ -59,8 +62,10 @@ class LliurexUpCore(object):
 		self.createLockToken()
 		self.retryN4d=True
 		self.n4dStatus=True
+		'''
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
+		'''		
 		editImage=self.checkImageBeingEdited()
 		if not editImage:
 			self.checkN4dStatus()
@@ -1095,20 +1100,8 @@ class LliurexUpCore(object):
 
 	def isAutoUpgradeAvailable(self):
 
-		check=False
-
-		if self.search_meta("desktop"):
-			if self.desktopClientized:
-				if not self.connectionWithServer:
-					check=True
-			else:
-				check=True
-
-		if check:
-			if os.path.exists(self.autoUpgradeService):
-				return True
-			else:
-				return False
+		if os.path.exists(self.autoUpgradeService):
+			return True
 		else:
 			return False
 
@@ -1139,17 +1132,30 @@ class LliurexUpCore(object):
 		try:
 			result = self.n4d.is_auto_update_active('','LliurexUpManager')
 			return result['return']
-		except:
+		except Exception as e:
 			return False
 
-	#def isAutoUpgradeActive 
+	#def isAutoUpgradeActive
+
+	def canCancelAutoUpdate(self):
+
+		try:
+			result = self.n4d.can_cancel_auto_upgrade('','LliurexUpManager')
+			return result['return']
+		except Exception as e:
+			return False
+
+
+	#def canCancelAutoUpdate
 
 	def getAutoUpgradeConfig(self):
 
 		try:
 			ret=self.n4d.read_current_config('','LliurexUpManager')["return"]
+
 			if ret['status']:
 				if len(ret['data']):
+					self.cancellationsAvailables=ret['data']["cancellationsAvailables"]
 					self.dateToUpdate=ret['data']["dateToUpdate"]
 					self.weeksOfPause=ret['data']["weeksOfPause"]
 					self.extensionPause=ret['data']["extensionPause"]
@@ -1173,11 +1179,11 @@ class LliurexUpCore(object):
 
 	#def manageAutoUpgrade
 
-	def stopAutoUpgrade(self):
+	def stopAutoUpgrade(self, systemUpdate=True):
 
 		if self.isAutoUpgradeAvailable():
 			try:
-				result = self.n4d.stop_auto_update_service('','LliurexUpManager',True)
+				result = self.n4d.stop_auto_update_service('','LliurexUpManager',systemUpdate)
 				return result['return']
 			except:
 				return True
