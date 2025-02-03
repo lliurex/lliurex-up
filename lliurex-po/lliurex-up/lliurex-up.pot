@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 14:05+0100\n"
+"POT-Creation-Date: 2025-02-03 09:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,7 @@ msgid "Update process"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:12
 msgid "Settings"
 msgstr ""
@@ -50,10 +51,12 @@ msgid "Update"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:217
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:59
 msgid "Apply"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:242
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:103
 msgid "Cancel"
 msgstr ""
 
@@ -117,6 +120,16 @@ msgstr ""
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:96
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
 msgid "Close"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:46
+msgid ""
+"There are pending changes to apply.\n"
+"Do you want apply the changes or discard them?"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:81
+msgid "Discard"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:60

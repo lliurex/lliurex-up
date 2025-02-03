@@ -9,6 +9,7 @@ import time
 import sys
 import pwd
 import subprocess
+import datetime
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -213,6 +214,22 @@ class GatherPackages(QThread):
 	#def run
 
 #def GatherPackages
+
+class DisableUpdatePause(QThread):
+
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+
+	#def __init__
+
+	def run (self,*args):
+
+		ret=Bridge.llxUpConnect.manageUpdatePause(False,0)
+		
+	#def run
+
+#class CheckMirror
 
 class Bridge(QObject):
 
@@ -617,9 +634,17 @@ class Bridge(QObject):
 				logMsg="System update. Nothing to do"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: System update. Nothing to do")
-				self.core.mainStack.loadInfo()
 				if self.launchInitActionsT.ret[1]!="":
 					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
+				if self.llxUpConnect.isWeekPauseActive:
+					if datetime.date.today().isoformat()>=self.llxUpConnect.dateToUpdate:
+						self.disableUpdatePauseT=DisableUpdatePause()
+						self.disableUpdatePauseT.start()
+						self.disableUpdatePauseT.finished.connect(self._disableUpdatePauseRet)
+					else:
+						self.core.mainStack.loadInfo()
+				else:
+					self.core.mainStack.loadInfo()
 		else:
 			if not self.gatherPackagesT.incorrectFlavours['status']:
 				self.core.mainStack.updateRequired=True
@@ -635,6 +660,12 @@ class Bridge(QObject):
 				self.core.mainStack.currentStack=1
 
 	#def _gatherPackagesRet
+
+	def _disableUpdatePauseRet(self):
+
+		self.core.mainStack.loadInfo()
+
+	#def _disableUpdatePauseRet
 
 	def _getProgress(self):
 

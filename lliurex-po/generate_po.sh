@@ -2,6 +2,7 @@
 
 xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml -o ./lliurex-up/lliurex-up.pot
 xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml -o ./lliurex-up/lliurex-up.pot
+xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml -o ./lliurex-up/lliurex-up.pot
 xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml -o ./lliurex-up/lliurex-up.pot
 xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml -o ./lliurex-up/lliurex-up.pot
 xgettext --join-existing -kde -ki18nd:2 ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml -o ./lliurex-up/lliurex-up.pot

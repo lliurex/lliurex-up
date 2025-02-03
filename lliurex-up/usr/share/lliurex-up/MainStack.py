@@ -409,6 +409,7 @@ class Bridge(QObject):
 			self.showPendingChangesDialog=False
 			self.core.settingStack.discardChanges()
 		elif action=="Cancel":
+			self.closeGui=False
 			self.showPendingChangesDialog=False
 	
 	#def managePendingChangesDialog

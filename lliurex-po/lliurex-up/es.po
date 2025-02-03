@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 14:05+0100\n"
-"PO-Revision-Date: 2025-01-31 14:12+0100\n"
+"POT-Creation-Date: 2025-02-03 09:15+0100\n"
+"PO-Revision-Date: 2025-02-03 09:16+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -33,6 +33,7 @@ msgid "Update process"
 msgstr "Proceso de actualización"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:12
 msgid "Settings"
 msgstr "Preferencias"
@@ -52,12 +53,14 @@ msgid "Update"
 msgstr "Actualizar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:217
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:59
 msgid "Apply"
 msgstr "Aplicar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:242
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:103
 msgid "Cancel"
-msgstr "Cancelae"
+msgstr "Cancelar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:306
 msgid "Apply changes. Wait a moment..."
@@ -124,6 +127,18 @@ msgstr "Buscando el control de cambios. Espere un momento..."
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
 msgid "Close"
 msgstr "Cerrar"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:46
+msgid ""
+"There are pending changes to apply.\n"
+"Do you want apply the changes or discard them?"
+msgstr ""
+"Hay cambios pendientes de aplicar. \n"
+"¿Desea aplicar los cambios o descartarlos?"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:81
+msgid "Discard"
+msgstr "Descartar"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:60
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:109

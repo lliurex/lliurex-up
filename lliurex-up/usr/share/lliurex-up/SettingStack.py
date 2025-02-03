@@ -55,7 +55,7 @@ class Bridge(QObject):
 		self._showExtensionPauseCombo=False
 		self._dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
 		self._isAdmin=Bridge.llxUpConnect.checkUser()
-		self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
+		self._extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
 		
 	#def __init__
@@ -66,6 +66,7 @@ class Bridge(QObject):
 		self.isSystrayEnabled=Bridge.llxUpConnect.isSystrayEnabled
 		self.isAutoUpgradeAvailable=Bridge.llxUpConnect.isAutoUpgradeAvailable
 		self.isAutoUpgradeEnabled=Bridge.llxUpConnect.isAutoUpgradeEnabled
+		self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
 		
 		if self.isAutoUpgradeEnabled:
 			self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
@@ -74,7 +75,6 @@ class Bridge(QObject):
 			self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
 			self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
 			self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-			self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
 			self.dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
 		
 		self.showExtensionPauseCombo=False
@@ -227,6 +227,20 @@ class Bridge(QObject):
 			self.on_showExtensionPauseCombo.emit()
 
 	#def _setShowExtensionPauseCombo
+
+	def _getExtensionWeekPause(self):
+
+		return self._extensionWeekPause
+
+	#def _getExtensionWeekPause
+
+	def _setExtensionWeekPause(self,extensionWeekPause):
+
+		if self._extensionWeekPause!=extensionWeekPause:
+			self._extensionWeekPause=extensionWeekPause
+			self.on_extensionWeekPause.emit()
+
+	#def _setExtensionWeekPause
 
 	def _getShowSettingsMsg(self):
 
@@ -392,8 +406,9 @@ class Bridge(QObject):
 	def _applyChangesRet(self):
 
 		self.getSettingsInfo()
+		self.settingsChanged=False
 		self.core.mainStack.closePopUp=True
-		
+
 		if not self.applyChangesT.ret[0]:
 			self.core.mainStack.closeGui=True
 			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
@@ -403,7 +418,6 @@ class Bridge(QObject):
 			self.core.mainStack.moveToStack=""
 			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Error"]
 
-		self.settingsChanged=False
 	
 	#def _applyChangesRet
 
@@ -465,6 +479,9 @@ class Bridge(QObject):
 	on_showExtensionPauseCombo=Signal()
 	showExtensionPauseCombo=Property(bool,_getShowExtensionPauseCombo,_setShowExtensionPauseCombo,notify=on_showExtensionPauseCombo)
 
+	on_extensionWeekPause=Signal()
+	extensionWeekPause=Property(int,_getExtensionWeekPause,_setExtensionWeekPause,notify=on_extensionWeekPause)
+	
 	on_settingsChanged=Signal()
 	settingsChanged=Property(bool,_getSettingsChanged,_setSettingsChanged,notify=on_settingsChanged)
 

@@ -74,7 +74,6 @@ class LliurexUpConnect():
 		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
 		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
 
-	
 	#def __init__	
 
 	def checkLocks(self):

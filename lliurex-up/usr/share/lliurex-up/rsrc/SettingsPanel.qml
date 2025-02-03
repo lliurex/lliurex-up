@@ -197,7 +197,7 @@ Rectangle{
 
 				PC3.ComboBox{
 					id:extensionValues
-					currentIndex:0
+					currentIndex:settingStackBridge.extensionWeekPause
 					textRole:"name"
 					model:settingStackBridge.extensionPauseCombo
 					Layout.alignment:Qt.AlignVCenter
