@@ -1,0 +1,32 @@
+have lliurex-upgrade &&
+_lliurex-upgrade()
+{
+    local cur prev opts base
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    #
+    #  The basic options we'll complete.
+    #
+    opts="update get-autoupdates-setting enable-autoupdates disable-autoupdates cancel-autoupdates pause-autoupdates extended-pause"
+
+    case "${prev}" in 
+        enable-autoupdates | disable-autoupdates | cancel-autoupdates | pause-autoupdates | extended-pause )
+            local flags="--unattended --help"
+            COMPREPLY=( $(compgen -W "${flags}" -- ${cur}) )
+            return 0
+            ;;
+        update)
+            local flags=" --help --unattended --sai --no-mirror --repositories"
+            COMPREPLY=( $(compgen -W "${flags}" -- ${cur}) )
+            return 0
+            ;;
+        *)
+            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            return 0
+            ;;
+
+    esac
+}
+[ "$have" ] && complete -F _lliurex-upgrade lliurex-upgrade

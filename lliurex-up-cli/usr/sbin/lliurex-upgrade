@@ -1120,6 +1120,7 @@ def	usage():
 		puts("lliurex-upgrade [FLAGS...]")
 		puts("Actions")
 		with indent(4):
+			puts("update: Update the system")
 			puts("get-autoupdates-settings: Show info about automatic updates settings")
 			puts("enable-autoupdates: Enable automatic system updates")
 			puts("disable-autoupdates: Disable automatic system updates")
@@ -1238,7 +1239,11 @@ if __name__ == '__main__':
 				usage()
 		else:
 			usage()
-	elif action!=None:
+	elif action=="update":
+		is_update_action=True
+		is_manage_action=False
+		manage_option=""
+	elif action!=None:		
 		usage()
 
 	if is_update_action:
