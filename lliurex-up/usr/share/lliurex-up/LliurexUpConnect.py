@@ -1026,8 +1026,8 @@ class LliurexUpConnect():
 				pauseNeedUpdate=True
 
 		if pauseNeedUpdate:
-			retUpdatePause=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
-			if retUpdatePause:
+			retPauseUpdate=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
+			if retPauseUpdate:
 				changesInAutoUpdate=True
 
 		if changesInSystray:
@@ -1063,13 +1063,15 @@ class LliurexUpConnect():
 	def manageUpdatePause(self,enablePause,weeksOfPause,extensionWeekPause=0):
 
 		if enablePause:
-			weeksOfPause=self.weeksOfPauseCombo[weeksOfPause]["value"]
-			if weeksOfPause<5 and extensionWeekPause>0:
-				weeksOfPause=weeksOfPause+extensionWeekPause
+			if not self.currentConfig[2]:
+				weeksOfPause=self.weeksOfPauseCombo[weeksOfPause]["value"]
+			else:
+				weeksOfPause=extensionWeekPause
 		else:
 			weeksOfPause=0
 
 		ret=self.llxUpCore.manageUpdatePause(enablePause,weeksOfPause)
+
 		return ret
 
 	#def manageAutoUpgradePause

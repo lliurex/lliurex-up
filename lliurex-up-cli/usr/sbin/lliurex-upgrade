@@ -26,7 +26,7 @@ class LliurexUpCli(object):
 		self.configureRequired=False
 		self.currentDay=datetime.date.today().isoformat()
 		self.isUserAdmin=self.lliurexcore.isUserAdmin()
-		self.isDeskop=self.lliurexcore.checkDesktop()
+		self.isDesktop=self.lliurexcore.checkDesktop()
 	
 	
 	#def __init__
@@ -789,9 +789,30 @@ class LliurexUpCli(object):
 		result_queue.put(p)
 
 	#def unlocking_process	
-		
+	
+	def getAutoUpgradeSettings(self):
+
+		if self.isDesktop:
+			if self.lliurexcore.isAutoUpgradeAvailable():
+				self.lliurexcore.getAutoUpgradeConfig()
+
+	#def getAutoUpgradeSettings
+
+	def disableUpdatePause(self):
+
+		if self.isDesktop:
+			if self.currentDay>=self.lliurexcore.dateToUpdate:
+				ret=self.lliurexcore.manageUpdatePause(False,0)
+ 
+ 	#def disableAutoUpdate
 	
 	def updateAction(self,mode,extra_args=None):
+
+		if not self.isUserAdmin:
+			if not self.isDesktop or mode=="sai":
+				print("  [Lliurex-Up]: You not have privlleges to execute this action")
+				self.cleanEnvironment()
+				return 0
 
 		self.isLliurexUpLocked(extra_args)
 		self.isAptLocked(extra_args)
@@ -809,8 +830,7 @@ class LliurexUpCli(object):
 			self.cleanEnvironment()
 			return 1
 			
-			
-
+	
 		clientCheckingMirror=self.clientCheckingMirrorIsRunning()
 		
 		if clientCheckingMirror!=False:
@@ -836,6 +856,7 @@ class LliurexUpCli(object):
 		self.getLliurexVersionLliurexNet()
 		self.checkingInitialFlavourToInstall()
 		self.packages=self.getPackagesToUpdate()
+		self.getAutoUpgradeSettings()
 
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
@@ -888,6 +909,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
 				log_msg="System updated. Nothing to do"
 				self.log(log_msg)
+				self.disableUpdatePause()
 				self.cleanEnvironment()
 
 				return 0
@@ -904,32 +926,35 @@ class LliurexUpCli(object):
 	def manageUpdates(self,action,unattendend,weeks_of_pause):
 
 		execute=False
+		if self.lliurexcore.isLliurexUpLocked()==0:
+			if self.isDesktop:
+				if self.lliurexcore.isAutoUpgradeAvailable():
+					execute=True
+					if action in ["enable","disable"]:
+						if not self.isUserAdmin:
+							print("  [Lliurex-Up]: You not have privlleges to execute this action")
+							return 0
+			if not execute:
+				print("  [Lliurex-Up]: Manage options not available in this computer")
+				return 0
+			else:
+				self.lliurexcore.getAutoUpgradeConfig()
 
-		if self.isDeskop:
-			if self.lliurexcore.isAutoUpgradeAvailable():
-				execute=True
-				if action in ["enable","disable"]:
-					if not self.isUserAdmin:
-						print("  [Lliurex-Up]: You not have privlleges to execute this action")
-						return 0
-		if not execute:
-			print("  [Lliurex-Up]: Manage options not available in this computer")
-			return 0
+				if action=="settings":
+					self.showAutoUpdateSettings()
+				elif action=="enable":
+					self.enableAutoUpdate(unattendend)
+				elif action=="disable":
+					self.disableAutoUpdate(unattendend)
+				elif action=="cancel":
+					self.cancelAutoUpdate(unattendend)
+				elif action=="pause":
+					self.pauseAutoUpdate(unattendend,weeks_of_pause)
+				elif action=="extended":
+					self.extendedAutoUpdatePause(unattendend,weeks_of_pause)
 		else:
-			self.lliurexcore.getAutoUpgradeConfig()
-
-			if action=="settings":
-				self.showAutoUpdateSettings()
-			elif action=="enable":
-				self.enableAutoUpdate(unattendend)
-			elif action=="disable":
-				self.disableAutoUpdate(unattendend)
-			elif action=="cancel":
-				self.cancelAutoUpdate(unattendend)
-			elif action=="pause":
-				self.pauseAutoUpdate(unattendend,weeks_of_pause)
-			elif action=="extended":
-				self.extendedAutoUpdatePause(unattendend,weeks_of_pause)
+			print("  [Lliurex-Up]: LliureX-Up is now running. Wait a moment and try again")
+			return 0		
 
 	# manageUpdates
 
@@ -937,16 +962,16 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Current automatic updates settings:")
 		automaticEnabled=self.lliurexcore.isAutoUpgradeEnabled()
-		print("  [Lliurex-Up]: - Automatic updates enabled: %s"%str(automaticEnabled))
+		print("		- Automatic updates enabled: %s"%str(automaticEnabled))
 
 		if automaticEnabled:
-			print("  [Lliurex-Up]: - Attemps to cancel automatic update: %s"%str(self.lliurexcore.cancellationsAvailables))
+			print("		- Attemps to cancel automatic update: %s"%str(self.lliurexcore.cancellationsAvailables))
 			weeksOfPause=self.lliurexcore.weeksOfPause
 			if weeksOfPause>0:
-				print("  [Lliurex-Up]: - Automatic updates paused for: %s weeks"%str(weeksOfPause))
-				print("  [Lliurex-Up]: - The pause of automatic updates can be extended up to: %s weeks"%str(self.lliurexcore.extensionPause))
+				print("		- Automatic updates paused for: %s weeks"%str(weeksOfPause))
+				print("		- The pause of automatic updates can be extended up to: %s weeks"%str(self.lliurexcore.extensionPause))
 				dateToUpdate=datetime.date.fromisoformat(self.lliurexcore.dateToUpdate).strftime("%d/%m/%y")
-				print("  [Lliurex-Up]: - Automatic updates will resume from: %s"%str(dateToUpdate))
+				print("		- Automatic updates will resume from: %s"%str(dateToUpdate))
 	
 		return 0
 
@@ -1075,8 +1100,7 @@ class LliurexUpCli(object):
 							response="yes"
 
 						if response.startswith('y'):
-							weeksOfPause=self.lliurexcore.weeksOfPause+extensionWeeksOfPause
-							ret=self.lliurexcore.manageUpdatePause(True,weeksOfPause)
+							ret=self.lliurexcore.manageUpdatePause(True,extensionWeeksOfPause)
 							if ret:
 								print("  [Lliurex-Up]: Automatic updates have been successfully extended for %s more weeks"%str(extensionWeeksOfPause))
 							else:
@@ -1096,12 +1120,12 @@ def	usage():
 		puts("lliurex-upgrade [FLAGS...]")
 		puts("Actions")
 		with indent(4):
-			puts("get-automatic-settings: Show info about automatic updates settings")
-			puts("enable-automatic-updates: Enable automatic system updates")
-			puts("disable-automatic-updates: Disable automatic system updates")
-			puts("cancel-automatic-updates: Cancel automatic system updates until next day")
-			puts("pause-automatic-updates <1..5>: Pause automatic updates for up 5 weeks")
-			puts("extended-update-pause <1..4>: Extendes the initial update pause for up 4 weeks ")
+			puts("get-autoupdates-settings: Show info about automatic updates settings")
+			puts("enable-autoupdates: Enable automatic system updates")
+			puts("disable-autoupdates: Disable automatic system updates")
+			puts("cancel-autoupdates: Cancel automatic system updates until next day")
+			puts("pause-autoupdates <1..5>: Pause automatic updates for up 5 weeks")
+			puts("extended-pause <1..4>: Extendes the initial update pause for up 4 weeks ")
 
 		puts("Flags")
 		with indent(4):
@@ -1171,23 +1195,23 @@ if __name__ == '__main__':
 
 	action=args.pop(0)
 
-	if action=="get-automatic-settings":
+	if action=="get-autoupdates-settings":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="settings"
-	elif action=="enable-automatic-updates":
+	elif action=="enable-autoupdates":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="enable"
-	elif action=="disable-automatic-updates":
+	elif action=="disable-autoupdates":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="disable"
-	elif action=="cancel-automatic-updates":
+	elif action=="cancel-autoupdates":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="cancel"
-	elif action=="pause-automatic-updates":
+	elif action=="pause-autoupdates":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="pause"
@@ -1201,7 +1225,7 @@ if __name__ == '__main__':
 		else:
 			usage()
 
-	elif action=="extended-update-pause":
+	elif action=="extended-autoupdates":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="extended"
