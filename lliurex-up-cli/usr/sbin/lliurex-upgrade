@@ -1225,7 +1225,7 @@ if __name__ == '__main__':
 		else:
 			usage()
 
-	elif action=="extended-autoupdates":
+	elif action=="extended-pause":
 		is_manage_action=True
 		is_update_action=False
 		manage_option="extended"
