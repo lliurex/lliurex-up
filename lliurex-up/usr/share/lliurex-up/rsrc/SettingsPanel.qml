@@ -7,7 +7,17 @@ import org.kde.plasma.components 3.0 as PC3
 
 Rectangle{
     color:"transparent"
-    enabled:mainStackBridge.endProcess
+    enabled:{
+    	if (settingStackBridge.isAutoUpgradeRun){
+    		false
+    	}else{
+    	  	if (mainStackBridge.endProcess){
+    	  		true
+    	  	}else{
+    	  		false
+    	  	}
+    	}
+    }
     Text{ 
        text:i18nd("lliurex-up","Settings")
         font.family: "Quattrocento Sans Bold"

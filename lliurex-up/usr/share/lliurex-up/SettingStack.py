@@ -70,12 +70,13 @@ class Bridge(QObject):
 		
 		if self.isAutoUpgradeEnabled:
 			self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
-			self.canPauseUpdate=Bridge.llxUpConnect.canPauseUpdate
-			self.weeksOfPause=Bridge.llxUpConnect.weeksOfPause
-			self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
-			self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
-			self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-			self.dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
+		
+		self.canPauseUpdate=Bridge.llxUpConnect.canPauseUpdate
+		self.weeksOfPause=Bridge.llxUpConnect.weeksOfPause
+		self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
+		self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
+		self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
+		self.dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
 		
 		self.showExtensionPauseCombo=False
 		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)

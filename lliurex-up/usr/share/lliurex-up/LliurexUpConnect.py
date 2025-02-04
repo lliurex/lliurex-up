@@ -936,40 +936,38 @@ class LliurexUpConnect():
 			self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
 			
 			if self.isAutoUpgradeAvailable:
+				self.llxUpCore.getAutoUpgradeConfig()
 				self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
 				self.currentConfig[1]=self.isAutoUpgradeEnabled
 				
-				if self.isAutoUpgradeEnabled:
-					self.llxUpCore.getAutoUpgradeConfig()
-					weeksOfPause=self.llxUpCore.weeksOfPause
-					self.dateToUpdate=self.llxUpCore.dateToUpdate
-					extensionPause=self.llxUpCore.extensionPause
-					self.weeksOfPause=0
-					self.extensionWeekPause=0
+				weeksOfPause=self.llxUpCore.weeksOfPause
+				self.dateToUpdate=self.llxUpCore.dateToUpdate
+				extensionPause=self.llxUpCore.extensionPause
+				self.weeksOfPause=0
+				self.extensionWeekPause=0
 
-					if weeksOfPause>0:
-						self.canPauseUpdate=False
-						self.isWeekPauseActive=True
+				if weeksOfPause>0:
+					self.canPauseUpdate=False
+					self.isWeekPauseActive=True
 											
-						for i in range(len(self.weeksOfPauseCombo)):
-							if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
-								self.weeksOfPause=i
-								break;
+					for i in range(len(self.weeksOfPauseCombo)):
+						if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
+							self.weeksOfPause=i
+							break;
 						
-						if weeksOfPause<5:
-							self.canExtendedPause=True
-						else:
-							self.canExtendedPause=False
-
+					if weeksOfPause<5:
+						self.canExtendedPause=True
 					else:
-						self.isWeekPauseActive=False
-						self.canPauseUpdate=True
 						self.canExtendedPause=False
+				else:
+					self.isWeekPauseActive=False
+					self.canPauseUpdate=True
+					self.canExtendedPause=False
 
-					self._getExtensionPauseCombo(extensionPause)
-					self.currentConfig[2]=self.isWeekPauseActive
-					self.currentConfig[3]=self.weeksOfPause
-					self.currentConfig[4]=self.extensionWeekPause
+				self._getExtensionPauseCombo(extensionPause)
+				self.currentConfig[2]=self.isWeekPauseActive
+				self.currentConfig[3]=self.weeksOfPause
+				self.currentConfig[4]=self.extensionWeekPause
 
 	#def getAutoUpgradeInfo
 

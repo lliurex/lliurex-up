@@ -12,7 +12,7 @@ import shutil
 import datetime
 import time
 import signal
-from gi.repository import GLib
+
 signal.signal(signal.SIGINT,signal.SIG_IGN)
 
 class LliurexUpCli(object):

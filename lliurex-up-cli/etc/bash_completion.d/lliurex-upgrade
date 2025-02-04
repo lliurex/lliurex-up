@@ -9,7 +9,7 @@ _lliurex-upgrade()
     #
     #  The basic options we'll complete.
     #
-    opts="update get-autoupdates-setting enable-autoupdates disable-autoupdates cancel-autoupdates pause-autoupdates extended-pause"
+    opts="update get-autoupdates-settings enable-autoupdates disable-autoupdates cancel-autoupdates pause-autoupdates extended-pause"
 
     case "${prev}" in 
         enable-autoupdates | disable-autoupdates | cancel-autoupdates | pause-autoupdates | extended-pause )

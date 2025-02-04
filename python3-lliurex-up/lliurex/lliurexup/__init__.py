@@ -1179,11 +1179,11 @@ class LliurexUpCore(object):
 
 	#def manageAutoUpgrade
 
-	def stopAutoUpgrade(self, systemUpdate=True):
+	def stopAutoUpgrade(self, restartConfig=True):
 
 		if self.isAutoUpgradeAvailable():
 			try:
-				result = self.n4d.stop_auto_update_service('','LliurexUpManager',systemUpdate)
+				result = self.n4d.stop_auto_update_service('','LliurexUpManager',restartConfig)
 				return result['return']
 			except:
 				return True
