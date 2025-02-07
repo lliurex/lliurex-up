@@ -27,7 +27,9 @@ class LliurexUpCli(object):
 		self.currentDay=datetime.date.today().isoformat()
 		self.isUserAdmin=self.lliurexcore.isUserAdmin()
 		self.isDesktop=self.lliurexcore.checkDesktop()
-	
+		self.isDesktopInADI=False
+		self.isClient=False
+		self.isMirrorInServerADI=self.lliurexcore.isMirrorInServerADI
 	
 	#def __init__
 	
@@ -39,11 +41,9 @@ class LliurexUpCli(object):
 		if mode=="sai":
 			self.mode=mode
 			self.initActionsArg="initActionsSai"
-			
 		else:
 			self.mode="normal"
 			self.initActionsArg="initActions"	
-
 
 		print("  [Lliurex-Up]: Checking n4d service status...")
 		self.free_space_check()
@@ -52,17 +52,12 @@ class LliurexUpCli(object):
 
 	def checkInitialN4dStatus(self):
 
-
 		self.statusN4d=self.lliurexcore.n4dStatus
 		
 		if not self.statusN4d:
 			log_msg="N4d is not working"
 			print("  [Lliurex-Up]: %s"%log_msg)
 			self.log(log_msg)
-			'''
-			self.cleanEnvironment()
-			sys.exit(1)
-			'''
 
 	def checkInitialFlavour(self,extra_args=None):
 
@@ -72,8 +67,11 @@ class LliurexUpCli(object):
 		log_msg="Get initial flavours: " + str(self.lliurexcore.previousFlavours)
 		self.log(log_msg)
 		
+		self.isClient=self.lliurexcore.isClient
+		self.isMirrorInServerADI=self.lliurexcore.isMirrorInServerADI
+		self.canConnectToServerADI=self.lliurexcore.canConnectToServerADI
+
 	#def checkInitialFlavour	
-		
 
 	def canConnectToLliurexNet(self):
 
@@ -90,13 +88,14 @@ class LliurexUpCli(object):
 			log_msg="Can connect to lliurex.net: False"
 			self.log(log_msg)
 
-			is_client=self.lliurexcore.search_meta("client")
-			if not is_client:
-				if self.initActionsArg !="initActionsSai":
-					return False
+			if self.canConnectToServerADI:
+				if self.isMirrorInServerADI:
+					return True
+
+			if self.initActionsArg !="initActionsSai":
+				return False
 				
 			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
-			return True
 				
 	#def canConnectToLliurexNet		
 

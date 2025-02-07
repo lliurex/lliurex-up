@@ -58,7 +58,7 @@ class LliurexUpConnect():
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
+		self.canConnectToServerADI=self.llxUpCore.canConnectToServerADI
 		self.isAutoUpgradeAvailable=False
 		self.isAutoUpgradeEnabled=False
 		self.dateToUpdate=self.llxUpCore.dateToUpdate
@@ -73,6 +73,9 @@ class LliurexUpConnect():
 		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
 		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
 		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
+		self.isDesktopInADI=False
+		self.isClient=False
+		self.isMirrorInServerADI=self.llxUpCore.isMirrorInServerADI
 
 	#def __init__	
 
@@ -190,6 +193,11 @@ class LliurexUpConnect():
 		self.previousFlavours=self.llxUpCore.previousFlavours
 		msgLog="Get initial metapackage: " + str(self.previousFlavours)
 		self.log(msgLog)
+
+		self.isDesktopInADI=self.llxUpCore.isDesktopInADI
+		self.isClient=self.llxUpCore.isClient
+		self.canConnectToServerADI=self.llxUpCore.canConnectToServerADI
+
 		return self.targetMetapackage
 
 	#def checkFlavoour
@@ -207,11 +215,11 @@ class LliurexUpConnect():
 		else:
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
-			isClient=self.searchMeta("client")
-			if not isClient:
-				return False
-			else:
-				return True		
+
+			if self.canConnectToServerADI:
+				if self.isMirrorInServerADI:
+					return True
+			return False		
 
 	#def canConnectToLliurexNet
 
@@ -255,7 +263,6 @@ class LliurexUpConnect():
 				msgLog="Mirror is being udpated in server. Unable to update the system"
 				self.log(msgLog)
 
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
 		return isMirrorRunningInServer['ismirrorrunning']
 
 	#def clientCheckingMirrorIsRunning
@@ -275,7 +282,8 @@ class LliurexUpConnect():
 				msgLog="Mirror not detected on the server"
 				self.log(msgLog)
 				
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
+		self.isMirrorInServerADI=self.llxUpCore.isMirrorInServerADI
+		
 		return isMirrorExistsInServer['ismirroravailable']
 
 	#def clientCheckingMirrorIsRunning
@@ -621,10 +629,10 @@ class LliurexUpConnect():
 		showSettings=True
 		try:
 			if self.targetMetapackage !=None:
-				if self.searchMeta('client') and self.connectionWithServer:
+				if self.isClient:
 					showSettings=False
 			else:
-				if self.searchMeta('client') and self.connectionWithServer:	
+				if self.isClient:	
 					showSettings=False
 
 			return showSettings

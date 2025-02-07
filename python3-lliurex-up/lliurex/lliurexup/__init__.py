@@ -44,7 +44,6 @@ class LliurexUpCore(object):
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
 		self.optionsLlxUp=""
-		self.desktopClientized=False
 		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
@@ -54,7 +53,16 @@ class LliurexUpCore(object):
 		self.cancellationsAvailables=3
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-	
+		self.adiServerRef="/usr/bin/natfree-server"
+		self.adiClientRef="/usr/bin/natfree-client"
+		self.isServer=False
+		self.isClient=False
+		self.isClientizedDesktop=False
+		self.isDesktopADI=False
+		self.isDesktopInADI=False
+		self.canConnectToServerADI=False
+		self.isMirrorInServerADI=False
+
 	#def __init__	
 
 	def startLliurexUp(self):
@@ -62,10 +70,7 @@ class LliurexUpCore(object):
 		self.createLockToken()
 		self.retryN4d=True
 		self.n4dStatus=True
-		'''
-		context=ssl._create_unverified_context()
-		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		'''		
+
 		editImage=self.checkImageBeingEdited()
 		if not editImage:
 			self.checkN4dStatus()
@@ -116,7 +121,6 @@ class LliurexUpCore(object):
 		'''
 		return self.locks_info["Apt"]	
 
-
 	#def isAptLocked
 		
 	def isDpkgLocked(self):
@@ -128,19 +132,15 @@ class LliurexUpCore(object):
 		 3: Apt is running
 
 		 ''' 
-
 		return self.locks_info["Dpkg"]		
 			
-
 	#def isAptLocked			
 
 	def unlockerCommand(self):
 
-
 		return "/usr/sbin/dpkg-unlocker-cli unlock -u"
 
 	#def unlockeCommand				
-
 
 	def createLockToken(self):
 
@@ -163,7 +163,6 @@ class LliurexUpCore(object):
 
 	#def checkImagesBeingEdited
 	
-
 	def getPreviousFlavours(self):
 		
 		if os.path.exists(self.previousflavourspath):
@@ -198,7 +197,6 @@ class LliurexUpCore(object):
 		
 	#def checkN4dStatus		
 			
-				
 	def getTargetMetapackage(self):
 
 		if os.path.exists(self.targetMetapackagePath):
@@ -240,13 +238,14 @@ class LliurexUpCore(object):
 		if len(self.previousFlavours)==0:
 			self.getPreviousFlavours()
 		
-
 		self.writeDefaultSourceslist()
 		self.writeDefaultSourceslistMirror()
 		self.writeDefaultSourceslistAll()
+		self.writeDefaultSourceslistADI()
 
-		#self.addSourcesListLliurex(args)
-		self.checkIsDesktopClientize()
+		self.checkFlavourType()
+		self.testConnectionWithServer()
+		
 		return self.targetMetapackage
 
 	#def checkInitialFlavour	
@@ -301,13 +300,25 @@ class LliurexUpCore(object):
 
 	#def writeDefaultSourceslistMirror	
 
-
 	def writeDefaultSourceslistAll(self):
 		
 		f = open(os.path.join(self.processSourceslist,'default_all'),'w')
 		f.write('deb http://mirror/{version_mirror} {version} main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
 		f.write('deb http://mirror/{version_mirror} {version}-updates main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
 		f.write('deb http://mirror/{version_mirror} {version}-security main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
+		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.close()	
+
+	#def writeDefaultSourceslistAll	
+
+	def writeDefaultSourceslistADI(self):
+		
+		f = open(os.path.join(self.processSourceslist,'default_ADI'),'w')
+		f.write('deb http://server/mirror/{version_mirror} {version} main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
+		f.write('deb http://server/mirror/{version_mirror} {version}-updates main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
+		f.write('deb http://server/mirror/{version_mirror} {version}-security main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
 		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
 		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
 		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
@@ -338,21 +349,23 @@ class LliurexUpCore(object):
 		textsearch_mirror="/mirror/"+str(self.defaultMirror)
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
 		
-		is_client=self.search_meta("client")		
-
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-
-		if is_client:
+		if self.isClient:
 			if self.connectionWithServer:
 				client=True
 				if args:
 					sourcesref=os.path.join(self.processSourceslist, 'default_all')
-
 				else:
 					sourcesref=os.path.join(self.processSourceslist, 'default_mirror')
 			else:
 				sourcesref=os.path.join(self.processSourceslist, 'default')	
 	
+		elif self.isDesktopInADI:
+			if self.isMirrorInServerADI:
+				client=True
+				args=True
+				sourcesref=os.path.join(self.processSourceslist, 'default_ADI')
+			else:
+				sourcesref=os.path.join(self.processSourceslist, 'default')	
 		else:
 			sourcesref=os.path.join(self.processSourceslist, 'default')	
 
@@ -481,11 +494,10 @@ class LliurexUpCore(object):
 		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
-		is_client=self.search_meta("client")		
+		#is_client=self.search_meta("client")		
 
-		#if "client" in self.previousFlavours or "lliurex-meta-client" in self.targetMetapackage or "minimal-client" in self.previousFlavours or "lliurex-meta-minimal-client" in self.targetMetapackage:
-		if is_client:
-			if self.connectionWithServer:
+		if self.isClient:
+			if self.connectionWithServerADI:
 				if not args:
 					sources=self.readSourcesList()
 					if sources==0:
@@ -494,7 +506,9 @@ class LliurexUpCore(object):
 						if not self.canConnectToLliurexNet()['status']:
 							sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_mirror')
 						
-
+		elif self.isDesktopInADI:
+			if self.isMirrorInServerADI:
+				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_ADI')
 		'''				
 		options = ""
 		if self.canConnectToLliurexNet():
@@ -546,17 +560,16 @@ class LliurexUpCore(object):
 			result.msg : message of status
 			result.action : Action to launch
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
-			result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
-			if result['status_code']==0:
-				if result["return"]["action"]=="update":
-					return {"action":"update","data":result}
+		if self.haveLliurexMirror:
+			if self.isServer or self.isDesktopADI:
+				result = self.n4d.is_update_available('','MirrorManager',self.defaultMirror)
+				if result['status_code']==0:
+					if result["return"]["action"]=="update":
+						return {"action":"update","data":result}
+					else:
+						return {"action":"nothing-to-do","data":result}
 				else:
 					return {"action":"nothing-to-do","data":result}
-			else:
-				return {"action":"nothing-to-do","data":result}
 		
 		return None
 
@@ -566,33 +579,26 @@ class LliurexUpCore(object):
 		'''
 			return Boolean
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
-			result = self.n4d.is_alive('','MirrorManager')
-			return result['return']['status']
+		if self.haveLliurexMirror:
+			if self.isServer or self.isDesktopADI:
+				result = self.n4d.is_alive('','MirrorManager')
+				return result['return']['status']
 		return False
 
 	#def lliurexMirrorIsRunning	
 
 	def clientCheckingMirrorIsRunning(self):
 
-		is_client=self.search_meta("client")
-
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-		if is_client:
-
-			try:
-				context=ssl._create_unverified_context()
-				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
-				result=client.is_alive('','MirrorManager')
-				return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
-			
-			except Exception as e:
-				if not self.desktopClientized:
-					return {'ismirrorrunning':None,'exception':str(e),'data':""}
-				else:
-					self.connectionWithServer=False					
+		if self.isClient or self.isDesktopInADI:
+			if self.canConnectToServerADI:
+				try:
+					context=ssl._create_unverified_context()
+					client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+					result=client.is_alive('','MirrorManager')
+					return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
+				except Exception as e:
+					if self.isClient:
+						return {'ismirrorrunning':None,'exception':str(e),'data':""}
 
 		return {'ismirrorrunning':False,'exception':False,'data':""}	
 
@@ -600,34 +606,24 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		is_client=self.search_meta("client")
-		
-		#if "lliurex-meta-client" in self.targetMetapackage or "lliurex-meta-minimal-client" in self.targetMetapackage or "client" in self.previousFlavours or "client" in self.metapackageRef or "minimal-client" in self.previousFlavours or "minimal-client" in self.metapackageRef :
-		if is_client:				
-			try:
+		if self.isClient or self.isDesktopInADI:
+			if self.canConnectToServerADI:	
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				try:
 					result=client.is_mirror_available('','MirrorManager')
 					if result['status']==0:
+						self.isMirrorInServerADI=True
 						return {'ismirroravailable':True,'exception':False,'data':result}
 					else:
 						return {'ismirroravailable':False,'exception':False,'data':result}
 				except Exception as e :
-					if not self.desktopClientized:
+					if self.isClient:
 						return {'ismirroravailable':False,'exception':False,'data':str(e)}
-					else:
-						self.connectionWithServer=False
-						return {'ismirroravailable':True,'exception':False,'data':''}
-				
-			except Exception as e:
-				if not self.desktopClientized:
-					return {'ismirroravailable':None,'exception':str(e),'data':''}
-				else:
-					self.connectionWithServer=False
-					return {'ismirroravailable':True,'exception':False,'data':''}					
-		else:
-			return {'ismirroravailable':True,'exception':False,'data':''}	
+			else:
+				return {'ismirroravailable':None,'exception':'No connection with server','data':''}
+	
+		return {'ismirroravailable':True,'exception':False,'data':''}	
 
 	#def clientCheckingMirrorExists	
 
@@ -636,15 +632,13 @@ class LliurexUpCore(object):
 		'''
 			return int | None
 		'''
-		is_server=self.search_meta("server")
-		#if self.haveLliurexMirror and ('server' in self.flavours or 'lliurex-meta-server' in self.targetMetapackage):
-		if self.haveLliurexMirror and (is_server):
-	
-			try:
-				result = self.n4d.get_percentage('','MirrorManager',self.defaultMirror)['return']
-				return result
-			except:
-				return None	
+		if self.haveLliurexMirror:
+			if self.isServer or self.isDesktopADI:
+				try:
+					result = self.n4d.get_percentage('','MirrorManager',self.defaultMirror)['return']
+					return result
+				except:
+					return None	
 		return None
 
 	#def getPercentageLliurexMirror	
@@ -722,8 +716,6 @@ class LliurexUpCore(object):
 					tmp_list.append(tmp)	
 			
 			return tmp_list		
-					
-					
 
 	#def checkFlavour	
 
@@ -1011,15 +1003,6 @@ class LliurexUpCore(object):
       	
 	#def installFinalFlavour
 
-	def checkIsDesktopClientize(self):
-
-		if self.search_meta("client"):
-			if self.search_meta("desktop"):
-				self.desktopClientized=True
-
-
-	#def checkIsDesktopClientize	
-
 	def get_process_list(self):
 		
 		self.process_list=[]
@@ -1247,6 +1230,43 @@ class LliurexUpCore(object):
 		return isDesktop
 
 	#def canUpdatSystem
+
+	def checkFlavourType(self):
+
+		if self.search_meta('server'):
+			self.isServer=True
+		else:
+			if self.search_meta('client'):
+				self.isClient=True
+			if self.search_meta('desktop'):
+				if self.isClient:
+					self.isClientizedDesktop=True
+				else:
+					if os.path.exists(self.adiServerRef):
+						self.isDesktopADI=True
+					elif os.path.exists(self.adiClientRef):
+						self.isDesktopInADI=True
+					else:
+						self.isStandarDesktop=True
+	
+	#def checkFlavourType
+
+	def testConnectionWithServer(self):
+
+		if self.isClient or self.isDesktopInADI:
+			try:
+				context=ssl._create_unverified_context()
+				n4c=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+				ret=n4c.get_variable("LLIUREXMIRROR")
+				self.canConnectToServerADI=True
+				self.isClientizedDesktop=False
+			except Exception as e:
+				self.canConnectToServerADI=False
+				if self.isClientizedDesktop:
+					self.isClient=False
+				self.isDesktopInADI=False
+
+	#def testConnectionWithServer
 
 #def LliurexUpCore
 

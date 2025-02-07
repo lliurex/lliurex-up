@@ -34,10 +34,10 @@ class CheckSystem(QThread):
 		if self.freeSpace:
 			self.statusN4d=Bridge.llxUpConnect.checkInitialN4dStatus()
 			Bridge.llxUpConnect.checkInitialFlavour()
+			self.isMirrorExistsInserver=Bridge.llxUpConnect.clientCheckingMirrorExists()
+			self.isMirrorRunningInserver=Bridge.llxUpConnect.clientCheckingMirrorIsRunning()
 			self.canConnect=Bridge.llxUpConnect.canConnectToLliurexNet()
-			if self.canConnect:
-				self.isMirrorExistsInserver=Bridge.llxUpConnect.clientCheckingMirrorExists()
-				self.isMirrorRunningInserver=Bridge.llxUpConnect.clientCheckingMirrorIsRunning()
+
 	#def run
 
 #class CheckSystem
