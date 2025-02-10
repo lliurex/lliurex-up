@@ -1040,7 +1040,7 @@ class LliurexUpCli(object):
 							print("  [Lliurex-Up]: Unable to cancel automatic updates")
 							return 1
 				else:
-					print("  [Lliurex-Up]: ")
+					print("  [Lliurex-Up]: Unable to cancel automatic updates. The attemps to cancel have benn exceed")
 			else:
 				print("  [Lliurex-Up]: Automatic updates has already cancelled")
 		else:
