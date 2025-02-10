@@ -497,7 +497,7 @@ class LliurexUpCore(object):
 		#is_client=self.search_meta("client")		
 
 		if self.isClient:
-			if self.connectionWithServerADI:
+			if self.canConnectToServerADI:
 				if not args:
 					sources=self.readSourcesList()
 					if sources==0:
@@ -589,16 +589,15 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorIsRunning(self):
 
-		if self.isClient or self.isDesktopInADI:
-			if self.canConnectToServerADI:
-				try:
-					context=ssl._create_unverified_context()
-					client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
-					result=client.is_alive('','MirrorManager')
-					return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
-				except Exception as e:
-					if self.isClient:
-						return {'ismirrorrunning':None,'exception':str(e),'data':""}
+		if self.canConnectToServerADI:
+			try:
+				context=ssl._create_unverified_context()
+				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+				result=client.is_alive('','MirrorManager')
+				return {'ismirrorrunning':result['return']['status'],'exception':False,'data':result}
+			except Exception as e:
+				if self.isClient:
+					return {'ismirrorrunning':None,'exception':str(e),'data':""}
 
 		return {'ismirrorrunning':False,'exception':False,'data':""}	
 
@@ -606,22 +605,19 @@ class LliurexUpCore(object):
 
 	def clientCheckingMirrorExists(self):
 
-		if self.isClient or self.isDesktopInADI:
-			if self.canConnectToServerADI:	
+		if self.canConnectToServerADI:	
+			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
-				try:
-					result=client.is_mirror_available('','MirrorManager')
-					if result['status']==0:
-						self.isMirrorInServerADI=True
-						return {'ismirroravailable':True,'exception':False,'data':result}
-					else:
-						return {'ismirroravailable':False,'exception':False,'data':result}
-				except Exception as e :
-					if self.isClient:
-						return {'ismirroravailable':False,'exception':False,'data':str(e)}
-			else:
-				return {'ismirroravailable':None,'exception':'No connection with server','data':''}
+				result=client.is_mirror_available('','MirrorManager')
+				if result['status']==0:
+					self.isMirrorInServerADI=True
+					return {'ismirroravailable':True,'exception':False,'data':result}
+				else:
+					return {'ismirroravailable':False,'exception':False,'data':result}
+			except Exception as e :
+				if self.isClient:
+					return {'ismirroravailable':None,'exception':False,'data':str(e)}
 	
 		return {'ismirroravailable':True,'exception':False,'data':''}	
 

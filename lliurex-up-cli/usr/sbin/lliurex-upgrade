@@ -91,9 +91,11 @@ class LliurexUpCli(object):
 			if self.canConnectToServerADI:
 				if self.isMirrorInServerADI:
 					return True
+			else:
+				if self.initActionsArg =="initActionsSai":
+					return True
 
-			if self.initActionsArg !="initActionsSai":
-				return False
+			return False
 				
 			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
 				
