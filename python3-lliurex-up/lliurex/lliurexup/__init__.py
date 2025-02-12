@@ -44,7 +44,6 @@ class LliurexUpCore(object):
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
 		self.optionsLlxUp=""
-		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
 		self.dateToUpdate=datetime.date.today().isoformat()
@@ -350,7 +349,7 @@ class LliurexUpCore(object):
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
 		
 		if self.isClient:
-			if self.connectionWithServer:
+			if self.canConnectToServerADI:
 				client=True
 				if args:
 					sourcesref=os.path.join(self.processSourceslist, 'default_all')
