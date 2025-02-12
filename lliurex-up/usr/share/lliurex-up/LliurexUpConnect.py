@@ -121,7 +121,7 @@ class LliurexUpConnect():
 	def unlockingProcess(self):
 
 		cmd=self.llxUpCore.unlockerCommand()
-		result=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
+		result=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False).returncode
 
 		if result!=0:
 			msgLog="The unlocking process has failed"
