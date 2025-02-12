@@ -786,8 +786,8 @@ class LliurexUpCli(object):
 	def unlocking_process(self,result_queue):
 
 		cmd=self.lliurexcore.unlockerCommand()
-		p=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
-		result_queue.put(p)
+		p=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False)
+		result_queue.put(p.returncode)
 
 	#def unlocking_process	
 	
