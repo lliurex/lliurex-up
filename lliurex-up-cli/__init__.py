@@ -10,7 +10,6 @@ import shutil
 import datetime
 import time
 import signal
-from gi.repository import GLib
 signal.signal(signal.SIGINT,signal.SIG_IGN)
 
 class LliurexUpCli(object):
@@ -22,7 +21,10 @@ class LliurexUpCli(object):
 		self.lliurexUpCore.checkLocks()
 		self.checkingBlock=True
 		self.configureRequired=False
-	
+		self.currentDay=datetime.date.today().isoformat()
+		self.isUserAdmin=self.lliurexUpCore.isUserAdmin()
+		self.isDesktopInADI=False
+		self.isMirrorInServerADI=self.lliurexUpCore.isMirrorInServerADI
 	
 	#def __init__
 	
@@ -34,19 +36,18 @@ class LliurexUpCli(object):
 		if mode=="sai":
 			self.mode=mode
 			self.initActionsArg="initActionsSai"
-			
 		else:
 			self.mode="normal"
 			self.initActionsArg="initActions"	
 
-
 		print("  [Lliurex-Up]: Checking n4d service status...")
+		
 		self.freeSpaceCheck()
 		self.checkInitialN4dStatus()
 
+	#def startLliurexUp
 
 	def checkInitialN4dStatus(self):
-
 
 		self.statusN4d=self.lliurexUpCore.n4dStatus
 		
@@ -54,6 +55,8 @@ class LliurexUpCli(object):
 			msgLog="N4d is not working"
 			print("  [Lliurex-Up]: %s"%msgLog)
 			self.log(msgLog)
+
+	#def checkInitialN4dStatus
 	
 	def checkInitialFlavour(self):
 
@@ -63,9 +66,11 @@ class LliurexUpCli(object):
 		msgLog="Get initial flavours: " + str(self.lliurexUpCore.previousFlavours)
 		self.log(msgLog)
 		
+		self.isMirrorInServerADI=self.lliurexUpCore.isMirrorInServerADI
+		self.canConnectToServerADI=self.lliurexUpCore.canConnectToServerADI
+
 	#def checkInitialFlavour	
 		
-
 	def canConnectToLliurexNet(self):
 
 		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
@@ -74,76 +79,63 @@ class LliurexUpCli(object):
 		msgLog="Checking connection to lliurex.net: %s"%canConnect
 		self.log(msgLog)
 		if canConnect['status']:
-				msgLog="Can connect to lliurex.net: True"
-				self.log(msgLog)
-				return True
+			msgLog="Can connect to lliurex.net: True"
+			self.log(msgLog)
+			return True
 		else:
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
 
-			isClient=self.lliurexUpCore.search_meta("client")
-			if not isClient:
-				if self.initActionsArg !="initActionsSai":
-					return False
+			if self.canConnectToServerADI:
+				if self.isMirrorInServerADI:
+					return True
+			else:
+				if self.initActionsArg =="initActionsSai":
+					return True
+
+			return False
 				
 			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
 			return True
 				
 	#def canConnectToLliurexNet		
 
-	def clientCheckingMirrorExists(self):
+	def desktopCheckingMirrorExists(self):
 
 		self.allRepos=False
 
 		if self.extraArgs["repositories"]:
 			self.allRepos=True
 		
-		if not self.extraArgs["unattendend_upgrade"]:
-			if not self.allRepos:
-				print("  [Lliurex-Up]: Checking if mirror exists in server...")
-				isMirrorExists=self.lliurexUpCore.clientCheckingMirrorExists()
-				msgLog="Checking if mirrror exists in server. MirrorManager response: %s"%isMirrorExists['data']
-				self.log(msgLog)
-				if isMirrorExists["ismirroravailable"]==None:
-					msgLog="Checking if mirror exists in server. Error: "+str(isMirrorExists['exception'])
-					self.log(msgLog)
-					print("  [Lliurex-Up]: %s"%msgLog)
-
-				else:
-					if not isMirrorExists["ismirroravailable"]:
-						msgLog="Mirror not detected in server"
-						self.log(msgLog)
-						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
-						if response.startswith('y'):
-							self.allRepos=True
-							msgLog="Adding the repositories of lliurex.net on client. Response: Yes"
-						else:
-							msgLog="Adding the repositories of lliurex.net on client. Response : No"	
-						self.log(msgLog)	
-					else:
-						print("  [Lliurex-Up]: Nothing to do with mirror")
+		print("  [Lliurex-Up]: Checking if mirror exists in ADI...")
+		isMirrorExists=self.lliurexUpCore.desktopCheckingMirrorExists()
+		msgLog="Checking if mirrror exists in ADI. MirrorManager response: %s"%isMirrorExists['data']
+		self.log(msgLog)
+		if not isMirrorExists["ismirroravailable"]:
+			msgLog="Mirror not detected in ADI"
+			print("  [Lliurex-Up]: Mirror not detected in ADI")
+			self.log(msgLog)
+		else:
+			print("  [Lliurex-Up]: Nothing to do with mirror")
 
 		self.lliurexUpCore.addSourcesListLliurex(self.allRepos)						
 	
-	#def clientCheckingMirrorExists
+	#def desktopCheckingMirrorExists
 				
-	def clientCheckingMirrorIsRunning(self):
+	def desktopCheckingMirrorIsRunning(self):
 		
-		isMirrorRunningInServer=self.lliurexUpCore.clientCheckingMirrorIsRunning()
-		msgLog="Checking if mirrror in server is being updated. MirrorManager response: %s"%isMirrorRunningInServer['data']
+		isMirrorRunningInADI=self.lliurexUpCore.desktopCheckingMirrorIsRunning()
+		msgLog="Checking if mirrror in ADI is being updated. MirrorManager response: %s"%isMirrorRunningInADI['data']
 		self.log(msgLog)		
-		if isMirrorRunningInServer['ismirrorrunning'] ==None:
-			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
-			self.log(msgLog)
-		else:
-			if isMirrorRunningInServer['ismirrorrunning']:
-				msgLog="Mirror is being updated in server. Unable to update the system"
-				self.log(msgLog)
 		
-		return isMirrorRunningInServer['ismirrorrunning']
+		if isMirrorRunningInADI['ismirrorrunning']:
+			msgLog="Mirror is being updated in ADI. Unable to update the system"
+			self.log(msgLog)
+		
+		return isMirrorRunningInADI['ismirrorrunning']
 		
 			
-	#def clientCheckingMirrorIsRunning		
+	#def desktopCheckingMirrorIsRunning		
 	
 	def initActionsScript(self):
 
@@ -185,7 +177,6 @@ class LliurexUpCli(object):
 	def checkLliurexUp(self):
 
 		print("  [Lliurex-Up]: Looking for new version of Lliurex Up...")
-
 
 		isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated(self.allRepos)
 		restart=False
@@ -414,7 +405,6 @@ class LliurexUpCli(object):
 			command=self.lliurexUpCore.preActionsScript()		
 		
 		try:
-			#os.system(command)
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
 			if type(output[1]) is bytes:
@@ -493,7 +483,6 @@ class LliurexUpCli(object):
 				msgLog="Exec Post-Actions. Error: %s"%str(output_err)
 			else:
 				msgLog="Exec Post-Actions.OK"
-
 			
 		except Exception as e:
 			self.postActionError=True
@@ -566,16 +555,13 @@ class LliurexUpCli(object):
 						msgLog="Final install metapackage. Error %s"%str(output_err)
 					else:
 						msgLog="Final install metapackage.OK"
-
-
+				
 				except Exception as e:
 					self.finalMetaPackageError=True
 					print("  [Lliurex-Up]: Install of metapackage. Error: " +'\n'+str(e))
 					msgLog="Install of metapackage. Error:%s"%str(e)
 
 				self.log(msgLog)	
-					
-							
 			else:
 				print("  [Lliurex-Up]: Metapackage is correct. Nothing to do")
 
@@ -588,7 +574,6 @@ class LliurexUpCli(object):
 	#def checkingFinalFlavourToInstall		
 					
 	def checkFinalUpgrade(self):
-
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
 		error=self.lliurexUpCore.checkErrorDistUpgrade()
@@ -604,7 +589,6 @@ class LliurexUpCli(object):
 			msgLog="Dist-upgrade process ending OK"
 			self.distUpgradeOK=True
 
-		
 		self.log(msgLog)
 		
 	#def checkFinalUpgrade	
@@ -644,7 +628,6 @@ class LliurexUpCli(object):
 	
 	#def log
 
-
 	def freeSpaceCheck(self):
 		
 		freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
@@ -665,7 +648,6 @@ class LliurexUpCli(object):
 		code=self.lliurexUpCore.isLliurexUpLocked()
 		msgLog="------------------------------------------\n"+"LLIUREX-UP-CLI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
 
-		
 		if code !=0:
 			if code!=1:
 				self.log(msgLog)
@@ -675,7 +657,6 @@ class LliurexUpCli(object):
 							
 		
 	#def islliurexup_running	
-
 
 	def isAptLocked(self):
 
@@ -688,9 +669,7 @@ class LliurexUpCli(object):
 
 	#def isAptLocked		
 
-	
 	def isDpkgLocked(self):
-
 
 		print("  [Lliurex-Up]: Checking if Dpkg is running...")
 
@@ -699,7 +678,6 @@ class LliurexUpCli(object):
 		if code !=0:
 			self.manageLocker(code,"Dpkg")	
 	
-
 	#def isDpkgLocked
 
 	def manageLocker(self,code,action):
@@ -733,6 +711,7 @@ class LliurexUpCli(object):
 		
 		sys.exit(1)			
 
+	#def manageLocker
 
 	def pulsate_unlockingProcess(self):
 
@@ -776,13 +755,26 @@ class LliurexUpCli(object):
 	def unlockingProcess(self,resultQueue):
 
 		cmd=self.lliurexUpCore.unlockerCommand()
-		p=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
-		resultQueue.put(p)
+		p=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False)
+		resultQueue.put(p.returncode)
 
-	#def unlockingProcess	
-		
+	#def unlockingProcess
+
+	def getAutoUpgradeSettings(self):
+
+		if self.lliurexUpCore.isAutoUpgradeAvailable():
+			self.lliurexUpCore.getAutoUpgradeConfig()
+
+	#def getAutoUpgradeSettings
+
+	def disableUpdatePause(self):
+
+		if self.currentDay>=self.lliurexUpCore.dateToUpdate:
+			ret=self.lliurexUpCore.manageUpdatePause(False,0)
+ 
+ 	#def disableAutoUpdate
 	
-	def main(self,mode,extraArgs=None):
+	def updateAction(self,mode,extraArgs=None):
 
 		self.extraArgs=extraArgs
 		self.isLliurexUpLocked()
@@ -801,20 +793,16 @@ class LliurexUpCli(object):
 			self.cleanEnvironment()
 			return 1
 			
-			
-
-		clientCheckingMirror=self.clientCheckingMirrorIsRunning()
+		desktopCheckingMirror=self.desktopCheckingMirrorIsRunning()
 		
-		if clientCheckingMirror!=False:
-			if clientCheckingMirror:
-				print("  [Lliurex-Up]: Mirror is being updated in server. Unable to update the system")
-			else:
-				print("  [Lliurex-Up]: Unable to connect with server")
-
+		if desktopCheckingMirror!=False:
+			if desktopCheckingMirror:
+				print("  [Lliurex-Up]: Mirror is being updated in ADI. Unable to update the system")
+	
 			self.cleanEnvironment()
 			return 1
 		else:
-			self.clientCheckingMirrorExists()
+			self.desktopCheckingMirrorExists()
 				
 		self.initActionsScript()
 		if not self.checkLliurexUp():
@@ -828,6 +816,7 @@ class LliurexUpCli(object):
 		self.getLliurexVersionLliurexNet()
 		self.checkingInitialFlavourToInstall()
 		self.packages=self.getPackagesToUpdate()
+		self.getAutoUpgradeSettings()
 
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
@@ -880,6 +869,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
 				msgLog="System updated. Nothing to do"
 				self.log(msgLog)
+				self.disableUpdatePause()
 				self.cleanEnvironment()
 
 				return 0
@@ -890,5 +880,196 @@ class LliurexUpCli(object):
 				self.cleanEnvironment()
 
 				return 1
-	#def main			
+	#def updateAction
+
+	def manageUpdates(self,action,unattendend,weeks_of_pause):
+
+		execute=False
+		if self.lliurexUpCore.isLliurexUpLocked()==0:
+			if self.lliurexUpCore.isAutoUpgradeAvailable():
+				execute=True
+				if action in ["enable","disable"]:
+					if not self.isUserAdmin:
+						print("  [Lliurex-Up]: You not have privlleges to execute this action")
+						return 0
+			if not execute:
+				print("  [Lliurex-Up]: Manage options not available in this computer")
+				return 0
+			else:
+				self.lliurexUpCore.getAutoUpgradeConfig()
+
+				if action=="settings":
+					self.showAutoUpdateSettings()
+				elif action=="enable":
+					self.enableAutoUpdate(unattendend)
+				elif action=="disable":
+					self.disableAutoUpdate(unattendend)
+				elif action=="cancel":
+					self.cancelAutoUpdate(unattendend)
+				elif action=="pause":
+					self.pauseAutoUpdate(unattendend,weeks_of_pause)
+				elif action=="extended":
+					self.extendedAutoUpdatePause(unattendend,weeks_of_pause)
+		else:
+			print("  [Lliurex-Up]: LliureX-Up is now running. Wait a moment and try again")
+			return 0		
+
+	# manageUpdates
+
+	def showAutoUpdateSettings(self):
+
+		print("  [Lliurex-Up]: Current automatic updates settings:")
+		automaticEnabled=self.lliurexUpCore.isAutoUpgradeEnabled()
+		print("		- Automatic updates enabled: %s"%str(automaticEnabled))
+
+		if automaticEnabled:
+			print("		- Attemps to cancel automatic update: %s"%str(self.lliurexUpCore.cancellationsAvailables))
+			weeksOfPause=self.lliurexUpCore.weeksOfPause
+			if weeksOfPause>0:
+				print("		- Automatic updates paused for: %s weeks"%str(weeksOfPause))
+				print("		- The pause of automatic updates can be extended up to: %s weeks"%str(self.lliurexUpCore.extensionPause))
+				dateToUpdate=datetime.date.fromisoformat(self.lliurexUpCore.dateToUpdate).strftime("%d/%m/%y")
+				print("		- Automatic updates will resume from: %s"%str(dateToUpdate))
+	
+		return 0
+
+	#def showAutoUpdateSettings
+
+	def enableAutoUpdate(self,unattendend):
+
+		if self.lliurexUpCore.isAutoUpgradeEnabled():
+			print("  [Lliurex-Up]: Automatic updates are already enabled. Nothing to do")
+		else:
+			if not unattendend:
+				response=input( '  [Lliurex-Up]: Do you want to enable automatic updates in this compueter (yes/no)?')
+			else:
+				response="yes"
+
+			if response.startswith('y'):
+				ret=self.lliurexUpCore.manageAutoUpgrade(True)
+				if ret:
+					print("  [Lliurex-Up]: Automatic updates have been successfully activated")
+					return 0
+				else:
+					print("  [Lliurex-Up]: Unable to enable automatic updates")
+					return 1
+		return 0
+	
+	#def enableAutoUpdate	
+
+	def disableAutoUpdate(self,unattendend):
+
+		if not self.lliurexUpCore.isAutoUpgradeEnabled():
+			print("  [Lliurex-Up]: Automatic updates are already disabled. Nothing to do")
+		else:
+			if not unattendend:
+				response=input( '  [Lliurex-Up]: Do you want to disable automatic updates in this compueter (yes/no)?')
+			else:
+				response="yes"
+
+			if response.startswith('y'):
+				ret=self.lliurexUpCore.manageAutoUpgrade(False)
+				if ret:
+					print("  [Lliurex-Up]: Automatic updates have been successfully disabled")
+					return 0
+				else:
+					print("  [Lliurex-Up]: Unable to disable automatic updates")
+					return 1
+		return 0
+	
+	#def disableAutoUpdate
+
+	def cancelAutoUpdate(self,unattendend):
+
+		if self.lliurexUpCore.isAutoUpgradeEnabled():
+			if self.lliurexUpCore.isAutoUpgradeActive():
+				if self.lliurexUpCore.canCancelAutoUpdate():
+					if not unattendend:
+						response=input( '  [Lliurex-Up]: Do you want to cancel automatic update until tomorrow (yes/no)?')
+					else:
+						response="yes"
+
+					if response.startswith('y'):
+						ret=self.lliurexUpCore.stopAutoUpgrade(False)
+						if ret:
+							print("  [Lliurex-Up]: Automatic updates have been successfully cancelled until tomorrow")
+						else:
+							print("  [Lliurex-Up]: Unable to cancel automatic updates")
+							return 1
+				else:
+					print("  [Lliurex-Up]: Unable to cancel automatic updates. The attemps to cancel have benn exceed")
+			else:
+				print("  [Lliurex-Up]: Automatic updates has already cancelled")
+		else:
+			print("  [Lliurex-Up]: Automatic updates are disabled in this computer")
+			
+		return 0
+
+	#def cancelAutoUpdate
+
+	def pauseAutoUpdate(self,unattendend,weeksOfPause):
+
+		if self.lliurexUpCore.isAutoUpgradeEnabled():
+
+			if self.lliurexUpCore.weeksOfPause>0:
+				print("  [Lliurex-Up]: Paussing of automatic updates is already set. Use the extended-update-pause option instead")
+			else:
+				if weeksOfPause>5:
+					print("  [Lliurex-Up]: Unable to pause automatic updates. The indicate pause weeks exceed the limit")
+					return 0
+				else:
+					if not unattendend:
+						response=input( '  [Lliurex-Up]: Do you want to pause automatic update in this computer (yes/no)?')
+					else:
+						response="yes"
+
+					if response.startswith('y'):
+						ret=self.lliurexUpCore.manageUpdatePause(True,weeksOfPause)
+						if ret:
+							print("  [Lliurex-Up]: Automatic updates have been successfully paused for %s weeks"%str(weeksOfPause))
+						else:
+							print("  [Lliurex-Up]: Unable to pause automatic updates")
+							return 1
+						
+		else:
+			print("  [Lliurex-Up]: Automatic updates are already disabled. Nothing to do")
+
+		return 0
+	
+	#def pauseAutoUpdate
+
+	def extendedAutoUpdatePause(self,unattendend,extensionWeeksOfPause):
+
+		if self.lliurexUpCore.isAutoUpgradeEnabled():
+
+			if self.lliurexUpCore.weeksOfPause==0:
+				print("  [Lliurex-Up]: Paussing of automatic updates is not configured. Use the pause-automatic-updates option instead")
+			else:
+				if self.lliurexUpCore.extensionPause==0:
+					print("  [Lliurex-Up]: Unable to extend the pause of automatic updates. The configured pause has already reached the limit")
+				else:
+					if extensionWeeksOfPause > self.lliurexUpCore.extensionPause:
+						print("  [Lliurex-Up]: Unable to extend the pause of automatic updates. The indicate extended weeks exceed the limit")
+						return 0
+					else:
+						if not unattendend:
+							response=input( '  [Lliurex-Up]: Do you want to extended the pause automatic update in this computer (yes/no)?')
+						else:
+							response="yes"
+
+						if response.startswith('y'):
+							ret=self.lliurexUpCore.manageUpdatePause(True,extensionWeeksOfPause)
+							if ret:
+								print("  [Lliurex-Up]: Automatic updates have been successfully extended for %s more weeks"%str(extensionWeeksOfPause))
+							else:
+								print("  [Lliurex-Up]: Unable to pause automatic updates")
+								return 1
+						
+		else:
+			print("  [Lliurex-Up]: Automatic updates are already disabled. Nothing to do")
+
+		return 0
+	
+	#def pauseAutoUpdate
+
 #class LliurexUpCli

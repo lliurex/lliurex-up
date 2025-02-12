@@ -10,7 +10,17 @@ import sys
 def	usage():
 	puts("Usage")
 	with indent(4):
-		puts("lliurex-upgrade [FLAGS...]")
+		puts("lliurex-upgrade [FLAGS...] ACTIONS")
+		puts("Actions")
+		with indent(4):
+			puts("update: Update the system")
+			puts("get-autoupdates-settings: Show info about automatic updates settings")
+			puts("enable-autoupdates: Enable automatic system updates")
+			puts("disable-autoupdates: Disable automatic system updates")
+			puts("cancel-autoupdates: Cancel automatic system updates until next day")
+			puts("pause-autoupdates <1..5>: Pause automatic updates for up 5 weeks")
+			puts("extended-pause <1..4>: Extendes the initial update pause for up 4 weeks ")
+
 		puts("Flags")
 		with indent(4):
 			puts("-h --help:		Show help")
@@ -18,7 +28,6 @@ def	usage():
 			puts("-u --unattended:	Update the system in unattended mode. Does not require confirmation to update mirror and system")
 			puts("-n --no-mirror:		Update the system without checking mirror")
 			puts("-r --repositories:	Update the system adding mirror and lliurex.net repositories (only valid for clients)")
-
 
 	sys.exit(1)		
 
@@ -34,37 +43,113 @@ if __name__ == '__main__':
 
 
 	mode=None
-	options=0	
+	options=0
+	is_update_action=True	
 	extra_args={}
 	extra_args["mirror"]=True
 	extra_args["unattended_mirror"]=False
 	extra_args["unattendend_upgrade"]=False
 	extra_args["repositories"]=False
+	is_manage_action=False
+	manage_option=""
+	weeks_of_pause=0
+	unattendend=False
 
 	args=arguments.Args().copy
 	
 	if args.contains(["-h", "--help"]):
 		usage()
 	
-	if args.contains(["-s", "--sai"]):
-		mode="sai"
-		options=1
-
 	if args.contains(["-u", "--unattended"]):
 		extra_args["unattendend_upgrade"]=True
 		extra_args["unattended_mirror"]=True
+		unattendend=True
+		index = args.first(["-u","--unattended"])
+		args.pop(index)
+		options=1
+
+	if args.contains(["-s", "--sai"]):
+		mode="sai"
+		index = args.first(["-s", "--sai"])
+		args.pop(index)
 		options=1
 
 	if args.contains(["-r","--repositories"]):
 		extra_args["repositories"]=True
+		index = args.first(["-s", "--sai"])
+		args.pop(index)
 		options=1
 	
 	if args.contains(["-n", "--no-mirror"]):
 		extra_args["mirror"]=False
+		index = args.first(["-s", "--sai"])
+		args.pop(index)
 		options=1
-	else:
+
+	action=args.pop(0)
+
+	if action=="get-autoupdates-settings":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="settings"
+	elif action=="enable-autoupdates":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="enable"
+	elif action=="disable-autoupdates":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="disable"
+	elif action=="cancel-autoupdates":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="cancel"
+	elif action=="pause-autoupdates":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="pause"
+		if len(args)>0:
+			for item in args.all:
+				if item.isdigit():
+					weeks_of_pause=int(item)
+					break
+			if weeks_of_pause==0:
+				usage()
+		else:
+			usage()
+
+	elif action=="extended-pause":
+		is_manage_action=True
+		is_update_action=False
+		manage_option="extended"
+		if len(args)>0:
+			for item in args.all:
+				if item.isdigit():
+					weeks_of_pause=int(item)
+					break
+			if weeks_of_pause==0:
+				usage()
+		else:
+			usage()
+	elif action=="update":
+		is_update_action=True
+		is_manage_action=False
+		manage_option=""
+	elif action!=None:		
+		usage()
+
+	if is_update_action:
 		if len(args)>0 and options==0:
 			usage()	
-	
-	lliurexupcli = LliurexUpCli()	
-	sys.exit(lliurexupcli.main(mode,extra_args))
+	elif is_manage_action:
+		if manage_option=="":
+			usage()
+	else:
+		usage()
+
+	lliurexupcli=LliurexUpCli()
+
+	if is_manage_action:
+		sys.exit(lliurexupcli.manageUpdates(manage_option,unattendend,weeks_of_pause))
+	else:
+		sys.exit(lliurexupcli.updateAction(mode,extra_args))
