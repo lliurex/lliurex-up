@@ -56,8 +56,8 @@ class LliurexUpCore(object):
 		self.adiClientRef="/usr/bin/natfree-client"
 		self.isADI=False
 		self.isDesktopInADI=False
-		self.canConnectToServerADI=False
-		self.isMirrorInServerADI=False
+		self.canConnectToADI=False
+		self.isMirrorInADI=False
 
 	#def __init__	
 
@@ -304,7 +304,7 @@ class LliurexUpCore(object):
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
 		
 		if self.isDesktopInADI:
-			if self.isMirrorInServerADI:
+			if self.isMirrorInADI:
 				client=True
 				args=True
 				sourcesref=os.path.join(self.processSourceslist, 'default_ADI')
@@ -437,7 +437,7 @@ class LliurexUpCore(object):
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
 		if self.isDesktopInADI:
-			if self.isMirrorInServerADI:
+			if self.isMirrorInADI:
 				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_ADI')
 	
 		self.optionsLlxUp = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
@@ -517,7 +517,7 @@ class LliurexUpCore(object):
 
 	def desktopCheckingMirrorIsRunning(self):
 
-		if self.canConnectToServerADI:
+		if self.canConnectToADI:
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
@@ -532,13 +532,13 @@ class LliurexUpCore(object):
 
 	def desktopCheckingMirrorExists(self):
 
-		if self.canConnectToServerADI:	
+		if self.canConnectToADI:	
 			try:
 				context=ssl._create_unverified_context()
 				client=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				result=client.is_mirror_available('','MirrorManager')
 				if result['status']==0:
-					self.isMirrorInServerADI=True
+					self.isMirrorInADI=True
 					return {'ismirroravailable':True,'exception':False,'data':result}
 				else:
 					return {'ismirroravailable':False,'exception':False,'data':result}
@@ -1129,9 +1129,9 @@ class LliurexUpCore(object):
 				context=ssl._create_unverified_context()
 				n4c=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
 				ret=n4c.get_variable("LLIUREXMIRROR")
-				self.canConnectToServerADI=True
+				self.canConnectToADI=True
 			except Exception as e:
-				self.canConnectToServerADI=False
+				self.canConnectToADI=False
 				self.isDesktopInADI=False
 
 	#def testConnectionWithADI

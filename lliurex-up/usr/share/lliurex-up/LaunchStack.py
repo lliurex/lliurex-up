@@ -196,8 +196,6 @@ class Bridge(QObject):
 			f=open("/etc/lliurex-up.token","w")
 			f.close()
 			os.remove("/etc/lliurex-up.token")
-			if Bridge.llxUpConnect.checkUser():
-				abort=True
 		except:
 			abort=True
 			pass

@@ -39,6 +39,9 @@ class Bridge(QObject):
 		self._currentCommand=""
 		self._progressPkg=0
 		self._closeGui=False
+		self.moveToStack=""
+		self._showPendingChangesDialog=False
+		self._closePopUp=True
 
 	#def __init__
 
@@ -293,21 +296,52 @@ class Bridge(QObject):
 
 	#def _setCloseGui
 
+	def _getShowPendingChangesDialog(self):
+
+		return self._showPendingChangesDialog
+
+	#def _getShowPendingChangesDialog
+
+	def _setShowPendingChangesDialog(self,showPendingChangesDialog):
+
+		if self._showPendingChangesDialog!=showPendingChangesDialog:
+			self._showPendingChangesDialog=showPendingChangesDialog
+			self.on_showPendingChangesDialog.emit()
+
+	#def _setShowPendingChangesDialog
+	
+	def _getClosePopUp(self):
+
+		return self._closePopUp
+
+	#def _getClosePopUp
+
+	def _setClosePopUp(self,closePopUp):
+
+		if self._closePopUp!=closePopUp:
+			self._closePopUp=closePopUp
+			self.on_closePopUp.emit()
+
+	#def _setClosePopUp
+
 	@Slot(int)
 	def manageTransitions(self,stack):
 
 		if self.currentOptionStack!=stack:
-			self.currentOptionStack=stack
-			self.core.settingStack.showSettingsMsg=[False,"","Ok"]
-			if stack==3:
-				self.core.settingStack.getSettingsInfo()
-				if self.enableUpdateBtn:
-					self.enableUpdateBtn=False
+			if self.core.settingStack.settingsChanged:
+				self.moveToStack=stack
+				self.showPendingChangesDialog=True
 			else:
-				if not self.enableKonsole:
-					if self.updateRequired:
-						if not self.enableUpdateBtn:
-							self.enableUpdateBtn=True
+				self.moveToStack=""
+				self.currentOptionStack=stack
+				if stack==3:
+					self.core.settingStack.showSettingsMsg=[False,"","Ok"]
+					self.showFeedbackMessage=[False,"","Ok"]
+				else:
+					if not self.enableKonsole:
+						if self.updateRequired:
+							if not self.enableUpdateBtn:
+								self.enableUpdateBtn=True
 
 	#de manageTransitions
 
@@ -364,13 +398,32 @@ class Bridge(QObject):
 
 	#def _openHelpRet
 
+	@Slot(str)
+	def managePendingChangesDialog(self,action):
+
+		if action=="Apply":
+			self.showPendingChangesDialog=False
+			self.core.settingStack.applyChanges()			
+		elif action=="Discard":
+			self.showPendingChangesDialog=False
+			self.core.settingStack.discardChanges()
+		elif action=="Cancel":
+			self.closeGui=False
+			self.showPendingChangesDialog=False
+	
+	#def managePendingChangesDialog
+
 	@Slot()
 	def closeApplication(self):
 
 		if self.endProcess:
-			Bridge.llxUpConnect.cleanEnvironment()
-			Bridge.llxUpConnect.cleanLliurexUpLock()
-			self.closeGui=True
+			if self.core.settingStack.settingsChanged:
+				self.showPendingChangesDialog=True
+				self.closeGui=False
+			else:
+				Bridge.llxUpConnect.cleanEnvironment()
+				Bridge.llxUpConnect.cleanLliurexUpLock()
+				self.closeGui=True
 		else:
 			self.closeGui=False
 
@@ -423,6 +476,12 @@ class Bridge(QObject):
 
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
+
+	on_showPendingChangesDialog=Signal()
+	showPendingChangesDialog=Property(bool,_getShowPendingChangesDialog,_setShowPendingChangesDialog,notify=on_showPendingChangesDialog)
+
+	on_closePopUp=Signal()
+	closePopUp=Property(bool,_getClosePopUp,_setClosePopUp,notify=on_closePopUp)
 
 	totalUpdateSteps=Property(int,_getTotalUpdateSteps,constant=True)
 

@@ -19,6 +19,9 @@ import lliurex.lliurexup as LliurexUpCore
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+import gettext
+gettext.textdomain("lliurex-up")
+_=gettext.gettext
 
 class LliurexUpConnect():
 
@@ -34,7 +37,6 @@ class LliurexUpConnect():
 		self.errorUpgradeToken=self.llxUpCore.errorupgrade_token
 		self.errorFinalMetapackageToken=self.llxUpCore.errorfinalmetapackage_token
 		self.finalUpgradeToken=self.llxUpCore.finalupgrade_token
-		self.allRepos=False
 		self.packagesData=[]
 		self.desktopsPath="/usr/share/applications"
 		self.standardIconPath="/usr/share/lliurex-up/rsrc"
@@ -42,6 +44,7 @@ class LliurexUpConnect():
 		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
 		self.disableSystrayPath="/etc/lliurex-up-indicator"
 		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
+		self.isSystrayEnabled=True
 		self.numberPackagesDownloaded=[]
 		self.numberPackagesUnpacked=[]
 		self.numberPackagesInstalled=[]
@@ -54,7 +57,23 @@ class LliurexUpConnect():
 		self.progressUnpacked=0
 		self.progressUnpackedPercentage=0.00
 		self.aptCachePath="/var/cache/apt/archives"
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
+		self.canConnectToADI=self.llxUpCore.canConnectToADI
+		self.isAutoUpgradeAvailable=False
+		self.isAutoUpgradeEnabled=False
+		self.dateToUpdate=self.llxUpCore.dateToUpdate
+		self.weeksOfPause=self.llxUpCore.weeksOfPause
+		self.isWeekPauseActive=False
+		self.canPauseUpdate=False
+		self.canExtendedPause=False
+		self.extensionWeekPause=0
+		week=_("week")
+		weeks=_("weeks")
+		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
+		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
+		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
+		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
+		self.isDesktopInADI=False
+		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
 
 	#def __init__	
 
@@ -121,7 +140,7 @@ class LliurexUpConnect():
 	def unlockingProcess(self):
 
 		cmd=self.llxUpCore.unlockerCommand()
-		result=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
+		result=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False).returncode
 
 		if result!=0:
 			msgLog="The unlocking process has failed"
@@ -172,6 +191,10 @@ class LliurexUpConnect():
 		self.previousFlavours=self.llxUpCore.previousFlavours
 		msgLog="Get initial metapackage: " + str(self.previousFlavours)
 		self.log(msgLog)
+
+		self.isDesktopInADI=self.llxUpCore.isDesktopInADI
+		self.canConnectToADI=self.llxUpCore.canConnectToADI
+
 		return self.targetMetapackage
 
 	#def checkFlavoour
@@ -189,11 +212,11 @@ class LliurexUpConnect():
 		else:
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
-			isClient=self.searchMeta("client")
-			if not isClient:
-				return False
-			else:
-				return True		
+
+			if self.canConnectToADI:
+				if self.isMirrorInADI:
+					return True
+			return False		
 
 	#def canConnectToLliurexNet
 
@@ -209,8 +232,12 @@ class LliurexUpConnect():
 		 	poutput,perror=p.communicate()
 		 	if len(perror)>0:
 		 		error=perror.decode()
-		 		msgLog="Exec Init-Actions.Error: %s"%str(error)
-		 		result=False
+		 		if token in error:
+			 		msgLog="Exec Init-Actions.Error: %s"%str(error)
+			 		result=False
+			 	else:
+			 		error=""
+			 		msgLog="Exec Init-Actions"
 		 	else:
 		 		msgLog="Exec Init-Actions"
 
@@ -223,56 +250,46 @@ class LliurexUpConnect():
 
 	#def initActionsScript	
 
-	def clientCheckingMirrorIsRunning(self):
+	def desktopCheckingMirrorIsRunning(self):
 
-		isMirrorRunningInServer=self.llxUpCore.clientCheckingMirrorIsRunning()
-		msgLog="Checking if mirrror in server is being updated. MirrorManager response: %s"%isMirrorRunningInServer['data']
+		isMirrorRunningInADI=self.llxUpCore.desktopCheckingMirrorIsRunning()
+		msgLog="Checking if mirrror in ADI is being updated. MirrorManager response: %s"%isMirrorRunningInADI['data']
 		self.log(msgLog)		
 		
-		if isMirrorRunningInServer['ismirrorrunning'] ==None:
-			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
+		if isMirrorRunningInADI['ismirrorrunning']==True:
+			msgLog="Mirror is being udpated in ADI. Unable to update the system"
 			self.log(msgLog)
-		else:
-			if isMirrorRunningInServer['ismirrorrunning']==True:
-				msgLog="Mirror is being udpated in server. Unable to update the system"
-				self.log(msgLog)
 
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
-		return isMirrorRunningInServer['ismirrorrunning']
+		return isMirrorRunningInADI['ismirrorrunning']
 
-	#def clientCheckingMirrorIsRunning
+	#def desktopCheckingMirrorIsRunning
 
-	def clientCheckingMirrorExists(self):
+	def desktopCheckingMirrorExists(self):
 
-		isMirrorExistsInServer=self.llxUpCore.clientCheckingMirrorExists()
-		msgLog="Checking if mirrror exists in server. MirrorManager response: %s"%isMirrorExistsInServer['data']
+		isMirrorExistsInADI=self.llxUpCore.desktopCheckingMirrorExists()
+		msgLog="Checking if mirrror exists in ADI. MirrorManager response: %s"%isMirrorExistsInADI['data']
 		self.log(msgLog)
 	
-		if isMirrorExistsInServer['ismirroravailable'] ==None:
-			msgLog="Checking if mirror exists in server. Error: " + str(isMirrorExistsInServer['exception'])
+		if not isMirrorExistsInADI['ismirroravailable']:
+			msgLog="Mirror not detected on the ADI"
 			self.log(msgLog)
-
-		else:
-			if not isMirrorExistsInServer['ismirroravailable']:
-				msgLog="Mirror not detected on the server"
-				self.log(msgLog)
 				
-		self.connectionWithServer=self.llxUpCore.connectionWithServer
-		return isMirrorExistsInServer['ismirroravailable']
+		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
+		
+		return isMirrorExistsInADI['ismirroravailable']
 
-	#def clientCheckingMirrorIsRunning
+	#def desktopCheckingMirrorExists
 
-	def addSourcesListLliurex(self,args):
+	def addSourcesListLliurex(self):
 
-		self.llxUpCore.addSourcesListLliurex(args)
-		self.allRepos=args
+		self.llxUpCore.addSourcesListLliurex()
 
 	#def addSourcesListLliurex	
 
 	def isLliurexUpIsUpdated(self):
 
 		try:
-			isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
+			isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated()
 			msgLog="Checking lliurex-up. Is lliurex-up updated: "+ str(isLliurexupUpdated)
 			self.log(msgLog)
 			return isLliurexupUpdated
@@ -295,7 +312,7 @@ class LliurexUpConnect():
 			if returncode==0:
 				return [True,""] 
 			else:
-				isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
+				isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated()
 				if isLliurexupUpdated:
 					return [True,""]
 				else:
@@ -601,74 +618,40 @@ class LliurexUpConnect():
 	def manageSettingsOptions(self):
 
 		showSettings=True
-		try:
-			if self.targetMetapackage !=None:
-				if self.searchMeta('client') and self.connectionWithServer:
-					showSettings=False
-			else:
-				if self.searchMeta('client') and self.connectionWithServer:	
-					showSettings=False
-
-			return showSettings
-
-		except Exception as e:	
-			return False
+		
+		return showSettings
 
 	#def manageSettinsgOptions
 
-	def isSystrayEnabled(self):
+	def getSystrayStatus(self):
 
 		if os.path.exists(self.disableSystrayToken):
-			return False
+			self.isSystrayEnabled=False
 		else:
-			return True
+			self.isSystrayEnabled=True
+
+		self.currentConfig[0]=self.isSystrayEnabled
 
 	#de isSystrayEnabled
 
 	def manageSystray(self,enable):
 
-		if enable:
-			if os.path.exists(self.disableSystrayToken):
-				os.remove(self.disableSystrayToken)
-		else:
-			if not os.path.exists(self.disableSystrayToken):
-				if not os.path.exists(self.disableSystrayPath):
-					os.mkdir(self.disableSystrayPath)
-			
-				f=open(self.disableSystrayToken,'w')
-				f.close()
+		try:
+			if enable:
+				if os.path.exists(self.disableSystrayToken):
+					os.remove(self.disableSystrayToken)
+			else:
+				if not os.path.exists(self.disableSystrayToken):
+					if not os.path.exists(self.disableSystrayPath):
+						os.mkdir(self.disableSystrayPath)
+				
+					f=open(self.disableSystrayToken,'w')
+					f.close()
+			return True
+		except:
+			return False
 
 	#def manageSystray
-
-	def isAutoUpgradeAvailable(self):
-
-		return self.llxUpCore.isAutoUpgradeAvailable()
-
-	#def isAutoUpgradeAvailable
-
-	def isAutoUpgradeEnabled(self):
-
-		return self.llxUpCore.isAutoUpgradeEnabled()
-
-	#de isAutoUpgradeEnabled
-
-	def manageAutoUpgrade(self,enable):
-
-		return self.llxUpCore.manageAutoUpgrade(enable)
-
-	#def manageAutoUpgrade
-
-	def isAutoUpgradeRun(self):
-
-		return self.llxUpCore.isAutoUpgradeRun()
-
-	#def isAutoUpgradeRun
-
-	def stopAutoUpgrade(self):
-
-		ret=self.llxUpCore.stopAutoUpgrade()
-
-	#def stopAutoUpgrade	
 
 	def preActionsScript(self):
 
@@ -855,33 +838,7 @@ class LliurexUpConnect():
 
 	def checkUser(self):
 		
-		lockUser=False
-		flavours=[]
-
-		try:
-			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
-			gid = pwd.getpwnam(user).pw_gid
-			groupsGids = os.getgrouplist(user, gid)
-			userGroups = [ grp.getgrgid(x).gr_name for x in groupsGids ]
-
-			if 'teachers' in userGroups:
-				if 'sudo' not in userGroups and 'admins' not in userGroups:
-					cmd='lliurex-version -v'
-					p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-					result=p.communicate()[0]
-					if type(result) is bytes:
-						result=result.decode()
-						flavours = [ x.strip() for x in result.split(',') ]	
-					
-					for item in flavours:
-						if 'server' in item or 'client' in item:
-							lockUser=True
-							break
-		
-		except Exception as e:
-			pass
-
-		return lockUser
+		return self.llxUpCore.isUserAdmin()
 
 	#def checkUser
 
@@ -914,7 +871,7 @@ class LliurexUpConnect():
 						self.numberPackagesUnpacked.pop(i)
 
 		if checkInstalledPkg and len(self.numberPackagesUnpacked)<10:
-			if self.progressInstallation>len(self.numberPackagesUnpacked):
+			if self.progressInstallation > len(self.numberPackagesUnpacked):
 				self.numberPackagesUnpacked=[]
 
 		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
@@ -955,5 +912,161 @@ class LliurexUpConnect():
 		return tmpPackages
 	
 	#def checkUnpackedStatus
+
+	def getAutoUpgradeInfo(self):
+
+		self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
+			
+		if self.isAutoUpgradeAvailable:
+			self.llxUpCore.getAutoUpgradeConfig()
+			self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
+			self.currentConfig[1]=self.isAutoUpgradeEnabled
+				
+			weeksOfPause=self.llxUpCore.weeksOfPause
+			self.dateToUpdate=self.llxUpCore.dateToUpdate
+			extensionPause=self.llxUpCore.extensionPause
+			self.weeksOfPause=0
+			self.extensionWeekPause=0
+
+			if weeksOfPause>0:
+				self.canPauseUpdate=False
+				self.isWeekPauseActive=True
+											
+				for i in range(len(self.weeksOfPauseCombo)):
+					if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
+						self.weeksOfPause=i
+						break;
+						
+				if weeksOfPause<5:
+					self.canExtendedPause=True
+				else:
+					self.canExtendedPause=False
+			else:
+				self.isWeekPauseActive=False
+				self.canPauseUpdate=True
+				self.canExtendedPause=False
+
+			self._getExtensionPauseCombo(extensionPause)
+			self.currentConfig[2]=self.isWeekPauseActive
+			self.currentConfig[3]=self.weeksOfPause
+			self.currentConfig[4]=self.extensionWeekPause
+
+	#def getAutoUpgradeInfo
+
+	def _getExtensionPauseCombo(self,extensionPause):
+
+		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0}]
+		for item in self.weeksOfPauseCombo:
+			if item["value"]>extensionPause:
+				pass
+			else:
+				self.extensionPauseCombo.append(item)
+
+	#def _getextensionPauseCombo
+
+	def applySettingsChanges(self,newConfig):
+		
+		'''
+			-0: Systray
+			-1: AutoUpdate
+			-2: Pause
+			-3: WeeksOfPause
+			-4: ExtensionPause
+		'''
+		CHANGES_APPLY_OK=0
+		SYSTRAY_ERROR=-1
+		AUTOUPGRADE_ERROR=-2
+		AUTOUPGRADE_PAUSE_ERROR=-3
+		CHANGES_APPLY_ERROR=-4
+		
+		retSystray=True
+		retEnableService=True
+		retPauseUpdate=True
+		changesInSystray=False
+		changesInAutoUpdate=False
+		pauseNeedUpdate=False
+		error=False
+
+		if newConfig[0]!=self.currentConfig[0]:
+			retSystray=self.manageSystray(newConfig[0])
+			if retSystray:
+				changesInSystray=True
+
+		if newConfig[1]!=self.currentConfig[1]:
+			retEnableService=self.manageAutoUpgrade(newConfig[1])
+			if retEnableService:
+				changesInAutoUpdate=True
+
+		if retEnableService:
+			if newConfig[2]!=self.currentConfig[2]:
+				pauseNeedUpdate=True
+			elif newConfig[3]!=self.currentConfig[3]:
+				pauseNeedUpdate=True
+			elif newConfig[4]!=self.currentConfig[4]:
+				pauseNeedUpdate=True
+
+		if pauseNeedUpdate:
+			retPauseUpdate=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
+			if retPauseUpdate:
+				changesInAutoUpdate=True
+
+		if changesInSystray:
+			self.getSystrayStatus()
+		
+		if changesInAutoUpdate:
+			self.getAutoUpgradeInfo()
+		
+		if retSystray and retEnableService and retPauseUpdate:
+			return [error,CHANGES_APPLY_OK]
+
+		elif not retSystray and retEnableService and retPauseUpdate:
+			error=True
+			return [error,SYSTRAY__ERROR]
+		elif retSystray and not retEnableService and retPauseUpdate:
+			error=True
+			return [error,AUTOUPGRADE_ERROR]
+		elif retSystray and retEnableService and not retPauseUpdate:
+			error=True
+			return [error,AUTOUPGRADE_PAUSE_ERROR]
+		else:
+			error=True
+			return [error,CHANGES_APPLY_ERROR]
+
+	#def applySettingsChanges
+
+	def manageAutoUpgrade(self,enable):
+
+		return self.llxUpCore.manageAutoUpgrade(enable)
+
+	#def manageAutoUpgrade
+	
+	def manageUpdatePause(self,enablePause,weeksOfPause,extensionWeekPause=0):
+
+		if enablePause:
+			if not self.currentConfig[2]:
+				weeksOfPause=self.weeksOfPauseCombo[weeksOfPause]["value"]
+			else:
+				weeksOfPause=extensionWeekPause
+		else:
+			weeksOfPause=0
+
+		ret=self.llxUpCore.manageUpdatePause(enablePause,weeksOfPause)
+
+		return ret
+
+	#def manageAutoUpgradePause
+	
+
+	def isAutoUpgradeRun(self):
+
+		return self.llxUpCore.isAutoUpgradeRun()
+
+	#def isAutoUpgradeRun
+
+	def stopAutoUpgrade(self):
+
+		ret=self.llxUpCore.stopAutoUpgrade()
+
+	#def stopAutoUpgrade
 
 #class LliurexUpConnect			

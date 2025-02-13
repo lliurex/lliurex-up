@@ -41,38 +41,28 @@ class LlxUpCheckRoot():
 				group_found=True
 
 
-		if not self.checkImageBeingEdited():				
-			if group_found:		
-				if 'students' in user_groups:
-					run_llxup=False
+		if group_found:		
+			if 'students' in user_groups:
+				run_llxup=False
 
-				if run_llxup:
-					screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
-					screensaver_inhibitor.inHibit()
-					cmd='pkexec lliurex-up'
-					os.system(cmd)
-					screensaver_inhibitor.unInhibit()
-				else:
-					show_msg=True
-
+			if run_llxup:
+				screensaver_inhibitor = lliurex.screensaver.InhibitScreensaver()
+				screensaver_inhibitor.inHibit()
+				cmd='pkexec lliurex-up'
+				os.system(cmd)
+				screensaver_inhibitor.unInhibit()
 			else:
 				show_msg=True
 
-			if show_msg:
-				text=_("You need administration privileges to run this application.")
-				cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
-				"%s" 5'%text
-				os.system(cmd)
 		else:
-			if 'root' in user_groups:
-				cmd='lliurex-up'
-				os.system(cmd)
-			else:
-				text=_("You need administration privileges to run this application.")
-				cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
-				"%s" 5'%text
-				os.system(cmd)
+			show_msg=True
 
+		if show_msg:
+			text=_("You need administration privileges to run this application.")
+			cmd='kdialog --icon lliurex-up --title "Lliurex-Up" --passivepopup \
+			"%s" 5'%text
+			os.system(cmd)
+	
 	#def check_root
 
 #def LlxUpCheckRoot

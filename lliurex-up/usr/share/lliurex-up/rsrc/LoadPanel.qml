@@ -66,41 +66,22 @@ Rectangle{
                 implicitWidth:500
             }
         }
-    }
+   }
 
-    CustomDialog{
-        id:repoDialog
-        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Repository configuration")
-        dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
-        dialogVisible:loadStackBridge.showRepoDialog
-        dialogWidth:500
-        Connections{
-           target:repoDialog
-           function onDialogApplyClicked(){
-               loadStackBridge.manageRepoDialog('Yes')         
-           }
-           function onRejectDialogClicked(){
-               loadStackBridge.manageRepoDialog('No')       
-           }
-
-        }
-
-    }
-
-     CustomDialog{
-        id:mirrorDialog
-        dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
-        dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
-        dialogVisible:loadStackBridge.showMirrorDialog
-        dialogWidth:500
-        Connections{
-           target:mirrorDialog
-           function onDialogApplyClicked(){
-               loadStackBridge.manageMirrorDialog('Yes')         
-           }
-           function onRejectDialogClicked(){
-               loadStackBridge.manageMirrorDialog('No')       
-           }
+   CustomDialog{
+       id:mirrorDialog
+       dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
+       dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
+       dialogVisible:loadStackBridge.showMirrorDialog
+       dialogWidth:500
+       Connections{
+          target:mirrorDialog
+          function onDialogApplyClicked(){
+              loadStackBridge.manageMirrorDialog('Yes')         
+          }
+          function onRejectDialogClicked(){
+              loadStackBridge.manageMirrorDialog('No')       
+          }
 
         }
     }

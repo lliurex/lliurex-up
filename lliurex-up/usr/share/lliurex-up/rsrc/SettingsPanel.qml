@@ -143,7 +143,7 @@ Rectangle{
 						settingStackBridge.manageUpdatePause(checked)
 					}
 				} 
-				PC.ComboBox{
+				ComboBox{
 					id:pauseValues
 					currentIndex:settingStackBridge.weeksOfPause
 					textRole:"name"
@@ -205,7 +205,7 @@ Rectangle{
 					Layout.alignment:Qt.AlignRight
 				} 
 
-				PC.ComboBox{
+				ComboBox{
 					id:extensionValues
 					currentIndex:settingStackBridge.extensionWeekPause
 					textRole:"name"

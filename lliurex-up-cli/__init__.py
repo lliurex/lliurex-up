@@ -24,7 +24,7 @@ class LliurexUpCli(object):
 		self.currentDay=datetime.date.today().isoformat()
 		self.isUserAdmin=self.lliurexUpCore.isUserAdmin()
 		self.isDesktopInADI=False
-		self.isMirrorInServerADI=self.lliurexUpCore.isMirrorInServerADI
+		self.isMirrorInADI=self.lliurexUpCore.isMirrorInADI
 	
 	#def __init__
 	
@@ -66,8 +66,8 @@ class LliurexUpCli(object):
 		msgLog="Get initial flavours: " + str(self.lliurexUpCore.previousFlavours)
 		self.log(msgLog)
 		
-		self.isMirrorInServerADI=self.lliurexUpCore.isMirrorInServerADI
-		self.canConnectToServerADI=self.lliurexUpCore.canConnectToServerADI
+		self.isMirrorInADI=self.lliurexUpCore.isMirrorInADI
+		self.canConnectToADI=self.lliurexUpCore.canConnectToADI
 
 	#def checkInitialFlavour	
 		
@@ -86,8 +86,8 @@ class LliurexUpCli(object):
 			msgLog="Can connect to lliurex.net: False"
 			self.log(msgLog)
 
-			if self.canConnectToServerADI:
-				if self.isMirrorInServerADI:
+			if self.canConnectToADI:
+				if self.isMirrorInADI:
 					return True
 			else:
 				if self.initActionsArg =="initActionsSai":
@@ -102,11 +102,6 @@ class LliurexUpCli(object):
 
 	def desktopCheckingMirrorExists(self):
 
-		self.allRepos=False
-
-		if self.extraArgs["repositories"]:
-			self.allRepos=True
-		
 		print("  [Lliurex-Up]: Checking if mirror exists in ADI...")
 		isMirrorExists=self.lliurexUpCore.desktopCheckingMirrorExists()
 		msgLog="Checking if mirrror exists in ADI. MirrorManager response: %s"%isMirrorExists['data']
@@ -118,7 +113,7 @@ class LliurexUpCli(object):
 		else:
 			print("  [Lliurex-Up]: Nothing to do with mirror")
 
-		self.lliurexUpCore.addSourcesListLliurex(self.allRepos)						
+		self.lliurexUpCore.addSourcesListLliurex()						
 	
 	#def desktopCheckingMirrorExists
 				
@@ -178,7 +173,7 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Looking for new version of Lliurex Up...")
 
-		isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated(self.allRepos)
+		isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated()
 		restart=False
 
 		if not isLliurexUpUpdated:
@@ -189,7 +184,7 @@ class LliurexUpCli(object):
 			if isLliurexUpInstalled['returncode']==0:
 				restart=True
 			else:
-				isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated(self.allRepos)
+				isLliurexUpUpdated=self.lliurexUpCore.isLliurexUpIsUpdated()
 				if not isLliurexUpUpdated:
 					msgLog="Unable to update Lliurex-Up"
 					self.log(msgLog)
