@@ -67,6 +67,7 @@ class Bridge(QObject):
 		self.abortProcess=False
 		self.lockedProcess=False
 		self.closeGui=True
+		self._runPkexec=Bridge.llxUpConnect.runPkexec
 		self._clearCache()
 
 	#def __init__
@@ -177,6 +178,12 @@ class Bridge(QObject):
 
 	#def _setShowApplyBtn
 
+	def _getRunPkexec(self):
+
+		return self._runPkexec
+
+	#def _getRunPkexec
+
 	def canRunUpdate(self):
 
 		ret=self.checkRoot()
@@ -196,8 +203,6 @@ class Bridge(QObject):
 			f=open("/etc/lliurex-up.token","w")
 			f.close()
 			os.remove("/etc/lliurex-up.token")
-			if Bridge.llxUpConnect.checkUser():
-				abort=True
 		except:
 			abort=True
 			pass
@@ -323,5 +328,7 @@ class Bridge(QObject):
 
 	on_lockedService=Signal()
 	lockedService=Property(str,_getLockedService,_setLockedService,notify=on_lockedService)
+
+	runPkexec=Property(bool,_getRunPkexec,constant=True)
 
 #def Bridge

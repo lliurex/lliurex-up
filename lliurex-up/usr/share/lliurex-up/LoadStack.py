@@ -9,6 +9,7 @@ import time
 import sys
 import pwd
 import subprocess
+import datetime
 
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -21,8 +22,8 @@ class CheckSystem(QThread):
 		self.freeSpace=False
 		self.statusN4d=""
 		self.canConnect=False
-		self.isMirrorExistsInserver=False
-		self.isMirrorRunningInserver=False
+		self.isMirrorExistsInADI=False
+		self.isMirrorRunningInADI=False
 
 	#def __init__
 
@@ -33,10 +34,10 @@ class CheckSystem(QThread):
 		if self.freeSpace:
 			self.statusN4d=Bridge.llxUpConnect.checkInitialN4dStatus()
 			Bridge.llxUpConnect.checkInitialFlavour()
+			self.isMirrorExistsInADI=Bridge.llxUpConnect.desktopCheckingMirrorExists()
+			self.isMirrorRunningInADI=Bridge.llxUpConnect.desktopCheckingMirrorIsRunning()
 			self.canConnect=Bridge.llxUpConnect.canConnectToLliurexNet()
-			if self.canConnect:
-				self.isMirrorExistsInserver=Bridge.llxUpConnect.clientCheckingMirrorExists()
-				self.isMirrorRunningInserver=Bridge.llxUpConnect.clientCheckingMirrorIsRunning()
+
 	#def run
 
 #class CheckSystem
@@ -47,7 +48,6 @@ class LaunchInitActions(QThread):
 
 		QThread.__init__(self)
 		self.addRepos=args[0]
-		self.addAllRepos=args[1]
 		self.ret=[False,""]
 
 	#def __init__
@@ -55,7 +55,7 @@ class LaunchInitActions(QThread):
 	def run (self,*args):
 
 		if self.addRepos:
-			Bridge.llxUpConnect.addSourcesListLliurex(self.addAllRepos)
+			Bridge.llxUpConnect.addSourcesListLliurex()
 
 		self.ret=Bridge.llxUpConnect.initActionsScript()
 
@@ -207,10 +207,28 @@ class GatherPackages(QThread):
 
 		self.packages,self.updateSize=Bridge.llxUpConnect.getPackagesToUpdate()
 		self.incorrectFlavours=Bridge.llxUpConnect.checkIncorrectFlavours()
+		Bridge.llxUpConnect.getSystrayStatus()
+		Bridge.llxUpConnect.getAutoUpgradeInfo()
 	
 	#def run
 
 #def GatherPackages
+
+class DisableUpdatePause(QThread):
+
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+
+	#def __init__
+
+	def run (self,*args):
+
+		ret=Bridge.llxUpConnect.manageUpdatePause(False,0)
+		
+	#def run
+
+#class CheckMirror
 
 class Bridge(QObject):
 
@@ -237,11 +255,10 @@ class Bridge(QObject):
 		self._mirrorPercentage=0
 		self.maxSeconds=5.0
 		self.currentSecond=0.0
-		self._showRepoDialog=False
 		self._showMirrorDialog=False
 		self.addRepos=True
-		self.addAllRepos=False
 		self.endLaunchMirror=True
+		self._runPkexec=Bridge.llxUpConnect.runPkexec
 
 	#def __init__
 
@@ -307,25 +324,11 @@ class Bridge(QObject):
 
 	#def _setCountDownValue
 
-	def _getShowRepoDialog(self):
-
-		return self._showRepoDialog
-
-	#def _getShowRepoDialog
-
-	def _setShowRepoDialog(self,showRepoDialog):
-
-		if self._showRepoDialog!=showRepoDialog:
-			self._showRepoDialog=showRepoDialog
-			self.on_showRepoDialog.emit()
-
-	#def _setShowRepoDialog
-
 	def _getShowMirrorDialog(self):
 
 		return self._showMirrorDialog
 
-	#def _getShowRepoDialog
+	#def _getShowMirrorDialog
 
 	def _setShowMirrorDialog(self,showMirrorDialog):
 
@@ -349,6 +352,12 @@ class Bridge(QObject):
 
 	#def _setMirrorPercentage
 
+	def _getRunPkexec(self):
+
+		return self._runPkexec
+
+	#def _getRunPkexec
+
 	def checkSystem(self):
 
 		print("  [Lliurex-Up]: Checking system: connection to lliurex.net, n4d status...")
@@ -369,20 +378,13 @@ class Bridge(QObject):
 			if self.checkSystemT.canConnect:
 				self.loadStep=2
 				self.progressValue=self._getProgress()
-				if self.checkSystemT.isMirrorRunningInserver==False:
-					if not self.checkSystemT.isMirrorExistsInserver:
-						print("  [Lliurex-Up]: Asking if lliurex repository will be add to sourceslist")
-						self.showRepoDialog=True
-					else:
-						self._launchInitActions()
+				if self.checkSystemT.isMirrorRunningInADI==False:
+					self._launchInitActions()
 				else:
 					abort=True
-					if self.checkSystemT.isMirrorRunningInserver:
+					if self.checkSystemT.isMirrorRunningInADI:
 						print("  [Lliurex-Up]: Mirror is being updated in server")
 						self.core.mainStack.showErrorMessage=[Bridge.MIRROR_IS_RUNNING_ERROR,"Warning",""]
-					else:
-						print("  [Lliurex-Up]: Unable to connect with server")
-						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_SERVER,"Error",""]
 			else:
 				abort=True
 				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
@@ -404,7 +406,7 @@ class Bridge(QObject):
 		print("  [Lliurex-Up]: Executing init-actions...")
 		self.loadStep=3
 		self.progressValue=self._getProgress()
-		self.launchInitActionsT=LaunchInitActions(self.addRepos,self.addAllRepos)
+		self.launchInitActionsT=LaunchInitActions(self.addRepos)
 		self.launchInitActionsT.start()
 		self.launchInitActionsT.finished.connect(self._checkLliurexUp)
 
@@ -615,9 +617,17 @@ class Bridge(QObject):
 				logMsg="System update. Nothing to do"
 				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: System update. Nothing to do")
-				self.core.mainStack.loadInfo()
 				if self.launchInitActionsT.ret[1]!="":
 					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
+				if self.llxUpConnect.isWeekPauseActive:
+					if datetime.date.today().isoformat()>=self.llxUpConnect.dateToUpdate:
+						self.disableUpdatePauseT=DisableUpdatePause()
+						self.disableUpdatePauseT.start()
+						self.disableUpdatePauseT.finished.connect(self._disableUpdatePauseRet)
+					else:
+						self.core.mainStack.loadInfo()
+				else:
+					self.core.mainStack.loadInfo()
 		else:
 			if not self.gatherPackagesT.incorrectFlavours['status']:
 				self.core.mainStack.updateRequired=True
@@ -634,6 +644,12 @@ class Bridge(QObject):
 
 	#def _gatherPackagesRet
 
+	def _disableUpdatePauseRet(self):
+
+		self.core.mainStack.loadInfo()
+
+	#def _disableUpdatePauseRet
+
 	def _getProgress(self):
 
 		totalProgress=self.totalSteps
@@ -642,23 +658,6 @@ class Bridge(QObject):
 		return currentProgress
 
 	#def _getProgress
-
-	@Slot(str)
-	def manageRepoDialog(self,response):
-
-		self.showRepoDialog=False
-		if response=="Yes":
-			self.addAllRepos=True
-			logMsg="Adding the repositories of lliurex.net on client. Response: Yes"
-		else:
-			self.addRepos=False
-			logMsg="Adding the repositories of lliurex.net on client. Response: No"
-			
-		Bridge.llxUpConnect.log(logMsg)
-		print("  [Lliurex-Up]: "+logMsg)
-		self._launchInitActions()
-
-	#def manageRepoDialog
 
 	@Slot(str)
 	def manageMirrorDialog(self,response):
@@ -688,9 +687,6 @@ class Bridge(QObject):
 	on_countDownValue=Signal()
 	countDownValue=Property(int,_getCountDownValue,_setCountDownValue,notify=on_countDownValue)
 	
-	on_showRepoDialog=Signal()
-	showRepoDialog=Property(bool,_getShowRepoDialog,_setShowRepoDialog,notify=on_showRepoDialog)
-
 	on_showMirrorDialog=Signal()
 	showMirrorDialog=Property(bool,_getShowMirrorDialog,_setShowMirrorDialog,notify=on_showMirrorDialog)
 
@@ -698,6 +694,8 @@ class Bridge(QObject):
 	mirrorPercentage=Property(int,_getMirrorPercentage,_setMirrorPercentage,notify=on_mirrorPercentage)
 
 	totalSteps=Property(int,_getTotalSteps,constant=True)
+
+	runPkexec=Property(bool,_getRunPkexec,constant=True)
 
 #class Bridge
 
