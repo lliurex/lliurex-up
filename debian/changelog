@@ -1,3 +1,9 @@
+lliurex-up (25.05.15) noble; urgency=medium
+
+  * Added support to new LliureX model
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 13 Feb 2025 13:49:32 +0100
+
 lliurex-up (25.05.14) noble; urgency=medium
 
   * Fixed code of lliurex-upgrade
