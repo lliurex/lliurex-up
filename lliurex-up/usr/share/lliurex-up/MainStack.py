@@ -379,7 +379,7 @@ class Bridge(QObject):
 			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
 			self.helpCmd="su -c '%s' %s"%(self.helpCmd,user)
 		else:
-			self.helpCmd="su -c '%s' $USER"%self.helpCmd
+			self.helpCmd="su -l %s -c '%s'"%(os.environ["SUDO_USER"],self.helpCmd)
 		
 		self.openHelp_t=threading.Thread(target=self._openHelpRet)
 		self.openHelp_t.daemon=True
