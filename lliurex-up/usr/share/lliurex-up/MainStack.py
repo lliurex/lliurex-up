@@ -373,14 +373,9 @@ class Bridge(QObject):
 	@Slot()
 	def openHelp(self):
 
-		runPkexec=False
-
-		if 'PKEXEC_UID' in os.environ:
-			runPkexec=True
-
 		self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Lliurex+Up'
 
-		if runPkexec:
+		if self.core.loadStack.runPkexec:
 			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
 			self.helpCmd="su -c '%s' %s"%(self.helpCmd,user)
 		else:

@@ -64,6 +64,7 @@ Rectangle{
                 value:loadStackBridge.progressValue
                 Layout.alignment:Qt.AlignHCenter
                 implicitWidth:500
+                implicitHeight:loadStackBridge.runPkexec?7:25
             }
         }
    }

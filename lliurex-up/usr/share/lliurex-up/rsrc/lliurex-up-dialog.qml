@@ -85,6 +85,7 @@ ApplicationWindow {
                     indeterminate:true
                     visible:launchStackBridge.isProgressBarVisible
                     implicitWidth:250
+                    implicitHeight:launchStackBridge.runPkexec?7:25
                     anchors.centerIn:parent
                 }
 	   		}

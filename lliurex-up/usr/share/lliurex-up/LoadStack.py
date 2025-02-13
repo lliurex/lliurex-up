@@ -258,6 +258,7 @@ class Bridge(QObject):
 		self._showMirrorDialog=False
 		self.addRepos=True
 		self.endLaunchMirror=True
+		self._runPkexec=Bridge.llxUpConnect.runPkexec
 
 	#def __init__
 
@@ -350,6 +351,12 @@ class Bridge(QObject):
 			self.on_mirrorPercentage.emit()
 
 	#def _setMirrorPercentage
+
+	def _getRunPkexec(self):
+
+		return self._runPkexec
+
+	#def _getRunPkexec
 
 	def checkSystem(self):
 
@@ -687,6 +694,8 @@ class Bridge(QObject):
 	mirrorPercentage=Property(int,_getMirrorPercentage,_setMirrorPercentage,notify=on_mirrorPercentage)
 
 	totalSteps=Property(int,_getTotalSteps,constant=True)
+
+	runPkexec=Property(bool,_getRunPkexec,constant=True)
 
 #class Bridge
 

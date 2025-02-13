@@ -166,6 +166,7 @@ GridLayout{
                     value:mainStackBridge.progressBarValue
                     visible:mainStackBridge.showProgressBar
                     implicitWidth:400
+                    implicitHeight:loadStackBridge.runPkexec?7:25
                     Layout.alignment:Qt.AlignHCenter
                 }
                 

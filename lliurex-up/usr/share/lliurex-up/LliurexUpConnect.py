@@ -74,8 +74,17 @@ class LliurexUpConnect():
 		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
 		self.isDesktopInADI=False
 		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
+		self.runPkexec=True
+		self._isRunPkexec()
 
-	#def __init__	
+	#def __init__
+
+	def _isRunPkexec(self):
+
+		if 'PKEXEC_UID' not in os.environ:
+			self.runPkexec=False
+
+	#def _isRunPkexec
 
 	def checkLocks(self):
 
