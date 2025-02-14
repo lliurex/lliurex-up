@@ -717,7 +717,7 @@ class LliurexUpCli(object):
 			if not extraArgs["unattendend_upgrade"]:
 				response=input( '  [Lliurex-Up]: %s seems blocked by a failed previous execution. Lliurex-Up can not continue if this block is maintained.You want to try to unlock it (yes/no)?'%action)
 				if response.startswith('y'):
-					self.pulsate_unlocking_process()
+					self.pulsateUnlockingProcess()
 				else:
 					unlocker=False
 			else:
@@ -730,12 +730,12 @@ class LliurexUpCli(object):
 
 	#def manageLocker
 
-	def pulsate_unlocking_process(self):
+	def pulsateUnlockingProcess(self):
 
 		self.endProcess=False
 		
 		result_queue=multiprocessing.Queue()
-		self.unlocking_t=multiprocessing.Process(target=self.unlocking_process,args=(result_queue,))
+		self.unlocking_t=multiprocessing.Process(target=self.unlockingProcess,args=(result_queue,))
 		self.unlocking_t.start()
 		
 		progressbar= ["[    ]","[=   ]","[==  ]","[=== ]","[====]","[ ===]","[  ==]","[   =]","[    ]","[   =]","[  ==]","[ ===]","[====]","[=== ]","[==  ]","[=   ]"]
@@ -764,15 +764,15 @@ class LliurexUpCli(object):
 			self.log(msgLog)
 			sys.exit(1)
 
-	#def pulsate_unlocking_process
+	#def pulsateUnlockingProcess
 
-	def unlocking_process(self,result_queue):
+	def unlockingProcess(self,result_queue):
 
 		cmd=self.lliurexUpCore.unlockerCommand()
 		p=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False)
 		result_queue.put(p.returncode)
 
-	#def unlocking_process	
+	#def unlockingProcess	
 	
 	def getAutoUpgradeSettings(self):
 
@@ -795,7 +795,6 @@ class LliurexUpCli(object):
 		if not self.isUserAdmin:
 			if not self.isDesktop or mode=="sai":
 				print("  [Lliurex-Up]: You not have privlleges to execute this action")
-				self.cleanEnvironment()
 				return 0
 
 		self.isLliurexUpLocked(extraArgs)
