@@ -1,3 +1,9 @@
+lliurex-up (25.05.16) noble; urgency=medium
+
+  * Fixed translations
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 14 Feb 2025 09:31:54 +0100
+
 lliurex-up (25.05.15) noble; urgency=medium
 
   * Added support to new LliureX model
