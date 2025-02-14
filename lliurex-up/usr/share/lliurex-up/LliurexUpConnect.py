@@ -65,6 +65,7 @@ class LliurexUpConnect():
 		self.isWeekPauseActive=False
 		self.canPauseUpdate=False
 		self.canExtendedPause=False
+		self.canEditWeekPause=False
 		self.extensionWeekPause=0
 		week=_("week")
 		weeks=_("weeks")
@@ -940,6 +941,7 @@ class LliurexUpConnect():
 			if weeksOfPause>0:
 				self.canPauseUpdate=False
 				self.isWeekPauseActive=True
+				self.canEditWeekPause=False
 											
 				for i in range(len(self.weeksOfPauseCombo)):
 					if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
@@ -954,6 +956,7 @@ class LliurexUpConnect():
 				self.isWeekPauseActive=False
 				self.canPauseUpdate=True
 				self.canExtendedPause=False
+				self.canEditWeekPause=False
 
 			self._getExtensionPauseCombo(extensionPause)
 			self.currentConfig[2]=self.isWeekPauseActive
