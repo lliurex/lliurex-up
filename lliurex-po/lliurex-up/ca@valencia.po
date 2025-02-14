@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-14 08:39+0100\n"
-"PO-Revision-Date: 2025-02-14 08:54+0100\n"
+"PO-Revision-Date: 2025-02-14 09:02+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -122,7 +122,7 @@ msgstr "Control de canvis"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:61
 msgid "Searching changelog. Wait a oment..."
-msgstr "S'èstà buscant el control de canvis. Espereu un moment..."
+msgstr "S'està buscant el control de canvis. Espereu un moment..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:102
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:125
