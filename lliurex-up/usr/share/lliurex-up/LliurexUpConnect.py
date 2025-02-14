@@ -9,8 +9,6 @@ import threading
 import datetime
 import math
 import ssl
-import pwd
-import grp
 import configparser
 
 #from math import pi
@@ -107,7 +105,6 @@ class LliurexUpConnect():
 	
 		code=self.llxUpCore.isAptLocked()
 
-
 		if code !=0:
 			if code ==1:
 				msgLog="Apt is running"
@@ -121,7 +118,6 @@ class LliurexUpConnect():
 	#def isAptLocked 	
 
 	def isDpkgLocked(self):
-
 
 		code=self.llxUpCore.isDpkgLocked()
 
@@ -164,8 +160,9 @@ class LliurexUpConnect():
 	def freeSpaceCheck(self):
 
 		freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		
 		if (freeSpace) < 2: #less than 2GB available?
-			msgLog="Not enough space on disk to upgrade (2 GB needed): "+str(freeSpace)+" GB available"
+			msgLog="Not enough space on disk to upgrade (2 GB needed): %s GB available"%str(freeSpace)
 			self.log(msgLog)
 			return False
 		else:
@@ -188,10 +185,10 @@ class LliurexUpConnect():
 	def checkInitialFlavour(self):
 
 		self.targetMetapackage=self.llxUpCore.checkInitialFlavour()
-		msgLog="Initial check metapackage. Metapackage to install: " + str(self.targetMetapackage)
+		msgLog="Initial check metapackage. Metapackage to install: %s"%str(self.targetMetapackage)
 		self.log(msgLog)
 		self.previousFlavours=self.llxUpCore.previousFlavours
-		msgLog="Get initial metapackage: " + str(self.previousFlavours)
+		msgLog="Get initial metapackage: %s"%str(self.previousFlavours)
 		self.log(msgLog)
 
 		self.isDesktopInADI=self.llxUpCore.isDesktopInADI
@@ -228,7 +225,7 @@ class LliurexUpConnect():
 		error=""
 		result=True
 		arg="initActions"
-		command="DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high " + self.llxUpCore.initActionsScript(arg)
+		command="DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s"%self.llxUpCore.initActionsScript(arg)
 		token="dpkg --configure -a"
 		try:
 		 	p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -247,7 +244,7 @@ class LliurexUpConnect():
 		 	self.log(msgLog)
 		 	return [result,error]
 		except Exception as e:
-		 	msgLog="Exec Init-Actions.Error: " +str(e)
+		 	msgLog="Exec Init-Actions.Error: %s"%str(e)
 		 	self.log(msgLog)
 		 	return [False,error]	
 
@@ -260,7 +257,7 @@ class LliurexUpConnect():
 		self.log(msgLog)		
 		
 		if isMirrorRunningInServer['ismirrorrunning'] ==None:
-			msgLog="Checking if mirror in server is being updated. Error: " + str(isMirrorRunningInServer['exception'])
+			msgLog="Checking if mirror in server is being updated. Error: %s"%str(isMirrorRunningInServer['exception'])
 			self.log(msgLog)
 		else:
 			if isMirrorRunningInServer['ismirrorrunning']==True:
@@ -278,7 +275,7 @@ class LliurexUpConnect():
 		self.log(msgLog)
 	
 		if isMirrorExistsInServer['ismirroravailable'] ==None:
-			msgLog="Checking if mirror exists in server. Error: " + str(isMirrorExistsInServer['exception'])
+			msgLog="Checking if mirror exists in server. Error: %s"%str(isMirrorExistsInServer['exception'])
 			self.log(msgLog)
 
 		else:
@@ -303,11 +300,11 @@ class LliurexUpConnect():
 
 		try:
 			isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated(self.allRepos)
-			msgLog="Checking lliurex-up. Is lliurex-up updated: "+ str(isLliurexupUpdated)
+			msgLog="Checking lliurex-up. Is lliurex-up updated: %s"%str(isLliurexupUpdated)
 			self.log(msgLog)
 			return isLliurexupUpdated
 		except Exception as e:
-			msgLog="Checking lliurex-up. Error: " + str(e)
+			msgLog="Checking lliurex-up. Error: %s"%str(e)
 			self.log(msgLog)
 			return True
 
@@ -320,7 +317,7 @@ class LliurexUpConnect():
 			isLliurexupInstalled=self.llxUpCore.installLliurexUp()
 			returncode=isLliurexupInstalled['returncode']
 			error=isLliurexupInstalled['stderrs']
-			msgLog="Installing lliurex-up. Returncode: " + str(returncode) + ". Error: " + str(error)
+			msgLog="Installing lliurex-up. Returncode: %s. Error: %s"%(str(returncode),str(error))
 			self.log(msgLog)
 			if returncode==0:
 				return [True,""] 
@@ -332,7 +329,7 @@ class LliurexUpConnect():
 					return [False,error]
 			
 		except Exception as e:
-			msgLog="Installing lliurex-up. Error: " + str(e)
+			msgLog="Installing lliurex-up. Error: %s"%str(e)
 			self.log(msgLog)
 			return [True,error]
 
@@ -351,7 +348,7 @@ class LliurexUpConnect():
 					self.log(msgLog)
 					return False
 				else: 
-					msgLog="Checking mirror. Is mirror update: " + isMirrorUpdated['action']
+					msgLog="Checking mirror. Is mirror update: %s"%isMirrorUpdated['action']
 					self.log(msgLog)
 					return True
 			else:
@@ -360,7 +357,7 @@ class LliurexUpConnect():
 				return True
 		
 		except Exception as e:
-			msgLog="Checking mirror. Error: " + str(e)
+			msgLog="Checking mirror. Error: %s"%str(e)
 			self.log(msgLog)
 			return True	
 
@@ -372,7 +369,7 @@ class LliurexUpConnect():
 			isLliurexMirrorRunning=self.llxUpCore.lliurexMirrorIsRunning()
 			return isLliurexMirrorRunning
 		except Exception as e:
-			msgLog="Updating mirror. Error: " + str(e)
+			msgLog="Updating mirror. Error: %s"%str(e)
 			self.log(msgLog)
 			return False
 
@@ -396,15 +393,15 @@ class LliurexUpConnect():
 		
 		try:
 			self.lliurexVersionLocal=self.llxUpCore.getLliurexVersionLocal()
-			msgLog="Get LliurexVersion installed: " + str(self.lliurexVersionLocal["installed"])
+			msgLog="Get LliurexVersion installed: %s"%str(self.lliurexVersionLocal["installed"])
 			self.log(msgLog)
-			msgLog="Get LliurexVersion candidate from local repository: " + str(self.lliurexVersionLocal["candidate"])
+			msgLog="Get LliurexVersion candidate from local repository: %s"%str(self.lliurexVersionLocal["candidate"])
 			self.log(msgLog)
-			msgLog="Get Update source: "+self.lliurexVersionLocal["updateSource"]
+			msgLog="Get Update source: %s"%self.lliurexVersionLocal["updateSource"]
 			self.log(msgLog)
 
 		except Exception as e:
-			msgLog="Get LliurexVersion from local repository. Error: " + str(e)
+			msgLog="Get LliurexVersion from local repository. Error: %s"%str(e)
 			self.log(msgLog)
 			self.lliurexVersionLocal={"installed":None,"candidate":None,"updateSource":None}
 
@@ -416,11 +413,11 @@ class LliurexUpConnect():
 		
 		try:
 			self.lliurexVersionNet=self.llxUpCore.getLliurexVersionLliurexNet()["candidate"]
-			msgLog="Get LliurexVersion candidate from lliurex.net: " + str(self.lliurexVersionNet)
+			msgLog="Get LliurexVersion candidate from lliurex.net: %s"%str(self.lliurexVersionNet)
 			self.log(msgLog)
 			
 		except Exception as e:
-			msgLog="Get LliurexVersion from lliurex.net. Error: " + str(e)
+			msgLog="Get LliurexVersion from lliurex.net. Error: %s"%str(e)
 			self.log(msgLog)
 			self.lliurexVersionNet=None
 
@@ -434,12 +431,12 @@ class LliurexUpConnect():
 			isFlavourInstalled=self.llxUpCore.installInitialFlavour(flavourToInstall)
 			returncode=isFlavourInstalled['returncode']
 			error=isFlavourInstalled['stderrs']
-			msgLog="Install initial metapackage:" + str(flavourToInstall) + ": Returncode: " + str(returncode) + " Error: " + str(error)
+			msgLog="Install initial metapackage: %s: Returncode: %s Error: %s"%(str(flavourToInstall),str(returncode),str(error))
 			self.log(msgLog)
 			return [returncode,error]
 		except Exception as e:
 			print(str(e))
-			msgLog="Install initial metapackage: " + str(flavourToInstall) + ". Error: " + str(e)
+			msgLog="Install initial metapackage: %s. Error: %s"%(str(flavourToInstall),str(e))
 			self.log(msgLog)
 			return 1
 			
@@ -458,13 +455,13 @@ class LliurexUpConnect():
 					size=self.getSizePackagesToUpdate(item)
 					install=str(packages[item]['install'])
 					architecture=str(packages[item]['architecture'])
-					packagesParsed.append(item+";"+version+";"+size+";"+install+";"+architecture)
+					packagesParsed.append("%s;%s;%s;%s;%s"%(item,version,size,install,architecture))
 					
-			msgLog="Get packages to update. Number of packages: " + str(len(packages)) 
+			msgLog="Get packages to update. Number of packages: %s"%str(len(packages)) 
 			self.log(msgLog)		
 
 		except Exception as e:
-			msgLog="Get packages to update. Error: " + str(e)
+			msgLog="Get packages to update. Error: %s"%str(e)
 			self.log(msgLog)
 
 		self.totalSize=self.convertSize(self.totalSize)
@@ -478,7 +475,7 @@ class LliurexUpConnect():
 		
 		size=0
 		try:
-			command='apt-cache show ' + pkg + ' |grep "^Size:" |cut -d " " -f2 |head -1'
+			command='apt-cache show %s |grep "^Size:" |cut -d " " -f2 |head -1'%pkg
 			p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
 			size=p.stdout.readline()
 			if type(size) is bytes:
@@ -531,10 +528,10 @@ class LliurexUpConnect():
 				tmp["pkgStatus"]=0
 				tmp["showStatus"]=False
 				self.packagesData.append(tmp)
-				self.numberPackagesDownloaded.append(tmpItem[0]+"_"+tmpItem[1]+"_"+tmpItem[4]+".deb")
-				self.numberPackagesUnpacked.append(tmpItem[0]+"_"+tmpItem[1])
-				self.numberPackagesInstalled.append(tmpItem[0]+"_"+tmpItem[1])
-				self.initialNumberPackages.append(tmpItem[0]+"_"+tmpItem[1])
+				self.numberPackagesDownloaded.append("%s_%s_%s.deb"%(tmpItem[0],tmpItem[1],tmpItem[4]))
+				self.numberPackagesUnpacked.append("%s_%s"%(tmpItem[0],tmpItem[1]))
+				self.numberPackagesInstalled.append("%s_%s"%(tmpItem[0],tmpItem[1]))
+				self.initialNumberPackages.append("%s_%s"%(tmpItem[0],tmpItem[1]))
 
 	#def getPackagesData
 
@@ -589,7 +586,7 @@ class LliurexUpConnect():
 		incorrectFlavours=self.llxUpCore.checkIncorrectFlavours()
 
 		if incorrectFlavours['status']:
-			msgLog="Checking incorrect metapackages. Others metapackages detected: " + str(incorrectFlavours['status']) + ". Detected flavours: "+str(incorrectFlavours['data'])
+			msgLog="Checking incorrect metapackages. Others metapackages detected: %s. Detected flavours: %s"%(str(incorrectFlavours['status']),str(incorrectFlavours['data']))
 			self.log(msgLog)
 		else:
 			msgLog="Checking incorrect metapackages. Others metapackages not detected"
@@ -679,7 +676,7 @@ class LliurexUpConnect():
 	def preActionsScript(self):
 
 		self.preActions=self.llxUpCore.preActionsScript()
-		self.preActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.preActions + ' ;touch ' + self.preactionsToken + '\n'
+		self.preActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s ;touch %s\n'%(self.preActions,self.preactionsToken)
 		msgLog="Exec Pre-Actions"
 		self.log(msgLog)
 		return self.preActions
@@ -689,7 +686,7 @@ class LliurexUpConnect():
 	def distUpgradeProcess(self):
 		
 		self.distupgrade=self.llxUpCore.distUpgradeProcess()	
-		self.distupgrade='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.distupgrade + ' ;touch ' + self.upgradeToken + '\n'
+		self.distupgrade='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s ;touch %s\n'%(self.distupgrade,self.upgradeToken)
 		msgLog="Exec Dist-uggrade"
 		self.log(msgLog)
 		return self.distupgrade
@@ -706,7 +703,7 @@ class LliurexUpConnect():
 			
 			if errorDistUpgrade[0] or self.errorCheckFlavour:
 				error=True
-				msgLog="Dist-upgrade process ending with errors. "+errorDetails
+				msgLog="Dist-upgrade process ending with errors. %s"%errorDetails
 				self.log(msgLog)
 			else:			
 				msgLog="Dist-upgrade process ending OK"
@@ -714,7 +711,7 @@ class LliurexUpConnect():
 
 		except Exception as e:
 			print(e)
-			msgLog="Error checking distupgrade. Error: " + str(e)
+			msgLog="Error checking distupgrade. Error: %s"%str(e)
 			self.log(msgLog)
 			error=True
 
@@ -751,12 +748,12 @@ class LliurexUpConnect():
 
 		try:
 			flavourToInstall=self.llxUpCore.checkFlavour(True)
-			msgLog="Final check metapackage. Metapackage to install: " + str(flavourToInstall)
+			msgLog="Final check metapackage. Metapackage to install: %s"%str(flavourToInstall)
 			self.log(msgLog)
 
 		except Exception as e:
 			self.errorCheckFlavour=True
-			msgLog="Final check metapackage. Error: " + str(e)
+			msgLog="Final check metapackage. Error: %s"%str(e)
 			self.log(msgLog)
 
 		return flavourToInstall	
@@ -766,7 +763,7 @@ class LliurexUpConnect():
 	def installFinalFlavour(self,flavourToInstall):
 
 		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high ' +self.command + ' 2> >(tee ' + self.errorFinalMetapackageToken + ');touch ' + self.installflavourToken + ' ; exit'+' \n'
+		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s);touch %s;exit\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
 		msgLog="Install final metapackage"
 		self.log(msgLog)
 		return self.command
@@ -776,8 +773,7 @@ class LliurexUpConnect():
 	def postActionsScript(self):
 
 		self.postActions=self.llxUpCore.postActionsScript()
-		self.postActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high '+self.postActions + ' 2> >(tee ' + self.errorPostactionToken + ') ;touch ' + self.postactionsToken + ' \n'
-		#self.postActions=self.postActions + ' ;touch ' + self.postactionsToken + ' \n'
+		self.postActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s);touch %s\n'%(self.postActions,self.errorPostactionToken,self.postactionsToken)
 
 		msgLog="Exec Post-Actions"
 		self.log(msgLog)
@@ -824,7 +820,7 @@ class LliurexUpConnect():
 			self.log(msgLog)
 
 		except Exception as e:
-			msgLog="Clean environment. Error :" + str(e)
+			msgLog="Clean environment. Error: %s"%str(e)
 			self.log(msgLog)				
 
 	#def cleanEnvironment
@@ -992,7 +988,7 @@ class LliurexUpConnect():
 			else:
 				self.extensionPauseCombo.append(item)
 
-	#def _getextensionPauseCombo
+	#def _getExtensionPauseCombo
 
 	def applySettingsChanges(self,newConfig):
 		
