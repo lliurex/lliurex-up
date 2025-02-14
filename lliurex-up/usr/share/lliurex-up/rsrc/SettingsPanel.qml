@@ -149,7 +149,7 @@ Rectangle{
 					textRole:"name"
 					model:settingStackBridge.weeksOfPauseCombo
 					enabled:{
-						if (settingStackBridge.isWeekPauseActive && !settingStackBridge.canExtendedPause){
+						if (settingStackBridge.isWeekPauseActive && settingStackBridge.canEditWeekPause){
 							true
 						}else{
 							false
