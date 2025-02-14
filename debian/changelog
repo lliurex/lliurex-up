@@ -1,3 +1,9 @@
+lliurex-up (25.05.17) noble; urgency=medium
+
+  * Fixed control to enable edition of weeks of pause
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 14 Feb 2025 13:33:34 +0100
+
 lliurex-up (25.05.16) noble; urgency=medium
 
   * Fixed translations
