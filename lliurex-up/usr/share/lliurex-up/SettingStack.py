@@ -48,6 +48,7 @@ class Bridge(QObject):
 		self._canPauseUpdate=False
 		self._isWeekPauseActive=False
 		self._canExtendedPause=False
+		self._canEditWeekPause=False
 		self._weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 		self._weeksOfPauseCombo=Bridge.llxUpConnect.weeksOfPauseCombo
 		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
@@ -72,6 +73,7 @@ class Bridge(QObject):
 			self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
 		
 		self.canPauseUpdate=Bridge.llxUpConnect.canPauseUpdate
+		self.canEditWeekPause=Bridge.llxUpConnect.canEditWeekPause
 		self.weeksOfPause=Bridge.llxUpConnect.weeksOfPause
 		self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
 		self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
@@ -152,6 +154,20 @@ class Bridge(QObject):
 			self.on_canPauseUpdate.emit()
 
 	#def _setIsWeekPauseActive
+
+	def _getCanEditWeekPause(self):
+
+		return self._canEditWeekPause
+
+	#def _getCanEditWeekPause
+
+	def _setCanEditWeekPause(self,canEditWeekPause):
+
+		if self._canEditWeekPause!=canEditWeekPause:
+			self._canEditWeekPause=canEditWeekPause
+			self.on_canEditWeekPause.emit()
+
+	#def _setCanEditWeekPause
 
 	def _getIsWeekPauseActive(self):
 
@@ -465,6 +481,9 @@ class Bridge(QObject):
 	on_canPauseUpdate=Signal()
 	canPauseUpdate=Property(bool,_getCanPauseUpdate,_setCanPauseUpdate,notify=on_canPauseUpdate)
 
+	on_canEditWeekPause=Signal()
+	canEditWeekPause=Property(bool,_getCanEditWeekPause,_setCanEditWeekPause,notify=on_canEditWeekPause)
+	
 	on_isWeekPauseActive=Signal()
 	isWeekPauseActive=Property(bool,_getIsWeekPauseActive,_setIsWeekPauseActive,notify=on_isWeekPauseActive)
 
