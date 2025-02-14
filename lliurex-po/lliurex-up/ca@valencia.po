@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 12:13+0200\n"
-"PO-Revision-Date: 2024-06-13 12:17+0200\n"
+"POT-Creation-Date: 2025-02-14 08:39+0100\n"
+"PO-Revision-Date: 2025-02-14 08:54+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -34,7 +34,8 @@ msgid "Update process"
 msgstr "Procés d'actualització"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:10
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:22
 msgid "Settings"
 msgstr "Preferències"
 
@@ -43,80 +44,110 @@ msgid "Help"
 msgstr "Ajuda"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:147
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:112
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:379
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:93
 msgid "of"
 msgstr "de"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:180
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:191
 msgid "Update"
 msgstr "Actualitza"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:229
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:218
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:66
+msgid "Apply"
+msgstr "Aplica"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:243
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:110
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:307
+msgid "Apply changes. Wait a moment..."
+msgstr "S'estan aplicant els canvis. Espereu un moment..."
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:319
+msgid "Restoring previous values. Wait a moment..."
+msgstr "S'estan restaurant els valors previs. Espereu un moment..."
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:361
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 "El procés d'actualització ha finalitzat correctament. El sistema està "
 "actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:232
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:364
 msgid "Your system is update"
 msgstr "El vostre sistema està actualitzat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:235
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:367
 msgid "The updated process has ended with errors"
 msgstr "El procés d'actualització ha finalitzat amb errors"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:238
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:370
 msgid ""
 "dpkg --configure -a must be executed. You can use dpkg-unlocker for this"
 msgstr ""
 "És necessari executar dpkg --configure -a. Pot usar l'aplicació Dpkg-"
 "Unlocker per a això"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:253
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:386
 msgid "Preparing system to the update..."
 msgstr "S'està preparant el sistema per a l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:256
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:389
 msgid "Downloading packages"
 msgstr "S'estan descarregant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:259
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:392
 msgid "Unpacking packages"
 msgstr "S'estan desempaquetant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:262
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:395
 msgid "Configuring packages"
 msgstr "S'estan configurant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:265
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:398
 msgid "Ending the update..."
 msgstr "Està finalitzant l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:268
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:401
 msgid "Checking metapackage..."
 msgstr "S'està comprovant el metapaquet..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:25
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:28
 msgid "Changelog"
 msgstr "Control de canvis"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:57
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:61
 msgid "Searching changelog. Wait a oment..."
 msgstr "S'èstà buscant el control de canvis. Espereu un moment..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:96
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:102
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:125
 msgid "Close"
 msgstr "Tanca"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:60
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:109
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:53
+msgid ""
+"There are pending changes to apply.\n"
+"Do you want apply the changes or discard them?"
+msgstr ""
+"Hi ha canvis pendents d'aplicar.\n"
+"Voleu aplicar els canvis o descartar-los?"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:88
+msgid "Discard"
+msgstr "Descarta"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:68
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:110
 msgid "Yes"
 msgstr "Si"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:82
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:124
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:90
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:125
 msgid "No"
 msgstr "No"
 
@@ -130,14 +161,13 @@ msgid "Unable to connect to lliurex.net"
 msgstr "No es pot connectar amb lliurex.net"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:47
-msgid "Mirror is being updated in server. Unable to update the system"
+msgid "Mirror is being updated in ADI. Unable to update the system"
 msgstr ""
-"S'està actualitzant la rèplica en el servidor. No es pot actualitzar el "
-"sistema"
+"S'està actualitzant la rèplica en la ADI. No es pot actualitzar el sistema"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:50
-msgid "Unable to connect with server"
-msgstr "No es pot connectar amb el servidor"
+msgid "Unable to connect with ADI"
+msgstr "No es pot connectar amb la ADI"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:53
 msgid "Unable to update Lliurex-Up. See /var/log/lliurex-up.log"
@@ -201,20 +231,23 @@ msgstr "Grandària de l'actualització (aprox.):"
 msgid "Update source:"
 msgstr "Origen de l'actualització:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:141
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:135
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:201
+msgid "Auto update paused until:"
+msgstr "Actualitzacions automàtiques pausades fins al:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:138
 msgid "Press to view pkg changelog"
 msgstr "Feu clic per a vore el control de canvis"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:141
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:142
 msgid "is now running. Wait a moment and try again"
 msgstr "està en execució. Espereu un moment i torneu-ho a provar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:144
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:145
 msgid "Some process are running. Wait a moment and try again"
 msgstr "Algun procés està execució. Espereu un moment i torneu-ho a provar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:147
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:148
 msgid ""
 "seems blocked by a failed previous execution.\n"
 "Lliurex-Up can not continue if this block is maintained.\n"
@@ -224,90 +257,77 @@ msgstr ""
 "El Lliurex-Up no pot continuar si aquest bloqueig es manté.\n"
 "Voleu intentar desbloquejar-lo?"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:150
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:151
 msgid "The unlocking process is running. Wait a moment..."
 msgstr "El procés de desbloqueig està en execució. Espereu un moment..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:153
-#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:72
-#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:81
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:154
+#: ../lliurex-up/usr/bin/lliurex-up-desktop-launcher.py:61
 msgid "You need administration privileges to run this application."
 msgstr ""
 "Necessiteu privilegis d'administració per a executar aquesta aplicació."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:156
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:157
 msgid "The unlocking process has failed"
 msgstr "El procés de desbloqueig ha fallat"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:42
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:41
 msgid "seconds"
 msgstr "segons"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:74
-msgid "Repository configuration"
-msgstr "Configuració del repositori"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:75
-msgid ""
-"Mirror not detected on the server.\n"
-"Do you want to add the repositories of lliurex.net?"
-msgstr ""
-"No s'ha detectat cap rèplica en el servidor.\n"
-"Voleu afegir els repositoris de lliurex.net?"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:93
 msgid "Mirror management"
 msgstr "Gestió de la rèplica"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:94
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:75
 msgid "Your mirror is not update. Do you want to update it?"
 msgstr "La vostra rèplica no està actualitzada. Voleu actualitzar-la?"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:115
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:96
 msgid "Checking sytem..."
 msgstr "S'està comprovant el sistema..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:118
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:99
 msgid "Checking mirror..."
 msgstr "S'està comprovant la rèplica..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:121
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:102
 msgid "Executing init-actions..."
 msgstr "S'estan executant les accions d'inici..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:124
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:105
 msgid "Looking for new version of Lliurex-Up..."
 msgstr "S'està buscant una nova versió del Lliurex-Up..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:127
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
 msgid "Updating Lliurex-Up..."
 msgstr "S'està actualitzant el Lliurex-Up..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:130
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:111
 msgid "Checking if mirror exist and there is updated..."
 msgstr "S'està comprovant si la rèplica existeix i hi ha actualitzacions..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:133
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:114
 msgid "Looking for new version to update..."
 msgstr "S'està buscant una nova versió per a actualitzar..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:136
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:117
 msgid "Looking for new version available..."
 msgstr "S'està buscant una nova versió disponible..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:139
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:120
 msgid "Checking if installation of metapackage is required..."
 msgstr "S'està comprovant si cal una instal·lació del metapaquet..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:142
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:123
 msgid "Looking for new updates..."
 msgstr "S'estan buscant noves actualitzacions..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:145
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:126
 msgid "Lliurex-Up is now updated and will be reboot in "
 msgstr "Lliurex-Up està ara actualitzat i es reiniciarà en "
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:148
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:129
 msgid "Updating mirror: "
 msgstr "S'està actualitzant la rèplica: "
 
@@ -323,70 +343,71 @@ msgstr "No s'ha trobat cap paquet"
 msgid "List of packages to update/install"
 msgstr "Llista de paquets per a actualitzar/instal·lar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:25
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:132
-msgid "Changes will take effect the next time you log in"
-msgstr "Els canvis tindran efecte la pròxima vegada que us connecteu"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
+msgid "Notifications:"
+msgstr "Notificacions:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:43
-msgid "Show notifications for available updates:"
-msgstr "Mostra notificacions d'actualitzacions disponibles:"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:65
+msgid "Show notifications for available updates"
+msgstr "Mostra notificacions d'actualitzacions disponibles"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:79
-msgid "Activate automatic system update:"
-msgstr "Activa l'actualització automàtica del sistema:"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:77
+msgid "Updates:"
+msgstr "Actualitzacions:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:111
-msgid "If it is activated the system will update automatically at login"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:94
+msgid "Activate automatic system updates"
+msgstr "Activa l'actualització automàtica del sistema"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:115
+msgid "Pause updates:"
+msgstr "Pausa les actualitzacions:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
+msgid "Pause automatic updates for: "
+msgstr "Pausa les actualitzacions automàtiques durant: "
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:172
+msgid "Click to extend the pause of automatic updates"
+msgstr "Feu clic per a prorrogar la pausa de les actualitzacions automàtiques"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:201
+msgid "Extended pause for:"
+msgstr "Prorroga la pausa durant:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:231
+msgid "It is not possible to change notifications setting"
+msgstr "No és possible canviar la configuració de les notificacions"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:234
+msgid "It is not possible to change automatic updates setting"
 msgstr ""
-"Si està activat el sistema s'actualitzarà automàticament en l'inici de sessió"
+"No és possible canviar la configuració per a les actualitzacions automàtiques"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:223
-msgid "Lliurex-Up is being executed"
-msgstr "El Lliurex-Up està en execució"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:237
+msgid "It is not possible to change automatic updates pause setting"
+msgstr ""
+"No és possible canviar la configuració per a la pausa de les actualitzacions "
+"automàtiques"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:239
-msgid "Update the system now"
-msgstr "Actualitza el sistema ara"
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:240
+msgid "It is not posible to change settings"
+msgstr "No és possible canviar la configuració"
 
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:388
-msgid "The upgrade process has ended"
-msgstr "El procés d'actualització ha finalitzat"
-
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:496
-msgid "There are new packages ready to be updated or installed"
-msgstr "Hi ha nous paquets preparats per a actualitzar-los i/o instal·lar-los"
-
-#: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:512
-msgid "Lliurex-Up"
-msgstr "Lliurex-Up"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate automatic updates"
-msgstr "No és possible activar les actualitzacions automàtiques"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic updates"
-msgstr "No és possible desactivar les actualitzacions automàtiques"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
-msgid "Changes will take effect the next time the computer is restarted"
-msgstr "Els canvis tindran efecte la pròxima vegada que l'equip es reinicie"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:138
-msgid "Automatic system update has been successfully disabled"
-msgstr "L'actualització automàtica del sistema s'ha desactivat correctament"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate the automatic system update"
-msgstr "No és possible activar l'actualització automàtica de l'equip"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic system update"
-msgstr "No és possible desactivar l'actualització automàtica de l'equip"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:243
 msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
 msgstr "Els canvis tindran efecte la pròxima que l'equip s'encenga o reinicie"
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:69
+msgid "week"
+msgstr "setmana"
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+msgid "weeks"
+msgstr "setmanes"
+
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:967
+msgid "Select a value"
+msgstr "Seleccioneu un valor"

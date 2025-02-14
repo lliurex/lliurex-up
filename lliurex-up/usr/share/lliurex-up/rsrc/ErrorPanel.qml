@@ -44,10 +44,10 @@ Rectangle{
                 msg=i18nd("lliurex-up","Unable to connect to lliurex.net")
                 break;
             case -3:
-                msg=i18nd("lliurex-up","Mirror is being updated in server. Unable to update the system")
+                msg=i18nd("lliurex-up","Mirror is being updated in ADI. Unable to update the system")
                 break;
             case -4:
-                msg=i18nd("lliurex-up","Unable to connect with server")
+                msg=i18nd("lliurex-up","Unable to connect with ADI")
                 break;
             case -5:
                 msg=i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")+ " "+mainStackBridge.showErrorMessage[2]
