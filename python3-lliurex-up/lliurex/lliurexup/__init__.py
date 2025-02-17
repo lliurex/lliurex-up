@@ -243,7 +243,7 @@ class LliurexUpCore(object):
 		self.writeDefaultSourceslistADI()
 
 		self.checkFlavourType()
-		self.testConnectionWithServer()
+		self.isConnectedWithServerADI()
 		
 		return self.targetMetapackage
 
@@ -1208,6 +1208,7 @@ class LliurexUpCore(object):
 
 		flavours=[]
 		isDesktop=False
+		isClient=False
 
 		cmd='lliurex-version -v'
 		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
@@ -1216,11 +1217,18 @@ class LliurexUpCore(object):
 			result=result.decode()
 			flavours = [ x.strip() for x in result.split(',') ]	
 			for item in flavours:
-				if 'server' in item or 'client' in item:
+				if 'server' in item:
 					isDesktop=False
+					isClient=False
 					break
+				elif 'client' in item:
+					isClient=True 
 				elif 'desktop' in item:
 					isDesktop=True
+
+		if isClient and isDesktop:
+			if self.testConnectionWithServerADI():
+				isDesktop=False
 
 		return isDesktop
 
@@ -1241,27 +1249,34 @@ class LliurexUpCore(object):
 						self.isDesktopADI=True
 					elif os.path.exists(self.adiClientRef):
 						self.isDesktopInADI=True
-					else:
-						self.isStandarDesktop=True
 	
 	#def checkFlavourType
 
-	def testConnectionWithServer(self):
+	def isConnectedWithServerADI(self):
 
 		if self.isClient or self.isDesktopInADI:
-			try:
-				context=ssl._create_unverified_context()
-				n4c=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
-				ret=n4c.get_variable("LLIUREXMIRROR")
+			if self.testConnectionWithServerADI():
 				self.canConnectToServerADI=True
 				self.isClientizedDesktop=False
-			except Exception as e:
+			else:
 				self.canConnectToServerADI=False
 				if self.isClientizedDesktop:
 					self.isClient=False
 				self.isDesktopInADI=False
 
-	#def testConnectionWithServer
+	#def isConnectedWithServerADI
+
+	def testConnectionWithServerADI(self):
+
+		try:
+			context=ssl._create_unverified_context()
+			n4c=n4dclient.ServerProxy('https://server:9779',context=context,allow_none=True)
+			ret=n4c.get_variable("LLIUREXMIRROR")
+			return True
+		except Exception as e:
+			return False
+			
+	#def testConnectionWithServerADI
 
 #def LliurexUpCore
 
