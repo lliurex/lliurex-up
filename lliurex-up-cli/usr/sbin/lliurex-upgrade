@@ -180,14 +180,14 @@ class LliurexUpCli(object):
 			if error:
 				if 'dpkg --configure -a' in outputErr:
 					self.configureRequired=True
-				print("  [Lliurex-Up]: Executing init actions. Error: '\n'%s"%str(outputErr))
+				print("  [Lliurex-Up]: Executing init actions. Error:\n%s"%str(outputErr))
 				msgLog="Exec Init-Actions. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Init-Actions. OK"
 			
 		except Exception as e:
 			msgLog="Exec Init-Actions.Error: " +str(e)
-			print("  [Lliurex-Up]: Checking system. Error: '\n'%s"%str(e))
+			print("  [Lliurex-Up]: Checking system. Error:\n%s"%str(e))
 
 		self.log(msgLog)	
 			
@@ -431,13 +431,13 @@ class LliurexUpCli(object):
 				outputErr=output[1]	
 			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Preparing system to update. Error: '\n'%s"%str(outputErr))
+				print("  [Lliurex-Up]: Preparing system to update. Error:\n%s"%str(outputErr))
 				msgLog="Exec Pre-Actions. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Pre-Actions. OK"
 
 		except Exception as e:
-			print("  [Lliurex-Up]: Preparing system to update. Error: '\n'%s"%str(e))
+			print("  [Lliurex-Up]: Preparing system to update. Error:\n%s"%str(e))
 			msgLog="Exec Pre-Actions. Error %s"%str(e)
 			
 		self.log(msgLog)	
@@ -462,13 +462,13 @@ class LliurexUpCli(object):
 				outputErr=output[1]	
 			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Downloading and installing packages. Error: '\n'%s"%str(outputErr))
+				print("  [Lliurex-Up]: Downloading and installing packages. Error:\n%s"%str(outputErr))
 				msgLog="Exec Dist-upgrade. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Dist-upgrade. OK"
 		
 		except Exception as e:
-			print("  [Lliurex-Up]: Downloading and installing packages. Error: '\n'%s"%str(e))
+			print("  [Lliurex-Up]: Downloading and installing packages. Error:\n%s"%str(e))
 			msgLog="Exec Dist-uggrade.Error : %s"%str(e)
 
 		self.log(msgLog)	
@@ -495,7 +495,7 @@ class LliurexUpCli(object):
 				outputErr=output[1]	
 			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Ending the update. Error: '\n'%s"%str(outputErr))
+				print("  [Lliurex-Up]: Ending the update. Error:\n%s"%str(outputErr))
 				self.errorPostAction=True
 				msgLog="Exec Post-Actions. Error: %s"%str(outputErr)
 			else:
@@ -503,7 +503,7 @@ class LliurexUpCli(object):
 			
 		except Exception as e:
 			self.errorPostAction=True
-			print("  [Lliurex-Up]: Ending the update. Error: '\n'%s"%str(e))
+			print("  [Lliurex-Up]: Ending the update. Error:\n%s"%str(e))
 			msgLog="Exec Post-Actions.Error:%s"%str(e)
 
 		self.log(msgLog)	
@@ -568,14 +568,14 @@ class LliurexUpCli(object):
 					error=self.readErrorOutput(outputErr)
 					if error:
 						self.errorFinalMetaPackage=True
-						print("  [Lliurex-Up]: Install of metapackage. Error: '\n'%s"%str(outputErr))
+						print("  [Lliurex-Up]: Install of metapackage. Error:\n%s"%str(outputErr))
 						msgLog="Final install metapackage. Error %s"%str(outputErr)
 					else:
 						msgLog="Final install metapackage.OK"
 
 				except Exception as e:
 					self.errorFinalMetaPackage=True
-					print("  [Lliurex-Up]: Install of metapackage. Error: '\n'%s"%str(e))
+					print("  [Lliurex-Up]: Install of metapackage. Error:\n%s"%str(e))
 					msgLog="Install of metapackage. Error:%s"%str(e)
 
 				self.log(msgLog)	
@@ -585,7 +585,7 @@ class LliurexUpCli(object):
 
 		except Exception as e:	
 			self.errorFinalMetaPackage=True
-			print("  [Lliurex-Up]: Checking Metapackage. Error: '\n'%s"%str(e))
+			print("  [Lliurex-Up]: Checking Metapackage. Error:\n%s"%str(e))
 			msgLog="Final check metapackage. Error:%s"%str(e)	
 			self.log(msgLog)	
 			
