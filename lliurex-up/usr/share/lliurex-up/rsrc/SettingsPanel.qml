@@ -126,7 +126,7 @@ Rectangle{
 				PC3.CheckBox {
 					id:pauseUpgradeCB
 					checked: settingStackBridge.isWeekPauseActive
-					text:i18nd("lliurex-up","Pause automatic updates for: ")
+					text:i18nd("lliurex-up","Pause automatic updates for:")
 					enabled:{
 						if (!mainStackBridge.updateRequired){
 							true

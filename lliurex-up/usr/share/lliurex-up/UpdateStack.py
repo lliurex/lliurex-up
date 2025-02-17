@@ -181,6 +181,9 @@ class UpdateStack(QObject):
 						self.updateProcessTimer.stop()	
 						UpdateStack.llxUpConnect.updatePackagesData(True)
 						self.core.packageStack.updatePackagesModelInfo()
+						if UpdateStack.llxUpConnect.isWeekPauseActive:
+							UpdateStack.llxUpConnect.getAutoUpgradeInfo()
+							self.core.settingStack.getSettingsInfo()
 						self.core.mainStack.showProgressBar=False
 						self.core.mainStack.endProcess=True
 						self.core.mainStack.updateStep=0

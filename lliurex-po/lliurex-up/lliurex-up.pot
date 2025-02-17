@@ -356,7 +356,7 @@ msgid "Pause updates:"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:119
-msgid "Pause automatic updates for: "
+msgid "Pause automatic updates for:"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:162

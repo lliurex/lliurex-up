@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 09:15+0100\n"
-"PO-Revision-Date: 2025-02-14 09:00+0100\n"
+"PO-Revision-Date: 2025-02-17 08:27+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -378,8 +378,8 @@ msgid "Pause updates:"
 msgstr "Pausa les actualitzacions:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:119
-msgid "Pause automatic updates for: "
-msgstr "Pausa les actualitzacions automàtiques durant: "
+msgid "Pause automatic updates for:"
+msgstr "Pausa les actualitzacions automàtiques durant:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:162
 msgid "Click to extend the pause of automatic updates"
