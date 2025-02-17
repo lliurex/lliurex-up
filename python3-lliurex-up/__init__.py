@@ -592,8 +592,9 @@ class LliurexUpCore(object):
 					history = [ x for x in history if not 'lliurex-meta-live' in x ]
 					for x in reversed(history):
 						if x.startswith('-'):
-							targetMetapackage.append(x[2:])
-							break
+							if x[2:] in self.flavourReference:
+								targetMetapackage.append(x[2:])
+								break
 
 			if len(targetMetapackage)>0:
 				self.saveTargetMetapackage(targetMetapackage)				
