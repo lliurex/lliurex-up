@@ -778,7 +778,7 @@ class LliurexUpCli(object):
 		self.startLliurexUp(mode)
 		self.checkInitialFlavour()
 
-		msgLog="Mode of execution: %s"str(self.mode)
+		msgLog="Mode of execution: %s"%str(self.mode)
 		self.log(msgLog)
 		msgLog="Extra args: %s"%str(self.extraArgs)
 		self.log(msgLog)
