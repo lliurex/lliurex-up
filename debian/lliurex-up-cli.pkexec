@@ -14,7 +14,8 @@
                 "type": "group",
                 "members": [
                     "sudo",
-                    "admins"
+                    "admins",
+		    "teachers"
                 ],
                 "any": "yes",
                 "inactive": "yes",
