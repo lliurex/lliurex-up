@@ -1,3 +1,10 @@
+lliurex-up (21.05.10) focal; urgency=medium
+
+  * Fixed dpkg --configure detection
+  * Fixed unlock process
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 21 Feb 2025 09:08:36 +0100
+
 lliurex-up (21.05.9) focal; urgency=medium
 
   * Fixed msg type in Settings panel
