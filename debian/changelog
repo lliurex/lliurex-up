@@ -1,3 +1,10 @@
+lliurex-up (24.05.10) jammy; urgency=medium
+
+  * Fixed detection of dpkg --configure warning
+  * Fixed unlock process
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 21 Feb 2025 08:44:54 +0100
+
 lliurex-up (24.05.09) jammy; urgency=medium
 
   * Fixed msg type in Settings panel
