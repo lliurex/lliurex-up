@@ -98,9 +98,9 @@ PC.ItemDelegate{
             id: statusImg
             source:{
                 if (pkgStatus==0){
-                    "/usr/share/lliurex-up/rsrc/ok.png"
+                    "/usr/share/icons/breeze/status/24/data-success.svg"
                 }else{
-                    "/usr/share/lliurex-up/rsrc/error.png"
+                    "/usr/share/icons/breeze/status/24/data-error.svg"
                                  
                 }
             }
