@@ -955,7 +955,7 @@ class LliurexUpConnect():
 				self.isWeekPauseActive=False
 				self.canPauseUpdate=True
 				self.canExtendedPause=False
-				self.canEditWeekPause=False
+				self.canEditWeekPause=True
 
 			self._getExtensionPauseCombo(extensionPause)
 			self.currentConfig[2]=self.isWeekPauseActive
