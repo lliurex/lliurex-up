@@ -132,10 +132,18 @@ PC.ItemDelegate{
                 }
 
             }
-            ToolTip.delay: 1000
-            ToolTip.timeout: 3000
-            ToolTip.visible: hovered
-            ToolTip.text:i18nd("lliurex-up","Press to view pkg changelog")
+            ToolTip{
+                id:showChangelogToolTip
+                delay:1000
+                timeout:3000
+                visible:showChangelogBtn.hovered
+                text:i18nd("lliurex-up","Press to view pkg changelog")
+                background:Rectangle{
+                    color:"#ffffff"
+                    border.color:"#b8b9ba"
+                    radius:5.0
+                }
+            }
             onClicked:{
                 packageStackBridge.showPkgChangelog(pkgId)
                 changelogPopUp.open()
