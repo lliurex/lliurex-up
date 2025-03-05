@@ -166,10 +166,18 @@ Rectangle{
 					id:extensionPauseBtn
 					display:AbstractButton.IconOnly
 					icon.name:"document-edit"
-					ToolTip.delay: 1000
-					ToolTip.timeout: 3000
-					ToolTip.visible: hovered
-					ToolTip.text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
+					ToolTip {
+						id:btnToolTip
+						delay: 1000
+						timeout: 3000
+						visible: extensionPauseBtn.hovered
+						text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
+						background:Rectangle{
+							color:"white"
+							border.color:"#b8b9ba"
+							radius:5.0
+						}
+					}
 					hoverEnabled:true
 					enabled:{
 						if (pauseUpgradeCB.checked && settingStackBridge.canExtendedPause){
