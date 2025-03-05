@@ -39,7 +39,7 @@ Rectangle{
             Layout.minimumWidth:580
             Layout.fillWidth:true
             Layout.topMargin: 40
-      }
+      	}
 		       
      	GridLayout {
      		id: settingsGrid
@@ -167,13 +167,13 @@ Rectangle{
 					display:AbstractButton.IconOnly
 					icon.name:"document-edit"
 					ToolTip {
-						id:btnToolTip
+						id:extensionPauseToolTip
 						delay: 1000
 						timeout: 3000
 						visible: extensionPauseBtn.hovered
 						text:i18nd("lliurex-up","Click to extend the pause of automatic updates")
 						background:Rectangle{
-							color:"white"
+							color:"#ffffff"
 							border.color:"#b8b9ba"
 							radius:5.0
 						}
