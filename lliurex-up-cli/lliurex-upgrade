@@ -13,13 +13,13 @@ def	usage():
 		puts("lliurex-upgrade [FLAGS...] ACTIONS")
 		puts("Actions")
 		with indent(4):
-			puts("update: Update the system")
+			puts("update: Update the system (optional)")
 			puts("get-autoupdates-settings: Show info about automatic updates settings")
 			puts("enable-autoupdates: Enable automatic system updates")
 			puts("disable-autoupdates: Disable automatic system updates")
 			puts("cancel-autoupdates: Cancel automatic system updates until next day")
 			puts("pause-autoupdates <1..5>: Pause automatic updates for up 5 weeks")
-			puts("extended-pause <1..4>: Extendes the initial update pause for up 4 weeks ")
+			puts("extended-pause <1..4>: Extended the initial update pause for up 4 weeks ")
 
 		puts("Flags")
 		with indent(4):
@@ -27,7 +27,6 @@ def	usage():
 			puts("-s --sai:		Update the system without pinning and enable try to update without conection to lliurex.net")	
 			puts("-u --unattended:	Update the system in unattended mode. Does not require confirmation to update mirror and system")
 			puts("-n --no-mirror:		Update the system without checking mirror")
-			puts("-r --repositories:	Update the system adding mirror and lliurex.net repositories (only valid for clients)")
 
 	sys.exit(1)		
 
