@@ -1,3 +1,10 @@
+lliurex-up (25.05.22) noble; urgency=medium
+
+  * Fixed parsing of changelogs
+  * Removing --repositories option from lliurex-upgrade
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 06 Mar 2025 10:57:56 +0100
+
 lliurex-up (25.05.21) noble; urgency=medium
 
   * Fixed tooltip style
