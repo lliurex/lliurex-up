@@ -18,7 +18,7 @@ _lliurex-upgrade()
             return 0
             ;;
         update)
-            local flags=" --help --unattended --sai --no-mirror --repositories"
+            local flags=" --help --unattended --sai --no-mirror"
             COMPREPLY=( $(compgen -W "${flags}" -- ${cur}) )
             return 0
             ;;

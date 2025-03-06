@@ -38,7 +38,7 @@ Popup {
             rowSpacing:10
             anchors.top:changelogText.bottom
             anchors.topMargin:25
-	    anchors.leftMargin:10
+            anchors.leftMargin:10
             anchors.left:mainContainer.left
             anchors.horizontalCenter:mainContainer.horizontalCenter
         
@@ -90,8 +90,8 @@ Popup {
         RowLayout{
             anchors.bottom:parent.bottom
             anchors.right:parent.right
-	    anchors.bottomMargin:10
-	    anchors.rightMargin:10
+            anchors.bottomMargin:10
+            anchors.rightMargin:10
 
             PC.Button {
                 id:closeBtn

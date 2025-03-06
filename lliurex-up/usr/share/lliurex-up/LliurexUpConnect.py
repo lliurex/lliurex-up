@@ -610,7 +610,7 @@ class LliurexUpConnect():
 				return changelog
 			
 		try:
-			cmd="sed -i r'/Get:1 http\|Fetched/d' " + str(changelogFile)
+			cmd="sed -i '/Get:1 http/d' %s"%str(changelogFile)
 			os.system(cmd)
 			f=open(changelogFile,"r")
 			tmpChangelog=f.readlines()
