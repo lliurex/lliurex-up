@@ -637,7 +637,7 @@ class Bridge(QObject):
 					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
 			else:
 				logMsg="Updated abort for incorrect metapackages detected in update"
-				Bridge.llxUpConnect.log(log_msg)
+				Bridge.llxUpConnect.log(logMsg)
 				print("  [Lliurex-Up]: Update abort. Detect incorrect metapackages in new updates")
 				self.core.mainStack.showErrorMessage=[Bridge.INCORRECT_METAPACKAGE_ERROR,"Error",""]
 				self.core.mainStack.currentStack=1
