@@ -118,7 +118,7 @@ GridLayout{
  
         }
 
-         Kirigami.InlineMessage {
+        Kirigami.InlineMessage {
             id: messageLabel
             visible:mainStackBridge.showFeedbackMessage[0]
             text:getResultText()
@@ -126,7 +126,11 @@ GridLayout{
             Layout.minimumWidth:555
             Layout.fillWidth:true
             Layout.rightMargin:10
-            
+            onVisibleChanged:{
+                if (messageLabel.visible && loadStackBridge.runPkexec){
+                    background.color=getMsgColor(messageLabel.type)
+                }
+            }
         }
 
         RowLayout{
@@ -416,6 +420,20 @@ GridLayout{
                 return Kirigami.MessageType.Information;
             case "Warning":
                 return Kirigami.MessageType.Warning;
+        }
+    }
+
+    function getMsgColor(type){
+
+        switch(type){
+            case 0:
+                return "#00bfff"
+            case 1:
+                return "#3cb371"
+            case 2:
+                return "#ff8c00"
+            case 3:
+                return "#dc143c"
         }
     }
 
