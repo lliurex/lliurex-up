@@ -1,3 +1,9 @@
+lliurex-up (25.05.24) noble; urgency=medium
+
+  * Minor fixes
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 23 Apr 2025 15:36:45 +0200
+
 lliurex-up (25.05.23) noble; urgency=medium
 
   * Fixed minor bug in load function when meta is not correct
