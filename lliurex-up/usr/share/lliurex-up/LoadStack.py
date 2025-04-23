@@ -111,7 +111,7 @@ class CheckMirror(QThread):
 
 	def run (self,*args):
 
-		time-sleep(0.2)
+		time.sleep(0.2)
 		self.isMirrorUpdate=Bridge.llxUpConnect.lliurexMirrorIsUpdated()
 		self.isMirrorRunning=Bridge.llxUpConnect.lliurexMirrorIsRunning()
 		
