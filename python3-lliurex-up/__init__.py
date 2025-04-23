@@ -26,7 +26,7 @@ class LliurexUpCore(object):
 		self.versionReference=["adi","desktop"] 
 		self.defaultMirror = 'llx25'
 		self.defaultVersion = 'noble'
-		self.defaultUrltoCheck="http://lliurex.net/jammy"
+		self.defaultUrltoCheck="http://lliurex.net/noble"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'

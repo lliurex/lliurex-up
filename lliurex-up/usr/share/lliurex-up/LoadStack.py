@@ -54,6 +54,7 @@ class LaunchInitActions(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		if self.addRepos:
 			Bridge.llxUpConnect.addSourcesListLliurex()
 
@@ -74,6 +75,7 @@ class CheckLliurexUp(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		self.isLliurexUpUpdated=Bridge.llxUpConnect.isLliurexUpIsUpdated()
 
 	#def run
@@ -109,6 +111,7 @@ class CheckMirror(QThread):
 
 	def run (self,*args):
 
+		time-sleep(0.2)
 		self.isMirrorUpdate=Bridge.llxUpConnect.lliurexMirrorIsUpdated()
 		self.isMirrorRunning=Bridge.llxUpConnect.lliurexMirrorIsRunning()
 		
@@ -145,6 +148,7 @@ class GetCurrentVersion(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		self.currentVersion=Bridge.llxUpConnect.getLliurexVersionLocal()
 		
 	#def run
@@ -162,6 +166,7 @@ class GetAvailableVersion(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		self.availableVersion=Bridge.llxUpConnect.getLliurexVersionNet()
 		
 	#def run
@@ -180,6 +185,7 @@ class CheckInitialFlavourToInstall(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		self.targetMetapackage=Bridge.llxUpConnect.targetMetapackage
 
 		if len(self.targetMetapackage) == 0:
@@ -205,6 +211,7 @@ class GatherPackages(QThread):
 
 	def run (self,*args):
 
+		time.sleep(0.2)
 		self.packages,self.updateSize=Bridge.llxUpConnect.getPackagesToUpdate()
 		self.incorrectFlavours=Bridge.llxUpConnect.checkIncorrectFlavours()
 		Bridge.llxUpConnect.getSystrayStatus()
