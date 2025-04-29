@@ -33,7 +33,7 @@ class LliurexUpCore(object):
 		self.changelogsPath = os.path.join(self.processPath,'changelogs')
 		self.processSourceslist = os.path.join(self.processPath,'sourceslist')
 		self.origsourcesfile=os.path.join(self.sourcesListPath,"sources.list")
-		self.origsourcesfileback=os.path.join(self.sourcesListPath,"lliurexup_sources.list")
+		self.origsourcesfileback=os.path.join(self.processPath,"lliurexup_sources.list")
 		self.targetMetapackagePath=os.path.join(self.processPath,"targetMetapackage")
 		self.previousflavourspath = os.path.join(self.processPath,'previousflavours')
 		self.errorpostaction_token=os.path.join(self.processPath,'errorpostaction_token')
@@ -58,6 +58,10 @@ class LliurexUpCore(object):
 		self.isDesktopInADI=False
 		self.canConnectToADI=False
 		self.isMirrorInADI=False
+		self.sourcesListDPath="/etc/apt/sources.list.d"
+		self.sourcesListLliurexTemplate="/usr/share/lliurex-up/templates/lliurex.sources"
+		self.sourcesListMirrorTemplate="/usr/share/lliurex-up/templates/00_lliurex-mirror.sources"
+		self.sourcesMirror="00_lliurex-mirror.sources"
 
 	#def __init__	
 
@@ -215,8 +219,8 @@ class LliurexUpCore(object):
 		if len(self.previousFlavours)==0:
 			self.getPreviousFlavours()
 		
-		self.writeDefaultSourceslist()
-		self.writeDefaultSourceslistADI()
+		#self.writeDefaultSourceslist()
+		#self.writeDefaultSourceslistADI()
 
 		self.checkFlavourType()
 		self.testConnectionWithADI()
@@ -288,8 +292,10 @@ class LliurexUpCore(object):
 		self.cleanEnvironment()
 		if not os.path.exists(self.processPath):
 			os.mkdir(self.processPath)
+		'''
 		if not os.path.exists(self.processSourceslist):
 			os.mkdir(self.processSourceslist)
+		'''
 		if not os.path.exists(self.changelogsPath):
 			os.mkdir(self.changelogsPath)
 
@@ -307,14 +313,14 @@ class LliurexUpCore(object):
 			if self.isMirrorInADI:
 				client=True
 				args=True
-				sourcesref=os.path.join(self.processSourceslist, 'default_ADI')
+				sourcesref="mirror"
 			else:
-				sourcesref=os.path.join(self.processSourceslist, 'default')	
+				sourcesref="default"	
 		else:
-			sourcesref=os.path.join(self.processSourceslist, 'default')	
+			sourcesref="default"	
 
 		if os.path.exists(self.origsourcesfile):
-			os.rename(self.origsourcesfile,self.origsourcesfileback)
+			shutil.move(self.origsourcesfile,self.origsourcesfileback)
 			origsources=open(self.origsourcesfileback,'r')
 			if not client:
 				for line in origsources:
@@ -331,22 +337,36 @@ class LliurexUpCore(object):
 												
 			origsources.close()
 				
-			if os.path.exists(sourcesref):
-				shutil.copy(sourcesref,self.origsourcesfile)
-				if len(extrasources)>0:	
-					newsourcesedit=open(newsourcesfile,'a')
-					for line in extrasources:
-						newsourcesedit.write(line+'\n')
-					newsourcesedit.close()
-			else:
-				os.rename(self.origsourcesfileback,self.origsourcesfile)					
-	
+			#if os.path.exists(sourcesref):
+			#shutil.copy(sourcesref,self.origsourcesfile)
+			if len(extrasources)>0:	
+				newsourcesedit=open(newsourcesfile,'a')
+				for line in extrasources:
+					newsourcesedit.write(line+'\n')
+				newsourcesedit.close()
+			#else:
+			#	os.rename(self.origsourcesfileback,self.origsourcesfile)
+
+		self._addSourcesListTemplate(sourcesref)
+
 	#def addSourcesListLliurex 		
+
+	def _addSourcesListTemplate(self,sourcesref):
+
+		if sourcesref=="mirror":
+			if os.path.exists(self.sourcesListMirrorTemplate):
+				shutil.copy(self.sourcesListMirrorTemplate,self.sourcesListDPath)
+
+		if os.path.exists(self.sourcesListLliurexTemplate):
+			shutil.copy(self.sourcesListLliurexTemplate,self.sourcesListDPath)
 
 	def restoreOrigSourcesList(self):
 		
 		if os.path.exists(self.origsourcesfileback):
-			os.rename(self.origsourcesfileback,self.origsourcesfile)
+			shutil.move(self.origsourcesfileback,self.origsourcesfile)
+
+		if os.path.exists(os.path.join(self.sourcesListDPath,self.sourcesMirror)):
+			os.remove(os.path.join(self.sourcesListDPath,self.sourcesMirror))
 
 	#def restoreOrigSourcesList		
 
@@ -365,11 +385,11 @@ class LliurexUpCore(object):
 	#def readSourcesList		
 
 	def cleanEnvironment(self):
-		
-		if os.path.exists(self.processPath):
-			shutil.rmtree(os.path.join(self.processPath))
 
 		self.restoreOrigSourcesList()	
+
+		if os.path.exists(self.processPath):
+			shutil.rmtree(os.path.join(self.processPath))
 
 	#def cleanEnvironment	
 
@@ -434,6 +454,7 @@ class LliurexUpCore(object):
 		'''
 			return Boolean 
 		'''
+		'''
 		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
 
 		if self.isDesktopInADI:
@@ -441,7 +462,7 @@ class LliurexUpCore(object):
 				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_ADI')
 	
 		self.optionsLlxUp = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
-
+		'''
 		self.updateCacheApt(self.optionsLlxUp)
 		result = self.getPackageVersionAvailable('lliurex-up',self.optionsLlxUp)
 
@@ -658,7 +679,7 @@ class LliurexUpCore(object):
 			return dictionary => result
 			result : {'installed':String,'candidate':String}
 		'''
-		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
+		sourceslistDefaultPath = os.path.join(self.sourcesListLliurexTemplate)
 		options = ""
 		if self.canConnectToLliurexNet()['status']:
 			options = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
