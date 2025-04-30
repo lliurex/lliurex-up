@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # APT PINNING FILE
-PINNING_FILE="/usr/share/lliurex-up/lliurex-pinning.cfg"
+PINNING_FILE="/usr/share/lliurex-up/templates/lliurex-pinning.cfg"
 PINNING_DEST="/etc/apt/preferences.d/lliurex-pinning"
 ACTION="$1"
 

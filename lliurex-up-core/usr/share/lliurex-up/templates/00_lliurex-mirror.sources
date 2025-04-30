@@ -1,0 +1,5 @@
+Types: deb
+URIs: http://mirror/llx25
+Suites: noble noble-updates noble-security
+Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/lliurex-archive-keyring.gpg
