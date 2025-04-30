@@ -31,7 +31,6 @@ class LliurexUpCore(object):
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
 		self.changelogsPath = os.path.join(self.processPath,'changelogs')
-		self.processSourceslist = os.path.join(self.processPath,'sourceslist')
 		self.origsourcesfile=os.path.join(self.sourcesListPath,"sources.list")
 		self.origsourcesfileback=os.path.join(self.processPath,"lliurexup_sources.list")
 		self.targetMetapackagePath=os.path.join(self.processPath,"targetMetapackage")
@@ -62,7 +61,8 @@ class LliurexUpCore(object):
 		self.sourcesListLliurexTemplate="/usr/share/lliurex-up/templates/lliurex.sources"
 		self.sourcesListMirrorTemplate="/usr/share/lliurex-up/templates/00_lliurex-mirror.sources"
 		self.sourcesMirror="00_lliurex-mirror.sources"
-
+		self.sourcesListAllTemplate="/usr/share/lliurex-up/templates/all.sources"
+	
 	#def __init__	
 
 	def startLliurexUp(self):
@@ -261,29 +261,6 @@ class LliurexUpCore(object):
 
 	#def updateFlavoursList		
 
-	def writeDefaultSourceslist(self):
-
-		f = open(os.path.join(self.processSourceslist,'default'),'w')
-		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.close()
-
-	#def writeDefaultSourceslist	
-
-	def writeDefaultSourceslistADI(self):
-		
-		f = open(os.path.join(self.processSourceslist,'default_ADI'),'w')
-		f.write('deb http://server/mirror/{version_mirror} {version} main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
-		f.write('deb http://server/mirror/{version_mirror} {version}-updates main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
-		f.write('deb http://server/mirror/{version_mirror} {version}-security main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.close()	
-
-	#def writeDefaultSourceslistAll		
-
 	def prepareEnvironment(self):
 		'''
 			This funcion delete all environment and rebuild environment
@@ -292,10 +269,7 @@ class LliurexUpCore(object):
 		self.cleanEnvironment()
 		if not os.path.exists(self.processPath):
 			os.mkdir(self.processPath)
-		'''
-		if not os.path.exists(self.processSourceslist):
-			os.mkdir(self.processSourceslist)
-		'''
+	
 		if not os.path.exists(self.changelogsPath):
 			os.mkdir(self.changelogsPath)
 
@@ -337,15 +311,11 @@ class LliurexUpCore(object):
 												
 			origsources.close()
 				
-			#if os.path.exists(sourcesref):
-			#shutil.copy(sourcesref,self.origsourcesfile)
 			if len(extrasources)>0:	
 				newsourcesedit=open(newsourcesfile,'a')
 				for line in extrasources:
 					newsourcesedit.write(line+'\n')
 				newsourcesedit.close()
-			#else:
-			#	os.rename(self.origsourcesfileback,self.origsourcesfile)
 
 		self._addSourcesListTemplate(sourcesref)
 
@@ -454,15 +424,15 @@ class LliurexUpCore(object):
 		'''
 			return Boolean 
 		'''
-		'''
-		sourceslistDefaultPath = os.path.join(self.processSourceslist,'default')
+		
+		sourceslistDefaultPath = self.sourcesListLliurexTemplate
 
 		if self.isDesktopInADI:
 			if self.isMirrorInADI:
-				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_ADI')
+				sourceslistDefaultPath = self.sourcesListAllTemplate
 	
 		self.optionsLlxUp = "-o Dir::Etc::sourcelist={sourceslistOnlyLliurex} -o Dir::Etc::sourceparts=/dev/null".format(sourceslistOnlyLliurex=sourceslistDefaultPath)
-		'''
+		
 		self.updateCacheApt(self.optionsLlxUp)
 		result = self.getPackageVersionAvailable('lliurex-up',self.optionsLlxUp)
 
