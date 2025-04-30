@@ -423,7 +423,7 @@ GridLayout{
         }
     }
 
-    function getMsgColor(type){
+    function getMsgColor(){
 
         switch(mainStackBridge.showFeedbackMessage[2]){
             case "Ok":
