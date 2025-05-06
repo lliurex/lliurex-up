@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-03 09:15+0100\n"
-"PO-Revision-Date: 2025-02-17 08:27+0100\n"
+"PO-Revision-Date: 2025-05-06 13:04+0200\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -339,7 +339,7 @@ msgstr "LliureX-Up se ha actualizado y se va a reiniciar en "
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:148
 msgid "Updating mirror: "
-msgstr "Actualizando mirror "
+msgstr "Actualizando mirror: "
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/PackagesList.qml:31
 msgid "Search..."
