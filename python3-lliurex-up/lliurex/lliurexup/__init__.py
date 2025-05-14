@@ -240,7 +240,7 @@ class LliurexUpCore(object):
 		self.writeDefaultSourceslist()
 		self.writeDefaultSourceslistMirror()
 		self.writeDefaultSourceslistAll()
-		self.writeDefaultSourceslistADI()
+		#self.writeDefaultSourceslistADI()
 
 		self.checkFlavourType()
 		self.isConnectedWithServerADI()
@@ -362,7 +362,7 @@ class LliurexUpCore(object):
 			if self.isMirrorInServerADI:
 				client=True
 				args=True
-				sourcesref=os.path.join(self.processSourceslist, 'default_ADI')
+				sourcesref=os.path.join(self.processSourceslist, 'default_all')
 			else:
 				sourcesref=os.path.join(self.processSourceslist, 'default')	
 		else:
@@ -507,7 +507,7 @@ class LliurexUpCore(object):
 						
 		elif self.isDesktopInADI:
 			if self.isMirrorInServerADI:
-				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_ADI')
+				sourceslistDefaultPath = os.path.join(self.processSourceslist,'default_all')
 		'''				
 		options = ""
 		if self.canConnectToLliurexNet():
