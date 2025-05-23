@@ -23,6 +23,7 @@ class LliurexUpCore(object):
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
 		self.flavourReference=["lliurex-meta-server","lliurex-meta-client", "lliurex-meta-desktop", "lliurex-meta-music", "lliurex-meta-pyme", "lliurex-meta-infantil", "lliurex-meta-minimal-client","lliurex-meta-server-lite","lliurex-meta-client-lite", "lliurex-meta-desktop-lite"] 
+		self.versionReference=["server","client","desktop","music","pyme","infantil","minimal-client","server-lite","client-lite","desktop-lite"]
 		self.defaultMirror = 'llx23'
 		self.defaultVersion = 'jammy'
 		self.defaultUrltoCheck="http://lliurex.net/jammy"
@@ -263,7 +264,8 @@ class LliurexUpCore(object):
 					pass
 				else:
 					if x.strip() not in self.flavours:
-						self.flavours.append(x.strip())
+						if x.strip() in self.versionReference: 						
+							self.flavours.append(x.strip())
 			#self.flavours = [ x.strip() for x in result.split(',') ]
 			if len(self.flavours) > 0:
 				aux = open(self.previousflavourspath,'w')
