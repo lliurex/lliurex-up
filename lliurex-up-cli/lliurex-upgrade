@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from clint import arguments
-from clint.textui import puts, indent, colored
+from clint.textui import puts, indent
 from lliurex.lliurexupcli import LliurexUpCli
 import os
 import sys
