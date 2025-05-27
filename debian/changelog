@@ -1,3 +1,9 @@
+lliurex-up (25.05.31) noble; urgency=medium
+
+  * Fixed clint import in cli
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 27 May 2025 08:44:11 +0200
+
 lliurex-up (25.05.30) noble; urgency=medium
 
   * Fixed translation
