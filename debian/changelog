@@ -1,3 +1,9 @@
+lliurex-up (25.05.32) noble; urgency=medium
+
+  * Replaced natfree-client by natfree-tie
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 02 Jun 2025 14:30:49 +0200
+
 lliurex-up (25.05.31) noble; urgency=medium
 
   * Fixed clint import in cli
