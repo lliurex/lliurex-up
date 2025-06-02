@@ -52,7 +52,7 @@ class LliurexUpCore(object):
 		self.cancellationsAvailables=3
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		self.adiClientRef="/usr/bin/natfree-client"
+		self.adiClientRef="/usr/bin/natfree-tie"
 		self.isADI=False
 		self.isDesktopInADI=False
 		self.canConnectToADI=False
