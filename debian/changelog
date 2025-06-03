@@ -1,3 +1,9 @@
+lliurex-up (24.05.11) jammy; urgency=medium
+
+  * Changed function to get meta to check
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 03 Jun 2025 17:45:35 +0200
+
 lliurex-up (24.05.10) jammy; urgency=medium
 
   * Fixed detection of dpkg --configure warning
