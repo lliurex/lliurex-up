@@ -1,3 +1,9 @@
+lliurex-up (25.05.33) noble; urgency=medium
+
+  * Fixed meta reference list
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 04 Jun 2025 08:48:04 +0200
+
 lliurex-up (25.05.32) noble; urgency=medium
 
   * Replaced natfree-client by natfree-tie
