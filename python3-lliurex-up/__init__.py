@@ -23,7 +23,7 @@ class LliurexUpCore(object):
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
 		self.flavourReference=["lliurex-meta-adi","lliurex-meta-desktop"]
-		self.versionReference=["adi","desktop"] 
+		self.versionReference=["adi","desktop","None"] 
 		self.defaultMirror = 'llx25'
 		self.defaultVersion = 'noble'
 		self.defaultUrltoCheck="http://lliurex.net/noble"
