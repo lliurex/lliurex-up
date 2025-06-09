@@ -1,3 +1,9 @@
+lliurex-up (25.05.34) noble; urgency=medium
+
+  * Fixed bug in treatment of arguments in cli
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 09 Jun 2025 10:55:22 +0200
+
 lliurex-up (25.05.33) noble; urgency=medium
 
   * Fixed meta reference list
