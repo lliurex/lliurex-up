@@ -1166,13 +1166,13 @@ if __name__ == '__main__':
 
 	if args.contains(["-r","--repositories"]):
 		extraArgs["repositories"]=True
-		index = args.first(["-s", "--sai"])
+		index = args.first(["-r","--repositories"])
 		args.pop(index)
 		options=1
 	
 	if args.contains(["-n", "--no-mirror"]):
 		extraArgs["mirror"]=False
-		index = args.first(["-s", "--sai"])
+		index = args.first(["-n", "--no-mirror"])
 		args.pop(index)
 		options=1
 
