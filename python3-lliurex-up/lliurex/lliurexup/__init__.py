@@ -390,18 +390,18 @@ class LliurexUpCore(object):
 
 			origsources.close()
 				
-			if os.path.exists(sourcesref):
+		if os.path.exists(sourcesref):
 
-				shutil.copy(sourcesref,self.sourcesListToUpdate)
-				newsourcesfile=self.sourcesListToUpdate
+			shutil.copy(sourcesref,self.sourcesListToUpdate)
+			newsourcesfile=self.sourcesListToUpdate
 
-				if len(extrasources)>0:	
-					newsourcesedit=open(newsourcesfile,'a')
-					for line in extrasources:
-						newsourcesedit.write(line+'\n')
-					newsourcesedit.close()
-			else:
-				self.sourcesListToUpdate=self.origsourcesfile
+			if len(extrasources)>0:	
+				newsourcesedit=open(newsourcesfile,'a')
+				for line in extrasources:
+					newsourcesedit.write(line+'\n')
+				newsourcesedit.close()
+		else:
+			self.sourcesListToUpdate=self.origsourcesfile
 
 		self.optionsToUpdate="-o Dir::Etc::sourcelist={sourceslistOnlyLliurex}".format(sourceslistOnlyLliurex=self.sourcesListToUpdate)	
 
