@@ -409,12 +409,9 @@ class LliurexUpCore(object):
 
 	def restoreOrigSourcesList(self):
 		
-		'''
-		if os.path.exists(self.sourcesListToUpdate):
-			os.rename(self.sourcesListToUpdate,self.origsourcesfile)
-		'''
-		pass
-
+		if os.path.exists("/etc/apt/lliurexup_sources.list"):
+			os.rename("/etc/apt/lliurexup_sources.list",self.origsourcesfile)
+		
 	#def restoreOrigSourcesList		
 
 	def readSourcesList(self):
@@ -436,7 +433,7 @@ class LliurexUpCore(object):
 		if os.path.exists(self.processPath):
 			shutil.rmtree(os.path.join(self.processPath))
 
-		#self.restoreOrigSourcesList()	
+		self.restoreOrigSourcesList()	
 
 	#def cleanEnvironment	
 
