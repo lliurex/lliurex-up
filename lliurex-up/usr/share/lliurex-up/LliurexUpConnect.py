@@ -118,7 +118,7 @@ class LliurexUpConnect():
 
 	#def isAptLocked 	
 
-	def isDpkgLocked(self):
+	def isDpkgLocked(self,writeLog=True):
 
 		code=self.llxUpCore.isDpkgLocked()
 
@@ -130,7 +130,8 @@ class LliurexUpConnect():
 			elif code==3:
 				msgLog="Apt is running"	
 
-			self.log(msgLog)
+			if writeLog:
+				self.log(msgLog)
 	
 		return 	code	
 
@@ -688,7 +689,7 @@ class LliurexUpConnect():
 		
 		self.distupgrade=self.llxUpCore.distUpgradeProcess()	
 		self.distupgrade='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s ;touch %s\n'%(self.distupgrade,self.upgradeToken)
-		msgLog="Exec Dist-uggrade"
+		msgLog="Exec Dist-upgrade"
 		self.log(msgLog)
 		return self.distupgrade
 

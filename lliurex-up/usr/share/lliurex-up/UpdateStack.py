@@ -51,7 +51,7 @@ class CheckProgressWorker(QThread):
 						self.core.mainStack.progressPkg=self.llxUpConnect.progressDownload
 						self.core.mainStack.progressBarValue=round((1+self.llxUpConnect.progressDownloadPercentage)/self.core.mainStack._totalUpdateSteps,2)
 						self.llxUpConnect.checkLocks()
-						if self.llxUpConnect.isDpkgLocked()==3:
+						if self.llxUpConnect.isDpkgLocked(False)==3:
 							self.aptRun=True
 						else:
 							self.aptRun=False
