@@ -1,3 +1,9 @@
+lliurex-up (25.05.35) noble; urgency=medium
+
+  * Changed to use a temporal sources.list to update
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 04 Jul 2025 10:37:30 +0200
+
 lliurex-up (25.05.34) noble; urgency=medium
 
   * Fixed bug in treatment of arguments in cli
