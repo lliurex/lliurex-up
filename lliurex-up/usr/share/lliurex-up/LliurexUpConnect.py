@@ -75,6 +75,8 @@ class LliurexUpConnect():
 		self.isDesktopInADI=False
 		self.isClient=False
 		self.isMirrorInServerADI=self.llxUpCore.isMirrorInServerADI
+		self.flatpakActionsToken=os.path.join(self.llxUpCore.processPath,'flatpakActions_token')
+
 
 	#def __init__	
 
@@ -1098,5 +1100,16 @@ class LliurexUpConnect():
 		ret=self.llxUpCore.stopAutoUpgrade()
 
 	#def stopAutoUpgrade
+
+	def flatpakActionsScript(self):
+
+		self.flatpakActions=self.llxUpCore.flatpakActionsScript()
+		self.flatpakActions='%s ;touch %s\n'%(self.flatpakActions,self.flatpakActionsToken)
+
+		msgLog="Exec Update-Flatpak"
+		self.log(msgLog)
+		return self.flatpakActions
+
+	#def flatpakActionsScript
 
 #class LliurexUpConnect			

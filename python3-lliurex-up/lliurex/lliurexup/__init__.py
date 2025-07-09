@@ -63,6 +63,7 @@ class LliurexUpCore(object):
 		self.canConnectToServerADI=False
 		self.isMirrorInServerADI=False
 		self.optionsToUpdate=""
+		self.flatpakActionsPath='/usr/share/lliurex-up/flatpakActions'
 
 	#def __init__	
 
@@ -1286,6 +1287,13 @@ class LliurexUpCore(object):
 			return False
 			
 	#def testConnectionWithServerADI
+
+	def flatpakActionsScript(self):
+		
+		return 'run-parts --arg="flatpakActions" ' + self.flatpakActionsPath
+
+		
+	#def flatpakActionsScript
 
 #def LliurexUpCore
 

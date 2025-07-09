@@ -136,6 +136,8 @@ class UpdateStack(QObject):
 		self.postActionsDone=False
 		self.checkFinalFlavourLaunched=False
 		self.checkFinalFlavourDone=False
+		self.flatpakActionsLaunched=False
+		self.flatpakActionsDone=False
 
 	#def _initUpdateProcess
 
@@ -178,20 +180,29 @@ class UpdateStack(QObject):
 						self.core.mainStack.endCurrentCommand=True
 
 					if self.checkFinalFlavourDone:
-						self.updateProcessTimer.stop()	
-						UpdateStack.llxUpConnect.updatePackagesData(True)
-						self.core.packageStack.updatePackagesModelInfo()
-						if UpdateStack.llxUpConnect.isWeekPauseActive:
-							UpdateStack.llxUpConnect.getAutoUpgradeInfo()
-							self.core.settingStack.getSettingsInfo()
-						self.core.mainStack.showProgressBar=False
-						self.core.mainStack.endProcess=True
-						self.core.mainStack.updateStep=0
+						if not self.flatpakActionsLaunched:
+							self.flatpakActionsLaunched=True
+							print("  [Lliurex-Up]: Updataing flatpak applications")
+							self.core.mainStack.updateStep=7
+							self.core.mainStack.setProgress()
+							self.core.mainStack.currentCommand=UpdateStack.llxUpConnect.flatpakActionsScript()
+							self.core.mainStack.endCurrentCommand=True
+						
+						if self.flatpakActionsDone:
+							self.updateProcessTimer.stop()	
+							UpdateStack.llxUpConnect.updatePackagesData(True)
+							self.core.packageStack.updatePackagesModelInfo()
+							if UpdateStack.llxUpConnect.isWeekPauseActive:
+								UpdateStack.llxUpConnect.getAutoUpgradeInfo()
+								self.core.settingStack.getSettingsInfo()
+							self.core.mainStack.showProgressBar=False
+							self.core.mainStack.endProcess=True
+							self.core.mainStack.updateStep=0
 
-						if not UpdateStack.llxUpConnect.checkErrorDistUpgrade():
-							self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_OK,"Ok"]
-						else:
-							self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_ERROR,"Error"]
+							if not UpdateStack.llxUpConnect.checkErrorDistUpgrade():
+								self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_OK,"Ok"]
+							else:
+								self.core.mainStack.showFeedbackMessage=[True,UpdateStack.UPDATE_PROCESS_ERROR,"Error"]
 
 		if self.preActionsLaunched:
 			if not self.preActionsDone:
@@ -212,6 +223,11 @@ class UpdateStack(QObject):
 			if not self.checkFinalFlavourDone:
 				if os.path.exists(UpdateStack.llxUpConnect.installflavourToken):
 					self.checkFinalFlavourDone=True
+
+		if self.flatpakActionsLaunched:
+			if not self.flatpakActionsDone:
+				if os.path.exists(UpdateStack.llxUpConnect.flatpakActionsToken):
+					self.flatpakActionsDone=True
 
 	#def _updateProcessRet
 

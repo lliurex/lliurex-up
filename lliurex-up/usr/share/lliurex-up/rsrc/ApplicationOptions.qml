@@ -399,6 +399,9 @@ GridLayout{
             case 6:
                 msg=i18nd("lliurex-up","Checking metapackage...")
                 break;
+            case 7:
+                msg=i18nd("lliurex-up","Updating flatpak applications...")
+                break;
         }
         msg=headed+". "+msg
         return msg
