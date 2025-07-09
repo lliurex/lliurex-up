@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 09:15+0100\n"
-"PO-Revision-Date: 2025-02-17 08:27+0100\n"
+"POT-Creation-Date: 2025-07-09 10:01+0200\n"
+"PO-Revision-Date: 2025-07-09 10:03+0200\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -35,7 +35,7 @@ msgstr "Procés d'actualització"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:12
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:22
 msgid "Settings"
 msgstr "Preferències"
 
@@ -115,6 +115,10 @@ msgstr "Està finalitzant l'actualització..."
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:400
 msgid "Checking metapackage..."
 msgstr "S'està comprovant el metapaquet..."
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:403
+msgid "Updating flatpak applications..."
+msgstr "S'estan actualitzant les aplicacions flatpak..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:25
 msgid "Changelog"
@@ -357,71 +361,71 @@ msgstr "No s'ha trobat cap paquet"
 msgid "List of packages to update/install"
 msgstr "Llista de paquets per a actualitzar/instal·lar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:45
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
 msgid "Notifications:"
 msgstr "Notificacions:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:65
 msgid "Show notifications for available updates"
 msgstr "Mostra notificacions d'actualitzacions disponibles"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:67
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:77
 msgid "Updates:"
 msgstr "Actualitzacions:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:84
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:94
 msgid "Activate automatic system updates"
 msgstr "Activa l'actualització automàtica del sistema"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:105
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:115
 msgid "Pause updates:"
 msgstr "Pausa les actualitzacions:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:119
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
 msgid "Pause automatic updates for:"
 msgstr "Pausa les actualitzacions automàtiques durant:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:162
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:172
 msgid "Click to extend the pause of automatic updates"
 msgstr "Feu clic per a prorrogar la pausa de les actualitzacions automàtiques"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:191
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:201
 msgid "Extended pause for:"
 msgstr "Prorroga la pausa durant:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:221
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:231
 msgid "It is not possible to change notifications setting"
 msgstr "No és possible canviar la configuració de les notificacions"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:224
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:234
 msgid "It is not possible to change automatic updates setting"
 msgstr ""
 "No és possible canviar la configuració per a les actualitzacions automàtiques"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:227
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:237
 msgid "It is not possible to change automatic updates pause setting"
 msgstr ""
 "No és possible canviar la configuració per a la pausa de les actualitzacions "
 "automàtiques"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:230
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:240
 msgid "It is not posible to change settings"
 msgstr "No és possible canviar la configuració"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:233
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:243
 msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
 msgstr "Els canvis tindran efecte la pròxima que l'equip s'encenga o reinicie"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:69
 msgid "week"
 msgstr "setmana"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
 msgid "weeks"
 msgstr "setmanes"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:978
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:990
 msgid "Select a value"
 msgstr "Seleccioneu un valor"

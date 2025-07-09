@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 09:15+0100\n"
+"POT-Creation-Date: 2025-07-09 10:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:12
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:22
 msgid "Settings"
 msgstr ""
 
@@ -107,6 +107,10 @@ msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:400
 msgid "Checking metapackage..."
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:403
+msgid "Updating flatpak applications..."
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:25
@@ -335,68 +339,68 @@ msgstr ""
 msgid "List of packages to update/install"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:45
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
 msgid "Notifications:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:55
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:65
 msgid "Show notifications for available updates"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:67
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:77
 msgid "Updates:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:84
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:94
 msgid "Activate automatic system updates"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:105
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:115
 msgid "Pause updates:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:119
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
 msgid "Pause automatic updates for:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:162
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:172
 msgid "Click to extend the pause of automatic updates"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:191
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:201
 msgid "Extended pause for:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:221
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:231
 msgid "It is not possible to change notifications setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:224
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:234
 msgid "It is not possible to change automatic updates setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:227
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:237
 msgid "It is not possible to change automatic updates pause setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:230
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:240
 msgid "It is not posible to change settings"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:233
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:243
 msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:69
 msgid "week"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
 msgid "weeks"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:978
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:990
 msgid "Select a value"
 msgstr ""
