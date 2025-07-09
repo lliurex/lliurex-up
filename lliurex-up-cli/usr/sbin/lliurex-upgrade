@@ -591,7 +591,7 @@ class LliurexUpCli(object):
 			
 	#def checkingFinalFlavourToInstall
 
-	def flatpakActionsScript(self,extraArgs):
+	def flatpakActionsScript(self):
 
 		print("  [Lliurex-Up]: Updating Flatpak applications...")
 
