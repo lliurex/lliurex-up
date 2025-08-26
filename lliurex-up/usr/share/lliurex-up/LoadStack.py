@@ -571,11 +571,11 @@ class Bridge(QObject):
 		self.progressValue=self._getProgress()
 		self.checkInitialFlavourToInstallT=CheckInitialFlavourToInstall()
 		self.checkInitialFlavourToInstallT.start()
-		self.checkInitialFlavourToInstallT.finished.connect(self._gathetPackages)
+		self.checkInitialFlavourToInstallT.finished.connect(self._gatherPackages)
 
 	#def _checkInitialFlavourToInstall
 
-	def _gathetPackages(self):
+	def _gatherPackages(self):
 
 		print("  [Lliurex-Up]: Looking for for new updates")
 		self.loadStep=10

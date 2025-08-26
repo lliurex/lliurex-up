@@ -27,7 +27,7 @@ class Bridge(QObject):
 		self._currentOptionStack=0
 		self._showProgressBar=False
 		self._progressBarValue=0.0
-		self._totalUpdateSteps=6
+		self._totalUpdateSteps=7
 		self._updateStep=0
 		self._showUpdateBtn=False
 		self._enableUpdateBtn=False

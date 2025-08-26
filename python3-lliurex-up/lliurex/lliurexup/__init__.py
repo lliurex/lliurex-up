@@ -31,7 +31,7 @@ class LliurexUpCore(object):
 		self.changelogsPath = os.path.join(self.processPath,'changelogs')
 		self.processSourceslist = os.path.join(self.processPath,'sourceslist')
 		self.origsourcesfile=os.path.join(self.sourcesListPath,"sources.list")
-		self.origsourcesfileback=os.path.join(self.sourcesListPath,"lliurexup_sources.list")
+		self.sourcesListToUpdate=os.path.join(self.processSourceslist,"lliurexup_sources.list")
 		self.targetMetapackagePath=os.path.join(self.processPath,"targetMetapackage")
 		self.previousflavourspath = os.path.join(self.processPath,'previousflavours')
 		self.errorpostaction_token=os.path.join(self.processPath,'errorpostaction_token')
@@ -42,11 +42,14 @@ class LliurexUpCore(object):
 		self.initActionsPath='/usr/share/lliurex-up/initActions'
 		self.preActionsPath = '/usr/share/lliurex-up/preActions'
 		self.postActionsPath = '/usr/share/lliurex-up/postActions'
-		self.optionsLlxUp=""
+		self.optionsLlxUp=""		
+		self.optionsToUpdate=""
 		self.desktopClientized=False
 		self.connectionWithServer=True
 		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
 		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
+		self.flatpakActionsPath='/usr/share/lliurex-up/flatpakActions'
+
 
 	#def __init__	
 
@@ -324,7 +327,7 @@ class LliurexUpCore(object):
 
 	def addSourcesListLliurex(self,args=None):
 		
-		newsourcesfile=os.path.join(self.sourcesListPath,'sources.list')
+		newsourcesfile=""
 		extrasources=[]
 		client=False
 		textsearch_mirror="/mirror/"+str(self.defaultMirror)
@@ -349,8 +352,7 @@ class LliurexUpCore(object):
 			sourcesref=os.path.join(self.processSourceslist, 'default')	
 
 		if os.path.exists(self.origsourcesfile):
-			os.rename(self.origsourcesfile,self.origsourcesfileback)
-			origsources=open(self.origsourcesfileback,'r')
+			origsources=open(self.origsourcesfile,'r')
 			if not client:
 				for line in origsources:
 					if not textsearch_lliurex in line:
@@ -367,23 +369,28 @@ class LliurexUpCore(object):
 
 			origsources.close()
 				
-			if os.path.exists(sourcesref):
-				shutil.copy(sourcesref,self.origsourcesfile)
-				if len(extrasources)>0:	
-					newsourcesedit=open(newsourcesfile,'a')
-					for line in extrasources:
-						newsourcesedit.write(line+'\n')
-					newsourcesedit.close()
-			else:
-				os.rename(self.origsourcesfileback,self.origsourcesfile)					
-	
-	#def addSourcesListLliurex 		
+		if os.path.exists(sourcesref):
+
+			shutil.copy(sourcesref,self.sourcesListToUpdate)
+			newsourcesfile=self.sourcesListToUpdate
+
+			if len(extrasources)>0:	
+				newsourcesedit=open(newsourcesfile,'a')
+				for line in extrasources:
+					newsourcesedit.write(line+'\n')
+				newsourcesedit.close()
+		else:
+			self.sourcesListToUpdate=self.origsourcesfile
+
+		self.optionsToUpdate="-o Dir::Etc::sourcelist={sourceslistOnlyLliurex}".format(sourceslistOnlyLliurex=self.sourcesListToUpdate)	
+
+		#def addSourcesListLliurex 		
 
 	def restoreOrigSourcesList(self):
 		
-		if os.path.exists(self.origsourcesfileback):
-			os.rename(self.origsourcesfileback,self.origsourcesfile)
-
+		if os.path.exists("/etc/apt/lliurexup_sources.list"):
+			os.rename("/etc/apt/lliurexup_sources.list",self.origsourcesfile)
+		
 	#def restoreOrigSourcesList		
 
 	def readSourcesList(self):
@@ -715,8 +722,6 @@ class LliurexUpCore(object):
 			
 			return tmp_list		
 					
-					
-
 	#def checkFlavour	
 
 	def canConnectToLliurexNet(self):
@@ -749,8 +754,8 @@ class LliurexUpCore(object):
 	
 	def getLliurexVersionLocal(self):
 		
-		self.updateCacheApt('')
-		return self.getPackageVersionAvailable('lliurex-version-timestamp','',True)		
+		self.updateCacheApt(self.optionsToUpdate)
+		return self.getPackageVersionAvailable('lliurex-version-timestamp',self.optionsToUpdate,True)		
 
 	#def getLliurexVersionLocal
 
@@ -790,13 +795,13 @@ class LliurexUpCore(object):
 		tmp_list=""
 		for item in flavourToInstall:
 			tmp_list=tmp_list+item+" "
-		self.updateCacheApt(options)
-		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + tmp_list + "{options} ".format(options=options)
+		self.updateCacheApt(self.optionsToUpdate)
+		command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages " + tmp_list + "{options} ".format(options=self.optionsToUpdate)
 		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		poutput,perror = p.communicate()
 		
 		if p.returncode!=0:
-			command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install -f --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {options} ".format(options=options)
+			command = "LANG=C LANGUAGE=en DEBIAN_FRONTEND=noninteractive apt-get install -f --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {options} ".format(options=self.optionsToUpdate)
 			p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			poutput,perror = p.communicate()
 			if len(poutput)>0:
@@ -824,8 +829,9 @@ class LliurexUpCore(object):
 			}
 		'''
 		self.packageInfo = {}
-		self.updateCacheApt("")
-		psimulate = subprocess.Popen('LANG=C LANGUAGE=en apt-get dist-upgrade -sV',shell=True,stdout=subprocess.PIPE)
+		self.updateCacheApt(self.optionsToUpdate)
+		cmd='LANG=C LANGUAGE=en apt-get dist-upgrade -sV {options} '.format(options=self.optionsToUpdate)
+		psimulate = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 		rawoutputpsimulate = psimulate.stdout.readlines()
 		rawpackagestoinstall = [ aux.decode().strip() for aux in rawoutputpsimulate if aux.decode().startswith('Inst') ]
 		r = [ aux.replace('Inst ','') for aux in rawpackagestoinstall ]
@@ -922,7 +928,7 @@ class LliurexUpCore(object):
 
 	def distUpgradeProcess(self):
 	
-		return 'apt-get dist-upgrade --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages'
+		return 'apt-get dist-upgrade --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {options} '.format(options=self.optionsToUpdate)
 
 	#def distUpgradeProcess
 
@@ -968,7 +974,7 @@ class LliurexUpCore(object):
 						
 					else:
 						j=0
-						cmd='apt-get dist-upgrade -sV >' + self.finalupgrade_token
+						cmd='apt-get dist-upgrade -sV {options} > {token}'.format(options=self.optionsToUpdate,token=self.finalupgrade_token)
 						os.system(cmd)
 						if os.path.exists(self.finalupgrade_token):
 							aux = open(self.finalupgrade_token,'r')
@@ -999,7 +1005,7 @@ class LliurexUpCore(object):
 		for item in flavourToInstall:
 			tmp_list=tmp_list+item +" "
 		
-		return 'apt-get install ' + tmp_list + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages'		
+		return 'apt-get install ' + tmp_list + ' --yes  --allow-downgrades --allow-remove-essential --allow-change-held-packages ' + '{options}'.format(options=self.optionsToUpdate)		
       	
 	#def installFinalFlavour
 
@@ -1171,6 +1177,13 @@ class LliurexUpCore(object):
 		return True
 
 	#def stopAutoUpgrade
+
+	def flatpakActionsScript(self):
+		
+		return 'run-parts --arg="flatpakActions" ' + self.flatpakActionsPath
+
+	#def flatpakActionsScript
+
 
 #def LliurexUpCore
 

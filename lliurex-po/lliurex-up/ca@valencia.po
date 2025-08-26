@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 12:13+0200\n"
-"PO-Revision-Date: 2024-06-13 12:17+0200\n"
+"POT-Creation-Date: 2025-08-26 08:22+0200\n"
+"PO-Revision-Date: 2025-08-26 08:24+0200\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -43,7 +43,7 @@ msgid "Help"
 msgstr "Ajuda"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:147
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:246
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:247
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:112
 msgid "of"
 msgstr "de"
@@ -73,29 +73,33 @@ msgstr ""
 "És necessari executar dpkg --configure -a. Pot usar l'aplicació Dpkg-"
 "Unlocker per a això"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:253
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:254
 msgid "Preparing system to the update..."
 msgstr "S'està preparant el sistema per a l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:256
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:257
 msgid "Downloading packages"
 msgstr "S'estan descarregant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:259
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:260
 msgid "Unpacking packages"
 msgstr "S'estan desempaquetant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:262
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:263
 msgid "Configuring packages"
 msgstr "S'estan configurant paquets"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:265
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:266
 msgid "Ending the update..."
 msgstr "Està finalitzant l'actualització..."
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:268
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:269
 msgid "Checking metapackage..."
 msgstr "S'està comprovant el metapaquet..."
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:272
+msgid "Updating Flatpak applications..."
+msgstr "S'estan actualitzant les aplicacions Flatpak..."
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:25
 msgid "Changelog"
@@ -201,7 +205,6 @@ msgstr "Grandària de l'actualització (aprox.):"
 msgid "Update source:"
 msgstr "Origen de l'actualització:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:141
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:135
 msgid "Press to view pkg changelog"
 msgstr "Feu clic per a vore el control de canvis"
@@ -323,11 +326,6 @@ msgstr "No s'ha trobat cap paquet"
 msgid "List of packages to update/install"
 msgstr "Llista de paquets per a actualitzar/instal·lar"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:25
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:132
-msgid "Changes will take effect the next time you log in"
-msgstr "Els canvis tindran efecte la pròxima vegada que us connecteu"
-
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:43
 msgid "Show notifications for available updates:"
 msgstr "Mostra notificacions d'actualitzacions disponibles:"
@@ -336,11 +334,31 @@ msgstr "Mostra notificacions d'actualitzacions disponibles:"
 msgid "Activate automatic system update:"
 msgstr "Activa l'actualització automàtica del sistema:"
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:110
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:111
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:113
 msgid "If it is activated the system will update automatically at login"
 msgstr ""
 "Si està activat el sistema s'actualitzarà automàticament en l'inici de sessió"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:128
+msgid "Unable to activate the automatic system update"
+msgstr "No és possible activar l'actualització automàtica de l'equip"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:131
+msgid "Unable to deactivate automatic system update"
+msgstr "No és possible desactivar l'actualització automàtica de l'equip"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:134
+msgid "Changes will take effect the next time you log in"
+msgstr "Els canvis tindran efecte la pròxima vegada que us connecteu"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:137
+msgid ""
+"Changes will take effect the next time the computer turns on or restarts"
+msgstr "Els canvis tindran efecte la pròxima que l'equip s'encenga o reinicie"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:140
+msgid "Automatic system update has been successfully disabled"
+msgstr "L'actualització automàtica del sistema s'ha desactivat correctament"
 
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:223
 msgid "Lliurex-Up is being executed"
@@ -361,32 +379,3 @@ msgstr "Hi ha nous paquets preparats per a actualitzar-los i/o instal·lar-los"
 #: ../lliurex-up-indicator/usr/bin/lliurex-up-indicator:512
 msgid "Lliurex-Up"
 msgstr "Lliurex-Up"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate automatic updates"
-msgstr "No és possible activar les actualitzacions automàtiques"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic updates"
-msgstr "No és possible desactivar les actualitzacions automàtiques"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
-msgid "Changes will take effect the next time the computer is restarted"
-msgstr "Els canvis tindran efecte la pròxima vegada que l'equip es reinicie"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:138
-msgid "Automatic system update has been successfully disabled"
-msgstr "L'actualització automàtica del sistema s'ha desactivat correctament"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:126
-msgid "Unable to activate the automatic system update"
-msgstr "No és possible activar l'actualització automàtica de l'equip"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:129
-msgid "Unable to deactivate automatic system update"
-msgstr "No és possible desactivar l'actualització automàtica de l'equip"
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:135
-msgid ""
-"Changes will take effect the next time the computer turns on or restarts"
-msgstr "Els canvis tindran efecte la pròxima que l'equip s'encenga o reinicie"
