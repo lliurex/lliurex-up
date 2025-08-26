@@ -1,3 +1,10 @@
+lliurex-up (24.05.13) jammy; urgency=medium
+
+  * Changed to use temporal sourceslist file
+  * Changed to update Flatpak applications
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 26 Aug 2025 08:46:24 +0200
+
 lliurex-up (24.05.12) jammy; urgency=medium
 
   * Fixed meta reference list
