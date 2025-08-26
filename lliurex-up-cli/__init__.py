@@ -566,8 +566,40 @@ class LliurexUpCli(object):
 			msgLog="Final check metapackage. Error:%s"%str(e)	
 			self.log(msgLog)	
 			
-	#def checkingFinalFlavourToInstall		
-					
+	#def checkingFinalFlavourToInstall
+
+	def flatpakActionsScript(self):
+
+		print("  [Lliurex-Up]: Updating Flatpak applications...")
+
+		self.errorFlatpakActions=False
+
+		command=self.lliurexUpCore.flatpakActionsScript()
+	
+		try:
+			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
+			output=p.communicate()
+			if type(output[1]) is bytes:
+				outputErr=output[1].decode()
+			else:
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
+			if error:
+				print("  [Lliurex-Up]: Updating flatpak. Error:\n%s"%str(outputErr))
+				self.errorFlatpakActions=True
+				msgLog="Exec UpdateFlatpak. Error: %s"%str(outputErr)
+			else:
+				msgLog="Exec UpdateFlatpak.OK"
+			
+		except Exception as e:
+			self.errorFlatpakActions=True
+			print("  [Lliurex-Up]: Updating flatpak. Error:\n%s"%str(e))
+			msgLog="Exec UpdateFlatpak.OK:%s"%str(e)
+
+		self.log(msgLog)	
+
+	#def flatpakActionsScript			
+		
 	def checkFinalUpgrade(self):
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
@@ -834,7 +866,8 @@ class LliurexUpCli(object):
 					self.distUpgrade()
 					self.postActionsScript()
 					time.sleep(5)
-					self.checkingFinalFlavourToInstall()	
+					self.checkingFinalFlavourToInstall()
+					self.flatpakActionsScript()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
 					if self.distUpgradeOK:

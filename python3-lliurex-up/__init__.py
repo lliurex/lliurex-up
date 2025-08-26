@@ -63,6 +63,7 @@ class LliurexUpCore(object):
 		self.sourcesMirror="00_lliurex-mirror.sources"
 		self.sourcesListAllTemplate="/usr/share/lliurex-up/templates/all.sources"
 		self.optionsToUpdate=""
+		self.flatpakActionsPath='/usr/share/lliurex-up/flatpakActions'
 	
 	#def __init__	
 
@@ -1133,6 +1134,13 @@ class LliurexUpCore(object):
 				self.isDesktopInADI=False
 
 	#def testConnectionWithADI
+
+	def flatpakActionsScript(self):
+		
+		return 'run-parts --arg="flatpakActions" ' + self.flatpakActionsPath
+
+		
+	#def flatpakActionsScript
 
 #def LliurexUpCore
 
