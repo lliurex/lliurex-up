@@ -1,3 +1,9 @@
+lliurex-up (24.05.14) jammy; urgency=medium
+
+  * Fixed action to update Flatpak applications
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 26 Aug 2025 13:59:30 +0200
+
 lliurex-up (24.05.13) jammy; urgency=medium
 
   * Changed to use temporal sourceslist file
