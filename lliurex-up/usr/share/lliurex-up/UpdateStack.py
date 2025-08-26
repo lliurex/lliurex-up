@@ -239,7 +239,7 @@ class UpdateStack(QObject):
 			return UpdateStack.llxUpConnect.installFinalFlavour(flavourToInstall)
 		else:
 			print("  [Lliurex-Up]: Check Final Metapackage: Nothing to do")
-			command='exit ' + '\n'
+			command='\n'
 			self.checkFinalFlavourDone=True
 			return command
 

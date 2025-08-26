@@ -754,7 +754,7 @@ class LliurexUpConnect():
 	def installFinalFlavour(self,flavourToInstall):
 
 		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s;exit\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
+		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
 		msgLog="Install final metapackage"
 		self.log(msgLog)
 		return self.command
@@ -1084,7 +1084,7 @@ class LliurexUpConnect():
 	def flatpakActionsScript(self):
 
 		self.flatpakActions=self.llxUpCore.flatpakActionsScript()
-		self.flatpakActions='%s ;touch %s\n'%(self.flatpakActions,self.flatpakActionsToken)
+		self.flatpakActions='%s ;touch %s;exit\n'%(self.flatpakActions,self.flatpakActionsToken)
 
 		msgLog="Exec Update-Flatpak"
 		self.log(msgLog)
