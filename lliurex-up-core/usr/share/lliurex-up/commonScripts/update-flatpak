@@ -1,0 +1,7 @@
+#!/bin/bash
+ACTION="$1"
+case "$ACTION" in 
+	flatpakActions)
+		flatpak update -y
+	;;
+esac
