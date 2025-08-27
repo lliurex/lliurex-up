@@ -43,15 +43,15 @@ if __name__ == '__main__':
 
 	mode=None
 	options=0
-	is_update_action=True	
-	extra_args={}
-	extra_args["mirror"]=True
-	extra_args["unattended_mirror"]=False
-	extra_args["unattendend_upgrade"]=False
-	extra_args["repositories"]=False
-	is_manage_action=False
-	manage_option=""
-	weeks_of_pause=0
+	isUpdateAction=True	
+	extraArgs={}
+	extraArgs["mirror"]=True
+	extraArgs["unattended_mirror"]=False
+	extraArgs["unattendend_upgrade"]=False
+	extraArgs["repositories"]=False
+	isManageAction=False
+	manageOption=""
+	weeksOfPause=0
 	unattendend=False
 
 	args=arguments.Args().copy
@@ -60,8 +60,8 @@ if __name__ == '__main__':
 		usage()
 	
 	if args.contains(["-u", "--unattended"]):
-		extra_args["unattendend_upgrade"]=True
-		extra_args["unattended_mirror"]=True
+		extraArgs["unattendend_upgrade"]=True
+		extraArgs["unattended_mirror"]=True
 		unattendend=True
 		index = args.first(["-u","--unattended"])
 		args.pop(index)
@@ -74,13 +74,13 @@ if __name__ == '__main__':
 		options=1
 
 	if args.contains(["-r","--repositories"]):
-		extra_args["repositories"]=True
+		extraArgs["repositories"]=True
 		index = args.first([-r","--repositories])
 		args.pop(index)
 		options=1
 	
 	if args.contains(["-n", "--no-mirror"]):
-		extra_args["mirror"]=False
+		extraArgs["mirror"]=False
 		index = args.first(["-n", "--no-mirror"])
 		args.pop(index)
 		options=1
@@ -88,67 +88,67 @@ if __name__ == '__main__':
 	action=args.pop(0)
 
 	if action=="get-autoupdates-settings":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="settings"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="settings"
 	elif action=="enable-autoupdates":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="enable"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="enable"
 	elif action=="disable-autoupdates":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="disable"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="disable"
 	elif action=="cancel-autoupdates":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="cancel"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="cancel"
 	elif action=="pause-autoupdates":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="pause"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="pause"
 		if len(args)>0:
 			for item in args.all:
 				if item.isdigit():
-					weeks_of_pause=int(item)
+					weeksOfPause=int(item)
 					break
-			if weeks_of_pause==0:
+			if weeksOfPause==0:
 				usage()
 		else:
 			usage()
 
 	elif action=="extended-pause":
-		is_manage_action=True
-		is_update_action=False
-		manage_option="extended"
+		isManageAction=True
+		isUpdateAction=False
+		manageOption="extended"
 		if len(args)>0:
 			for item in args.all:
 				if item.isdigit():
-					weeks_of_pause=int(item)
+					weeksOfPause=int(item)
 					break
-			if weeks_of_pause==0:
+			if weeksOfPause==0:
 				usage()
 		else:
 			usage()
 	elif action=="update":
-		is_update_action=True
-		is_manage_action=False
-		manage_option=""
+		isUpdateAction=True
+		isManageAction=False
+		manageOption=""
 	elif action!=None:		
 		usage()
 
-	if is_update_action:
+	if isUpdateAction:
 		if len(args)>0 and options==0:
 			usage()	
-	elif is_manage_action:
-		if manage_option=="":
+	elif isManageAction:
+		if manageOption=="":
 			usage()
 	else:
 		usage()
 
 	lliurexupcli=LliurexUpCli()
 
-	if is_manage_action:
-		sys.exit(lliurexupcli.manageUpdates(manage_option,unattendend,weeks_of_pause))
+	if isManageAction:
+		sys.exit(lliurexupcli.manageUpdates(manageOption,unattendend,weeksOfPause))
 	else:
-		sys.exit(lliurexupcli.updateAction(mode,extra_args))
+		sys.exit(lliurexupcli.updateAction(mode,extraArgs))
