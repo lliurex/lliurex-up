@@ -53,6 +53,7 @@ class LliurexUpCore(object):
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
 		self.adiClientRef="/usr/bin/natfree-tie"
+		self.adiServerRef="/usr/bin/natfree-adi"
 		self.isADI=False
 		self.isDesktopInADI=False
 		self.canConnectToADI=False
@@ -63,6 +64,7 @@ class LliurexUpCore(object):
 		self.sourcesMirror="00_lliurex-mirror.sources"
 		self.sourcesListAllTemplate="/usr/share/lliurex-up/templates/all.sources"
 		self.optionsToUpdate=""
+		self.flatpakActionsPath='/usr/share/lliurex-up/flatpakActions'
 	
 	#def __init__	
 
@@ -257,8 +259,9 @@ class LliurexUpCore(object):
 				if x.strip() in ["edu","live"]:
 					pass
 				else:
-					if x.strip() in self.flavourReference:
-						self.lastFlavours.append(x.strip())
+					if x.strip() not in self.lastFlavours:
+						if x.strip() in self.versionReference:
+							self.lastFlavours.append(x.strip())
 
 	#def updateFlavoursList		
 
@@ -1112,7 +1115,7 @@ class LliurexUpCore(object):
 
 	def checkFlavourType(self):
 
-		if self.search_meta('adi'):
+		if os.path.exists(self.adiServerRef):
 			self.isADI=True
 		else:
 			if os.path.exists(self.adiClientRef):
@@ -1133,6 +1136,13 @@ class LliurexUpCore(object):
 				self.isDesktopInADI=False
 
 	#def testConnectionWithADI
+
+	def flatpakActionsScript(self):
+		
+		return 'run-parts --arg="flatpakActions" ' + self.flatpakActionsPath
+
+		
+	#def flatpakActionsScript
 
 #def LliurexUpCore
 

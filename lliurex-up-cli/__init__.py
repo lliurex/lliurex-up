@@ -148,20 +148,20 @@ class LliurexUpCli(object):
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
 			if type(output[1]) is bytes:
-				output_err=output[1].decode()
+				outputErr=output[1].decode()
 			else:
-				output_err=output[1]	
-			error=self.readErrorOutput(output_err)
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
 			if error:
-				if 'dpkg --configure -a' in output_err:
+				if 'dpkg --configure -a' in outputErr:
 					self.configureRequired=True
-				print("  [Lliurex-Up]: Executing init actions. Error:\n%s"%str(output_err))
-				msgLog="Exec Init-Actions. Error: %s"%str(output_err)
+				print("  [Lliurex-Up]: Executing init actions. Error:\n%s"%str(outputErr))
+				msgLog="Exec Init-Actions. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Init-Actions. OK"
 			
 		except Exception as e:
-			msgLog="Exec Init-Actions.Error: " +str(e)
+			msgLog="Exec Init-Actions.Error: %s"%str(e)
 			print("  [Lliurex-Up]: Checking system. Error:\n%s"%str(e))
 
 			
@@ -251,7 +251,7 @@ class LliurexUpCli(object):
 							print("  [Lliurex-Up]: %s"%msgLog)
 				
 				except Exception as e:
-					msgLog="Updating mirror. Error: " + str(e)
+					msgLog="Updating mirror. Error: %s"%str(e)
 					self.log(msgLog)	
 					print("  [Lliurex-Up]: Updating mirror. Error: %s"%str(e))
 											
@@ -261,7 +261,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Nothing to do with mirror")
 		
 		except Exception as e:
-			msgLog="Checking mirror. Error: " + str(e)
+			msgLog="Checking mirror. Error: %s"%str(e)
 			self.log(msgLog)	
 			print("  [Lliurex-Up]: Checking mirror. Error: %s"%str(e)) 	
 			
@@ -302,11 +302,11 @@ class LliurexUpCli(object):
 		print("  [Lliurex-Up]: Looking for LliurexVersion from local repository...")
 		
 		self.versionToUpdate=self.lliurexUpCore.getLliurexVersionLocal()
-		msgLog="Get LliurexVersion installed: " + str(self.versionToUpdate["installed"])
+		msgLog="Get LliurexVersion installed: %s"%str(self.versionToUpdate["installed"])
 		self.log(msgLog)
 		msgLog="Get LliurexVersion candidate from local repository: %s"%str(self.versionToUpdate["candidate"])
 		self.log(msgLog)
-		msgLog="Get Update source: "+str(self.versionToUpdate["updateSource"])
+		msgLog="Get Update source: %s"%str(self.versionToUpdate["updateSource"])
 		self.log(msgLog)
 
 	#def getLliurexVersionLocal	
@@ -355,7 +355,7 @@ class LliurexUpCli(object):
 			for item in packages:
 				if packages[item]["install"]==None:
 						self.newPackages=int(self.newPackages) + 1
-				self.packagesList=str(self.packagesList) + item +" "		
+				self.packagesList="%s %s "%(str(self.packagesList),item)		
 
 		return packages
 
@@ -403,19 +403,19 @@ class LliurexUpCli(object):
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
 			if type(output[1]) is bytes:
-				output_err=output[1].decode()
+				outputErr=output[1].decode()
 			else:
-				output_err=output[1]	
-			error=self.readErrorOutput(output_err)
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Preparing system to update. Error:\n%s"%str(output_err))
-				msgLog="Exec Pre-Actions. Error: %s"%str(output_err)
+				print("  [Lliurex-Up]: Preparing system to update. Error:\n%s"%str(outputErr))
+				msgLog="Exec Pre-Actions. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Pre-Actions. OK"
 
 		except Exception as e:
 			print("  [Lliurex-Up]: Preparing system to update. Error:\n%s"%str(e))
-			msgLog="Exec Pre-Actions. Error " +str(e)
+			msgLog="Exec Pre-Actions. Error %s"%str(e)
 			
 
 		self.log(msgLog)	
@@ -435,19 +435,19 @@ class LliurexUpCli(object):
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
 			if type(output[1]) is bytes:
-				output_err=output[1].decode()
+				outputErr=output[1].decode()
 			else:
-				output_err=output[1]	
-			error=self.readErrorOutput(output_err)
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Downloading and installing packages. Error:\n%s"%str(output_err))
-				msgLog="Exec Dist-upgrade. Error: %s"%str(output_err)
+				print("  [Lliurex-Up]: Downloading and installing packages. Error:\n%s"%str(outputErr))
+				msgLog="Exec Dist-upgrade. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Dist-upgrade. OK"
 		
 		except Exception as e:
 			print("  [Lliurex-Up]: Downloading and installing packages. Error:\n%s"%str(e))
-			msgLog="Exec Dist-uggrade.Error : " +str(e)
+			msgLog="Exec Dist-uggrade.Error: %s"%str(e)
 
 		self.log(msgLog)	
 			
@@ -468,21 +468,21 @@ class LliurexUpCli(object):
 			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 			output=p.communicate()
 			if type(output[1]) is bytes:
-				output_err=output[1].decode()
+				outputErr=output[1].decode()
 			else:
-				output_err=output[1]	
-			error=self.readErrorOutput(output_err)
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
 			if error:
-				print("  [Lliurex-Up]: Ending the update. Error:\n%s"%str(output_err))
+				print("  [Lliurex-Up]: Ending the update. Error:\n%s"%str(outputErr))
 				self.postActionError=True
-				msgLog="Exec Post-Actions. Error: %s"%str(output_err)
+				msgLog="Exec Post-Actions. Error: %s"%str(outputErr)
 			else:
 				msgLog="Exec Post-Actions.OK"
 			
 		except Exception as e:
 			self.postActionError=True
 			print("  [Lliurex-Up]: Ending the update. Error:\n%s"%str(e))
-			msgLog="Exec Post-Actions.Error:%s"%str(e)
+			msgLog="Exec Post-Actions.Error: %s"%str(e)
 
 		self.log(msgLog)	
 
@@ -540,21 +540,21 @@ class LliurexUpCli(object):
 					p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
 					output=p.communicate()
 					if type(output[1]) is bytes:
-						output_err=output[1].decode()
+						outputErr=output[1].decode()
 					else:
-						output_err=output[1]	
-					error=self.readErrorOutput(output_err)
+						outputErr=output[1]	
+					error=self.readErrorOutput(outputErr)
 					if error:
 						self.finalMetaPackageError=True
-						print("  [Lliurex-Up]: Install of metapackage. Error:\n%s"%str(output_err))
-						msgLog="Final install metapackage. Error %s"%str(output_err)
+						print("  [Lliurex-Up]: Install of metapackage. Error:\n%s"%str(outputErr))
+						msgLog="Final install metapackage. Error %s"%str(outputErr)
 					else:
 						msgLog="Final install metapackage.OK"
 				
 				except Exception as e:
 					self.finalMetaPackageError=True
 					print("  [Lliurex-Up]: Install of metapackage. Error:\n%s"%str(e))
-					msgLog="Install of metapackage. Error:%s"%str(e)
+					msgLog="Install of metapackage. Error: %s"%str(e)
 
 				self.log(msgLog)	
 			else:
@@ -563,11 +563,43 @@ class LliurexUpCli(object):
 		except Exception as e:	
 			self.finalMetaPackageError=True
 			print("  [Lliurex-Up]: Checking Metapackage. Error:\n%s"%str(e))
-			msgLog="Final check metapackage. Error:%s"%str(e)	
+			msgLog="Final check metapackage. Error: %s"%str(e)	
 			self.log(msgLog)	
 			
-	#def checkingFinalFlavourToInstall		
-					
+	#def checkingFinalFlavourToInstall
+
+	def flatpakActionsScript(self):
+
+		print("  [Lliurex-Up]: Updating Flatpak applications...")
+
+		self.errorFlatpakActions=False
+
+		command=self.lliurexUpCore.flatpakActionsScript()
+	
+		try:
+			p=subprocess.Popen(command,shell=True,stderr=subprocess.PIPE)
+			output=p.communicate()
+			if type(output[1]) is bytes:
+				outputErr=output[1].decode()
+			else:
+				outputErr=output[1]	
+			error=self.readErrorOutput(outputErr)
+			if error:
+				print("  [Lliurex-Up]: Updating flatpak. Error:\n%s"%str(outputErr))
+				self.errorFlatpakActions=True
+				msgLog="Exec UpdateFlatpak. Error: %s"%str(outputErr)
+			else:
+				msgLog="Exec UpdateFlatpak.OK"
+			
+		except Exception as e:
+			self.errorFlatpakActions=True
+			print("  [Lliurex-Up]: Updating flatpak. Error:\n%s"%str(e))
+			msgLog="Exec UpdateFlatpak.OK: %s"%str(e)
+
+		self.log(msgLog)	
+
+	#def flatpakActionsScript			
+		
 	def checkFinalUpgrade(self):
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
@@ -834,7 +866,8 @@ class LliurexUpCli(object):
 					self.distUpgrade()
 					self.postActionsScript()
 					time.sleep(5)
-					self.checkingFinalFlavourToInstall()	
+					self.checkingFinalFlavourToInstall()
+					self.flatpakActionsScript()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
 					if self.distUpgradeOK:

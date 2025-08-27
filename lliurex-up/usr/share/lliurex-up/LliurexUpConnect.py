@@ -76,6 +76,7 @@ class LliurexUpConnect():
 		self.isDesktopInADI=False
 		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
 		self.runPkexec=True
+		self.flatpakActionsToken=os.path.join(self.llxUpCore.processPath,'flatpakActions_token')
 		self._isRunPkexec()
 
 	#def __init__
@@ -753,7 +754,7 @@ class LliurexUpConnect():
 	def installFinalFlavour(self,flavourToInstall):
 
 		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s;exit\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
+		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
 		msgLog="Install final metapackage"
 		self.log(msgLog)
 		return self.command
@@ -1079,5 +1080,17 @@ class LliurexUpConnect():
 		ret=self.llxUpCore.stopAutoUpgrade()
 
 	#def stopAutoUpgrade
+
+	def flatpakActionsScript(self):
+
+		self.flatpakActions=self.llxUpCore.flatpakActionsScript()
+		self.flatpakActions='%s ;touch %s;exit\n'%(self.flatpakActions,self.flatpakActionsToken)
+
+		msgLog="Exec Update-Flatpak"
+		self.log(msgLog)
+		return self.flatpakActions
+
+	#def flatpakActionsScript
+
 
 #class LliurexUpConnect			

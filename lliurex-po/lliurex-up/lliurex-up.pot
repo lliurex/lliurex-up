@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 08:39+0100\n"
+"POT-Creation-Date: 2025-08-26 11:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,73 +40,77 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:147
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:379
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:151
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:383
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:93
 msgid "of"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:191
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:195
 msgid "Update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:218
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:222
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:66
 msgid "Apply"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:243
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:247
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:110
 msgid "Cancel"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:307
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:311
 msgid "Apply changes. Wait a moment..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:319
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:323
 msgid "Restoring previous values. Wait a moment..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:361
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:365
 msgid "The updated process has ended successfully.The system is now update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:364
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:368
 msgid "Your system is update"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:367
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:371
 msgid "The updated process has ended with errors"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:370
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:374
 msgid ""
 "dpkg --configure -a must be executed. You can use dpkg-unlocker for this"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:386
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:390
 msgid "Preparing system to the update..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:389
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:393
 msgid "Downloading packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:392
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:396
 msgid "Unpacking packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:395
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:399
 msgid "Configuring packages"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:398
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:402
 msgid "Ending the update..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:401
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:405
 msgid "Checking metapackage..."
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:408
+msgid "Updating Flatpak applications..."
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangelogPopUp.qml:28
@@ -220,7 +224,7 @@ msgstr ""
 msgid "Auto update paused until:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:138
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:140
 msgid "Press to view pkg changelog"
 msgstr ""
 
@@ -348,44 +352,44 @@ msgstr ""
 msgid "Pause automatic updates for: "
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:172
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:174
 msgid "Click to extend the pause of automatic updates"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:201
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:209
 msgid "Extended pause for:"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:231
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:239
 msgid "It is not possible to change notifications setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:234
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:242
 msgid "It is not possible to change automatic updates setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:237
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:245
 msgid "It is not possible to change automatic updates pause setting"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:240
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:248
 msgid "It is not posible to change settings"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:243
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:251
 msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:69
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
 msgid "week"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
 msgid "weeks"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:967
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:970
 msgid "Select a value"
 msgstr ""
