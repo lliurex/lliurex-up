@@ -272,7 +272,9 @@ class LliurexUpCore(object):
 				if x.strip() in ["edu","live"]:
 					pass
 				else:
-					self.lastFlavours.append(x.strip())
+					if x.strip() not in self.lastFlavours:
+						if x.strip() in self.versionReference:
+							self.lastFlavours.append(x.strip())
 
 	#def updateFlavoursList		
 
