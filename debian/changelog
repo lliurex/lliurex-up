@@ -1,3 +1,9 @@
+lliurex-up (24.05.15) jammy; urgency=medium
+
+  * Improved metapackage detection
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 27 Aug 2025 08:51:38 +0200
+
 lliurex-up (24.05.14) jammy; urgency=medium
 
   * Fixed action to update Flatpak applications
