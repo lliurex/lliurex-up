@@ -1,3 +1,10 @@
+lliurex-up (25.05.37) noble; urgency=medium
+
+  * Changed to only check desktop as meta base
+  * Fixed bug in cli when flag --sai is used
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 10 Oct 2025 10:12:23 +0200
+
 lliurex-up (25.05.36) noble; urgency=medium
 
   * Changed to update Flatpak applications
