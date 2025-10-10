@@ -626,7 +626,7 @@ class LliurexUpCli(object):
 		self.lliurexUpCore.cleanLliurexUpLock()
 
 		if self.initActionsArg =="initActionsSai":
-			origPinningPath="/usr/share/lliurex-up/lliurex-pinning.cfg"
+			origPinningPath="/usr/share/lliurex-up/templates/lliurex-pinning.cfg"
 			destPinningPath="/etc/apt/preferences.d/lliurex-pinning"
 			shutil.copy(origPinningPath,destPinningPath)
 
