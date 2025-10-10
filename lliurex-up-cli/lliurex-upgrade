@@ -11,6 +11,7 @@ def	usage():
 	puts("Usage")
 	with indent(4):
 		puts("lliurex-upgrade [FLAGS...] ACTIONS")
+		'''
 		puts("Actions")
 		with indent(4):
 			puts("update: Update the system (optional)")
@@ -21,6 +22,7 @@ def	usage():
 			puts("pause-autoupdates <1..5>: Pause automatic updates for up 5 weeks")
 			puts("extended-pause <1..4>: Extended the initial update pause for up 4 weeks ")
 
+		'''
 		puts("Flags")
 		with indent(4):
 			puts("-h --help:		Show help")
@@ -87,6 +89,7 @@ if __name__ == '__main__':
 
 	action=args.pop(0)
 
+	'''
 	if action=="get-autoupdates-settings":
 		isManageAction=True
 		isUpdateAction=False
@@ -134,21 +137,25 @@ if __name__ == '__main__':
 		isUpdateAction=True
 		isManageAction=False
 		manageOption=""
+	
 	elif action!=None:		
 		usage()
-
+	'''
 	if isUpdateAction:
 		if len(args)>0 and options==0:
 			usage()	
-	elif isManageAction:
-		if manageOption=="":
-			usage()
+	
+	#elif isManageAction:
+	#	if manageOption=="":
+	#		usage()
 	else:
 		usage()
 
 	lliurexupcli=LliurexUpCli()
 
+	'''
 	if isManageAction:
 		sys.exit(lliurexupcli.manageUpdates(manageOption,unattendend,weeksOfPause))
 	else:
-		sys.exit(lliurexupcli.updateAction(mode,extraArgs))
+	'''
+	sys.exit(lliurexupcli.updateAction(mode,extraArgs))
