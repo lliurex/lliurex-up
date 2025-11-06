@@ -1,3 +1,9 @@
+lliurex-up (24.05.16) jammy; urgency=medium
+
+  * Fixed description in zomando
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 06 Nov 2025 13:14:08 +0100
+
 lliurex-up (24.05.15) jammy; urgency=medium
 
   * Improved metapackage detection
