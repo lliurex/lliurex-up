@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Dialogs
 
 Rectangle{
     visible: true
@@ -71,7 +70,6 @@ Rectangle{
 
    CustomDialog{
        id:mirrorDialog
-       dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Mirror management")
        dialogMsg:i18nd("lliurex-up","Your mirror is not update. Do you want to update it?")
        dialogVisible:loadStackBridge.showMirrorDialog
        dialogWidth:500
