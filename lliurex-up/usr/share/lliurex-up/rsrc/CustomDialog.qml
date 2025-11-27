@@ -1,13 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Dialogs
 import org.kde.plasma.components as PC
 
 
-Dialog {
+Popup {
     id: customDialog
-    property alias dialogTitle:customDialog.title
     property alias dialogVisible:customDialog.visible
     property alias dialogMsg:dialogText.text
     property alias dialogWidth:container.implicitWidth
@@ -16,25 +14,15 @@ Dialog {
     property bool xButton
 
     visible:dialogVisible
-    title:dialogTitle
     modal:true
     anchors.centerIn:Overlay.overlay
+    closePolicy:Popup.NoAutoClose
+
     background:Rectangle{
         color:"#ebeced"
         border.color:"#b8b9ba"
         border.width:1
         radius:5.0
-    }
-
-
-    onVisibleChanged:{
-        if (!this.visible && xButton){
-            if ((loadStackBridge.showMirrorDialog)||(loadStackBridge.showRepoDialog)){
-                rejectDialogClicked()
-            }
-        }else{
-            xButton=true
-        }
     }
 
     contentItem: Rectangle {
@@ -77,7 +65,6 @@ Dialog {
             Keys.onReturnPressed: dialogApplyBtn.clicked()
             Keys.onEnterPressed: dialogApplyBtn.clicked()
             onClicked:{
-                xButton:false
                 dialogApplyClicked()
             }
             
@@ -97,7 +84,6 @@ Dialog {
             Keys.onReturnPressed: dialogCancelBtn.clicked()
             Keys.onEnterPressed: dialogCancelBtn.clicked()
             onClicked:{
-                xButton:false
                 rejectDialogClicked()
 
             }

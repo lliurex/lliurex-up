@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-26 11:44+0200\n"
+"POT-Creation-Date: 2025-11-27 11:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,6 @@ msgid "Update process"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:65
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:18
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/SettingsPanel.qml:22
 msgid "Settings"
 msgstr ""
@@ -42,7 +41,7 @@ msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:151
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:383
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:93
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:91
 msgid "of"
 msgstr ""
 
@@ -51,12 +50,12 @@ msgid "Update"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:222
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:66
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:54
 msgid "Apply"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:247
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:110
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:94
 msgid "Cancel"
 msgstr ""
 
@@ -126,22 +125,22 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:53
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:41
 msgid ""
 "There are pending changes to apply.\n"
 "Do you want apply the changes or discard them?"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:88
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ChangesDialog.qml:74
 msgid "Discard"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:68
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:56
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:110
 msgid "Yes"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:90
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/CustomDialog.qml:77
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/lliurex-up-dialog.qml:125
 msgid "No"
 msgstr ""
@@ -256,63 +255,59 @@ msgstr ""
 msgid "The unlocking process has failed"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:41
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:40
 msgid "seconds"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:74
-msgid "Mirror management"
-msgstr ""
-
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:75
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:73
 msgid "Your mirror is not update. Do you want to update it?"
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:96
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:94
 msgid "Checking sytem..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:99
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:97
 msgid "Checking mirror..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:102
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:100
 msgid "Executing init-actions..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:105
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:103
 msgid "Looking for new version of Lliurex-Up..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:108
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:106
 msgid "Updating Lliurex-Up..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:111
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:109
 msgid "Checking if mirror exist and there is updated..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:114
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:112
 msgid "Looking for new version to update..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:117
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:115
 msgid "Looking for new version available..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:120
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:118
 msgid "Checking if installation of metapackage is required..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:123
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:121
 msgid "Looking for new updates..."
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:126
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:124
 msgid "Lliurex-Up is now updated and will be reboot in "
 msgstr ""
 
-#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:129
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/LoadPanel.qml:127
 msgid "Updating mirror: "
 msgstr ""
 
