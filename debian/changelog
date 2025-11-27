@@ -1,3 +1,9 @@
+lliurex-up (25.05.38) noble; urgency=medium
+
+  * Fixed custom dialog template
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 27 Nov 2025 12:04:40 +0100
+
 lliurex-up (25.05.37) noble; urgency=medium
 
   * Changed to only check desktop as meta base
