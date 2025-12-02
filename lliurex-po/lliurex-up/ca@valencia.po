@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-26 08:22+0200\n"
-"PO-Revision-Date: 2025-08-26 08:24+0200\n"
+"POT-Creation-Date: 2025-12-02 10:49+0100\n"
+"PO-Revision-Date: 2025-12-02 10:51+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -125,9 +125,13 @@ msgid "No"
 msgstr "No"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
-msgid "There's not enough space on disk to upgrade (2 GB needed)"
+msgid "There's not enough space on disk to upgrade: 2 GB needed"
 msgstr ""
-"No hi ha prou espai en el disc per a fer l'actualització (es necessiten 2 GB)"
+"No hi ha prou espai en el disc per a fer l'actualització: es necessiten 2 GB"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
+msgid "available"
+msgstr "disponibles"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:44
 msgid "Unable to connect to lliurex.net"
