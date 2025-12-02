@@ -360,6 +360,12 @@ class Bridge(QObject):
 
 	#def _setMirrorPercentage
 
+	def _getRunPkexec(self):
+
+		return self._runPkexec
+
+	#def _getRunPkexec
+
 	def _getFreeSpaceAvailable(self):
 
 		return self._freeSpaceAvailable
