@@ -38,7 +38,7 @@ Rectangle{
         var msg=""
         switch (mainStackBridge.showErrorMessage[0]){
             case -1:
-                msg=i18nd("lliurex-up","There's not enough space on disk to upgrade (2 GB needed)");
+                msg=i18nd("lliurex-up","There's not enough space on disk to upgrade: 2 GB needed")+ " - "+loadStackBridge.freeSpaceAvailable+" GB "+i18nd("lliurex-up","available");
                 break;
             case -2:
                 msg=i18nd("lliurex-up","Unable to connect to lliurex.net")
