@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 11:59+0100\n"
-"PO-Revision-Date: 2025-11-27 12:00+0100\n"
+"POT-Creation-Date: 2025-12-02 11:03+0100\n"
+"PO-Revision-Date: 2025-12-02 11:03+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -155,9 +155,13 @@ msgid "No"
 msgstr "No"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
-msgid "There's not enough space on disk to upgrade (2 GB needed)"
+msgid "There's not enough space on disk to upgrade: 2 GB needed"
 msgstr ""
-"No hi ha prou espai en el disc per a fer l'actualització (es necessiten 2 GB)"
+"No hi ha prou espai en el disc per a fer l'actualització: es necessiten 2 GB"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
+msgid "available"
+msgstr "disponibles"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:44
 msgid "Unable to connect to lliurex.net"
@@ -398,15 +402,15 @@ msgid ""
 "Changes will take effect the next time the computer turns on or restarts"
 msgstr "Els canvis tindran efecte la pròxima que l'equip s'encenga o reinicie"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
 msgid "week"
 msgstr "setmana"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
 msgid "weeks"
 msgstr "setmanes"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:970
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:74
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:973
 msgid "Select a value"
 msgstr "Seleccioneu un valor"
