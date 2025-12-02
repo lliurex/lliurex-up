@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 11:59+0100\n"
-"PO-Revision-Date: 2025-11-27 11:59+0100\n"
+"POT-Creation-Date: 2025-12-02 11:03+0100\n"
+"PO-Revision-Date: 2025-12-02 11:04+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -154,8 +154,12 @@ msgid "No"
 msgstr "No"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
-msgid "There's not enough space on disk to upgrade (2 GB needed)"
-msgstr "No hay suficiente espacio en disco para actualizar (se necesitan 2 GB)"
+msgid "There's not enough space on disk to upgrade: 2 GB needed"
+msgstr "No hay suficiente espacio en disco para actualizar: se necesitan 2 GB"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:41
+msgid "available"
+msgstr "disponibles"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:44
 msgid "Unable to connect to lliurex.net"
@@ -395,15 +399,15 @@ msgid ""
 msgstr ""
 "Los cambios tendrán efecto la próxima que el equipo se encienda o reinicie"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:70
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
 msgid "week"
 msgstr "semana"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:71
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:72
 msgid "weeks"
 msgstr "semanas"
 
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:73
-#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:970
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:74
+#: ../lliurex-up/usr/share/lliurex-up/LliurexUpConnect.py:973
 msgid "Select a value"
 msgstr "Seleccionar un valor"

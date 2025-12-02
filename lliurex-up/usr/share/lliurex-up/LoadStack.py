@@ -19,7 +19,7 @@ class CheckSystem(QThread):
 	def __init__(self,*args):
 
 		QThread.__init__(self)
-		self.freeSpace=False
+		self.freeSpace=[False,0]
 		self.statusN4d=""
 		self.canConnect=False
 		self.isMirrorExistsInADI=False
@@ -31,7 +31,7 @@ class CheckSystem(QThread):
 
 		time.sleep(5)
 		self.freeSpace=Bridge.llxUpConnect.freeSpaceCheck()
-		if self.freeSpace:
+		if self.freeSpace[0]:
 			self.statusN4d=Bridge.llxUpConnect.checkInitialN4dStatus()
 			Bridge.llxUpConnect.checkInitialFlavour()
 			self.isMirrorExistsInADI=Bridge.llxUpConnect.desktopCheckingMirrorExists()
@@ -263,6 +263,7 @@ class Bridge(QObject):
 		self.maxSeconds=5.0
 		self.currentSecond=0.0
 		self._showMirrorDialog=False
+		self._freeSpaceAvailable="0.00"
 		self.addRepos=True
 		self.endLaunchMirror=True
 		self._runPkexec=Bridge.llxUpConnect.runPkexec
@@ -359,11 +360,19 @@ class Bridge(QObject):
 
 	#def _setMirrorPercentage
 
-	def _getRunPkexec(self):
+	def _getFreeSpaceAvailable(self):
 
-		return self._runPkexec
+		return self._freeSpaceAvailable
 
-	#def _getRunPkexec
+	#def _getFreeSpaceAvailable
+
+	def _setFreeSpaceAvailable(self,freeSpaceAvailable):
+
+		if self._freeSpaceAvailable!=freeSpaceAvailable:
+			self._freeSpaceAvailable=freeSpaceAvailable
+			self.on_freeSpaceAvailable.emit()
+
+	#def _setFreeSpaceAvailable
 
 	def checkSystem(self):
 
@@ -380,8 +389,9 @@ class Bridge(QObject):
 	def _checkSystemRet(self):
 
 		abort=False
-
-		if self.checkSystemT.freeSpace:
+		self.freeSpaceAvailable=str(self.checkSystemT.freeSpace[1])
+		
+		if self.checkSystemT.freeSpace[0]:
 			if self.checkSystemT.canConnect:
 				self.loadStep=2
 				self.progressValue=self._getProgress()
@@ -399,7 +409,7 @@ class Bridge(QObject):
 				self.core.mainStack.currentStack=2
 		else:
 			abort=True
-			print("  [Lliurex-Up]: Not enough space on disk")
+			print("  [Lliurex-Up]: Not enough space on disk ( %s GB)"%self.freeSpaceAvailable)
 			self.core.mainStack.showErrorMessage=[Bridge.FREESPACE_ERROR,"Error",""]
 		
 		if abort:
@@ -700,6 +710,9 @@ class Bridge(QObject):
 	on_mirrorPercentage=Signal()
 	mirrorPercentage=Property(int,_getMirrorPercentage,_setMirrorPercentage,notify=on_mirrorPercentage)
 
+	on_freeSpaceAvailable=Signal()
+	freeSpaceAvailable=Property(str,_getFreeSpaceAvailable,_setFreeSpaceAvailable,notify=on_freeSpaceAvailable)
+	
 	totalSteps=Property(int,_getTotalSteps,constant=True)
 
 	runPkexec=Property(bool,_getRunPkexec,constant=True)

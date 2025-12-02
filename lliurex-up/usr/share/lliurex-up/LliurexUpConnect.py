@@ -12,6 +12,7 @@ import ssl
 import pwd
 import grp
 import configparser
+import psutil
 
 #from math import pi
 
@@ -172,13 +173,15 @@ class LliurexUpConnect():
 
 	def freeSpaceCheck(self):
 
-		freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		#freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
+		freeSpace=round(psutil.disk_usage("/").free/(1024**3),2)
+
 		if (freeSpace) < 2: #less than 2GB available?
 			msgLog="Not enough space on disk to upgrade (2 GB needed): %s GB available"%str(freeSpace)
 			self.log(msgLog)
-			return False
+			return [False,freeSpace]
 		else:
-			return True	
+			return [True,freeSpace]	
 
 	#def freeSpaceCheck		
 
