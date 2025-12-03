@@ -1196,7 +1196,6 @@ class LliurexUpCore(object):
 		
 		if len(pout)>0:
 			pout.pop(-1)
-			totalFlatpak=len(pout)
 			sizeToUpdate=0
 			for item in pout:
 				try:
@@ -1211,6 +1210,8 @@ class LliurexUpCore(object):
 						sizeItem=float(tmpSize)*1024*1024*1024
 					else:
 						sizeItem=float(tmpSize)
+
+					totalFlatpak+=1
 				except:
 					sizeItem=0
 				
