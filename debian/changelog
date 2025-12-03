@@ -1,3 +1,10 @@
+lliurex-up (24.05.17) jammy; urgency=medium
+
+  * Changed method to get free space on disk
+  * Added information about Flatpak update
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 03 Dec 2025 13:10:48 +0100
+
 lliurex-up (24.05.16) jammy; urgency=medium
 
   * Fixed description in zomando
