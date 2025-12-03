@@ -216,6 +216,7 @@ class GatherPackages(QThread):
 		self.incorrectFlavours=Bridge.llxUpConnect.checkIncorrectFlavours()
 		Bridge.llxUpConnect.getSystrayStatus()
 		Bridge.llxUpConnect.getAutoUpgradeInfo()
+		self.flatpakInfo=Bridge.llxUpConnect.getFlapakUpdateInfo()
 	
 	#def run
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 11:03+0100\n"
+"POT-Creation-Date: 2025-12-03 12:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,6 +224,18 @@ msgid "Update source:"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:201
+msgid "Flatpak update info:"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Number of flapak:"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Size:"
+msgstr ""
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:233
 msgid "Auto update paused until:"
 msgstr ""
 

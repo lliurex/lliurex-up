@@ -569,6 +569,18 @@ class LliurexUpCli(object):
 			
 	#def checkingFinalFlavourToInstall
 
+	def getFlatpakUpdateInfo(self):
+
+		flatpakInfo=[0,"0"]
+		
+		flatpakInfo=self.lliurexUpCore.getFlatpakUpdateInfo()
+		msgLog="Flatpak update info: %s"%str(flatpakInfo)
+		self.log(msgLog)
+
+		return flatpakInfo
+
+	#def getFlatpakUpdateInfo
+
 	def flatpakActionsScript(self):
 
 		print("  [Lliurex-Up]: Updating Flatpak applications...")
@@ -846,6 +858,7 @@ class LliurexUpCli(object):
 		self.checkingInitialFlavourToInstall()
 		self.packages=self.getPackagesToUpdate()
 		self.getAutoUpgradeSettings()
+		self.flatPakUpdateInfo=self.getFlatpakUpdateInfo()
 
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
@@ -855,6 +868,10 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: Available version (lliurex.net): %s"%str(self.versionAvailable["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionToUpdate["candidate"]))
 				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionToUpdate["updateSource"]))
+				if self.flatPakUpdateInfo[0]>0:
+					print("  [Lliurex-Up]: Flatpak update info:             Number of Flatpak: %s - Size: < %s"%(str(self.flatPakUpdateInfo[0]),self.flatPakUpdateInfo[1]))
+
+				
 				if self.configureRequired:
 					print("  [Lliurex-Up]: dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
 				if not self.extraArgs["unattendend_upgrade"]:
@@ -869,7 +886,8 @@ class LliurexUpCli(object):
 					self.postActionsScript()
 					time.sleep(5)
 					self.checkingFinalFlavourToInstall()
-					self.flatpakActionsScript()	
+					if self.flatPakUpdateInfo[0]>0:
+						self.flatpakActionsScript()	
 					self.checkFinalUpgrade()
 					self.cleanEnvironment()
 					if self.distUpgradeOK:

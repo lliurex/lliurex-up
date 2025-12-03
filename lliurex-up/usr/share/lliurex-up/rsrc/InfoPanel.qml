@@ -195,6 +195,38 @@ Rectangle{
                 Layout.alignment:Qt.AlignLeft
                 Layout.bottomMargin:10
             }
+	    
+	        Text{
+                id:flatpakText
+                text:i18nd("lliurex-up","Flatpak update info:")
+                font.family: "Quattrocento Sans Bold"
+                font.pointSize: 10
+                Layout.alignment:Qt.AlignRight
+                Layout.bottomMargin:10
+		        visible:{
+                    if (infoStackBridge.flatpakInfo[0]>0){
+                        true
+                    }else{
+                        false
+                    }
+                }
+            }
+	    
+	        Text{
+                id:flatpakValue
+                text:i18nd("lliurex-up","Number of flapak:")+"  "+infoStackBridge.flatpakInfo[0]+" - "+i18nd("lliurex-up","Size:")+ " < "+infoStackBridge.flatpakInfo[1]
+                font.family: "Quattrocento Sans Bold"
+                font.pointSize: 10
+                Layout.alignment:Qt.AlignRight
+                Layout.bottomMargin:10
+                visible:{
+                    if (infoStackBridge.flatpakInfo[0]>0){
+                        true
+                    }else{
+                        false
+                    }
+                }
+            }
 
             Text{
                 id:dateToUpdateText
