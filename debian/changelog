@@ -1,3 +1,10 @@
+lliurex-up (25.05.39) noble; urgency=medium
+
+  * Changed method to get free space on disk
+  * Added information about Flatpak updates
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 03 Dec 2025 13:13:52 +0100
+
 lliurex-up (25.05.38) noble; urgency=medium
 
   * Fixed custom dialog template
