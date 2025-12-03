@@ -1200,13 +1200,13 @@ class LliurexUpCore(object):
 			for item in pout:
 				try:
 					tmpItem=item.split("\t")[6].split("<")[1]
-					tmpSize=tmpItem.split(" ")[1].strip().replace(",",".")
+					tmpSize=tmpItem.replace('\xa0',' ').split(" ")[1].strip().replace(",",".")
 				
-					if "k" in tmpItem:
+					if "kB" in tmpItem:
 						sizeItem=float(tmpSize)*1024
-					elif "M" in tmpItem:
+					elif "MB" in tmpItem:
 						sizeItem=float(tmpSize)*1024*1024
-					elif "G" in tmpItem:
+					elif "GB" in tmpItem:
 						sizeItem=float(tmpSize)*1024*1024*1024
 					else:
 						sizeItem=float(tmpSize)
