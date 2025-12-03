@@ -16,6 +16,7 @@ import dpkgunlocker.dpkgunlockermanager as DpkgUnlockerManager
 import datetime
 import pwd
 import grp
+import math
 
 
 class LliurexUpCore(object):
@@ -1143,6 +1144,52 @@ class LliurexUpCore(object):
 
 		
 	#def flatpakActionsScript
+
+	def getFlatpakUpdateInfo(self):
+		
+		totalFlatpak=0
+		totalSize="0"
+		cmd=r"'n\n' 2>/dev/null | flatpak update | grep -Eo '^[\ ][0-9]*\.?+[\ ]*.*'"
+		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+		pout=p.communicate()[0].decode().split("\n")
+		if len(pout)>0:
+			pout.pop(-1)
+			sizeToUpdate=0
+			for item in pout:
+				try:
+					tmpItem=item.split("\t")[6].split("<")[1]
+					tmpSize=tmpItem.replace('\xa0',' ').split(" ")[1].strip().replace(",",".")
+					if "kB" in tmpItem:
+						sizeItem=float(tmpSize)*1024
+					elif "MB" in tmpItem:
+						sizeItem=float(tmpSize)*1024*1024
+					elif "GB" in tmpItem:
+						sizeItem=float(tmpSize)*1024*1024*1024
+					else:
+						sizeItem=float(tmpSize)
+
+					totalFlatpak+=1
+					sizeToUpdate=sizeToUpdate+sizeItem
+				except:
+					sizeItem=0
+	
+			if sizeToUpdate>0:
+				totalSize=self._convertSize(sizeToUpdate)
+				
+		return [totalFlatpak,totalSize]
+	
+	#def getFlatpakUpdateInfo
+						
+	def _convertSize(self,sizeBytes):
+
+		sizeName = ("B", "KB", "MB", "GB")
+		i = int(math.floor(math.log(sizeBytes, 1024)))
+		p = math.pow(1024, i)
+		s = round(sizeBytes/p,)
+		s=int(s)
+		return '%s %s' % (s, sizeName[i])
+
+	#def convertSize
 
 #def LliurexUpCore
 

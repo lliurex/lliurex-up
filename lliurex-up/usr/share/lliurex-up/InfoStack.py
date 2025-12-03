@@ -26,6 +26,7 @@ class Bridge(QObject):
 		self._newPackagesToUpdate=0
 		self._updateSize=""
 		self._updateSource=""
+		self._flatpakInfo=[0,"0"]
 
 	#def __init__
 
@@ -126,6 +127,20 @@ class Bridge(QObject):
 			self.on_updateSource.emit()
 
 	#def _setUpdateSource
+	
+	def _getFlatpakInfo(self):
+		
+		return self._flatpakInfo
+		
+	#def _getFlatpakInfo
+	
+	def _setFlatpakInfo(self,flatpakInfo):
+		
+		if self._flatpakInfo!=flatpakInfo:
+			self._flatpakInfo=flatpakInfo
+			self.on_flatpakInfo.emit()
+			
+	#def _setFlatpakInfo
 
 	def getUpdateInfo(self):
 
@@ -158,6 +173,7 @@ class Bridge(QObject):
 			self.packagesToUpdate=len(self.core.loadStack.gatherPackagesT.packages)
 			self.newPackagesToUpdate=Bridge.llxUpConnect.newPackages
 			self.updateSize=self.core.loadStack.gatherPackagesT.updateSize
+			self.flatpakInfo=self.core.loadStack.gatherPackagesT.flatpakInfo
 
 		updateSource=self.core.loadStack.getCurrentVersionT.currentVersion["updateSource"]
 
@@ -188,7 +204,10 @@ class Bridge(QObject):
 	updateSize=Property(str,_getUpdateSize,_setUpdateSize,notify=on_updateSize)
 
 	on_updateSource=Signal()
-	updateSource=Property(str,_getUpdateSource,_setUpdateSource,notify=on_updateSource)	
+	updateSource=Property(str,_getUpdateSource,_setUpdateSource,notify=on_updateSource)
+
+	on_flatpakInfo=Signal()
+	flatpakInfo=Property('QVariantList',_getFlatpakInfo,_setFlatpakInfo,notify=on_flatpakInfo)
 
 
 #class Bridge

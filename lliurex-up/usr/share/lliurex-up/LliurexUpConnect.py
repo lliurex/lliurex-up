@@ -1094,6 +1094,17 @@ class LliurexUpConnect():
 		return self.flatpakActions
 
 	#def flatpakActionsScript
+	
+	def getFlapakUpdateInfo(self):
+		
+		flatPakUpdateInfo=[0,"0"]
 
+		flatPakUpdateInfo=self.llxUpCore.getFlatpakUpdateInfo()
+		msgLog="Flatpak update info: %s"%str(flatPakUpdateInfo)
+		self.log(msgLog)
+		
+		return flatPakUpdateInfo
+	
+	#def getFlapakUpdateInfo
 
 #class LliurexUpConnect			

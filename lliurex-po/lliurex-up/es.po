@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 11:03+0100\n"
-"PO-Revision-Date: 2025-12-02 11:04+0100\n"
+"POT-Creation-Date: 2025-12-03 12:54+0100\n"
+"PO-Revision-Date: 2025-12-03 12:54+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ApplicationOptions.qml:28
 msgid "Information"
@@ -235,6 +235,18 @@ msgid "Update source:"
 msgstr "Origen de la actualización:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:201
+msgid "Flatpak update info:"
+msgstr "Actualización de Flatpak:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Number of flapak:"
+msgstr "Número de Flatpak:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Size:"
+msgstr "Descarga:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:233
 msgid "Auto update paused until:"
 msgstr "Actualizaciones automáticas pausadas hasta el:"
 
