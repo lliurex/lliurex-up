@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 10:49+0100\n"
-"PO-Revision-Date: 2025-12-02 10:51+0100\n"
+"POT-Creation-Date: 2025-12-02 17:43+0100\n"
+"PO-Revision-Date: 2025-12-02 17:46+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -208,6 +208,18 @@ msgstr "Grandària de l'actualització (aprox.):"
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:170
 msgid "Update source:"
 msgstr "Origen de l'actualització:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:201
+msgid "Flatpak update info:"
+msgstr "Actualització de Flatpak:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Number of flapak:"
+msgstr "Nombre de Flatpak:"
+
+#: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:217
+msgid "Size:"
+msgstr "Grandària:"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ListDelegatePkgItem.qml:135
 msgid "Press to view pkg changelog"

@@ -182,11 +182,14 @@ class UpdateStack(QObject):
 					if self.checkFinalFlavourDone:
 						if not self.flatpakActionsLaunched:
 							self.flatpakActionsLaunched=True
-							print("  [Lliurex-Up]: Updating Flatpak applications")
-							self.core.mainStack.updateStep=7
-							self.core.mainStack.setProgress()
-							self.core.mainStack.currentCommand=UpdateStack.llxUpConnect.flatpakActionsScript()
-							self.core.mainStack.endCurrentCommand=True
+							if self.core.infoStack.flatpakInfo[0]>0:
+								print("  [Lliurex-Up]: Updating Flatpak applications")
+								self.core.mainStack.updateStep=7
+								self.core.mainStack.setProgress()
+								self.core.mainStack.currentCommand=UpdateStack.llxUpConnect.flatpakActionsScript()
+								self.core.mainStack.endCurrentCommand=True
+							else:
+								self.flatpakActionsDone=True
 						
 						if self.flatpakActionsDone:
 							self.updateProcessTimer.stop()	
