@@ -1,3 +1,9 @@
+lliurex-up (24.05.18) jammy; urgency=medium
+
+  * Added timeout in function to check connection to lliurex.net
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 09 Feb 2026 14:27:34 +0100
+
 lliurex-up (24.05.17) jammy; urgency=medium
 
   * Changed method to get free space on disk
