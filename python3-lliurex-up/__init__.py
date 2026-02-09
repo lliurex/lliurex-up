@@ -646,7 +646,7 @@ class LliurexUpCore(object):
 			result : {'status':bool,'data':String}
 		'''
 		try:
-			res=urllib.request.urlopen(self.defaultUrltoCheck)
+			res=urllib.request.urlopen(self.defaultUrltoCheck,timeout=15)
 			return {'status':True,'data':str(res)}
 		except Exception as e:
 			return {'status':False,'data':str(e)}
