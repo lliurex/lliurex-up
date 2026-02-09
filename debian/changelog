@@ -1,3 +1,9 @@
+lliurex-up (25.05.40) noble; urgency=medium
+
+  * Added timeout when check connection with lliurex.net
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 09 Feb 2026 14:21:08 +0100
+
 lliurex-up (25.05.39) noble; urgency=medium
 
   * Changed method to get free space on disk
