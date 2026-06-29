@@ -15,7 +15,8 @@
                 "members": [
                     "sudo",
                     "admins",
-                    "teachers"
+                    "teachers",
+                    "NoDocente"
                 ],
                 "any": "yes",
                 "inactive": "yes",
