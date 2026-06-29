@@ -1,3 +1,9 @@
+lliurex-up (24.05.19) jammy; urgency=medium
+
+  * Changed to allow NoDocente group to run lliurex-up
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 29 Jun 2026 11:00:47 +0200
+
 lliurex-up (24.05.18) jammy; urgency=medium
 
   * Added timeout in function to check connection to lliurex.net
