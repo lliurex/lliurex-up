@@ -17,7 +17,7 @@ _= gettext.gettext
 
 class LlxUpCheckRoot():
 
-	GROUPS=["admins","sudo","teachers"]
+	GROUPS=["admins","sudo","teachers","NoDocente"]
 	
 	def __init__(self):
 		self.check_root()
