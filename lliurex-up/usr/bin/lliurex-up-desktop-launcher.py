@@ -17,7 +17,7 @@ _= gettext.gettext
 
 class LlxUpCheckRoot():
 
-	GROUPS=["admins","sudo","teachers"]
+	GROUPS=["admins","sudo","teachers","NoDocente"]
 	
 	def __init__(self):
 		self.check_root()
@@ -51,7 +51,7 @@ class LlxUpCheckRoot():
 		if not self.checkImageBeingEdited():				
 			if group_found:		
 				lock_flavour=self.get_flavour()
-				if 'teachers' in user_groups:
+				if 'teachers' in user_groups or 'NoDocente' in user_groups:
 					if 'sudo' not in user_groups and 'admins' not in user_groups:
 						if lock_flavour:
 							run_llxup=False

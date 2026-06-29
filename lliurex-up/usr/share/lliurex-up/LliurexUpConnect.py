@@ -871,7 +871,7 @@ class LliurexUpConnect():
 			groupsGids = os.getgrouplist(user, gid)
 			userGroups = [ grp.getgrgid(x).gr_name for x in groupsGids ]
 
-			if 'teachers' in userGroups:
+			if 'teachers' in userGroups or 'NoDocente' in userGroups:
 				if 'sudo' not in userGroups and 'admins' not in userGroups:
 					cmd='lliurex-version -v'
 					p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
