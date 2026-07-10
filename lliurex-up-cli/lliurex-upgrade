@@ -1,161 +1,76 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-from clint import arguments
-from clint.textui import puts, indent
-from lliurex.lliurexupcli import LliurexUpCli
 import os
 import sys
+import psutil
+import argparse
 
-def	usage():
-	puts("Usage")
-	with indent(4):
-		puts("lliurex-upgrade [FLAGS...] ACTIONS")
-		'''
-		puts("Actions")
-		with indent(4):
-			puts("update: Update the system (optional)")
-			puts("get-autoupdates-settings: Show info about automatic updates settings")
-			puts("enable-autoupdates: Enable automatic system updates")
-			puts("disable-autoupdates: Disable automatic system updates")
-			puts("cancel-autoupdates: Cancel automatic system updates until next day")
-			puts("pause-autoupdates <1..5>: Pause automatic updates for up 5 weeks")
-			puts("extended-pause <1..4>: Extended the initial update pause for up 4 weeks ")
+from lliurex.lliurexupcli import LliurexUpCli
 
-		'''
-		puts("Flags")
-		with indent(4):
-			puts("-h --help:		Show help")
-			puts("-s --sai:		Update the system without pinning and enable try to update without conection to lliurex.net")	
-			puts("-u --unattended:	Update the system in unattended mode. Does not require confirmation to update mirror and system")
-			puts("-n --no-mirror:		Update the system without checking mirror")
+def custom_print_help():
+    help_text = (
+        "Usage:\n"
+        "  lliurex-upgrade [FLAGS...]\n\n"
+        "Flags:\n"
+        "  -h, --help        Show help\n"
+        "  -s, --sai         Update the system without pinning and enable try to update without conection to lliurex.net\n"
+        "  -u, --unattended  Update the system in unattended mode. Does not require confirmation to update the system\n"
+    )
+    print(help_text)
 
-	sys.exit(1)		
+#def custom_print_help
 
-#def usage
+def custom_error(message):
+    print(f"Error: {message}\n", file=sys.stderr)
+    parser.print_help()
+    sys.exit(2)
 
+#def custom_error
 
-if __name__ == '__main__':
-	
+class HelpAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        parser.print_help()
+        sys.exit(0)
+
+    #def __call__
+
+#class HelpAction
+
+def main():
 
 	if os.geteuid() != 0:
 		print("  [Lliurex-Up]: You need be root!")
 		sys.exit(1)
 
+	parser = argparse.ArgumentParser(add_help=False)
+	parser.print_help = custom_print_help
+	parser.error = custom_error
 
-	mode=None
-	options=0
-	isUpdateAction=True	
-	extraArgs={}
-	extraArgs["mirror"]=True
-	extraArgs["unattended_mirror"]=False
-	extraArgs["unattendend_upgrade"]=False
-	extraArgs["repositories"]=False
-	isManageAction=False
-	manageOption=""
-	weeksOfPause=0
-	unattendend=False
+	parser.add_argument("-h", "--help", action=HelpAction, nargs=0)
+	parser.add_argument("-s", "--sai", action="store_true", dest="sai")
+	parser.add_argument("-u", "--unattended", action="store_true", dest="unattended")
 
-	args=arguments.Args().copy
-	
-	if args.contains(["-h", "--help"]):
-		usage()
-	
-	if args.contains(["-u", "--unattended"]):
-		extraArgs["unattendend_upgrade"]=True
-		extraArgs["unattended_mirror"]=True
-		unattendend=True
-		index = args.first(["-u","--unattended"])
-		args.pop(index)
-		options=1
+	parser.add_argument("-r", "--repositories", action="store_true", dest="repositories", help=argparse.SUPPRESS)
 
-	if args.contains(["-s", "--sai"]):
-		mode="sai"
-		index = args.first(["-s", "--sai"])
-		args.pop(index)
-		options=1
+	try:
+		args = parser.parse_args()
+	except argparse.ArgumentError:
+		parser.print_help()
+		sys.exit(1)
 
-	if args.contains(["-r","--repositories"]):
-		extraArgs["repositories"]=True
-		index = args.first([-r","--repositories])
-		args.pop(index)
-		options=1
-	
-	if args.contains(["-n", "--no-mirror"]):
-		extraArgs["mirror"]=False
-		index = args.first(["-n", "--no-mirror"])
-		args.pop(index)
-		options=1
+	mode = "sai" if args.sai else None
 
-	action=args.pop(0)
+	extraArgs = {
+		"mirror": False,
+		"unattended_mirror": True,
+		"unattendend_upgrade": args.unattended,
+		"repositories": False
+	}
 
-	'''
-	if action=="get-autoupdates-settings":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="settings"
-	elif action=="enable-autoupdates":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="enable"
-	elif action=="disable-autoupdates":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="disable"
-	elif action=="cancel-autoupdates":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="cancel"
-	elif action=="pause-autoupdates":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="pause"
-		if len(args)>0:
-			for item in args.all:
-				if item.isdigit():
-					weeksOfPause=int(item)
-					break
-			if weeksOfPause==0:
-				usage()
-		else:
-			usage()
+	lliurexupcli = LliurexUpCli()
+	sys.exit(lliurexupcli.updateAction(mode, extraArgs))
 
-	elif action=="extended-pause":
-		isManageAction=True
-		isUpdateAction=False
-		manageOption="extended"
-		if len(args)>0:
-			for item in args.all:
-				if item.isdigit():
-					weeksOfPause=int(item)
-					break
-			if weeksOfPause==0:
-				usage()
-		else:
-			usage()
-	elif action=="update":
-		isUpdateAction=True
-		isManageAction=False
-		manageOption=""
-	
-	elif action!=None:		
-		usage()
-	'''
-	if isUpdateAction:
-		if len(args)>0 and options==0:
-			usage()	
-	
-	#elif isManageAction:
-	#	if manageOption=="":
-	#		usage()
-	else:
-		usage()
+#def main
 
-	lliurexupcli=LliurexUpCli()
-
-	'''
-	if isManageAction:
-		sys.exit(lliurexupcli.manageUpdates(manageOption,unattendend,weeksOfPause))
-	else:
-	'''
-	sys.exit(lliurexupcli.updateAction(mode,extraArgs))
+if __name__ == '__main__':
+	main()
