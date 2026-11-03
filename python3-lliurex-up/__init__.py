@@ -27,7 +27,7 @@ class LliurexUpCore(object):
 		self.versionReference=["desktop","None"] 
 		self.defaultMirror = 'llx25'
 		self.defaultVersion = 'noble'
-		self.defaultUrltoCheck="http://lliurex.net/noble"
+		self.defaultUrltoCheck="http://lliurex.gva.es/noble"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
@@ -287,7 +287,8 @@ class LliurexUpCore(object):
 		client=False
 		textsearch_mirror="/mirror/"+str(self.defaultMirror)
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
-		
+		textsearch_lliurex_2="/lliurex.gva.es/"+str(self.defaultVersion)
+
 		if self.isDesktopInADI:
 			if self.isMirrorInADI:
 				client=True
@@ -303,12 +304,12 @@ class LliurexUpCore(object):
 			origsources=open(self.origsourcesfile,'r')
 			if not client:
 				for line in origsources:
-					if not textsearch_lliurex in line:
+					if not textsearch_lliurex in line and not textsearch_lliurex_2 in line:
 						extrasources.append(line.strip())
 			else:
 				for line in origsources:
 					if args:
-						if (not textsearch_lliurex in line) and (not textsearch_mirror in line):
+						if (not textsearch_lliurex in line) and (not textsearch_lliurex_2 in line) and (not textsearch_mirror in line):
 							extrasources.append(line.strip())
 					else:
 						if not textsearch_mirror in line:
@@ -355,8 +356,9 @@ class LliurexUpCore(object):
 		if os.path.exists(self.origsourcesfile):
 			sources=open(self.origsourcesfile,'r')
 			ref="/lliurex.net/"+str(self.defaultVersion)
+			ref2="/lliurex.gva.es/"+str(self.defaultVersion)
 			for line in sources:
-				if ref in line:
+				if ref in line or ref2 in line:
 					if not "#" in line:
 						count=count+1
 		return count	
@@ -381,7 +383,7 @@ class LliurexUpCore(object):
 
 	def updateCacheApt(self,options=""):
 		
-		command = "LANG=C LANGUAGE=en apt-get update {options}".format(options=options)
+		command = "LANG=C LANGUAGE=en apt-get update -y {options}".format(options=options)
 		subprocess.Popen(command,shell=True).communicate()
 
 	#def updateCacheApt	

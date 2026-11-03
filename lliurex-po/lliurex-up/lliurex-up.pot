@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 12:54+0100\n"
+"POT-Creation-Date: 2026-11-03 12:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,7 @@ msgid "available"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:44
-msgid "Unable to connect to lliurex.net"
+msgid "Unable to connect to lliurex.gva.es"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:47
@@ -192,7 +192,7 @@ msgid "Not available"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:65
-msgid "Available version (lliurex.net):"
+msgid "Available version (lliurex.gva.es):"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:74
@@ -200,7 +200,7 @@ msgid "Not available for clients"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:77
-msgid "Not available. Check conexion to lliurex.net"
+msgid "Not available. Check conexion to lliurex.gva.es"
 msgstr ""
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:100

@@ -41,7 +41,7 @@ Rectangle{
                 msg=i18nd("lliurex-up","There's not enough space on disk to upgrade: 2 GB needed")+ " - "+loadStackBridge.freeSpaceAvailable+" GB "+i18nd("lliurex-up","available");
                 break;
             case -2:
-                msg=i18nd("lliurex-up","Unable to connect to lliurex.net")
+                msg=i18nd("lliurex-up","Unable to connect to lliurex.gva.es")
                 break;
             case -3:
                 msg=i18nd("lliurex-up","Mirror is being updated in ADI. Unable to update the system")

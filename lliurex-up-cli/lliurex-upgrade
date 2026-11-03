@@ -12,7 +12,7 @@ def custom_print_help():
         "  lliurex-upgrade [FLAGS...]\n\n"
         "Flags:\n"
         "  -h, --help        Show help\n"
-        "  -s, --sai         Update the system without pinning and enable try to update without conection to lliurex.net\n"
+        "  -s, --sai         Update the system without pinning and enable try to update without conection to lliurex.gva.es\n"
         "  -u, --unattended  Update the system in unattended mode. Does not require confirmation to update the system\n"
     )
     print(help_text)

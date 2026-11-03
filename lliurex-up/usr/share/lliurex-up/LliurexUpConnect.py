@@ -216,15 +216,15 @@ class LliurexUpConnect():
 	def canConnectToLliurexNet(self):
 
 		canConnect=self.llxUpCore.canConnectToLliurexNet()
-		msgLog="Checking connection to lliurex.net: %s"%canConnect
+		msgLog="Checking connection to lliurex.gva.es: %s"%canConnect
 		self.log(msgLog)
 
 		if canConnect['status']:
-			msgLog="Can connect to lliurex.net: True"
+			msgLog="Can connect to lliurex.gva.es: True"
 			self.log(msgLog)
 			return True
 		else:
-			msgLog="Can connect to lliurex.net: False"
+			msgLog="Can connect to lliurex.gva.es: False"
 			self.log(msgLog)
 
 			if self.canConnectToADI:
@@ -417,11 +417,11 @@ class LliurexUpConnect():
 		
 		try:
 			self.lliurexVersionNet=self.llxUpCore.getLliurexVersionLliurexNet()["candidate"]
-			msgLog="Get LliurexVersion candidate from lliurex.net: %s"%str(self.lliurexVersionNet)
+			msgLog="Get LliurexVersion candidate from lliurex.gva.es: %s"%str(self.lliurexVersionNet)
 			self.log(msgLog)
 			
 		except Exception as e:
-			msgLog="Get LliurexVersion from lliurex.net. Error: %s"%str(e)
+			msgLog="Get LliurexVersion from lliurex.gva.es. Error: %s"%str(e)
 			self.log(msgLog)
 			self.lliurexVersionNet=None
 
