@@ -72,17 +72,17 @@ class LliurexUpCli(object):
 
 	def canConnectToLliurexNet(self):
 
-		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
+		print("  [Lliurex-Up]: Checking connection to lliurex.gva.es...")
 
 		canConnect=self.lliurexUpCore.canConnectToLliurexNet()
-		msgLog="Checking connection to lliurex.net: %s"%canConnect
+		msgLog="Checking connection to lliurex.gva.es: %s"%canConnect
 		self.log(msgLog)
 		if canConnect['status']:
-				msgLog="Can connect to lliurex.net: True"
+				msgLog="Can connect to lliurex.gva.es: True"
 				self.log(msgLog)
 				return True
 		else:
-			msgLog="Can connect to lliurex.net: False"
+			msgLog="Can connect to lliurex.gva.es: False"
 			self.log(msgLog)
 
 			is_client=self.lliurexUpCore.search_meta("client")
@@ -90,7 +90,7 @@ class LliurexUpCli(object):
 				if self.initActionsArg !="initActionsSai":
 					return False
 				
-			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
 			return True
 				
 	#def canConnectToLliurexNet		
@@ -117,12 +117,12 @@ class LliurexUpCli(object):
 					if not isMirrorExists["ismirroravailable"]:
 						msgLog="Mirror not detected in server"
 						self.log(msgLog)
-						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.net? (yes/no): ').lower()
+						response=input('  [Lliurex-Up]: Mirror not detected on the server.Do you want to add the repositories of lliurex.gva.es? (yes/no): ').lower()
 						if response.startswith('y'):
 							self.allRepos=True
-							msgLog="Adding the repositories of lliurex.net on client. Response: Yes"
+							msgLog="Adding the repositories of lliurex.gva.es on client. Response: Yes"
 						else:
-							msgLog="Adding the repositories of lliurex.net on client. Response : No"	
+							msgLog="Adding the repositories of lliurex.gva.es on client. Response : No"	
 						self.log(msgLog)	
 					else:
 						print("  [Lliurex-Up]: Nothing to do with mirror")
@@ -330,10 +330,10 @@ class LliurexUpCli(object):
 
 	def getLliurexVersionLliurexNet(self):
 	
-		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
+		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.gva.es...")
 
 		self.versionAvailable=self.lliurexUpCore.getLliurexVersionLliurexNet()
-		msgLog="Get LliurexVersion candidate from lliurex.net: %s"%str(self.versionAvailable["candidate"])
+		msgLog="Get LliurexVersion candidate from lliurex.gva.es: %s"%str(self.versionAvailable["candidate"])
 		self.log(msgLog)
 	
 	#def getLliurexVersionLliurexNet		
@@ -831,7 +831,7 @@ class LliurexUpCli(object):
 		self.log(msgLog)
 			
 		if not self.canConnectToLliurexNet():
-			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
 			self.cleanEnvironment()
 			return 1
 			
@@ -869,7 +869,7 @@ class LliurexUpCli(object):
 				print("  [Lliurex-Up]: List of packages to update:\n%s"%str(self.packagesList))
 				print("  [Lliurex-Up]: Number of packages to update:    %s"%str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
 				print("  [Lliurex-Up]: Current version:                 %s"%str(self.versionUpdate["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): %s"%str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Available version (lliurex.gva.es): %s"%str(self.versionAvailable["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionUpdate["candidate"]))
 				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionUpdate["updateSource"]))
 				
@@ -916,7 +916,7 @@ class LliurexUpCli(object):
 		else:
 			if not self.checkPreviousUpgrade():
 				print("  [Lliurex-Up]: Current version:                 %s"%str(self.versionUpdate["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): %s"%str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Available version (lliurex.gva.es): %s"%str(self.versionAvailable["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionUpdate["candidate"]))
 				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionUpdate["updateSource"]))
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
@@ -942,10 +942,10 @@ def	usage():
 		puts("Flags")
 		with indent(4):
 			puts("-h --help:		Show help")
-			puts("-s --sai:		Update the system without pinning and enable try to update without conection to lliurex.net")	
+			puts("-s --sai:		Update the system without pinning and enable try to update without conection to lliurex.gva.es")	
 			puts("-u --unattended:	Update the system in unattended mode. Does not require confirmation to update mirror and system")
 			puts("-n --no-mirror:		Update the system without checking mirror")
-			puts("-r --repositories:	Update the system adding mirror and lliurex.net repositories (only valid for clients)")
+			puts("-r --repositories:	Update the system adding mirror and lliurex.gva.es repositories (only valid for clients)")
 
 
 	sys.exit(1)		

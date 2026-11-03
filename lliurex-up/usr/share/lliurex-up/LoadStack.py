@@ -367,7 +367,7 @@ class Bridge(QObject):
 
 	def checkSystem(self):
 
-		print("  [Lliurex-Up]: Checking system: connection to lliurex.net, n4d status...")
+		print("  [Lliurex-Up]: Checking system: connection to lliurex.gva.es, n4d status...")
 		self.core.mainStack.endProcess=False
 		self.loadStep=1
 		self.progressValue=self._getProgress()
@@ -402,7 +402,7 @@ class Bridge(QObject):
 						self.core.mainStack.showErrorMessage=[Bridge.UNABLE_CONNECTION_TO_SERVER,"Error",""]
 			else:
 				abort=True
-				print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+				print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
 				self.core.mainStack.showErrorMessage=[Bridge.INTERNET_CONNECTION_ERROR,"Error",""]
 				self.core.mainStack.currentStack=2
 		else:
@@ -666,10 +666,10 @@ class Bridge(QObject):
 		self.showRepoDialog=False
 		if response=="Yes":
 			self.addAllRepos=True
-			logMsg="Adding the repositories of lliurex.net on client. Response: Yes"
+			logMsg="Adding the repositories of lliurex.gva.es on client. Response: Yes"
 		else:
 			self.addRepos=False
-			logMsg="Adding the repositories of lliurex.net on client. Response: No"
+			logMsg="Adding the repositories of lliurex.gva.es on client. Response: No"
 			
 		Bridge.llxUpConnect.log(logMsg)
 		print("  [Lliurex-Up]: "+logMsg)
