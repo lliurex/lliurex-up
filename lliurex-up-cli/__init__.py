@@ -74,17 +74,17 @@ class LliurexUpCli(object):
 		
 	def canConnectToLliurexNet(self):
 
-		print("  [Lliurex-Up]: Checking connection to lliurex.net...")
+		print("  [Lliurex-Up]: Checking connection to lliurex.gva.es...")
 
 		canConnect=self.lliurexUpCore.canConnectToLliurexNet()
-		msgLog="Checking connection to lliurex.net: %s"%canConnect
+		msgLog="Checking connection to lliurex.gva.es: %s"%canConnect
 		self.log(msgLog)
 		if canConnect['status']:
-			msgLog="Can connect to lliurex.net: True"
+			msgLog="Can connect to lliurex.gva.es: True"
 			self.log(msgLog)
 			return True
 		else:
-			msgLog="Can connect to lliurex.net: False"
+			msgLog="Can connect to lliurex.gva.es: False"
 			self.log(msgLog)
 
 			if self.canConnectToADI:
@@ -96,7 +96,7 @@ class LliurexUpCli(object):
 
 			return False
 				
-			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
 			return True
 				
 	#def canConnectToLliurexNet		
@@ -315,10 +315,10 @@ class LliurexUpCli(object):
 
 	def getLliurexVersionLliurexNet(self):
 	
-		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.net...")
+		print("  [Lliurex-Up]: Looking for LliurexVersion from lliurex.gva.es...")
 
 		self.versionAvailable=self.lliurexUpCore.getLliurexVersionLliurexNet()
-		msgLog="Get LliurexVersion candidate from lliurex.net: %s"%str(self.versionAvailable["candidate"])
+		msgLog="Get LliurexVersion candidate from lliurex.gva.es: %s"%str(self.versionAvailable["candidate"])
 		self.log(msgLog)
 	
 	#def getLliurexVersionLliurexNet		
@@ -830,7 +830,7 @@ class LliurexUpCli(object):
 		self.log(msgLog)
 			
 		if not self.canConnectToLliurexNet():
-			print("  [Lliurex-Up]: Unable to connect to lliurex.net")
+			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
 			self.cleanEnvironment()
 			return 1
 			
@@ -863,13 +863,13 @@ class LliurexUpCli(object):
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
 				print("  [Lliurex-Up]: List of packages to update:\n%s"%str(self.packagesList))
-				print("  [Lliurex-Up]: Number of packages to update:    %s"%str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
-				print("  [Lliurex-Up]: Current version:                 %s"%str(self.versionToUpdate["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): %s"%str(self.versionAvailable["candidate"]))
-				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionToUpdate["candidate"]))
-				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionToUpdate["updateSource"]))
+				print("  [Lliurex-Up]: Number of packages to update:       %s"%str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
+				print("  [Lliurex-Up]: Current version:                    %s"%str(self.versionToUpdate["installed"]))
+				print("  [Lliurex-Up]: Available version (lliurex.gva.es): %s"%str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Candidate version (to install):     %s"%str(self.versionToUpdate["candidate"]))
+				print("  [Lliurex-Up]: Update source:                      %s"%str(self.versionToUpdate["updateSource"]))
 				if self.flatPakUpdateInfo[0]>0:
-					print("  [Lliurex-Up]: Flatpak update info:             Number of Flatpak: %s - Size: < %s"%(str(self.flatPakUpdateInfo[0]),self.flatPakUpdateInfo[1]))
+					print("  [Lliurex-Up]: Flatpak update info:                Number of Flatpak: %s - Size: < %s"%(str(self.flatPakUpdateInfo[0]),self.flatPakUpdateInfo[1]))
 
 				
 				if self.configureRequired:
@@ -911,7 +911,7 @@ class LliurexUpCli(object):
 		else:
 			if not self.checkPreviousUpgrade():
 				print("  [Lliurex-Up]: Current version:                 %s"%str(self.versionToUpdate["installed"]))
-				print("  [Lliurex-Up]: Available version (lliurex.net): %s"%str(self.versionAvailable["candidate"]))
+				print("  [Lliurex-Up]: Available version (lliurex.gva.es): %s"%str(self.versionAvailable["candidate"]))
 				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionToUpdate["candidate"]))
 				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionToUpdate["updateSource"]))
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")

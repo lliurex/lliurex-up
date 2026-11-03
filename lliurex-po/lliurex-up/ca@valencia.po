@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 12:54+0100\n"
-"PO-Revision-Date: 2025-12-03 12:57+0100\n"
+"POT-Creation-Date: 2026-11-03 12:15+0100\n"
+"PO-Revision-Date: 2026-11-03 12:16+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-up/"
 "lliurex-up/ca@valencia/>\n"
@@ -164,8 +164,8 @@ msgid "available"
 msgstr "disponibles"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:44
-msgid "Unable to connect to lliurex.net"
-msgstr "No es pot connectar amb lliurex.net"
+msgid "Unable to connect to lliurex.gva.es"
+msgstr "No es pot connectar amb lliurex.gva.es"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/ErrorPanel.qml:47
 msgid "Mirror is being updated in ADI. Unable to update the system"
@@ -207,16 +207,16 @@ msgid "Not available"
 msgstr "No està disponible"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:65
-msgid "Available version (lliurex.net):"
-msgstr "Versió disponible (lliurex.net):"
+msgid "Available version (lliurex.gva.es):"
+msgstr "Versió disponible (lliurex.gva.es):"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:74
 msgid "Not available for clients"
 msgstr "No està disponible per a clients"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:77
-msgid "Not available. Check conexion to lliurex.net"
-msgstr "No està disponible. Comproveu la connexió a lliurex.net"
+msgid "Not available. Check conexion to lliurex.gva.es"
+msgstr "No està disponible. Comproveu la connexió a lliurex.gva.es"
 
 #: ../lliurex-up/usr/share/lliurex-up/rsrc/InfoPanel.qml:100
 msgid "Candidate version (to install):"
