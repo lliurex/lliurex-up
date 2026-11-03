@@ -1,3 +1,9 @@
+lliurex-up (24.05.25) jammy; urgency=medium
+
+  * Changed lliurex.net by lliurex.gva.es in default sourceslist and others files
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 03 Nov 2026 11:53:18 +0100
+
 lliurex-up (24.05.24) jammy; urgency=medium
 
   * Dummy upgraded
