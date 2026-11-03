@@ -24,7 +24,7 @@ class LliurexUpCore(object):
 		self.versionReference=["server","client","desktop","music","pyme","infantil","minimal-client","server-lite","client-lite","desktop-lite","None"]
 		self.defaultMirror = 'llx23'
 		self.defaultVersion = 'jammy'
-		self.defaultUrltoCheck="http://lliurex.net/jammy"
+		self.defaultUrltoCheck="http://lliurex.gva.es/jammy"
 		self.lockTokenPath="/var/run/lliurexUp.lock"
 		self.processPath = '/var/run/lliurex-up'
 		self.sourcesListPath='/etc/apt/'
@@ -281,9 +281,9 @@ class LliurexUpCore(object):
 	def writeDefaultSourceslist(self):
 
 		f = open(os.path.join(self.processSourceslist,'default'),'w')
-		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
 		f.close()
 
 	#def writeDefaultSourceslist	
@@ -305,9 +305,9 @@ class LliurexUpCore(object):
 		f.write('deb http://mirror/{version_mirror} {version} main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
 		f.write('deb http://mirror/{version_mirror} {version}-updates main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
 		f.write('deb http://mirror/{version_mirror} {version}-security main restricted universe multiverse\n'.format(version_mirror=self.defaultMirror,version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
-		f.write('deb http://lliurex.net/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version} main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version}-updates main restricted universe multiverse\n'.format(version=self.defaultVersion))
+		f.write('deb http://lliurex.gva.es/{version} {version}-security main restricted universe multiverse\n'.format(version=self.defaultVersion))
 		f.close()	
 
 	#def writeDefaultSourceslistAll		
@@ -334,6 +334,7 @@ class LliurexUpCore(object):
 		client=False
 		textsearch_mirror="/mirror/"+str(self.defaultMirror)
 		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
+		textsearch_lliurex_2="/lliurex.gva.es/"+str(self.defaultVersion)
 		
 		is_client=self.search_meta("client")		
 
@@ -357,12 +358,12 @@ class LliurexUpCore(object):
 			origsources=open(self.origsourcesfile,'r')
 			if not client:
 				for line in origsources:
-					if not textsearch_lliurex in line:
+					if not textsearch_lliurex in line and not textsearch_lliurex_2 in line:
 						extrasources.append(line.strip())
 			else:
 				for line in origsources:
 					if args:
-						if (not textsearch_lliurex in line) and (not textsearch_mirror in line):
+						if (not textsearch_lliurex in line) and (not textsearch_lliurex_2 in line) and (not textsearch_mirror in line):
 							extrasources.append(line.strip())
 					else:
 						if not textsearch_mirror in line:
@@ -401,8 +402,9 @@ class LliurexUpCore(object):
 		if os.path.exists(self.origsourcesfile):
 			sources=open(self.origsourcesfile,'r')
 			ref="/lliurex.net/"+str(self.defaultVersion)
+			ref2="/lliurex.gva.es/"+str(self.defaultVersion)
 			for line in sources:
-				if ref in line:
+				if ref in line or ref2 in line:
 					if not "#" in line:
 						count=count+1
 		return count	
@@ -427,7 +429,7 @@ class LliurexUpCore(object):
 
 	def updateCacheApt(self,options=""):
 		
-		command = "LANG=C LANGUAGE=en apt-get update {options}".format(options=options)
+		command = "LANG=C LANGUAGE=en apt-get update -y {options}".format(options=options)
 		subprocess.Popen(command,shell=True).communicate()
 
 	#def updateCacheApt	

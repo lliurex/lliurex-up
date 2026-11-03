@@ -62,7 +62,7 @@ Rectangle{
                 id:availableVersionText
                 Layout.bottomMargin:10
                 Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Available version (lliurex.net):")
+                text:i18nd("lliurex-up","Available version (lliurex.gva.es):")
                 font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
             }
@@ -74,7 +74,7 @@ Rectangle{
                         i18nd("lliurex-up","Not available for clients")
                     }else{
                         if (infoStackBridge.availableVersion=="Connection"){
-                            i18nd("lliurex-up","Not available. Check conexion to lliurex.net")
+                            i18nd("lliurex-up","Not available. Check conexion to lliurex.gva.es")
                         }else{
                             infoStackBridge.availableVersion
                         }

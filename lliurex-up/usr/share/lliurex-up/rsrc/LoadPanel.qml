@@ -72,7 +72,7 @@ Rectangle{
     CustomDialog{
         id:repoDialog
         dialogTitle:"LliureX-Up"+" - "+i18nd("lliurex-up","Repository configuration")
-        dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.net?")
+        dialogMsg:i18nd("lliurex-up","Mirror not detected on the server.\nDo you want to add the repositories of lliurex.gva.es?")
         dialogVisible:loadStackBridge.showRepoDialog
         dialogWidth:500
         Connections{
