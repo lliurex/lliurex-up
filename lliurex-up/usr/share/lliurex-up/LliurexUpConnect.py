@@ -79,6 +79,7 @@ class LliurexUpConnect():
 		self.runPkexec=True
 		self.flatpakActionsToken=os.path.join(self.llxUpCore.processPath,'flatpakActions_token')
 		self._isRunPkexec()
+		self._clearCache()
 
 	#def __init__
 
@@ -1106,5 +1107,48 @@ class LliurexUpConnect():
 		return flatPakUpdateInfo
 	
 	#def getFlapakUpdateInfo
+
+	def _clearCache(self):
+		
+		clear=False
+		installedVersion=self._getPackageVersion()
+
+		versionFile="/root/.lliurex-up.conf"
+		cachePath="/root/.cache/lliurex-up"
+	
+		try:
+			if not os.path.exists(versionFile):
+				clear=True
+			else:
+				with open(versionFile,'r') as fd:
+					fileVersion=fd.readline().strip()
+
+				if fileVersion!=installedVersion:
+					clear=True
+
+			if clear:
+				with open(versionFile,'w') as fd:
+					fd.write(installedVersion)
+
+				if os.path.exists(cachePath):
+					shutil.rmtree(cachePath)
+		except:
+			pass
+
+	#def clearCache
+
+	def _getPackageVersion(self):
+
+		packageVersionFile="/var/lib/lliurex-up/version"
+		pkgVersion=""
+
+		if os.path.exists(packageVersionFile):
+			with open(packageVersionFile,'r') as fd:
+				pkgVersion=fd.readline().strip()
+
+		return pkgVersion
+
+	#def _getPackageVersion
+
 
 #class LliurexUpConnect			
