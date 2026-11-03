@@ -867,14 +867,14 @@ class LliurexUpCli(object):
 		if len(self.packages)>0:
 			if not self.checkingIncorrectFlavours():
 				print("  [Lliurex-Up]: List of packages to update:\n%s"%str(self.packagesList))
-				print("  [Lliurex-Up]: Number of packages to update:    %s"%str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
-				print("  [Lliurex-Up]: Current version:                 %s"%str(self.versionUpdate["installed"]))
+				print("  [Lliurex-Up]: Number of packages to update:       %s"%str(len(self.packages)) + " (" + str(self.newPackages) + " news)" )
+				print("  [Lliurex-Up]: Current version:                    %s"%str(self.versionUpdate["installed"]))
 				print("  [Lliurex-Up]: Available version (lliurex.gva.es): %s"%str(self.versionAvailable["candidate"]))
-				print("  [Lliurex-Up]: Candidate version (to install):  %s"%str(self.versionUpdate["candidate"]))
-				print("  [Lliurex-Up]: Update source:                   %s"%str(self.versionUpdate["updateSource"]))
+				print("  [Lliurex-Up]: Candidate version (to install):     %s"%str(self.versionUpdate["candidate"]))
+				print("  [Lliurex-Up]: Update source:                      %s"%str(self.versionUpdate["updateSource"]))
 				
 				if self.flatPakUpdateInfo[0]>0:
-					print("  [Lliurex-Up]: Flatpak update info:             Number of Flatpak: %s - Size: < %s"%(str(self.flatPakUpdateInfo[0]),self.flatPakUpdateInfo[1]))
+					print("  [Lliurex-Up]: Flatpak update info:                Number of Flatpak: %s - Size: < %s"%(str(self.flatPakUpdateInfo[0]),self.flatPakUpdateInfo[1]))
 
 				
 				if self.configureRequired:
