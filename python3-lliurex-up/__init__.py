@@ -18,54 +18,41 @@ import pwd
 import grp
 import math
 
+from pathlib import Path
+
 
 class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference=["lliurex-meta-desktop"]
-		self.versionReference=["desktop","None"] 
-		self.defaultMirror = 'llx25'
-		self.defaultVersion = 'noble'
-		self.defaultUrltoCheck="http://lliurex.gva.es/noble"
-		self.lockTokenPath="/var/run/lliurexUp.lock"
-		self.processPath = '/var/run/lliurex-up'
-		self.sourcesListPath='/etc/apt/'
-		self.changelogsPath = os.path.join(self.processPath,'changelogs')
-		self.origsourcesfile=os.path.join(self.sourcesListPath,"sources.list")
-		self.sourcesListToUpdate=os.path.join(self.processPath,"lliurexup_sources.list")
-		self.targetMetapackagePath=os.path.join(self.processPath,"targetMetapackage")
-		self.previousflavourspath = os.path.join(self.processPath,'previousflavours')
-		self.errorpostaction_token=os.path.join(self.processPath,'errorpostaction_token')
-		self.errorfinalmetapackage_token=os.path.join(self.processPath,'errorfinalmetapackage_token')
-		self.errorupgrade_token=os.path.join(self.processPath,'errorupgrade_token')
-		self.finalupgrade_token=os.path.join(self.processPath,'finalupgrade_token')
+		self.flavourReference = ["lliurex-meta-desktop"]
+		self.versionReference = ["desktop","None"] 
+		self.defaultVersion = "noble"
+		self.defaultUrltoCheck = "http://lliurex.gva.es/noble"
+		self.lockTokenPath=Path("/var/run/lliurexUp.lock")
+		self.processPath = Path("/var/run/lliurex-up")
+		self.sourcesListPath= Path("/etc/apt")
+		self.changelogsPath = self.processPath /'changelogs'
+		self.origsourcesfile = self.sourcesListPath / "sources.list"
+		self.sourcesListToUpdate = self.processPath / "lliurexup_sources.list"
+		self.targetMetapackagePath = self.processPath / "targetMetapackage"
+		self.previousflavourspath = self.processPath / "previousflavours"
+		self.errorpostaction_token = self.processPath / "errorpostaction_token"
+		self.errorfinalmetapackage_token = self.processPath / "errorfinalmetapackage_token"
+		self.errorupgrade_token = self.processPath / "errorupgrade_token"
+		self.finalupgrade_token = self.processPath / "finalupgrade_token"
 
-		self.initActionsPath='/usr/share/lliurex-up/initActions'
-		self.preActionsPath = '/usr/share/lliurex-up/preActions'
-		self.postActionsPath = '/usr/share/lliurex-up/postActions'
-		self.optionsLlxUp=""
-		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
-		self.autoUpgradeService="/usr/lib/systemd/system/lliurex-up-auto-upgrade.service"
-		self.dateToUpdate=datetime.date.today().isoformat()
-		self.weeksOfPause=0
-		self.extensionPause=5
-		self.cancellationsAvailables=3
+		self.initActionsPath = Path("/usr/share/lliurex-up/initActions")
+		self.preActionsPath = Path("/usr/share/lliurex-up/preActions")
+		self.postActionsPath = Path("/usr/share/lliurex-up/postActions")
+		self.optionsLlxUp =""
+		self.dpkgUnlocker = DpkgUnlockerManager.DpkgUnlockerManager()
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
-		self.adiClientRef="/usr/bin/natfree-tie"
-		self.adiServerRef="/usr/bin/natfree-adi"
-		self.isADI=False
-		self.isDesktopInADI=False
-		self.canConnectToADI=False
-		self.isMirrorInADI=False
-		self.sourcesListDPath="/etc/apt/sources.list.d"
-		self.sourcesListLliurexTemplate="/usr/share/lliurex-up/templates/lliurex.sources"
-		self.sourcesListMirrorTemplate="/usr/share/lliurex-up/templates/00_lliurex-mirror.sources"
-		self.sourcesMirror="00_lliurex-mirror.sources"
-		self.sourcesListAllTemplate="/usr/share/lliurex-up/templates/all.sources"
-		self.optionsToUpdate=""
-		self.flatpakActionsPath='/usr/share/lliurex-up/flatpakActions'
+		self.sourcesListDPath = self.sourcesListPath / "sources.list.d"
+		self.sourcesListLliurexTemplate = Path("/usr/share/lliurex-up/templates/lliurex.sources")
+		self.optionsToUpdate = ""
+		self.flatpakActionsPath = Path("/usr/share/lliurex-up/flatpakActions")
 	
 	#def __init__	
 
@@ -77,7 +64,6 @@ class LliurexUpCore(object):
 		
 		self.checkN4dStatus()
 		
-		self.haveLliurexMirror = False
 		self.metapackageRef=[]
 		self.previousFlavours = []
 
@@ -86,10 +72,6 @@ class LliurexUpCore(object):
 		self.lastFlavours=[]
 		self.getPreviousFlavours()
 
-		if self.n4dStatus:
-			if len(self.n4d.get_methods('MirrorManager')) > 0:
-				self.haveLliurexMirror = True
-			
 		self.retryN4d=True
 		self.prepareEnvironment()
 
@@ -103,37 +85,37 @@ class LliurexUpCore(object):
 	
 	def isLliurexUpLocked(self):
 
-		'''
+		"""
 		 0: Lliurex-Up is not running
 		 1: Lliurex-Up is running
 		 2: Lliurex-Up is locked for previous failed process
-		 ''' 
+		""" 
 
-		return self.locks_info["Lliurex-Up"]
+		return self.locks_info.get("Lliurex-Up")
 
 	#def isLliurexUpLocked		
 
 	def isAptLocked(self):
 
-		'''
+		"""
 		 0: Apt is not running
 		 1: Apt is running
 		 2: Apt is locked for previous failed process
-		'''
-		return self.locks_info["Apt"]	
+		"""
+		return self.locks_info.get("Apt")	
 
 	#def isAptLocked
 		
 	def isDpkgLocked(self):
 
-		'''
+		"""
 		 0: Dpkgis not running
 		 1: Dpkg is running
 		 2: Dpkg is locked for previous failed process
 		 3: Apt is running
-
-		 ''' 
-		return self.locks_info["Dpkg"]		
+		
+		""" 
+		return self.locks_info.get("Dpkg")		
 			
 	#def isAptLocked			
 
@@ -145,87 +127,84 @@ class LliurexUpCore(object):
 
 	def createLockToken(self):
 
-		if not os.path.exists(self.lockTokenPath):
-			f=open(self.lockTokenPath,'w')
-			up_pid=os.getpid()
-			f.write(str(up_pid))
-			f.close()
+		if not self.lockTokenPath.exists():
+			self.lockTokenPath.write_text(str(os.getpid()))
 
 	#def createLockToken		
 
 	def getPreviousFlavours(self):
 		
-		if os.path.exists(self.previousflavourspath):
-			aux = open(self.previousflavourspath,'r')
-			lines = aux.readlines()
-			for x in lines:
-				self.previousFlavours.append(x.strip())
-			aux.close()
-		
+		if self.previousflavourspath.exists():
+			lines = self.previousflavourspath.read_text().splitlines()
+			self.previousFlavours.extend(line.strip() for line in lines if line.strip())
+
 	#def getPreviousFlavours		
 
 	def checkN4dStatus(self):
-	
-		try:
-			test=self.n4d.get_methods()
-			self.n4dStatus=True
-		except:
-			if self.retryN4d:
-				self.retryN4d=False
-				try: 
-					cmd='systemctl restart n4d.service 1>/dev/null'
-					restart=os.system(cmd)
-					time.sleep(5)
-					if restart==0:
-						self.checkN4dStatus()
-					else:
-						self.n4dStatus=False
-				except Exception as e:
-					self.n4dStatus=False
-			else:
-				self.n4dStatus=False
-		
+
+		canRetry = self.retryN4d
+
+		while True:
+			try:
+				self.n4d.get_methods()
+				self.n4dStatus = True
+				return
+			except Exception:
+				if canRetry:
+					self.retryN4d = False
+					canRetry = False
+					try: 
+						result = subprocess.run(
+							['systemctl','restart','n4d.service'],
+							stdout=subproces.DEVNULL,
+							stderr=subprocess.DEVNULL
+						)
+						time.sleep(5)
+						if result.returncode == 0:
+							continue
+					except Exception:
+						pass
+				
+				self.n4dStatus = False
+				return 
+				
 	#def checkN4dStatus		
 			
 	def getTargetMetapackage(self):
 
-		if os.path.exists(self.targetMetapackagePath):
-			aux = open(self.targetMetapackagePath,'r')
-			lines = aux.readlines()
-			for x in lines:
-				self.metapackageRef.append(x.strip())
-			aux.close()		
-		
+		if self.targetMetapackagePath.exists():
+			lines = self.targetMetapackagePath.read_text().splitlines()
+			self.metapackageRef.extend(line.strip() for line in lines if line.strip())
+
 	#def getTargetMetapackage
 			
 	def saveTargetMetapackage(self,targetMetapackage):
 
-		aux=open(self.targetMetapackagePath,'w')
-		for x in targetMetapackage:
-			x=x.split("-")[2]	
-			aux.write(x+"\n")
-	
-		x="edu"
-		aux.write(x+"\n")
-		aux.close()
+		line = []
+
+		for lines in targetMetapackage:
+			parts = lines.split("-")
+			if len(parts) > 2:
+				lines.append(parts[2])
+
+		lines.append("edu")
+
+		self.targetMetapackagePath.write_text("\n".join(lines)+"\n")
 
 	#def saveTargetMetapackage	
 
 	def checkInitialFlavour(self,args=None):
 
-		self.targetMetapackage=self.checkFlavour()
+		self.targetMetapackage = self.checkFlavour()
 		
-		if len(self.metapackageRef)==0:
+		if len(self.metapackageRef) == 0:
 			self.getTargetMetapackage()
 			
-		self.metapackageRef=sorted(self.metapackageRef)	
+		self.metapackageRef = sorted(self.metapackageRef)	
 		 	 
-		if len(self.previousFlavours)==0:
+		if len(self.previousFlavours) ==0:
 			self.getPreviousFlavours()
-		
-		#self.writeDefaultSourceslist()
-		#self.writeDefaultSourceslistADI()
-
+	
 		self.checkFlavourType()
 		self.testConnectionWithADI()
 		
@@ -234,162 +213,110 @@ class LliurexUpCore(object):
 	#def checkInitialFlavour	
 		
 	def updateFlavoursList(self,args=None):
-		
-		cmd='lliurex-version -v'
-		p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		result=p.communicate()[0]
-		if type(result) is bytes:
-			result=result.decode()
-		
-		if args==None:
-			for x in result.split(','):
-				if x.strip() in ["edu","live"]:
-					pass
-				else:
-					if x.strip() not in self.flavours:
-						if x.strip() in self.versionReference:
-							self.flavours.append(x.strip())
 
-			if len(self.flavours) > 0:
-				aux = open(self.previousflavourspath,'w')
-				for x in self.flavours:
-					aux.write(x+"\n")
-				aux.close()
-		else:
-			for x in result.split(','):
-				if x.strip() in ["edu","live"]:
-					pass
-				else:
-					if x.strip() not in self.lastFlavours:
-						if x.strip() in self.versionReference:
-							self.lastFlavours.append(x.strip())
+		result = subprocess.run(
+			["lliurex-version", "-v" ],
+			stdout=subprocess.PIPE,
+			stderr=subprocess.DEVNULL,
+			text=True
+			)
 
+		targetList = self.lastFlavours if args is not None else self.flavours
+
+		for item in result.stdout.split(","):
+			flavour = item.strip()
+
+			if flavour in ["edu", "live"]:
+				continue
+
+			if flavour not in targetList and flavour in self.versionReference:
+				targetList.append(flavour)
+
+		if args is None and len(self.flavours) > 0:
+			self.previousflavourspath.write_text("\n".join(self.flavours)+"\n")
+		
 	#def updateFlavoursList		
 
 	def prepareEnvironment(self):
-		'''
+		"""
 			This funcion delete all environment and rebuild environment
 
-		'''
+		"""
 		self.cleanEnvironment()
-		if not os.path.exists(self.processPath):
-			os.mkdir(self.processPath)
-	
-		if not os.path.exists(self.changelogsPath):
-			os.mkdir(self.changelogsPath)
+		self.processPath.mkdir(parents=True,exist_ok=True)
+		self.changelogsPath.mkdir(parents=True,exist_ok=True)
 
 	#def prepareEnvironment	
 
 	def addSourcesListLliurex(self,args=None):
 		
-		newsourcesfile=""
-		extrasources=[]
-		client=False
-		textsearch_mirror="/mirror/"+str(self.defaultMirror)
-		textsearch_lliurex="/lliurex.net/"+str(self.defaultVersion)
-		textsearch_lliurex_2="/lliurex.gva.es/"+str(self.defaultVersion)
+		newsourcesfile = ""
+		extrasources = []
+		
+		textsearch_lliurex=f"/lliurex.net/{defaultVersion}"
+		textsearch_lliurex_2=f"/lliurex.gva.es/{defaultVersion}"	
 
-		if self.isDesktopInADI:
-			if self.isMirrorInADI:
-				client=True
-				args=True
-				sourcesref="mirror"
-			else:
-				sourcesref="default"	
-		else:
-			sourcesref="default"	
-
-		if os.path.exists(self.origsourcesfile):
-			#shutil.move(self.origsourcesfile,self.sourcesListToUpdate)
-			origsources=open(self.origsourcesfile,'r')
-			if not client:
-				for line in origsources:
-					if not textsearch_lliurex in line and not textsearch_lliurex_2 in line:
-						extrasources.append(line.strip())
-			else:
-				for line in origsources:
-					if args:
-						if (not textsearch_lliurex in line) and (not textsearch_lliurex_2 in line) and (not textsearch_mirror in line):
-							extrasources.append(line.strip())
-					else:
-						if not textsearch_mirror in line:
-							extrasources.append(line.strip())		
-												
-			origsources.close()
+		if self.origsourcesfile.exists():
+			lines = self.origsourcesfile.read_text().splitlines()
+		
+			for line in lines:
+				hasLliurex = textsearch_lliurex in line or textsearch_lliurex_2 in line
+				if  not hasLliurex:
+					extrasources.append(line.strip())
 				
 			if len(extrasources)>0:
-				newsourcesfile=self.sourcesListToUpdate
-				newsourcesedit=open(newsourcesfile,'a')
-				for line in extrasources:
-					newsourcesedit.write(line+'\n')
-				newsourcesedit.close()
-
-		self.optionsToUpdate="-o Dir::Etc::sourcelist={sourceslistOnlyLliurex}".format(sourceslistOnlyLliurex=self.sourcesListToUpdate)
-		self._addSourcesListTemplate(sourcesref)
+				self.sourcesListToUpdate.write_text("\n".join(extrasources)+"\n")
+				
+		self.optionsToUpdate=f"-o Dir::Etc::sourcelist={self.sourcesListToUpdate}"
+		self._addSourcesListTemplate()
 
 	#def addSourcesListLliurex 		
 
-	def _addSourcesListTemplate(self,sourcesref):
+	def _addSourcesListTemplate(self):
 
-		if sourcesref=="mirror":
-			if os.path.exists(self.sourcesListMirrorTemplate):
-				shutil.copy(self.sourcesListMirrorTemplate,self.sourcesListDPath)
-
-		if os.path.exists(self.sourcesListLliurexTemplate):
+		if self.sourcesListLliurexTemplate.exists():
 			shutil.copy(self.sourcesListLliurexTemplate,self.sourcesListDPath)
 
 	#def _addSourcesListTemplate
 
-	def restoreOrigSourcesList(self):
-		
-		if os.path.exists("/etc/apt/lliurexup_sources.list"):
-			shutil.move("/etc/apt/lliurexup_sources.list",self.origsourcesfile)
-
-		if os.path.exists(os.path.join(self.sourcesListDPath,self.sourcesMirror)):
-			os.remove(os.path.join(self.sourcesListDPath,self.sourcesMirror))
-
-	#def restoreOrigSourcesList		
-
-	def readSourcesList(self):
-		
-		count=0
-		if os.path.exists(self.origsourcesfile):
-			sources=open(self.origsourcesfile,'r')
-			ref="/lliurex.net/"+str(self.defaultVersion)
-			ref2="/lliurex.gva.es/"+str(self.defaultVersion)
-			for line in sources:
-				if ref in line or ref2 in line:
-					if not "#" in line:
-						count=count+1
-		return count	
-
-	#def readSourcesList		
-
 	def cleanEnvironment(self):
 
-		self.restoreOrigSourcesList()	
-
-		if os.path.exists(self.processPath):
-			shutil.rmtree(os.path.join(self.processPath))
+		if self.processPath.exists():
+			shutil.rmtree(self.processPath)
 
 	#def cleanEnvironment	
 
 	def cleanLliurexUpLock(self):
 
-		if os.path.exists(self.lockTokenPath):
-			os.remove(self.lockTokenPath)
+		if self.lockTokenPath.exists():
+			self.lockTokenPath.unlink(missing_ok=True)
 
 	#def cleanLliurexUpLock		
 
 	def updateCacheApt(self,options=""):
-		
-		command = "LANG=C LANGUAGE=en apt-get update -y {options}".format(options=options)
-		subprocess.Popen(command,shell=True).communicate()
 
+		env = os.environ.copy()
+
+		env["LANG"] = "C"
+		env["LANGUAGE"] = "en"
+
+		command = ["apt-get","update","-y"]
+
+		if options:
+			command.extend(options)
+
+		subprocess.run(
+			command,
+			env=env,
+			stdout=subprocess.DEVNULL,
+			stderr=subprocess.DEVNULL
+		)
+	
 	#def updateCacheApt	
 
 	def getPackageVersionAvailable(self,package,options="",checkRepo=False):
-		'''
+		
+		"""
 			Args :
 				package String
 				options String
@@ -398,36 +325,55 @@ class LliurexUpCore(object):
 			result : {'installed':String,'candidate':String}
 
 			Options are Apt options 
-		'''
-		command = "LANG=C LANGUAGE=en apt-cache policy {package} {options}".format(package=package,options=options)
-		p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
+		
+		"""
+		env = os.environ.copy()
+		env["LANG"] = "C"
+		env["LANGUAGE"] = "en"
+
+		command = ["apt-cache", "policy", package]
+
+		if options:
+			command.extend(options)
+
+		result = subprocess.run(
+			command,
+			env=env,
+			stdout = subprocess.PIPE,
+			stderr = subprocess.DEVNULL,
+			text = True
+		)
+
 		installed = None
 		candidate = None
-		getRepo=False
-		updateSource=None
+		getRepo = False
+		updateSource = None
 
-		for line in iter(p.stdout.readline,b""):
-			if type(line) is bytes:
-				line=line.decode()
+		for line in result.stdout.splitlines():
+			stripedline=line.strip()
 
-			stripedline = line.strip()
-			if stripedline.startswith("Installed"):
-				installed = stripedline.replace("Installed: ","")
-			if stripedline.startswith("Candidate"):
-				candidate = stripedline.replace("Candidate: ","")
-			if checkRepo:
-				if candidate !=None:
-					if candidate in stripedline:
-						getRepo=True 
+			if stripedline.startswith("Installed:"):
+				installed = stripedline.replace("Installed: ","").strip()
+			elif stripedline.startswith("Candidate: "):
+				candidate = stripedline.replace("Candidate: ", "").strip()
+
+			if checkRepo and candidate is not None:
+				if candidate in stripedline:
+					getRepo = True
+
 			if getRepo:
 				if stripedline.startswith("666"):
-					try:
-						updateSource=stripedline.split(" ")[1]
-						getRepo=False
-					except:
-						getRepo=False
+					parts = stripedline.split()
+					if len(parts) > 1:
+						updateSource = parts[1]
 
-		return {"installed":installed,"candidate":candidate,"updateSource":updateSource}
+					getRepo = False
+
+		return {
+			"installed": installed,
+			"candidate": candidate,
+			"updateSource": updateSource
+		}
 
 	#def getPackageVersionAvailable	
 
