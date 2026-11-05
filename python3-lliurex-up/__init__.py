@@ -563,19 +563,19 @@ class LliurexUpCore(object):
 
 	def initActionsScript(self,arg):
 		
-		return f"run-parts --arg={arg} {self.initActionsPath}"
+		return ["run-parts", f"--arg={arg}", self.initActionsPath]
 
 	#def initActionsScript
 
 	def preActionsScript(self):
 		
-		return f"run-parts --arg='preActions' {self.preActionsPath}"
+		return f'run-parts --arg="preActions" {self.preActionsPath}'
 
 	#def preActionsScript
 
 	def postActionsScript(self):
 		
-		return f"run-parts --arg='postActions' {self.postActionsPath}"
+		return f'run-parts --arg="postActions" {self.postActionsPath}'
 		
 	#def postActionsScript
 
@@ -767,7 +767,7 @@ class LliurexUpCore(object):
 
 	def distUpgradeProcess(self):
 	
-		return f"apt-get dist-upgrade --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {self.optionsToUpdate}"
+		return f'apt-get dist-upgrade --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages {self.optionsToUpdate}'
 
 	#def distUpgradeProcess
 
@@ -845,7 +845,7 @@ class LliurexUpCore(object):
 			error = True
 			errorDetails = f"Error when running Postactions.Details: {lines}"
 
-		return [error,errorDetails]	
+		return {"status":error,"data":errorDetails}
 
 	#def checkErrorDistUpgrade	
 
@@ -1022,7 +1022,7 @@ class LliurexUpCore(object):
 				totalSize = self._convertSize(sizeToUpdate)
 
 				
-		return [totalFlatpak,totalSize]
+		return {"totalFlatpak":totalFlatpak,"size":totalSize}
 	
 	#def getFlatpakUpdateInfo
 						
