@@ -823,7 +823,8 @@ class LliurexUpCore(object):
 						command,
 						env=envVar,
 						stdout=subprocess.PIPE,
-						stderr=subprocess.PIPE
+						stderr=subprocess.PIPE,
+						text=True
 					)
 
 					if result.stdout:
