@@ -523,8 +523,8 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
 		errorInfo= self.lliurexUpCore.checkErrorDistUpgrade()
-		isError= errorInfo.get("status")
-		errorDetails = error.get("errorDetails")
+		isError = errorInfo.get("status")
+		errorDetails = errorInfo.get("errorDetails")
 
 		if isError or self.finalMetaPackageError or self.postActionError :
 			print("  [Lliurex-Up]: The updated process is endend with errors")
