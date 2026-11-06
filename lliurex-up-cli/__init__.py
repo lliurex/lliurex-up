@@ -398,7 +398,7 @@ class LliurexUpCli(object):
 
 	#def readErrorOutput
 
-	def checkFinalN4dStatus(self):
+	def _checkFinalN4dStatus(self):
 
 		print("  [Lliurex-Up]: Checking N4d status...")
 
@@ -408,13 +408,13 @@ class LliurexUpCli(object):
 			msgLog = "N4d is not working"
 			self._log(msgLog)
 
-	#def checkFinalN4dStatus		
+	#def _checkFinalN4dStatus		
 
 	def _checkingFinalFlavourToInstall(self):
 		
 		print("  [Lliurex-Up]: Checking final metapackage...")
 		self.finalMetaPackageError = False
-		self.checkFinalN4dStatus()
+		self._checkFinalN4dStatus()
 
 		try:
 			self.flavourToInstall = self.lliurexUpCore.checkFlavour(True)
