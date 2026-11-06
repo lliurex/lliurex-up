@@ -205,9 +205,6 @@ class LliurexUpCore(object):
 		if len(self.previousFlavours) == 0:
 			self.getPreviousFlavours()
 	
-		self.checkFlavourType()
-		self.testConnectionWithADI()
-		
 		return self.targetMetapackage
 
 	#def checkInitialFlavour	
@@ -253,8 +250,8 @@ class LliurexUpCore(object):
 		newsourcesfile = ""
 		extrasources = []
 		
-		textsearch_lliurex = f"/lliurex.net/{defaultVersion}"
-		textsearch_lliurex_2 = f"/lliurex.gva.es/{defaultVersion}"	
+		textsearch_lliurex = f"/lliurex.net/{self.defaultVersion}"
+		textsearch_lliurex_2 = f"/lliurex.gva.es/{self.defaultVersion}"	
 
 		if self.origsourcesfile.exists():
 			lines = self.origsourcesfile.read_text().splitlines()
@@ -295,23 +292,23 @@ class LliurexUpCore(object):
 
 	def updateCacheApt(self,options=""):
 
-		env = os.environ.copy()
+		envVar = os.environ.copy()
 
-		env["LANG"] = "C"
-		env["LANGUAGE"] = "en"
+		envVar["LANG"] = "C"
+		envVar["LANGUAGE"] = "en"
 
 		command = ["apt-get","update","-y"]
 
 		if options:
 			command.extend(options.split())
 
-		subprocess.run(
+		result=subprocess.run(
 			command,
-			env=env,
+			env=envVar,
 			stdout=subprocess.DEVNULL,
 			stderr=subprocess.DEVNULL
 		)
-	
+
 	#def updateCacheApt	
 
 	def getPackageVersionAvailable(self,package,options="",checkRepo=False):
@@ -327,9 +324,9 @@ class LliurexUpCore(object):
 			Options are Apt options 
 		
 		"""
-		env = os.environ.copy()
-		env["LANG"] = "C"
-		env["LANGUAGE"] = "en"
+		envVar = os.environ.copy()
+		envVar["LANG"] = "C"
+		envVar["LANGUAGE"] = "en"
 
 		command = ["apt-cache", "policy", package]
 
@@ -338,7 +335,7 @@ class LliurexUpCore(object):
 
 		result = subprocess.run(
 			command,
-			env=env,
+			env=envVar,
 			stdout = subprocess.PIPE,
 			stderr = subprocess.DEVNULL,
 			text = True
@@ -387,6 +384,7 @@ class LliurexUpCore(object):
 		self.optionsLlxUp = f"-o Dir::Etc::sourcelist={sourceslistDefaultPath} -o Dir::Etc::sourceparts=/dev/null"
 		
 		self.updateCacheApt(self.optionsLlxUp)
+
 		result = self.getPackageVersionAvailable("lliurex-up",self.optionsLlxUp)
 
 		if result.get("installed") != result.get("candidate"):
@@ -410,10 +408,10 @@ class LliurexUpCore(object):
 		"""
 		self.updateCacheApt(self.optionsLlxUp)
 
-		env = os.environ.copy()
-		env["LANG"] = "C"
-		env["LANGUAGE"] = "en"
-		env["DEBIAN_FRONTEND"] = "noninteractive"
+		envVar = os.environ.copy()
+		envVar["LANG"] = "C"
+		envVar["LANGUAGE"] = "en"
+		envVar["DEBIAN_FRONTEND"] = "noninteractive"
 
 		command = [
 			"apt-get", 
@@ -429,7 +427,7 @@ class LliurexUpCore(object):
 
 		result=subprocess.run(
 			command,
-			env=env,
+			env=envVar,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
 			text=True
@@ -563,7 +561,7 @@ class LliurexUpCore(object):
 
 	def initActionsScript(self,arg):
 		
-		return ["run-parts", f"--arg={arg}", self.initActionsPath]
+		return ["run-parts", f'--arg={arg}', self.initActionsPath]
 
 	#def initActionsScript
 
@@ -596,10 +594,10 @@ class LliurexUpCore(object):
 
 		self.updateCacheApt(self.optionsToUpdate)
 
-		env = os.environ.copy()
-		env["LANG"] = "C"
-		env["LANGUAGE"] = "en"
-		env["DEBIAN_FRONTEND"] = "noninteractive"
+		envVar = os.environ.copy()
+		envVar["LANG"] = "C"
+		envVar["LANGUAGE"] = "en"
+		envVar["DEBIAN_FRONTEND"] = "noninteractive"
 
 		command = [
 			"apt-get",
@@ -617,7 +615,7 @@ class LliurexUpCore(object):
 
 		result = subprocess.run(
 			command,
-			env=env,
+			env=envVar,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
 			text=True
@@ -636,7 +634,7 @@ class LliurexUpCore(object):
 
 			result = subprocess.run(
 				command,
-				env=env,
+				env=envVar,
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE,
 				text=True
@@ -663,9 +661,9 @@ class LliurexUpCore(object):
 		self.packageInfo = {}
 		self.updateCacheApt(self.optionsToUpdate)
 
-		env = os.environ.copy()
-		env["LANG"] = "C"
-		env["LANGUAGE"] = "en"
+		envVar = os.environ.copy()
+		envVar["LANG"] = "C"
+		envVar["LANGUAGE"] = "en"
 
 		command=[
 			"apt-get",
@@ -677,7 +675,7 @@ class LliurexUpCore(object):
 
 		result = subprocess.run(
 			command,
-			env=env,
+			env=envVar,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
 			text=True
@@ -685,8 +683,8 @@ class LliurexUpCore(object):
 
 		for line in result.stdout.splitlines():
 			stripedLine=line.strip()
-			if stripedline.startswith("Inst"):
-				parts=stripedline[5:].split()
+			if stripedLine.startswith("Inst"):
+				parts=stripedLine[5:].split()
 				if not parts:
 					continue
 
@@ -780,7 +778,7 @@ class LliurexUpCore(object):
 		lines = ""
 		pkgsNotInstalled = []
 
-		if self.errorPostactionToken.exits():
+		if self.errorPostactionToken.exists():
 			lines = self.errorPostactionToken.read_text().splitlines()
 			for x in lines:
 				if 'E' in x:
@@ -814,16 +812,16 @@ class LliurexUpCore(object):
 					errorDetails=f"There are packages that have not been configured correctly. Details: {unconfiguredPkgs}"
 						
 				else:
-					env = os.environ.copy()
-					env["LANG"] = "C"
-					env["LANGUAGE"] = "en"
+					envVar = os.environ.copy()
+					envVar["LANG"] = "C"
+					envVar["LANGUAGE"] = "en"
 
 					command=["apt-get","dist-upgrade","-sv"]
 					command.extend(self.optionsToUpdate)
 
 					result=subprocess.run(
 						command,
-						env=env,
+						env=envVar,
 						stdout=subprocess.PIPE,
 						stderr=subprocess.PIPE
 					)
@@ -976,7 +974,7 @@ class LliurexUpCore(object):
 		
 		totalFlatpak = 0
 		totalSize = "0"
-		commnand=["flatpak","update"]
+		command=["flatpak","update"]
 
 		result = subprocess.run(
 			command,
@@ -987,14 +985,15 @@ class LliurexUpCore(object):
 			)
 
 		if result.stdout:
+			sizeToUpdate = 0
 			lines = result.stdout.splitlines()
 			for line in lines:
-				stripedline = line.split().replace('\xa0',' ').replace(",",".")
+				stripedline = line.replace('\xa0',' ').replace(",",".")
+				parts = stripedline.split()
 
-				if not stripedline or "ID" in stripedline or "Proceed with these changes" in stripedline:
+				if not parts or "ID" in parts or "Proceed with these changes" in parts:
 					continue
 
-				parts = stripedline.split()
 
 				for i in range(len(parts) -1 ):
 				 	item = parts[i]
