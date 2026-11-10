@@ -305,7 +305,7 @@ class LliurexUpCore(object):
 		result=subprocess.run(
 			command,
 			env=envVar,
-			stdout=subprocess.DEVNULL,
+			stdout=None,
 			stderr=subprocess.DEVNULL
 		)
 
@@ -428,7 +428,7 @@ class LliurexUpCore(object):
 		result=subprocess.run(
 			command,
 			env=envVar,
-			stdout=subprocess.PIPE,
+			stdout=None,
 			stderr=subprocess.PIPE,
 			text=True
 		)
@@ -616,7 +616,7 @@ class LliurexUpCore(object):
 		result = subprocess.run(
 			command,
 			env=envVar,
-			stdout=subprocess.PIPE,
+			stdout=None,
 			stderr=subprocess.PIPE,
 			text=True
 		)
@@ -635,7 +635,7 @@ class LliurexUpCore(object):
 			result = subprocess.run(
 				command,
 				env=envVar,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)

@@ -109,7 +109,7 @@ class LliurexUpCli(object):
 			result = subprocess.run(
 				command,
 				env=envVars,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)
@@ -287,7 +287,7 @@ class LliurexUpCli(object):
 				command,
 				env=envVars,
 				shell=True,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)
@@ -325,7 +325,7 @@ class LliurexUpCli(object):
 				command,
 				env=envVars,
 				shell=True,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)
@@ -365,7 +365,7 @@ class LliurexUpCli(object):
 				command,
 				env=envVars,
 				shell=True,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)
@@ -441,7 +441,7 @@ class LliurexUpCli(object):
 					command,
 					env=envVars,
 					shell=True,
-					stdout=subprocess.PIPE,
+					stdout=None,
 					stderr=subprocess.PIPE,
 					text=True
 				)
@@ -495,7 +495,7 @@ class LliurexUpCli(object):
 			result = subprocess.run(
 				command,
 				shell=True,
-				stdout=subprocess.PIPE,
+				stdout=None,
 				stderr=subprocess.PIPE,
 				text=True
 			)
