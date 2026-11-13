@@ -17,6 +17,8 @@ import datetime
 import pwd
 import grp
 import math
+import re
+import shlex
 
 from pathlib import Path
 
@@ -657,8 +659,13 @@ class LliurexUpCore(object):
 				}
 			}
 		"""
-
+		
+		aptInstPattern = re.compile(
+			r"^Inst\s+(?P<name>\S+)\s+(?:\[(?P<installed>[^\]]+)\]\s+)?\((?P<candidate>\S+).*?\[(?P<arch>[^\]]+)\]\)"
+		)
+		
 		self.packageInfo = {}
+
 		self.updateCacheApt(self.optionsToUpdate)
 
 		envVar = os.environ.copy()
@@ -678,44 +685,66 @@ class LliurexUpCore(object):
 			env=envVar,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
-			text=True
+			text=True,
+			check=False
 		)
+
+		if result.returncode !=0:
+			raise RuntimeError(f"Error executing getPackagesToUpdate: {result.stderr.strip()}")
 
 		for line in result.stdout.splitlines():
 			stripedLine=line.strip()
-			if stripedLine.startswith("Inst"):
-				parts=stripedLine[5:].split()
-				if not parts:
-					continue
+			if not stripedLine.startswith("Inst"):
+				continue
 
-				packageName = parts[0]
-				raw = parts[1:]
+			match = aptInstPattern.match(stripedLine)
 
-				if not raw:
-					continue
-
-				self.packageInfo[packageName] = {}
-
-				if raw[0].startswith("["):
-					self.packageInfo[packageName]["install"] = raw[0][1:-1]
-					self.packageInfo[packageName]["candidate"] = raw[1][1:] if len(raw) > 1 else ""
-
-					for item in raw:
-						if item.endswith(")"):
-							self.packageInfo[packageName]["architecture"] = item.strip("() ")
-
-				elif raw[0].startswith("("):
-					self.packageInfo[packageName]["install"] = None
-					self.packageInfo[packageName]["candidate"] = raw[0][1:]
-
-					for item in raw:
-						if item.endswith(")"):
-							self.packageInfo[packageName]["architecture"] = item.strip("() ")
-
+			if match:
+				pkgName= match.group("name")
+				self.packageInfo[pkgName]={
+					"install": match.group("installed"),
+					"candidate": match.group("candidate"),
+					"architecture": match.group("arch"),
+					"size": 0
+				}
+		if self.packageInfo:
+			self._populatePackagesSize()
 
 		return self.packageInfo
-
+		
 	#def getPackagesToUpdate
+
+	def _populatePackagesSize(self):
+
+		pkgNames = list(self.packageInfo.keys())
+
+		command = ["apt-cache","show"] + pkgNames
+
+		result = subprocess.run(
+			command,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			text=True,
+			check=False
+		)
+
+		currentPkg = None
+		currentVersion = None
+
+		for line in result.stdout.splitlines():
+			if line.startswith("Package: "):
+				currentPkg = line.split(":", 1)[1].strip()
+				currentVersion = None
+			elif line.startswith("Version: "):
+				currentVersion = line.split(":", 1)[1].strip()
+			elif line.startswith("Size: ") and currentPkg in self.packageInfo:
+				if currentVersion == self.packageInfo[currentPkg]["candidate"]:
+					try:
+						self.packageInfo[currentPkg]["size"] = int(line.split(":" ,1)[1].strip())
+					except ValueError:
+						pass
+
+	#def _populatePackagesSize
 		
 	def checkIncorrectFlavours(self):
 		
