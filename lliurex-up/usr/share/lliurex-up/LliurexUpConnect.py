@@ -28,6 +28,12 @@ _=gettext.gettext
 
 class LliurexUpConnect():
 
+	KIRIGAMI_MSG_OK = 0
+	KIRIGAMI_MSG_ERROR = 1 
+	KIRIGAMI_MSG_WARNING = 2
+	KIRIGAMI_MSG_INFO = 3
+
+
 	def __init__(self):
 
 		self.llxUpCore = LliurexUpCore.LliurexUpCore()
@@ -48,11 +54,11 @@ class LliurexUpConnect():
 		self.disableSystrayPath = Path("/etc/lliurex-up-indicator")
 		self.disableSystrayToken = self.disableSystrayPath / "disableIndicator.token"
 		self.isSystrayEnabled = True
-		self.numberPackagesDownloaded = []
-		self.numberPackagesUnpacked = []
-		self.numberPackagesInstalled = []
+		self.pendingDownloads = []
+		self.pendingUnpacked = []
+		self.self.pendingInstalled = []
 		self.initialNumberPackages = []
-		self.packagesInstalled = []
+		self.packagesInstalled = set()
 		self.progressDownload = 0
 		self.progressDownloadPercentaje = 0.00
 		self.progressInstallation = 0
@@ -368,56 +374,22 @@ class LliurexUpConnect():
 
 	def getPackagesToUpdate(self):
 		
-		packagesParsed = []
-		totalBytes = 0
-		
 		try:
-			packages=self.llxUpCore.getPackagesToUpdate()
+			packageInfo = =self.llxUpCore.getPackagesToUpdate()
+			packages = packageInfo.get("packagesToUpdate")
+			totalSize = packageInfo.get("totalSize")
 
-			for item,info in packages.items():
-				version = info.get("candidate")
-				rawSize = info.get("size",0)
-				totalBytes += rawSize
-				sizeStr = self.convertSize(rawSize)
-
-				install = info.get("installed")
-				architecture = info.get("architecture")
-
-				packagesParsed.append(f"{item};{version};{size};{install};{architecture}")
-					
 			self.log(f"Get packages to update. Number of packages: {len(packages)}") 
 
 		except Exception as e:
 			self.log(f"Get packages to update. Error: {e}")
 
-		self.totalSize = self.convertSize(self.totalSize)
-		self.getPackagesData(packagesParsed)	
+		self.getPackagesData(packages)	
 
-		return {"packages":packagesParsed,"upgradeSize":self.totalSize}
+		return {"Totalpackages":len(packages),"upgradeSize":totalSize}
 			
 	#def getPackagesToUpdate
 	
-	'''
-	def getSizePackagesToUpdate(self,pkg):
-		
-		size=0
-		try:
-			command='apt-cache show ' + pkg + ' |grep "^Size:" |cut -d " " -f2 |head -1'
-			p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
-			size=p.stdout.readline()
-			if type(size) is bytes:
-				size=size.decode()
-			size=size.strip()
-			self.totalSize=(self.totalSize)+int(size)
-			size=self.convertSize(size)
-			return size
-
-		except Exception as e:
-			print(e)
-			return self.convertSize(size) 
-
-	#def getSizePackagesToUpdate
-	'''
 	def convertSize(self,sizeBytes):
 
 		try:
@@ -435,25 +407,24 @@ class LliurexUpConnect():
 
 		return f"{s} {sizeName[i]}"
 
-	#def convertSize
-
 	def getPackagesData(self,packages):
 
 		self.newPackages = 0
 		self.packagesData = []
-		self.numberPackagesDownloaded = []
-		self.numberPackagesUnpacked = []
-		self.numberPackagesInstalled = []
-		self.initialNumberPackages = []
+		self.pendingDownloads = set()
+		self.pendingUnpacked = set()
+		self.self.pendingInstalled = set()
+		self.initialNumberPackages = set()
+		self.totalPackagesCount = len(packages)
 
-		for item in packages:
+		for pkgId,info in packages.items():
+			pkgVersion = info.get("candidate","")
+			pkgSize = info.get("size", "0 B")
+			installStatus = info.get("install")
+			arch = info.get("architecture","")
 			parts = item.split(";")
-			if len(parts) < 5:
-				continue
-
-			pkgId,pkgVersion,pkgSize,installStatus,arch = parts[:5]
-
-			if installStatus == "None":
+			
+			if installStatus is None or str(installStatus) == "None":
 				self.newPackages += 1
 
 			pkgInfo = {
@@ -465,12 +436,12 @@ class LliurexUpConnect():
 				"showStatus": False
 			}
 
-			self.packagesData.append(tmp)
+			self.packagesData.append(pkgInfo)
 			pkgFullId = f"{pkgId}_{pkgVersion}"
-			self.numberPackagesDownloaded.append(f"{pkgVersion}_{arch}.deb")
-			self.numberPackagesUnpacked.append(pkgFullId)
-			self.numberPackagesInstalled.append(pkgFullId)
-			self.initialNumberPackages.append(pkgFullId)
+			self.pendingDownloads.add(f"{pkgFullId}_{arch}.deb".replace(":","%3a"))
+			self.pendingUnpacked.add(pkgFullId)
+			self.self.pendingInstalled.add(pkgFullId)
+			self.initialNumberPackages.add(pkgFullId)
 
 	#def getPackagesData
 
@@ -626,21 +597,21 @@ class LliurexUpConnect():
 
 	def preActionsScript(self):
 
-		self.preActions = self.llxUpCore.preActionsScript()
-		self.preActions = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.preActions} ;touch {self.preactionsToken}\n'
+		preActionsCommand = self.llxUpCore.preActionsScript()
+		preActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.preActions} ;touch {self.preactionsToken}\n'
 		self.log("Exec Pre-Actions")
 
-		return self.preActions
+		return preActionsCommand
 
 	#def preActionsScript	
 
 	def distUpgradeProcess(self):
 		
-		self.distupgrade = self.llxUpCore.distUpgradeProcess()	
-		self.distupgrade = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.distupgrade} ;touch {self.upgradeToken}\n'
+		distupgradeCommand = self.llxUpCore.distUpgradeProcess()	
+		distupgradeCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.distupgrade} ;touch {self.upgradeToken}\n'
 		self.log("Exec Dist-uggrade")
 
-		return self.distupgrade
+		return distupgradeCommand
 
 	#def distUpgradeProcess
 	
@@ -664,50 +635,20 @@ class LliurexUpConnect():
 	
 	#def checkErrorDistUpgrade
 	
-	def checkInstalledStatus(self):
-
-		self.packagesInstalled=[]
-
-		try:
-			result = subprocess.run(
-				["dpkg-query","-W","-f=${db:Status-Abbrev}\t${Package}\t{Version}\n"],newConfig
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
-				text=True,
-				errors="replace",
-				check=False
-			)
-
-			for line in result.stdout.splitlines():
-				parts = line.split("\n")
-
-				if len(parts) == 3 and pars[0].strip() == "ii":
-					pkgName = parts[1].split(":")[0]
-					pkgVersion = parts[2].strip()
-					self.packagesInstalled.append(f"{pkgName}_{pkgVersion}")
-
-		except Exception as e:
-			print(str(e))
-			pass
-
-	#def checkInstalledStatus						
-
 	def checkFinalFlavour(self):
 
-		self.errorCheckFlavour=False
-		flavourToInstall=None
+		self.errorCheckFlavour = False
+		flavourToInstall = None
 		
 		self.checkFinalN4dStatus()
 
 		try:
-			flavourToInstall=self.llxUpCore.checkFlavour(True)
-			msgLog="Final check metapackage. Metapackage to install: %s"%str(flavourToInstall)
-			self.log(msgLog)
+			flavourToInstall = self.llxUpCore.checkFlavour(True)
+			self.log(f"Final check metapackage. Metapackage to install: %{flavourToInstall}")
 
 		except Exception as e:
-			self.errorCheckFlavour=True
-			msgLog="Final check metapackage. Error: %s"%str(e)
-			self.log(msgLog)
+			self.errorCheckFlavour = True
+			self.log(f"Final check metapackage. Error: {e}")
 
 		return flavourToInstall	
 	
@@ -715,22 +656,21 @@ class LliurexUpConnect():
 	
 	def installFinalFlavour(self,flavourToInstall):
 
-		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
-		msgLog="Install final metapackage"
-		self.log(msgLog)
-		return self.command
+		installFlavourCommand = self.llxUpCore.installFinalFlavour(flavourToInstall)
+		installFlavourCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.command} 2> >(tee {self.errorFinalMetapackageToken} );touch {self.installflavourToken}\n'
+		self.log("Install final metapackage")
+
+		return installFlavourCommand
 
 	#def installFinalFlavour
 
 	def postActionsScript(self):
 
-		self.postActions=self.llxUpCore.postActionsScript()
-		self.postActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s); touch %s\n'%(self.postActions,self.errorPostactionToken,self.postactionsToken)
+		postActionsCommand = self.llxUpCore.postActionsScript()
+		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.postActions} 2> >(tee {self.errorPostactionToken}; touch {self.postactionsToken}\n'
+		self.log("Exec Post-Actions")
 
-		msgLog="Exec Post-Actions"
-		self.log(msgLog)
-		return self.postActions
+		return postActionsCommand
 
 	#def postActionsScript
 
@@ -739,29 +679,26 @@ class LliurexUpConnect():
 		self.llxUpCore.checkN4dStatus()
 
 		if not self.llxUpCore.n4dStatus:
-			msgLog="N4d is not working"
-
-			self.log(msgLog)
+			self.log("N4d is not working")
 
 	#def checkFinalN4dStatus
 
 	def updatePackagesData(self,finalUpdate=False):
 
 		if finalUpdate:
-			self.checkInstalledStatus()
+			_,self.packagesInstalled = self._getDpkgState()
 
 		for item in self.packagesData:
-			pkgName=item["pkgId"]
-			pkgVersion=item["pkgVersion"]
-			tmpName=pkgName+"_"+pkgVersion
-			if finalUpdate:
-				if tmpName not in self.packagesInstalled:
-					item["pkgStatus"]=-1
+			if item["showStatus"] and not finalUpdate:
+				continue
 
-				item["showStatus"]=True
-			else:
-				if tmpName in self.packagesInstalled:
-					item["showStatus"]=True
+			tmpName = f"{item["pkgId"]}_{item["Version"]}"
+
+			if tmpName in self.packagesInstalled:
+				item["showStatus"] = True
+			elif finalUpdate:
+				item["pkgStatus"] = 1
+				item["showStatus"] = True
 
 	#def updatePackagesData		
 
@@ -769,12 +706,9 @@ class LliurexUpConnect():
 		
 		try:
 			self.llxUpCore.cleanEnvironment()
-			msgLog="Clean environment: OK"
-			self.log(msgLog)
-
+			self.log("Clean environment: OK")
 		except Exception as e:
-			msgLog="Clean environment. Error: %s"%str(e)
-			self.log(msgLog)				
+			self.log(f"Clean environment. Error: {e}")
 
 	#def cleanEnvironment
 
@@ -782,7 +716,6 @@ class LliurexUpConnect():
 
 		try:
 			self.llxUpCore.cleanLliurexUpLock()
-		
 		except Exception as e:
 			print(e)
 	
@@ -790,9 +723,9 @@ class LliurexUpConnect():
 
 	def searchMeta(self,meta):
 		
-		match=False
+		match = False
 		try:
-			match=self.llxUpCore.search_meta(meta)
+			match = self.llxUpCore.search_meta(meta)
 			return match
 		except Exception as e:
 			return match
@@ -801,10 +734,12 @@ class LliurexUpConnect():
 
 	def log(self,msg):
 		
-		logFile="/var/log/lliurex-up.log"
-		f=open(logFile,"a+")
-		f.write(msg + '\n')
-		f.close()
+		logFile = Path("/var/log/lliurex-up.log")
+		
+		logFile.parent.mkdir(parents=True,exist_ok=True)
+
+		with logFile.open("a",encodiing="utf-8") as fd:
+			fd.write(f"{msg}\n")
 
 	#def log
 
@@ -816,109 +751,110 @@ class LliurexUpConnect():
 
 	def checkProgressDownload(self):
 
-		for i in range(len(self.numberPackagesDownloaded)-1,-1,-1):
-			if os.path.exists(os.path.join(self.aptCachePath,self.numberPackagesDownloaded[i].replace(":","%3a"))):
-				self.numberPackagesDownloaded.pop(i)
+		if self.totalPackagesCount == 0:
+			self.progressDownload = 0
+			self.progressDownloadPercentage = 1.0
 
-		self.progressDownload=len(self.initialNumberPackages)-len(self.numberPackagesDownloaded)
-		self.progressDownloadPercentage=round(self.progressDownload/len(self.initialNumberPackages),2)
+		self.pendingDownloads = {
+			pkg for pkg in self.pendingDownloads
+			if not (self.aptCachePath / pkg).exists()
+		}
+
+		self.progressDownload = self.totalPackagesCount - len(self.pendingDownloads)
+		self.progressDownloadPercentage = round(self.progressDownload / self.totalPackagesCount,2)
 
 	#def checkProgressDownload
 
+	def _getDpkgState(self):
+
+		unpackedOrMore = set()
+		self.packagesInstalled = set()
+
+		try:
+			pkgNames = [p["pkgId"] for p in self.packagesData]
+
+			if not pkgNames:
+				return unpackedOrMore,installed
+
+			result = subprocess.run(
+				["dpkg-query", "-W", "-f=${db:Status-Abbrev}\t${Package}\t${Version}\n"] + pkgNames,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE,
+				text=True,
+				error="replace",
+				check=False
+			)
+
+			for line in result.stdout.splitlines():
+				parts = line.split("\t")
+				if len(parts) != 3:
+					continue
+
+				status = parts[0].strip()
+				pkgName = parts[1].split(":")[0]
+				pkgVersion = parts[2].strip()
+				pkgFullId = f"{pkgName}_{pkgVersion}"
+
+				if status == "ii":
+					self.packagesInstalled.add(pkgFullId)
+					unpackedOrMore.add(pkgFullId)
+				elif len(status) >=2 and status[1] in ("U","F","H"):
+					unpackedOrMore.add(pkgFullId)
+
+		except Exception as e:
+			self.log("Error checkgin pkg status": {e})
+
+		return unpackedOrMore
+
+	#def _getDpkgState
+
 	def checkProgressUnpacked(self):
 
-		checkInstalledPkg=False
-		tmpPackagesUnpacked=self.checkUnpackedStatus()
+		if self.totalPackagesCount == 0:
+			return
 
-		if self.progressUnpacked>=len(self.numberPackagesUnpacked):
-			self.checkProgressInstallation()
-			checkInstalledPkg=True
+		unpackedOrMore = self._getDpkgState()
+
+		self.pendingUnpacked -= unpackedOrMore
+		self.pendingInstalled -= self.packagesInstalled
+
+		self.progressUnpacked = self.totalPackagesCount - len(self.pendingUnpacked)
+		self.progressUnpackedPercentage = round(self.progressUnpacked / self.totalPackagesCount,2)
+
+		self.progressInstallation = self.totalPackagesCount - len(self.pendingInstalled)
+		self.progressInstallationPercentage = round(self.progressInstallation / self.totalPackagesCount,2)
+
 		
-		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
-			if self.numberPackagesUnpacked[i] in tmpPackagesUnpacked:
-				self.numberPackagesUnpacked.pop(i)
-			else:
-				if checkInstalledPkg:
-					if self.numberPackagesUnpacked[i] in self.packagesInstalled:
-						self.numberPackagesUnpacked.pop(i)
-
-		if checkInstalledPkg and len(self.numberPackagesUnpacked)<10:
-			if self.progressInstallation > len(self.numberPackagesUnpacked):
-				self.numberPackagesUnpacked=[]
-
-		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
-		self.progressUnpackedPercentage=round(self.progressUnpacked/len(self.initialNumberPackages),2)
-
 	#def checkProgressUnpacked
 
 	def checkProgressInstallation(self):
 
-		self.checkInstalledStatus()
-		for i in range(len(self.numberPackagesInstalled)-1,-1,-1):
-			if self.numberPackagesInstalled[i] in self.packagesInstalled:
-				self.numberPackagesInstalled.pop(i)
+		if self.totalPackagesCount == 0:
+			return
 
-		self.progressInstallation=len(self.initialNumberPackages)-len(self.numberPackagesInstalled)
-		self.progressInstallationPercentage=round(self.progressInstallation/len(self.initialNumberPackages),2)
+		self._getDpkgState()
+
+		self.pendingInstalled -= self.packagesInstalled
+
+		self.progressInstallation = self.totalPackagesCount - len(self.pendingInstalled)
+		self.progressInstallationPercentage = round(self.progressInstallation / self.totalPackagesCount,2)
 
 	#def checkProgressInstallation
-	
-	def checkUnpackedStatus(self):
-		
-		cmd="dpkg -l | awk '/^.U/'"
-
-		tmpPackages=[]
-
-		try:
-			p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-			for line in iter(p.stdout.readline,b""):
-				if type(line) is bytes:
-					line=line.decode()
-
-				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
-				tmpPackages.append(tmp)
-
-		except Exception as e:
-			print(str(e))
-			pass
-
-		return tmpPackages
-	
-	#def checkUnpackedStatus
 
 	def applySettingsChanges(self,newConfig):
 		
 		'''
 			-0: Systray
 		'''
-		CHANGES_APPLY_OK=0
-		SYSTRAY_ERROR=-1
+		CHANGES_APPLY_OK = 0
+		SYSTRAY_ERROR = -1
 		
-		retSystray=True
-		error=False
+		retSystray = True
 
-		if newConfig[0]!=self.currentConfig[0]:
-			retSystray=self.manageSystray(newConfig[0])
+		if newConfig.get("systraryEnabled")!=self.currentConfig.get("systraryEnabled"):
+			retSystray = self.manageSystray(newConfigget("systraryEnabled"))
 			if retSystray:
-				changesInSystray=True
-
-		if newConfig[1]!=self.currentConfig[1]:
-			retEnableService=self.manageAutoUpgrade(newConfig[1])
-			if retEnableService:
-				changesInAutoUpdate=True
-
-		if retEnableService:
-			if newConfig[2]!=self.currentConfig[2]:
-				pauseNeedUpdate=True
-			elif newConfig[3]!=self.currentConfig[3]:
-				pauseNeedUpdate=True
-			elif newConfig[4]!=self.currentConfig[4]:
-				pauseNeedUpdate=True
-
-		if pauseNeedUpdate:
-			retPauseUpdate=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
-			if retPauseUpdate:
-				changesInAutoUpdate=True
+				changesInSystray = True
 
 		if changesInSystray:
 			self.getSystrayStatus()
@@ -926,42 +862,31 @@ class LliurexUpConnect():
 		if changesInAutoUpdate:
 			self.getAutoUpgradeInfo()
 		
-		if retSystray and retEnableService and retPauseUpdate:
-			return [error,CHANGES_APPLY_OK]
+		if retSystray:
+			return {"status":error,"code":CHANGES_APPLY_OK,"type":KIRIGAMI_MSG_OK}
 
-		elif not retSystray and retEnableService and retPauseUpdate:
-			error=True
-			return [error,SYSTRAY__ERROR]
-		elif retSystray and not retEnableService and retPauseUpdate:
-			error=True
-			return [error,AUTOUPGRADE_ERROR]
-		elif retSystray and retEnableService and not retPauseUpdate:
-			error=True
-			return [error,AUTOUPGRADE_PAUSE_ERROR]
-		else:
-			error=True
-			return [error,CHANGES_APPLY_ERROR]
-
+		elif:
+			return {"status":false,"code":SYSTRAY_ERROR,"type":KIRIGAMI_MSG_ERROR}		
+	
 	#def applySettingsChanges
 
 	def flatpakActionsScript(self):
 
-		self.flatpakActions=self.llxUpCore.flatpakActionsScript()
-		self.flatpakActions='%s ;touch %s;exit\n'%(self.flatpakActions,self.flatpakActionsToken)
+		self.flatpakActions = self.llxUpCore.flatpakActionsScript()
+		self.flatpakActions = f'{self.flatpakActions} ;touch {self.flatpakActionsToken};exit\n'
 
-		msgLog="Exec Update-Flatpak"
-		self.log(msgLog)
+		self.log("Exec Update-Flatpak")
+		
 		return self.flatpakActions
 
 	#def flatpakActionsScript
 	
 	def getFlapakUpdateInfo(self):
 		
-		flatPakUpdateInfo=[0,"0"]
+		flatPakUpdateInfo = {"totalFlatpak":0,"size":"0 B"}
 
-		flatPakUpdateInfo=self.llxUpCore.getFlatpakUpdateInfo()
-		msgLog="Flatpak update info: %s"%str(flatPakUpdateInfo)
-		self.log(msgLog)
+		flatPakUpdateInfo = self.llxUpCore.getFlatpakUpdateInfo()
+		self.log(f"Flatpak update info: {flatPakUpdateInfo}")
 		
 		return flatPakUpdateInfo
 	
@@ -969,21 +894,21 @@ class LliurexUpConnect():
 
 	def _clearCache(self):
 		
-		clear=False
-		installedVersion=self._getPackageVersion()
+		clear = False
+		installedVersion = self._getPackageVersion()
 
 		versionFile="/root/.lliurex-up.conf"
 		cachePath="/root/.cache/lliurex-up"
 	
 		try:
 			if not os.path.exists(versionFile):
-				clear=True
+				clear = True
 			else:
 				with open(versionFile,'r') as fd:
 					fileVersion=fd.readline().strip()
 
 				if fileVersion!=installedVersion:
-					clear=True
+					clear = True
 
 			if clear:
 				with open(versionFile,'w') as fd:
@@ -998,8 +923,8 @@ class LliurexUpConnect():
 
 	def _getPackageVersion(self):
 
-		packageVersionFile="/var/lib/lliurex-up/version"
-		pkgVersion=""
+		packageVersionFile = "/var/lib/lliurex-up/version"
+		pkgVersion = ""
 
 		if os.path.exists(packageVersionFile):
 			with open(packageVersionFile,'r') as fd:

@@ -665,6 +665,7 @@ class LliurexUpCore(object):
 		)
 		
 		self.packageInfo = {}
+		totalSize = "0 B"
 
 		self.updateCacheApt(self.optionsToUpdate)
 
@@ -708,14 +709,15 @@ class LliurexUpCore(object):
 					"size": 0
 				}
 		if self.packageInfo:
-			self._populatePackagesSize()
+			totalSize = self._populatePackagesSize()
 
-		return self.packageInfo
+		return {"packagesToUpdate":self.packageInfo,"totalSize":totalSize}
 		
 	#def getPackagesToUpdate
 
 	def _populatePackagesSize(self):
 
+		totalSize = 0
 		pkgNames = list(self.packageInfo.keys())
 
 		command = ["apt-cache","show"] + pkgNames
@@ -740,11 +742,39 @@ class LliurexUpCore(object):
 			elif line.startswith("Size: ") and currentPkg in self.packageInfo:
 				if currentVersion == self.packageInfo[currentPkg]["candidate"]:
 					try:
-						self.packageInfo[currentPkg]["size"] = int(line.split(":" ,1)[1].strip())
+						pkgSize = int(line.split(":" ,1)[1].strip())
+						if self.packageInfo[currentPkg]["size"] == 0:
+							self.packageInfo[currentPkg]["size"] = self._convertSize(pkgSize)
+							totalSize +=pkgSize
+
 					except ValueError:
 						pass
 
+		if totalSize > 0:
+			totalSize = self._convertSize(totalSize)
+
+		return totalSize
+
 	#def _populatePackagesSize
+
+	def _convertSize(self,sizeBytes):
+
+		try:
+			sizeBytes = float(sizeBytes)
+		except (ValueError,TypeError):
+			return "0 B"
+
+		if sizeBytes <= 0:
+			return "0 B"
+
+		sizeName = ("B", "KB", "MB", "GB" , "TB")
+		i = min(int(math.floor(math.log(sizeBytes, 1024))),len(sizeName) -1)
+		p = math.pow(1024, i)
+		size = round(sizeBytes/p, 1) if i >= 2 else int(round(sizeBytes / p))
+
+		return f"{size} {sizeName[i]}"
+
+	#def _convertSize
 		
 	def checkIncorrectFlavours(self):
 		
@@ -1055,22 +1085,7 @@ class LliurexUpCore(object):
 	
 	#def getFlatpakUpdateInfo
 						
-	def _convertSize(self,sizeBytes):
-
-		if sizeBytes == 0:
-			return "0 B"
-
-		sizeName = ("B", "KB", "MB", "GB")
-		i = int(math.floor(math.log(sizeBytes, 1024)))
-		i = min(i,len(sizeName) - 1)
-		
-		p = math.pow(1024, i)
-		s = int(round(sizeBytes/p,))
-
-		return f"{size} {sizeName[i]}"
-
-	#def convertSize
-
+	
 #def LliurexUpCore
 
 if __name__ == '__main__':

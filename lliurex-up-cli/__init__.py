@@ -225,7 +225,10 @@ class LliurexUpCli(object):
 	def _getPackagesToUpdate(self):
 
 		print("  [Lliurex-Up]: Looking for new updates...")
-		packages = self.lliurexUpCore.getPackagesToUpdate()
+		packageInfo =  self.lliurexUpCore.getPackagesToUpdate()
+		packages = packageInfo.get("packagesToUpdate")
+		totalSize = packageInfo.get("totalSize")
+
 		msgLog = f"Get packages to update. Number of packages: {len(packages)}"
 		self._log(msgLog)
 
@@ -240,7 +243,7 @@ class LliurexUpCli(object):
 
 		self.packagesList = f"{' '.join(collectedPackages)}" if collectedPackages else ""
 
-		return packages
+		return packages,totalSize
 
 	#def _getPackagesToUpdate		
 			
@@ -759,13 +762,15 @@ class LliurexUpCli(object):
 		self._getLliurexVersionLocal()
 		self._getLliurexVersionLliurexNet()
 		self._checkingInitialFlavourToInstall()
-		self.packages = self._getPackagesToUpdate()
+		self.packages, self.totalSize = self._getPackagesToUpdate()
+
 		self.flatPakUpdateInfo = self._getFlatpakUpdateInfo()
 
 		if len(self.packages) > 0:
 			if not self._checkingIncorrectFlavours():
 				print(f"  [Lliurex-Up]: List of packages to update:\n{self.packagesList}")
 				print(f"  [Lliurex-Up]: Number of packages to update:       {len(self.packages)} ({self.newPackages} news)")
+				print(f"  [Lliurex-Up]: Download (aprox):                   {self.totalSize}")
 				print(f"  [Lliurex-Up]: Current version:                    {self.versionToUpdate.get('installed')}")
 				print(f"  [Lliurex-Up]: Available version (lliurex.gva.es): {self.versionAvailable.get('candidate')}")
 				print(f"  [Lliurex-Up]: Candidate version (to install):     {self.versionToUpdate.get('candidate')}")
