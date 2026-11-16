@@ -186,7 +186,7 @@ class LliurexUpConnect():
 			freeSpace=round(usage.free / (1024**3),2)
 		except Exception as e:
 			self.log(f"Error checking disk space on /: {e}")
-			return {"enoughSpace": False,"freeSpace": 0,0}
+			return {"enoughSpace": False,"freeSpace": 0.0}
 
 		if freeSpace < 2: 
 			self.log(f"Not enough space on disk to upgrade (2 GB needed): {freeSpace} GB available")
@@ -386,7 +386,7 @@ class LliurexUpConnect():
 
 		self.getPackagesData(packages)	
 
-		return {"Totalpackages":len(packages),"upgradeSize":totalSize}
+		return {"totalPackages":len(packages),"upgradeSize":totalSize}
 			
 	#def getPackagesToUpdate
 	

@@ -9,37 +9,27 @@ import time
 import sys
 import pwd
 
+from pathlib import Path
+
 import LliurexUpConnect
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class GatherLockInfo(QThread):
+class UnlockProcess(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(int)
 
-		QThread.__init__(self)
-	
-	#def __init__
-		
-	def run(self,*args):
-		
-		Bridge.llxUpConnect.checkLocks()
+	def __init__(self,manager):
 
-	#def run
-
-#class GatherInfo
-
-class UnlockProcess(QThread):
-
-	def __init__(self,*args):
-
-		QThread.__init__(self)
+		super().__init__()
+		self.manager = manager
 
 	#def __init__
 		
-	def run(self,*args):
+	def run(self):
 		
-		self.ret=Bridge.llxUpConnect.unlockingProcess()
+		ret = self.manager.unlockingProcess()
+		self.finished.emit(ret)
 
 	#def run
 
@@ -47,143 +37,151 @@ class UnlockProcess(QThread):
 
 class Bridge(QObject):
 
-	SERVICE_RUNNING=1
-	SOME_PROCESS_RUNNING=2
-	LOCKED_SERVICE=3
-	UNLOCK_PROCESS_RUN=4
+	SERVICE_RUNNING = 1
+	SOME_PROCESS_RUNNING = 2
+	LOCKED_SERVICE = 3
+	UNLOCK_PROCESS_RUN = 4
 
-	NO_ADMINISTRATION_PRIVILEGES=-1
-	UNLOCK_PROCESS_FAIL=-2
+	NO_ADMINISTRATION_PRIVILEGES = -1
+	UNLOCK_PROCESS_FAIL = -2
 
+	isProgressBarVisibleChanged = Signal()
+	dialogTextCodeChanged = Signal()
+	showApplyBtnChanged=Signal()
+	lockedServiceChanged=Signal()
 
 	def __init__(self):
 
 		QObject.__init__(self)
-		Bridge.llxUpConnect=LliurexUpConnect.LliurexUpConnect()
-		self._isProgressBarVisible=False
-		self._dialogTextCode=0
-		self._showApplyBtn=False
-		self._lockedService=""
-		self.abortProcess=False
-		self.lockedProcess=False
-		self.closeGui=True
-		self._runPkexec=Bridge.llxUpConnect.runPkexec
+		self.llxUpConnnect=LliurexUpConnect.LliurexUpConnect()
+		self._isProgressBarVisible = False
+		self._dialogTextCode = 0
+		self._showApplyBtn = False
+		self._lockedService = ""
+		self.abortProcess = False
+		self.lockedProcess = False
+		self.closeGui = True
+		self._runPkexec = self.llxUpConnnect.runPkexec
 
 	#def __init__
 
-	def _getIsProgressBarVisible(self):
+	@Property(bool,notify = isProgressBarVisibleChanged)
+	def _isProgressBarVisible(self):
 
 		return self._isProgressBarVisible
 
-	#def _getIsProgressBarVisible
+	#def _isProgressBarVisible
 
-	def _setIsProgressBarVisible(self,isProgressBarVisible):
+	@isProgressBarVisible.setter
+	def isProgressBarVisible(self,isProgressBarVisible):
 
-		if self._isProgressBarVisible!=isProgressBarVisible:
-			self._isProgressBarVisible=isProgressBarVisible
-			self.on_isProgressBarVisible.emit()
+		if self._isProgressBarVisible != isProgressBarVisible:
+			self._isProgressBarVisible = isProgressBarVisible
+			self.isProgressBarVisibleChanged.emit()
 
-	#def _setIsProgressBarVisible
+	#def isProgressBarVisible
 
-	def _getDialogTextCode(self):
+	@Property(int,,notify = dialogTextCodeChanged)
+	def dialogTextCode(self):
 
 		return self._dialogTextCode
 
-	#def _getIsProgressBarVisible
+	#def dialogTextCode
 
-	def _setDialogTextCode(self,dialogTextCode):
+	@dialogTextCode.setter
+	def dialogTextCode(self,dialogTextCode):
 
-		if self._dialogTextCode!=dialogTextCode:
-			self._dialogTextCode=dialogTextCode
-			self.on_dialogTextCode.emit()
+		if self._dialogTextCode != dialogTextCode:
+			self._dialogTextCode = dialogTextCode
+			self.dialogTextCodeChanged.emit()
 
-	#def _setDialogTextCode
+	#def dialogTextCode
 
-	def _getShowApplyBtn(self):
+	@Property(bool,notify = showApplyBtnChanged)
+	def showApplyBtn(self):
 
 		return self._showApplyBtn
 
-	#def _getIsProgressBarVisible
+	#def showApplyBtn
 
-	def _setShowApplyBtn(self,showApplyBtn):
+	@showApplyBtn.setter
+	def showApplyBtn(self,showApplyBtn):
 
-		if self._showApplyBtn!=showApplyBtn:
-			self._showApplyBtn=showApplyBtn
-			self.on_showApplyBtn.emit()
+		if self._showApplyBtn != showApplyBtn:
+			self._showApplyBtn = showApplyBtn
+			self.showApplyBtnChanged.emit()
 
-	#def _setShowApplyBtn
+	#def showApplyBtn
 
-	def _getLockedService(self):
+	@Property(str,notify = lockedServiceChanged)
+	def lockedService(self):
 
 		return self._lockedService
 
-	#def _getIsProgressBarVisible
+	#def lockedService
 
-	def _setLockedService(self,lockedService):
+	@lockedService.setter
+	def lockedService(self,lockedService):
 
-		if self._lockedService!=lockedService:
-			self._lockedService=lockedService
-			self.on_lockedService.emit()
+		if self._lockedService != lockedService:
+			self._lockedService = lockedService
+			self.lockedServiceChanged.emit()
 
-	#def _setShowApplyBtn
+	#def lockedService
 
-	def _getRunPkexec(self):
+	@Property(bool,constant=True)
+	def runPkexec(self):
 
 		return self._runPkexec
 
-	#def _getRunPkexec
+	#def runPkexec
 
 	def canRunUpdate(self):
 
-		ret=self.checkRoot()
+		ret = self.checkRoot()
 		
 		if ret:
-			ret=self.getLockInfo()
+			ret = self.getLockInfo()
 		
 		return ret
 
 	#def canRunUpdate
 
 	def checkRoot(self):
-		
-		abort=False
+
+		tokenFile = Path("/etc/lliurex-up.token")
+
 		try:
 			print("  [Lliurex-Up]: Checking root")
-			f=open("/etc/lliurex-up.token","w")
-			f.close()
-			os.remove("/etc/lliurex-up.token")
-		except:
-			abort=True
-			pass
-		
-		if abort:
-			self.dialogTextCode=Bridge.NO_ADMINISTRATION_PRIVILEGES
-			self.abortProcess=True
-			return False
-		else:
+			tokenFile.touch()
+			tokenFile.unlink(missing_ok=True)
 			return True
+		except Exception:
+			self.dialogTextCode = Bridge.NO_ADMINISTRATION_PRIVILEGES
+			self.abortProcess = True
+			return False
 		
 	#def checkRoot
 
 	def getLockInfo(self):
 
-		Bridge.llxUpConnect.checkLocks()
+		self.llxUpConnnect.checkLocks()
 		
 		print("  [Lliurex-Up]: Checking if LliureX-Up is running...")
-		code=Bridge.llxUpConnect.isLliurexUpLocked()
+		code = self.llxUpConnnect.isLliurexUpLocked()
 		
-		if code==0:
+		if code == 0:
 			return self._isAptLocked()
-		else:
-			self.lockedService="LliureX-Up"	
-			if code==1:
-				self.dialogTextCode=Bridge.SERVICE_RUNNING
-				self.abortProcess=True
-				return False
-			elif code==2:
-				self.dialogTextCode=Bridge.LOCKED_SERVICE
-				self.showApplyBtn=True
-				return False
+		
+		self.lockedService="LliureX-Up"	
+		if code == 1:
+			self.dialogTextCode = Bridge.SERVICE_RUNNING
+			self.abortProcess = True
+		elif code == 2:
+			self.dialogTextCode = Bridge.LOCKED_SERVICE
+			self.showApplyBtn = True
+		
+		return False
 	
 	#def _isLliurexUpLocked
 
@@ -191,20 +189,21 @@ class Bridge(QObject):
 
 		print("  [Lliurex-Up]: Checking if Apt is running...")
 
-		code=Bridge.llxUpConnect.isAptLocked()
+		code = self.llxUpConnnect.isAptLocked()
 
-		if code ==0:
+		if code == 0:
 			return self._isDpkgLocked()
-		else:
-			self.lockedService="Apt"	
-			if code==1:
-				self.dialogTextCode=Bridge.SERVICE_RUNNING
-				self.abortProcess=True
-				return False
-			elif code==2:
-				self.dialogTextCode=Bridge.LOCKED_SERVICE
-				self.showApplyBtn=True
-				return False
+		
+		self.lockedService = "Apt"
+
+		if code == 1:
+			self.dialogTextCode = Bridge.SERVICE_RUNNING
+			self.abortProcess = True
+		elif code == 2:
+			self.dialogTextCode = Bridge.LOCKED_SERVICE
+			self.showApplyBtn = True
+		
+		return False
 
 	#def _isAptLocked
 
@@ -212,50 +211,59 @@ class Bridge(QObject):
 
 		print("  [Lliurex-Up]: Checking if Dpkg is running...")
 
-		code=Bridge.llxUpConnect.isDpkgLocked()
-		if code ==0:
+		code = self.llxUpConnnect.isDpkgLocked()
+
+		if code == 0:
 			return True
-		elif code in [1,3]:
-			if code==1:
-				self.lockedService="Dpkg"	
-			elif code==3:
-				self.lockedService="Apt"
-			self.dialogTextCode=Bridge.SERVICE_RUNNING
-			self.abortProcess=True
-			return False
-		elif code==2:
-			self.dialogTextCode=Bridge.LOCKED_SERVICE
-			self.showApplyBtn=True
-			return False
+		elif code in (1,3):
+			self.lockedService = "Dpkg" if code == 1 else "Apt"	
+			self.dialogTextCode = Bridge.SERVICE_RUNNING
+			self.abortProcess = True
+		elif code == 2:
+			self.lockedService = "Dpkg"
+			self.dialogTextCode = Bridge.LOCKED_SERVICE
+			self.showApplyBtn = True
+		
+		return False
 	
 	#def isDpkgLocked
 
 	@Slot()
 	def launchUnlockProcess(self):
 
-		self.dialogTextCode=Bridge.UNLOCK_PROCESS_RUN
-		self.showApplyBtn=False
-		self.isProgressBarVisible=True
-		self.closeGui=False
-		self.unlockProcessT=UnlockProcess()
-		self.unlockProcessT.start()
-		self.unlockProcessT.finished.connect(self._unlockProcessRet)
+		self.dialogTextCode = Bridge.UNLOCK_PROCESS_RUN
+		self.showApplyBtn = False
+		self.isProgressBarVisible = True
+		self.closeGui = False
+
+		self.unlockProcessThread = QThread()
+		self.unlockProcessWorker = UnlockProcess(self.llxUpConnnect)
+		self.unlockProcessWorker.moveToThread(self.unlockProcessThread)
+
+		self.unlockProcessWorker.started.connect(self.unlockProcessThread.run)
+		self.unlockProcessWorker.finished.connect(self._unlockProcessRet)
+		self.unlockProcessWorker.finished.connect(self.unlockProcessThread.quit)
+		self.unlockProcessWorker.finished.connect(self.unlockProcessWorker.deleteLater)
+		self.unlockProcessThread.finished.connect(self.unlockProcessThread.deleteLater)
+
+		self.unlockProcessThread.start()
 
 	#def launchUnlockProcess
 
-	def _unlockProcessRet(self):
+	def _unlockProcessRet(self,ret):
 
-		self.closeGui=True
-		self.isProgressBarVisible=False
+		self.closeGui = True
+		self.isProgressBarVisible = False
 
-		if self.unlockProcessT.ret==0:
+		if ret == 0:
+			self.unlockProcessThread.wait()
 			os.execl(sys.executable, sys.executable, *sys.argv) 
 		else:
-			self.abortProcess=True
-			if self.unlockProcessT.ret==1:
-				self.dialogTextCode=Bridge.UNLOCK_PROCESS_FAIL
-			elif self.unlockProcessT.ret==2:
-				self.dialogTextCode=Bridge.SOME_PROCESS_RUNNING
+			self.abortProcess = True
+			if ret == 1:
+				self.dialogTextCode = Bridge.UNLOCK_PROCESS_FAIL
+			elif ret == 2:
+				self.dialogTextCode = Bridge.SOME_PROCESS_RUNNING
 
 	#def _unlockProcessRet
 
@@ -265,19 +273,5 @@ class Bridge(QObject):
 		return self.closeGui	
 
 	#def closed	
-
-	on_isProgressBarVisible=Signal()
-	isProgressBarVisible=Property(bool,_getIsProgressBarVisible,_setIsProgressBarVisible,notify=on_isProgressBarVisible)
-
-	on_dialogTextCode=Signal()
-	dialogTextCode=Property(int,_getDialogTextCode,_setDialogTextCode,notify=on_dialogTextCode)
-	
-	on_showApplyBtn=Signal()
-	showApplyBtn=Property(bool,_getShowApplyBtn,_setShowApplyBtn,notify=on_showApplyBtn)
-
-	on_lockedService=Signal()
-	lockedService=Property(str,_getLockedService,_setLockedService,notify=on_lockedService)
-
-	runPkexec=Property(bool,_getRunPkexec,constant=True)
 
 #def Bridge

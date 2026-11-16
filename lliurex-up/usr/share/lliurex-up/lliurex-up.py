@@ -9,16 +9,16 @@ import sys
 import os
 
 import LaunchStack
-launchStack=LaunchStack.Bridge()
-ret=launchStack.canRunUpdate()
+launchStack = LaunchStack.Bridge()
+ret = launchStack.canRunUpdate()
 
 if not ret:
 	app = QApplication()
 	app.setDesktopFileName("lliurex-up")
 	engine = QQmlApplicationEngine()
 	engine.clearComponentCache()
-	context=engine.rootContext()
-	launchStackBridge=launchStack
+	context = engine.rootContext()
+	launchStackBridge = launchStack
 
 	context.setContextProperty("launchStackBridge", launchStackBridge)
 
@@ -31,12 +31,12 @@ else:
 	app.setDesktopFileName("lliurex-up")
 	engine = QQmlApplicationEngine()
 	engine.clearComponentCache()
-	context=engine.rootContext()
-	mainStackBridge=c.mainStack
-	loadStackBridge=c.loadStack
-	infoStackBridge=c.infoStack
-	packageStackBridge=c.packageStack
-	settingStackBridge=c.settingStack
+	context = engine.rootContext()
+	mainStackBridge = c.mainStack
+	loadStackBridge = c.loadStack
+	infoStackBridge = c.infoStack
+	packageStackBridge = c.packageStack
+	settingStackBridge = c.settingStack
 	context.setContextProperty("mainStackBridge",mainStackBridge)
 	context.setContextProperty("loadStackBridge",loadStackBridge)
 	context.setContextProperty("infoStackBridge",infoStackBridge)

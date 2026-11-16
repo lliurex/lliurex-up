@@ -14,193 +14,191 @@ import datetime
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class CheckSystem(QThread):
+class CheckSystem(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
 
-		QThread.__init__(self)
-		self.freeSpace=[False,0]
-		self.statusN4d=""
-		self.canConnect=False
-		self.isMirrorExistsInADI=False
-		self.isMirrorRunningInADI=False
+	def __init__(self,manager):
+
+		super().__init__()
+		self.manager = manager
 
 	#def __init__
 
 	def run (self,*args):
 
-		time.sleep(5)
-		self.freeSpace=Bridge.llxUpConnect.freeSpaceCheck()
-		if self.freeSpace[0]:
-			self.statusN4d=Bridge.llxUpConnect.checkInitialN4dStatus()
-			Bridge.llxUpConnect.checkInitialFlavour()
-			self.isMirrorExistsInADI=Bridge.llxUpConnect.desktopCheckingMirrorExists()
-			self.isMirrorRunningInADI=Bridge.llxUpConnect.desktopCheckingMirrorIsRunning()
-			self.canConnect=Bridge.llxUpConnect.canConnectToLliurexNet()
+		ret = {
+			"freeSpace":{"enoughSpace": False,"freeSpace": 0.0},
+			"n4dStatus": False,
+			"canConnect": False
+		}
+
+		freeSpace = self.manager.freeSpaceCheck()
+
+		if freeSpace.get("enoughSpace"):
+			n4dStatus=self.manager.checkInitialN4dStatus()
+			self.manager.checkInitialFlavour()
+			canConnect=self.manager.canConnectToLliurexNet()
+			ret = {
+				"freeSpace": freeSpace,
+				"n4dStatus": n4dStatus,
+				"canConnect": canConnect
+			}
+
+		self.finished.emit(ret)
 
 	#def run
 
 #class CheckSystem
 
-class LaunchInitActions(QThread):
+class LaunchInitActions(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
 
-		QThread.__init__(self)
-		self.addRepos=args[0]
-		self.ret=[False,""]
+	def __init__(self,manager):
+
+		super().__init__()
 
 	#def __init__
 
 	def run (self,*args):
 
-		time.sleep(0.2)
-		if self.addRepos:
-			Bridge.llxUpConnect.addSourcesListLliurex()
+		ret = self.manager.initActionsScript()
 
-		self.ret=Bridge.llxUpConnect.initActionsScript()
-
+		self.finished.emit(ret)
+	
 	#def run
 
 #class LaunchInitActions
 
-class CheckLliurexUp(QThread):
+class CheckLliurexUp(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(bool)
 
-		QThread.__init__(self)
-		self.isLliurexUpUpdated=False
+	def __init__(self,manager):
+
+		super().__init__()
+		self.manager = manager
 
 	#def __init__
 
 	def run (self,*args):
+		
+		ret = self.manager.isLliurexUpIsUpdated()
 
-		time.sleep(0.2)
-		self.isLliurexUpUpdated=Bridge.llxUpConnect.isLliurexUpIsUpdated()
+		self.finished.emit(ret)
 
 	#def run
 
 #class CheckLliurexUp
 
-class UpdateLliurexUp(QThread):
+class UpdateLliurexUp(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
 
-		QThread.__init__(self)
-		self.isLliurexUpInstalled=[False,""]
+	def __init__(self,manager):
+
+		super().__init__()
+
+		self,manager = manager
 
 	#def __init__
 
 	def run (self,*args):
-		time.sleep(5)
-		self.isLliurexUpInstalled=Bridge.llxUpConnect.installLliurexUp()
+
+		ret = self.manager.installLliurexUp()
+
+		self.finished.emit(ret)
 	
 	#def run
 
 #class UpdateLliurexUp
 
-class CheckMirror(QThread):
+class GetCurrentVersion(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
 
-		QThread.__init__(self)
-		self.isLliurexUpUpdated=False
-		self.isMirrorRunning=False
+	def __init__(self,manager):
 
-	#def __init__
-
-	def run (self,*args):
-
-		time.sleep(0.2)
-		self.isMirrorUpdate=Bridge.llxUpConnect.lliurexMirrorIsUpdated()
-		self.isMirrorRunning=Bridge.llxUpConnect.lliurexMirrorIsRunning()
-		
-	#def run
-
-#class CheckMirror
-
-class LaunchMirror(QThread):
-
-	def __init__(self,*args):
-
-		QThread.__init__(self)
-		self.ret=""
+		super()__init__()
+		self.manager = manager
 
 	#def __init__
 
 	def run (self,*args):
 
-		cmd="/usr/sbin/lliurex-mirror-gui"
-		self.ret=subprocess.call(cmd,shell=True,stdout=subprocess.PIPE)
-		
-	#def run
+		ret = self.manager.getLliurexVersionLocal()
 
-#class LaunchMirror
-
-class GetCurrentVersion(QThread):
-
-	def __init__(self,*args):
-
-		QThread.__init__(self)
-		self.currentVersion=[]
-
-	#def __init__
-
-	def run (self,*args):
-
-		time.sleep(0.2)
-		self.currentVersion=Bridge.llxUpConnect.getLliurexVersionLocal()
+		self.finished.emit(ret)
 		
 	#def run
 
 #class GetCurrentVersion
 
-class GetAvailableVersion(QThread):
+class GetAvailableVersion(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(QObject)
 
-		QThread.__init__(self)
-		self.availableVersion=""
+	def __init__(self,manager):
 
+		super()__init__()
+		self.manager = manager
+	
 	#def __init__
 
 	def run (self,*args):
 
-		time.sleep(0.2)
-		self.availableVersion=Bridge.llxUpConnect.getLliurexVersionNet()
+		ret = self.manager.getLliurexVersionNet()
+
+		self.finished.emit(ret)
 		
 	#def run
 
 #class GetAvailableVersion
 
-class CheckInitialFlavourToInstall(QThread):
+class CheckInitialFlavourToInstall(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
 
-		QThread.__init__(self)
-		self.isFlavourInstalled=[0,""]
-		self.targetMetapackage=""
+	def __init__(self, manager):
+
+		super().__init()__
+		self.manager = manager
 
 	#def __init__
 
 	def run (self,*args):
 
-		time.sleep(0.2)
-		self.targetMetapackage=Bridge.llxUpConnect.targetMetapackage
+		ret = {
+			"status": 0,
+			"data": ""
+		}
 
-		if len(self.targetMetapackage) == 0:
+		targetMetapackage = self.llxUpConnect.targetMetapackage
+
+		if targetMetapackage:
 			print("  [Lliurex-Up]: Installation of metapackage is not required")
-		else:
-			print("  [Lliurex-Up]: Installation of metapackage is required: " +str(self.targetMetapackage))
-			self.isFlavourInstalled=Bridge.llxUpConnect.installInitialFlavour(self.targetMetapackage)
+			self.finished.emit(ret)
+		
+		print("  [Lliurex-Up]: Installation of metapackage is required: " +str(targetMetapackage))
+		isFlavourInstalled=self.llxUpConnect.installInitialFlavour(targetMetapackage)
+		
+		ret = isFlavourInstalled
+		
+		self.finished.emit(ret)
 	
 	#def run
 
 #def CheckInitialFlavourToInstall
 
-class GatherPackages(QThread):
+class GatherPackages(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
+
+	def __init__(self,manager):
+
+		super().__init()
+		self.manager = manager
 
 		QThread.__init__(self)
 		self.packages=0
@@ -211,246 +209,247 @@ class GatherPackages(QThread):
 
 	def run (self,*args):
 
-		time.sleep(0.2)
-		self.packages,self.updateSize=Bridge.llxUpConnect.getPackagesToUpdate()
-		self.incorrectFlavours=Bridge.llxUpConnect.checkIncorrectFlavours()
-		Bridge.llxUpConnect.getSystrayStatus()
-		Bridge.llxUpConnect.getAutoUpgradeInfo()
-		self.flatpakInfo=Bridge.llxUpConnect.getFlapakUpdateInfo()
+		packagesInfo = self.llxUpConnect.getPackagesToUpdate()
+		incorrectFlavours = self.llxUpConnect.checkIncorrectFlavours()
+		self.llxUpConnect.getSystrayStatus()
+		flatpakInfo = self.llxUpConnect.getFlapakUpdateInfo()
+
+		ret ={
+			"packagesInfo": packagesInfo,
+			"incorrectFlavours": incorrectFlavours,
+			"flatpakInfo": flatpakInfo
+		}
+
+		self.finished.emit(ret)
 	
 	#def run
 
 #def GatherPackages
 
-class DisableUpdatePause(QThread):
-
-	def __init__(self,*args):
-
-		QThread.__init__(self)
-
-	#def __init__
-
-	def run (self,*args):
-
-		ret=Bridge.llxUpConnect.manageUpdatePause(False,0)
-		
-	#def run
-
-#class CheckMirror
-
 class Bridge(QObject):
 
-	FREESPACE_ERROR=-1
-	INTERNET_CONNECTION_ERROR=-2
-	MIRROR_IS_RUNNING_ERROR=-3
-	UNABLE_CONNECTION_TO_SERVER=-4
-	UPDATE_LLIUREXUP_ERROR=-5
-	SEARCH_UPDATES_ERROR=-6
-	INCORRECT_METAPACKAGE_ERROR=-7
-	DPKG_CONFIGURE_ERROR=-8
+	FREESPACE_ERROR = -1
+	INTERNET_CONNECTION_ERROR = -2
+	UPDATE_LLIUREXUP_ERROR = -5
+	SEARCH_UPDATES_ERROR = -6
+	INCORRECT_METAPACKAGE_ERROR = -7
+	DPKG_CONFIGURE_ERROR = -8
 
+	KIRIGAMI_MSG_ERROR = 1 
+
+	loadStepChanged=Signal()
+	showProgressBarChanged=Signal()
+	progressValueChanged=Signal()
+	countDownValueChanged=Signal()
+	freeSpaceAvailableChanged=Signal()
 
 	def __init__(self):
 
 		QObject.__init__(self)
-		self.core=Core.Core.get_core()
-		Bridge.llxUpConnect=self.core.llxUpConnect
-		self._totalSteps=10
-		self._loadStep=0
-		self._showProgressBar=False
-		self._progressValue=0.0
-		self._countDownValue=5
-		self._mirrorPercentage=0
-		self.maxSeconds=5.0
-		self.currentSecond=0.0
-		self._showMirrorDialog=False
-		self._freeSpaceAvailable="0.00"
-		self.addRepos=True
-		self.endLaunchMirror=True
-		self._runPkexec=Bridge.llxUpConnect.runPkexec
+		self.core = Core.Core.get_core()
+		self.llxUpConnect = self.core.llxUpConnect
+		self._totalSteps = 9
+		self._loadStep = 0
+		self._showProgressBar = False
+		self._progressValue = 0.0
+		self._countDownValue = 5
+		self.maxSeconds = 5.0
+		self.currentSecond = 0.0
+		self._freeSpaceAvailable = 0.00
+		self._runPkexec=self.llxUpConnect.runPkexec
 
 	#def __init__
 
-	def _getTotalSteps(self):
-
-		return self._totalSteps
-
-	#def _getTotalSteps
-
-	def _getLoadStep(self):
+	@Property(int, notify = loadStepChanged)
+	def loadStep(self):
 
 		return self._loadStep
 
-	#def _getLoadStep
+	#def loadStep
 
-	def _setLoadStep(self,loadStep):
+	@loadStep.setter
+	def loadStep(self,loadStep):
 
-		if self._loadStep!=loadStep:
-			self._loadStep=loadStep
-			self.on_loadStep.emit()
+		if self._loadStep != loadStep:
+			self._loadStep = loadStep
+			self.loadStepChanged.emit()
 
-	#def _setLoadStep
+	#def loadStep
 
-	def _getShowProgressBar(self):
+	@Property(bool, notify = showProgressBarChanged)
+	def showProgressBar(self):
 
 		return self._showProgressBar
 
-	#def _getShowProgressBar
+	#def _showProgressBar
 
-	def _setShowProgressBar(self,showProgressBar):
+	@showProgressBar.setter
+	def showProgressBar(self,showProgressBar):
 
-		if self._showProgressBar!=showProgressBar:
-			self._showProgressBar=showProgressBar
+		if self._showProgressBar != showProgressBar:
+			self._showProgressBar = showProgressBar
 			self.on_showProgressBar.emit()
 
-	#def _setShowProgressBar
+	#def showProgressBar
 
-	def _getProgressValue(self):
+	Property(float, notify = progressValueChanged)
+	def progressValue(self):
 
 		return self._progressValue
 
-	#def _getProgressValue
+	#def progressValue
 
-	def _setProgressValue(self,progressValue):
+	@progressValue.setter
+	def progressValue(self,progressValue):
 
-		if self._progressValue!=progressValue:
-			self._progressValue=progressValue
-			self.on_progressValue.emit()
+		if self._progressValue != progressValue:
+			self._progressValue = progressValue
+			self.progressValueChanged.emit()
 
-	#def _setProgressValue
+	#def progressValue
 
-	def _getCountDownValue(self):
+	@Property(int, notify = countDownValueChanged)
+	def countDownValue(self):
 
 		return self._countDownValue
 
-	#def _getCountDownValue
+	#def countDownValue
 
-	def _setCountDownValue(self,countDownValue):
+	@countDownValue.setter
+	def countDownValue(self,countDownValue):
 
-		if self._countDownValue!=countDownValue:
-			self._countDownValue=countDownValue
-			self.on_countDownValue.emit()
+		if self._countDownValue != countDownValue:
+			self._countDownValue = countDownValue
+			self.countDownValueChanged.emit()
 
-	#def _setCountDownValue
+	#def countDownValue
 
-	def _getShowMirrorDialog(self):
-
-		return self._showMirrorDialog
-
-	#def _getShowMirrorDialog
-
-	def _setShowMirrorDialog(self,showMirrorDialog):
-
-		if self._showMirrorDialog!=showMirrorDialog:
-			self._showMirrorDialog=showMirrorDialog
-			self.on_showMirrorDialog.emit()
-
-	#def _setShowMirrorDialog
-
-	def _getMirrorPercentage(self):
-
-		return self._mirrorPercentage
-
-	#def _getMirrorPercentage
-
-	def _setMirrorPercentage(self,mirrorPercentage):
-
-		if self._mirrorPercentage!=mirrorPercentage:
-			self._mirrorPercentage=mirrorPercentage
-			self.on_mirrorPercentage.emit()
-
-	#def _setMirrorPercentage
-
-	def _getRunPkexec(self):
-
-		return self._runPkexec
-
-	#def _getRunPkexec
-
-	def _getFreeSpaceAvailable(self):
+	@Property(float, notify = freeSpaceAvailableChanged)
+	def freeSpaceAvailable(self):
 
 		return self._freeSpaceAvailable
 
-	#def _getFreeSpaceAvailable
+	#def freeSpaceAvailable
 
-	def _setFreeSpaceAvailable(self,freeSpaceAvailable):
+	@freeSpaceAvailable.setter
+	def freeSpaceAvailable(self,freeSpaceAvailable):
 
-		if self._freeSpaceAvailable!=freeSpaceAvailable:
-			self._freeSpaceAvailable=freeSpaceAvailable
-			self.on_freeSpaceAvailable.emit()
+		if self._freeSpaceAvailable != freeSpaceAvailable:
+			self._freeSpaceAvailable = freeSpaceAvailable
+			self.freeSpaceAvailableChanged.emit()
 
-	#def _setFreeSpaceAvailable
+	#def freeSpaceAvailable
+
+	@Property(int, constant=True)
+	def totalSteps(self):
+
+		return self._totalSteps
+
+	#def totalSteps
+
+	@Property(bool,constant=True)
+	def runPkexec(self):
+
+		return self._runPkexec
+
+	#def runPkexec
 
 	def checkSystem(self):
 
 		print("  [Lliurex-Up]: Checking system: connection to lliurex.gva.es, n4d status...")
-		self.core.mainStack.endProcess=False
-		self.loadStep=1
-		self.progressValue=self._getProgress()
-		self.checkSystemT=CheckSystem()
-		self.checkSystemT.start()
-		self.checkSystemT.finished.connect(self._checkSystemRet)
+		self.core.mainStack.endProcess = False
+		self.loadStep = 1
+		self.progressValue = self._getProgress()
+		
+		checkSystemThread = QThread()
+		self.checkSystemWorker = CheckSystem(self.llxUpConnect)
+		self.checkSystemWorker.moveToThread(checkSystemThread)
+
+		self.checkSystemWorker.started.connect(checkSystemThread.run)
+		self.checkSystemWorker.finished.connect(self._checkMirrorRet)
+		self.checkSystemWorker.finished.connect(checkSystemThread.quit)
+		self.checkSystemWorker.finished.connect(self.checkSystemWorker.deleteLater)
+		checkSystemThread.finished.connect(checkSystemThread.deleteLater)
+
+		checkSystemThread.star()
 
 	#def checkSystem
 
-	def _checkSystemRet(self):
+	@Slot(dict)
+	def _checkSystemRet(self,ret):
 
-		abort=False
-		self.freeSpaceAvailable=str(self.checkSystemT.freeSpace[1])
-		
-		if self.checkSystemT.freeSpace[0]:
-			if self.checkSystemT.canConnect:
-				self.loadStep=2
-				self.progressValue=self._getProgress()
-				if self.checkSystemT.isMirrorRunningInADI==False:
-					self._launchInitActions()
-				else:
-					abort=True
-					if self.checkSystemT.isMirrorRunningInADI:
-						print("  [Lliurex-Up]: Mirror is being updated in server")
-						self.core.mainStack.showErrorMessage=[Bridge.MIRROR_IS_RUNNING_ERROR,"Warning",""]
-			else:
-				abort=True
-				print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
-				self.core.mainStack.showErrorMessage=[Bridge.INTERNET_CONNECTION_ERROR,"Error",""]
-				self.core.mainStack.currentStack=2
-		else:
-			abort=True
-			print("  [Lliurex-Up]: Not enough space on disk ( %s GB)"%self.freeSpaceAvailable)
-			self.core.mainStack.showErrorMessage=[Bridge.FREESPACE_ERROR,"Error",""]
-		
-		if abort:
-			self.core.mainStack.endProcess=True
-			self.core.mainStack.currentStack=1	
+		freeSpace = ret.get("freeSpace")
+		n4dStatus = ret.get("n4dStatus")
+		canConnect = ret.get("canConnect")
 
+		self.freeSpaceAvailable = freeSpace.get("freeSpace")
+		
+		if not freeSpace.get("enoughSpace"):
+			print(f"  [Lliurex-Up]: Not enough space on disk ( {self.freeSpaceAvailable} GB)")
+			self.core.mainStack.showErrorMessage = {"msgCode": FREESPACE_ERROR,"type":KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.endProcess = True
+			self.core.mainStack.currentStack = 1
+			return	
+
+		if not canConnect:
+			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
+			self.core.mainStack.showErrorMessage = {"msgCode": INTERNET_CONNECTION_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.endProcess = True
+			self.core.mainStack.currentStack = 1
+			return
+
+		self._launchInitActions()
+		
 	#def _checkSystemRet
 
 	def _launchInitActions(self):
 
 		print("  [Lliurex-Up]: Executing init-actions...")
-		self.loadStep=3
-		self.progressValue=self._getProgress()
-		self.launchInitActionsT=LaunchInitActions(self.addRepos)
-		self.launchInitActionsT.start()
-		self.launchInitActionsT.finished.connect(self._checkLliurexUp)
+		self.loadStep = 2
+		self.progressValue = self._getProgress()
+		
+		launchInitActionsThread = QThread()
+		self.launchInitActionsWorker = LaunchInitActions(self.llxUpConnect)
+		self.launchInitActionsWorker.moveToThread(launchInitActionsThread)
+
+		self.launchInitActionsWorker.started.connect(launchInitActionsThread.run)
+		self.launchInitActionsThread.finished.connect(self._checkLliurexUp)
+		self.launchInitActionsWorker.finished.connect(launchInitActionsThread.quit)
+		self.launchInitActionsWorker.finished.connect(self.launchInitActionsWorker.deleteLater)
+		launchInitActionsThread.finished.connect(launchInitActionsThread.deleteLater)
+
+		launchInitActionsThread.start()
 
 	#def _launchInitActions
 
-	def _checkLliurexUp(self):
+	@Slot(dict)
+	def _checkLliurexUp(self,ret):
+
+		self.initActionsResult = ret
 
 		print("  [Lliurex-Up]: Checking Lliurex-Up version")
-		self.loadStep=4
-		self.progressValue=self._getProgress()
-		self.checkLliurexUpT=CheckLliurexUp()
-		self.checkLliurexUpT.start()
-		self.checkLliurexUpT.finished.connect(self._checkLliurexUpRet)
+		self.loadStep = 3
+		self.progressValue = self._getProgress()
+
+		checkLliurexUpThread = QThread()
+		self.checkLliurexUpWorker = CheckLliurexUp(self.llxUpConnect)
+		self.checkSystemWorker.moveToThread(checkLliurexUpThread)
+		self.checkLliurexUpWorker.started.connect(checkLliurexUpThread.run)
+
+		self.checkLliurexUpWorker.finished.connect(self._checkLliurexUpRet)
+		self.checkLliurexUpWorker.finished.connect(checkLliurexUpThread.quit)
+		self.checkLliurexUpWorker.finished.connect(self.checkLliurexUpWorker.deleteLater)
+		checkLliurexUpThread.finished.connect(checkLliurexUpThread.deleteLater)
+
+		checkLliurexUpThread.start()
 
 	#def _checkLliurexUp
 
-	def _checkLliurexUpRet(self):
+	@Slot(bool)
+	def _checkLliurexUpRet(self,ret):
 
-		if self.checkLliurexUpT.isLliurexUpUpdated:
-			self._checkMirror()
+		if ret:
+			self._getCurrentVersion()
 		else:
 			self._updateLliurexUp()
 
@@ -459,271 +458,214 @@ class Bridge(QObject):
 	def _updateLliurexUp(self):
 
 		print("  [Lliurex-Up]: Updating Lliurex-Up")
-		self.loadStep=5
-		self.progressValue=self._getProgress()
-		self.updateLliurexUpT=UpdateLliurexUp()
-		self.updateLliurexUpT.start()
-		self.updateLliurexUpT.finished.connect(self._updateLliurexUpRet)
+		self.loadStep = 4
+		self.progressValue = self._getProgress()
+
+		self.updateLliurexUpThread = QThread()
+		self.updateLliurexUpWorker = UpdateLliurexUp(self.llxUpConnect)
+		self.updateLliurexUpWorker.moveToThread(self.updateLliurexUpThread)
+		self.updateLliurexUpWorker.started.connect(self.updateLliurexUpThread.run)
+
+		self.updateLliurexUpWorker.finished.connect(self._updateLliurexUpRet)
+		self.updateLliurexUpWorker.finished.connect(self.updateLliurexUpThread.quit)
+		self.updateLliurexUpWorker.finished.connect(self.updateLliurexUpWorker.deleteLater)
+		self.updateLliurexUpThread.finished.connect(self.updateLliurexUpThread.deleteLater)
+
+		self.updateLliurexUpThread.start()
 
 	#def _updateLliureXUp
 
+	@Slot(dict)
 	def _updateLliurexUpRet(self):
 
 		self.core.mainStack.endProcess=True
 
-		if self.updateLliurexUpT.isLliurexUpInstalled[0]:
-			print("  [Lliurex-Up]: Reboot Lliurex-Up")
-			self.loadStep=12
-			self.waitForRestartTimer=QTimer(None)
-			self.waitForRestartTimer.timeout.connect(self._waitForRestartT)
-			self.progressValue=0.0
-			self.waitForRestartTimer.start(10)
-		else:
+		if not ret.get("status"):
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
-			self.core.mainStack.showErrorMessage=[Bridge.UPDATE_LLIUREXUP_ERROR,"Error",self.updateLliurexUpT.isLliurexUpInstalled[1]]
+			self.core.mainStack.showErrorMessage = {"msgCode": UPDATE_LLIUREXUP_ERROR,"type": KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
 			self.core.mainStack.currentStack=1
+			return
 
+		print("  [Lliurex-Up]: Reboot Lliurex-Up")
+		self.loadStep = 5
+		self.self.updateLliurexUpThread.wait()
+		self.waitForRestartTimer = QTimer(None)
+		self.waitForRestartTimer.timeout.connect(self._waitForRestartT)
+		self.progressValue = 0.0
+		self.waitForRestartTimer.start(10)
 
 	#def _updateLliureXUp
 
 	def _waitForRestartT(self):
 
-		self.countDownValue=int(self.maxSeconds+1-self.currentSecond)
-		self.progressValue=self.currentSecond/self.maxSeconds
+		self.countDownValue = int(self.maxSeconds+1-self.currentSecond)
+		self.progressValue = self.currentSecond/self.maxSeconds
 
-		self.currentSecond+=0.01	
-		if self.currentSecond>=self.maxSeconds:
+		self.currentSecond += 0.01	
+		if self.currentSecond >= self.maxSeconds:
 			self.waitForRestartTimer.stop()
-			Bridge.llxUpConnect.cleanLliurexUpLock()
+			self.llxUpConnect.cleanLliurexUpLock()
 			os.execl(sys.executable, sys.executable, *sys.argv)
 
 	#def _waitForRestartT
 
-	def _checkMirror(self):
-
-		print("  [Lliurex-Up]: Checking if mirror exist")
-		self.loadStep=6
-		self.progressValue=self._getProgress()
-		self.checkMirrorT=CheckMirror()
-		self.checkMirrorT.start()
-		self.checkMirrorT.finished.connect(self._checkMirrorRet)
-
-	#def _checkMirror
-
-	def _checkMirrorRet(self):
-
-		if not self.checkMirrorT.isMirrorUpdate:
-			if not self.checkMirrorT.isMirrorRunning:
-				print("  [Lliurex-Up]: Asking if mirror will be update")
-				self.showMirrorDialog=True
-			else:
-				self._launchMirrorTimer()
-		else:
-			if self.checkMirrorT.isMirrorRunning:
-				self._launchMirrorTimer()
-			else:
-				print("  [Lliurex-Up]: Nothing to do with mirror")
-				self._getCurrentVersion()
-
-	#def _checkMirrorRet
-
-	def _launchMirror(self):
-
-		print("  [Lliurex-Up]: Updating mirror")
-		self.endLaunchMirror=False
-		self._launchMirrorTimer()
-		self.launchMirrorT=LaunchMirror()
-		self.launchMirrorT.start()
-		self.launchMirrorT.finished.connect(self._launchMirrorRet)
-
-	#def _launchMirror
-
-	def _launchMirrorRet(self):
-
-		self.endLaunchMirror=True
-
-	#def _launchMirrorRet
-
-	def _launchMirrorTimer(self):
-
-		self.loadStep=13
-		self.progressValue=0
-		self.waitForMirrorTimer=QTimer(None)
-		self.waitForMirrorTimer.timeout.connect(self._waitForMirrorT)
-		self.waitForMirrorTimer.start(10)
-
-	#def _launchMirrorTimer
-
-	def _waitForMirrorT(self):
-
-		isMirrorRunning=Bridge.llxUpConnect.lliurexMirrorIsRunning()
-
-		if isMirrorRunning or not self.endLaunchMirror:
-			completed=Bridge.llxUpConnect.getPercentageLliurexMirror()
-			self.mirrorPercentage=int(format(completed,'.0f'))
-			self.progressValue=completed/100.0
-		else:
-			self.waitForMirrorTimer.stop()
-			self._getCurrentVersion()
-
-	#def _waitForMirrorT
-
 	def _getCurrentVersion(self):
 
 		print("  [Lliurex-Up]: Looking for LliurexVersion from local repository ")
-		self.loadStep=7
-		self.progressValue=self._getProgress()
-		self.getCurrentVersionT=GetCurrentVersion()
-		self.getCurrentVersionT.start()
-		self.getCurrentVersionT.finished.connect(self._getAvailableVersion)
+		self.loadStep = 6
+		self.progressValue = self._getProgress()
+		
+		getCurrentVersionThread = QThread()
+		self.getCurrentVersionWorker = GetCurrentVersion(self.llxUpConnect)
+		self.getCurrentVersionWorker.moveToThread(getCurrentVersionThread)
+		self.getCurrentVersionWorker.started.connect(getCurrentVersionWorker.run)
+
+		self.getCurrentVersionWorker.finished.connect(self._getAvailableVersion)
+		self.getCurrentVersionWorker.finished.connect(getCurrentVersionThread.quit)
+		self.getCurrentVersionWorker.finished.connect(self.getCurrentVersionWorker.deleteLater)
+		getCurrentVersionThread.finished.connect(getCurrentVersionThread.deleteLater)
+
+		getCurrentVersionThread.start()
 
 	#def _getCurrentVersion
 
-	def _getAvailableVersion(self):
+	@Slot(dict)
+	def _getAvailableVersion(self,ret):
+
+		self.currentVersion = ret
 
 		print("  [Lliurex-Up]: Looking for LliurexVersion from Lliurex net")
-		self.loadStep=8
+		self.loadStep = 7
 		self.progressValue=self._getProgress()
-		self.getAvailableVersionT=GetAvailableVersion()
-		self.getAvailableVersionT.start()
-		self.getAvailableVersionT.finished.connect(self._checkInitialFlavourToInstall)
+
+		getAvailableVersionThread = QThread()
+		self.getAvailableVersionWorker = GetAvailableVersion(self.llxUpConnect)
+		self.getAvailableVersionWorker.moveToThread(getAvailableVersionThread)
+		self.getAvailableVersionWorker.started.connect(getAvailableVersionThread.run)
+
+		self.getAvailableVersionWorker.finished.connect(self._checkInitialFlavourToInstall)
+		self.getAvailableVersionWorker.finished.connect(getAvailableVersionThread.quit)
+		self.getAvailableVersionWorker.finished.connect(self.getAvailableVersionWorker.deleteLater)
+		getAvailableVersionThread.finished.connect(getAvailableVersionThread.deleteLater)
+
+		getAvailableVersionThread.start()
 
 	#def _getAvailableVersion
 
-	def _checkInitialFlavourToInstall(self):
+	@Slot(QObject)
+	def _checkInitialFlavourToInstall(self,ret):
+
+		self.availableVersion = ret
 
 		print("  [Lliurex-Up]: Checking if installation of metapackage is required")
-		self.loadStep=9
-		self.progressValue=self._getProgress()
-		self.checkInitialFlavourToInstallT=CheckInitialFlavourToInstall()
-		self.checkInitialFlavourToInstallT.start()
-		self.checkInitialFlavourToInstallT.finished.connect(self._gatherPackages)
+		self.loadStep = 8
+		self.progressValue = self._getProgress()
+
+		checkInitialFlavourToInstallThread = QThread()
+		self.checkInitialFlavourToInstallWorker = CheckInitialFlavourToInstall(self.llxUpConnect)
+		self.checkInitialFlavourToInstallWorker.moveToThread(checkInitialFlavourToInstallThread)
+		self.checkInitialFlavourToInstallWorker.started.connect(checkInitialFlavourToInstallThread.run)
+
+		self.checkInitialFlavourToInstallWorker.finished.connect(self._gatherPackages)
+		self.checkInitialFlavourToInstallWorker.finished.connect(checkInitialFlavourToInstallThread.quit)
+		self.checkInitialFlavourToInstallWorker.finished.connect(self.checkInitialFlavourToInstallWorker.deleteLater)
+		checkInitialFlavourToInstallThread.finished.connect(checkInitialFlavourToInstallThread.deleteLater)
+
+		checkInitialFlavourToInstallThread.start()
+
 
 	#def _checkInitialFlavourToInstall
 
-	def _gatherPackages(self):
+	@Slot(dict)
+	def _gatherPackages(self,ret):
+
+		self.isFlavourInstalled = ret
 
 		print("  [Lliurex-Up]: Looking for for new updates")
-		self.loadStep=10
-		self.progressValue=self._getProgress()
-		self.gatherPackagesT=GatherPackages()
-		self.gatherPackagesT.start()
-		self.gatherPackagesT.finished.connect(self._gatherPackagesRet)
+		self.loadStep = 9
+		self.progressValue = self._getProgress()
+
+		gatherPackagesThread = QThread()
+		self.gatherPackagesWorker = GatherPackages(self.llxUpConnect)
+		self.gatherPackagesWorker.moveToThread(gatherPackagesThread)
+		self.gatherPackagesWorker.started.connect(gatherPackagesThread.run)
+
+		self.gatherPackagesWorker.finished.connect(self._gatherPackagesRet)
+		self.gatherPackagesWorker.finished.connect(gatherPackagesThread.quit)
+		self.gatherPackagesWorker.finished.connect(self.gatherPackagesWorker.deleteLater)
+		gatherPackagesThread.finished.connect(gatherPackagesThread.deleteLater)
+
+		gatherPackagesThread.start()
+
 
 	#def _gatherPackages
 
-	def _gatherPackagesRet(self):
+	@Slot(dict)
+	def _gatherPackagesRet(self,ret):
 
-		self.core.mainStack.endProcess=True
-		error=""
+		self.core.mainStack.endProcess = True
+		error = ""
+		packagesInfo = ret.get("packagesInfo")
+		incorrectFlavours = ret.get("incorrectFlavours")
+		flatpakInfo = ret.get("flatpakInfo")
 		
-		if len(self.gatherPackagesT.packages)==0:
-			self.core.mainStack.updateRequired=False
+		if packagesInfo.get("totalPackages") == 0:
+			self.core.mainStack.updateRequired = False
 
-			if self.checkInitialFlavourToInstallT.isFlavourInstalled[0]!=0:
+			if self.isFlavourInstalled.get("status") != 0:
 				self.core.mainStack.updateRequired=True
-				error=self.checkInitialFlavourToInstallT.isFlavourInstalled[1]
+				error = self.isFlavourInstalled.get("data")
 			else:	
-				if self.getCurrentVersionT.currentVersion["candidate"]!=None:
-					if self.getCurrentVersionT.currentVersion["installed"]!=self.getCurrentVersionT.currentVersion["candidate"]:
-						self.core.mainStack.updateRequired=True
+				if self.currentVersion.get("candidate") is not None:
+					if self.currentVersion.get("installed") != self.currentVersion.get("candidate"):
+						self.core.mainStack.updateRequired = True
 					else:
-						if self.getCurrentVersionT.currentVersion["installed"]!=self.getAvailableVersionT.availableVersion:
-							self.core.mainStack.updateRequired=True
+						if self.currentVersion.get("installed") != self.availableVersion:
+							self.core.mainStack.updateRequired = True
 
 			if self.core.mainStack.updateRequired:
-				logMsg="Updated abort. An error occurred in the search for updates"
-				Bridge.llxUpConnect.log(logMsg)
-				print("  [Lliurex-Up]: Error in search for updates")
-				self.core.mainStack.showErrorMessage=[Bridge.SEARCH_UPDATES_ERROR,"Error",error]
-				self.core.mainStack.currentStack=1
-			else:
-				logMsg="System update. Nothing to do"
-				Bridge.llxUpConnect.log(logMsg)
-				print("  [Lliurex-Up]: System update. Nothing to do")
-				if self.launchInitActionsT.ret[1]!="":
-					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
-				if self.llxUpConnect.isWeekPauseActive:
-					if datetime.date.today().isoformat()>=self.llxUpConnect.dateToUpdate:
-						self.disableUpdatePauseT=DisableUpdatePause()
-						self.disableUpdatePauseT.start()
-						self.disableUpdatePauseT.finished.connect(self._disableUpdatePauseRet)
-					else:
-						self.core.mainStack.loadInfo()
-				else:
-					self.core.mainStack.loadInfo()
+				logMsg = "Updated abort. An error occurred in the search for updates"
+				self.llxUpConnect.log(logMsg)
+				print(f"  [Lliurex-Up]: {logMsg}")
+				self.core.mainStack.showErrorMessag = {"msgCode": SEARCH_UPDATES_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":error}
+				self.core.mainStack.currentStack = 1
+				return
+			
+			logMsg="System update. Nothing to do"
+			self.llxUpConnect.log(logMsg)
+			
+			print(f"  [Lliurex-Up]: {logMsg}")
+			if not self.initActionsResult.get("status"):
+				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode":DKG_CONFIGURE_ERROR,"type":KIRIGAMI_MSG_ERROR}
+			self.core.mainStack.loadInfo()
+		
 		else:
-			if not self.gatherPackagesT.incorrectFlavours['status']:
+			if not incorrectFlavours.get("status"):
 				self.core.mainStack.updateRequired=True
 				print("  [Lliurex-Up]: System nor update")
+				if not self.initActionsResult.get("status"):
+					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": DPKG_CONFIGURE_ERROR,"type":KIRIGAMI_MSG_ERROR}
 				self.core.mainStack.loadInfo()
-				if self.launchInitActionsT.ret[1]!="":
-					self.core.mainStack.showFeedbackMessage=[True,Bridge.DPKG_CONFIGURE_ERROR,"Error"]
-			else:
-				logMsg="Updated abort for incorrect metapackages detected in update"
-				Bridge.llxUpConnect.log(logMsg)
-				print("  [Lliurex-Up]: Update abort. Detect incorrect metapackages in new updates")
-				self.core.mainStack.showErrorMessage=[Bridge.INCORRECT_METAPACKAGE_ERROR,"Error",""]
-				self.core.mainStack.currentStack=1
+				return
+
+			logMsg="Updated abort for incorrect metapackages detected in update"
+			self.llxUpConnect.log(logMsg)
+			print(f"  [Lliurex-Up]: {logMsg}")
+			self.core.mainStack.showErrorMessage = {"msgCode": INCORRECT_METAPACKAGE_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.currentStack=1
 
 	#def _gatherPackagesRet
 
-	def _disableUpdatePauseRet(self):
-
-		self.core.mainStack.loadInfo()
-
-	#def _disableUpdatePauseRet
-
 	def _getProgress(self):
 
-		totalProgress=self.totalSteps
-		currentProgress=round((self.loadStep-1)/totalProgress,1)
+		totalProgress = self.totalSteps
+		currentProgress = round((self.loadStep-1)/totalProgress,1)
 
 		return currentProgress
 
 	#def _getProgress
 
-	@Slot(str)
-	def manageMirrorDialog(self,response):
-
-		self.showMirrorDialog=False
-		if response=="Yes":
-			logMsg="Update lliurex-mirror. Response: Yes"
-			Bridge.llxUpConnect.log(logMsg)
-			self._launchMirror()
-		else:
-			logMsg="Update lliurex-mirror. Response: No"
-			Bridge.llxUpConnect.log(logMsg)
-			self._getCurrentVersion()
-			
-	#def manageRepoDialog
-	
-
-	on_loadStep=Signal()
-	loadStep=Property(int,_getLoadStep,_setLoadStep,notify=on_loadStep)
-	
-	on_showProgressBar=Signal()
-	showProgressBar=Property(bool,_getShowProgressBar,_setShowProgressBar,notify=on_showProgressBar)
-
-	on_progressValue=Signal()
-	progressValue=Property(float,_getShowProgressBar,_setShowProgressBar,notify=on_showProgressBar)
-
-	on_countDownValue=Signal()
-	countDownValue=Property(int,_getCountDownValue,_setCountDownValue,notify=on_countDownValue)
-	
-	on_showMirrorDialog=Signal()
-	showMirrorDialog=Property(bool,_getShowMirrorDialog,_setShowMirrorDialog,notify=on_showMirrorDialog)
-
-	on_mirrorPercentage=Signal()
-	mirrorPercentage=Property(int,_getMirrorPercentage,_setMirrorPercentage,notify=on_mirrorPercentage)
-
-	on_freeSpaceAvailable=Signal()
-	freeSpaceAvailable=Property(str,_getFreeSpaceAvailable,_setFreeSpaceAvailable,notify=on_freeSpaceAvailable)
-	
-	totalSteps=Property(int,_getTotalSteps,constant=True)
-
-	runPkexec=Property(bool,_getRunPkexec,constant=True)
-
+		
 #class Bridge
 
 import Core
