@@ -26,6 +26,13 @@ if not ret:
 	
 else:
 	import Core
+
+	if os.geteuid()==0:
+		os.environ["XDG_CURRENT_DESKTOP"]="KDE"
+
+	icons_paths=["/usr/share/icons","/usr/local/share/icons"]
+	QIcon.setThemeName("breeze")
+	
 	c=Core.Core.get_core()
 	app = QApplication()
 	app.setDesktopFileName("lliurex-up")

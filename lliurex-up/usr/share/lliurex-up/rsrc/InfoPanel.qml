@@ -4,262 +4,143 @@ import QtQuick.Layouts
 
 
 Rectangle{
-    color:"transparent"
+    color: "transparent"
 
-    Text{ 
-        text:i18nd("lliurex-up","Update information")
-        font.family: "Quattrocento Sans Bold"
-        font.pointSize: 16
-    }
-    GridLayout{
-        id:infoLayout
-        rows:1
-        flow: GridLayout.TopToBottom
-        rowSpacing:10
-        anchors.left:parent.left
-        width:parent.width-10
+    ColumnLayout{
+        id: mainContent
+        anchors.fill: parent
+        anchors.leftMargin: 5
+        anchors.rightMargin: 15
+        anchors.bottomMargin: 15
+        spacing: 5
+
+        Text{ 
+            text: i18nd("lliurex-up","Update information")
+            font.pointSize: 16
+        }
 
         GridLayout{
-            id: updateInfo
+            id: infoLayout
             columns: 2
-            flow: GridLayout.LeftToRight
-            columnSpacing:10
-            Layout.alignment:Qt.AlignHCenter
-            Layout.topMargin:50
+            rowSpacing: 10
+            Layout.topMargin: 5
+            Layout.alignment: Qt.AlignHCenter
 
             Text{
-                id:currentVersionText
-                Layout.bottomMargin:10
-                Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Current version:")
-                font.family: "Quattrocento Sans Bold"
+                id: currentVersionText
+                Layout.alignment: Qt.AlignRight
+                text: i18nd("lliurex-up","Current version:")
                 font.pointSize: 10
             }
 
             Text{
-                id:currentVersionValue
-                text:{
-                    if (infoStackBridge.currentVersion!=""){
-                        infoStackBridge.currentVersion
-                    }else{
-                        i18nd("lliurex-up","Not available")
-                    }
-                }
-                color:{
-                    if (infoStackBridge.currentVersion==""){
-                        "red"
-                    }else{
-                        "black"
-                    }
-                }
-                font.family: "Quattrocento Sans Bold"
+                id: currentVersionValue
+                text: infoStackBridge.versionInfo.currentVersion != null ? infoStackBridge.versionInfo.currentVersion : i18nd("lliurex-up","Not available")
+                color: infoStackBridge.versionInfo.currentVersion != null ? "red" : "black"
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
           
             Text{
-                id:availableVersionText
-                Layout.bottomMargin:10
-                Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Available version (lliurex.gva.es):")
-                font.family: "Quattrocento Sans Bold"
+                id: availableVersionText
+                Layout.alignment: Qt.AlignRight
+                text: i18nd("lliurex-up","Available version (lliurex.gva.es):")
                 font.pointSize: 10
             }
 
             Text{
-                id:availableVersionValue
-                text:{
-                    if (infoStackBridge.availableVersion=="Client"){
-                        i18nd("lliurex-up","Not available for clients")
-                    }else{
-                        if (infoStackBridge.availableVersion=="Connection"){
-                            i18nd("lliurex-up","Not available. Check conexion to lliurex.gva.es")
-                        }else{
-                            infoStackBridge.availableVersion
-                        }
-                    }
-                }
-                color:{
-                    if ((infoStackBridge.availableVersion=="Client")||(infoStackBridge.availableVersion=="Connection")){
-                        "red"
-                    }else{
-                        "black"
-                    }
-                }
-                font.family: "Quattrocento Sans Bold"
+                id: availableVersionValue
+                text: infoStackBridge.versionInfo.availableVersion != null ?
+                        infoStackBridge.versionInfo.availableVersion :
+                        i18nd("lliurex-up","Not available. Check conexion to lliurex.gva.es")
+                color: infoStackBridge.versionInfo. availableVersion != null ? "black" : "red"
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
 
             Text{
-                id:candiateVersionText
-                Layout.bottomMargin:10
-                Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Candidate version (to install):")
-                font.family: "Quattrocento Sans Bold"
+                id: candiateVersionText
+                Layout.alignment: Qt.AlignRight
+                text: i18nd("lliurex-up","Candidate version (to install):")
                 font.pointSize: 10
             }
 
             Text{
-                id:candiateVersionValue
-                text:{
-                    if (infoStackBridge.candidateVersion!=""){
-                        infoStackBridge.candidateVersion
-                    }else{
+                id: candiateVersionValue
+                text: infoStackBridge.versionInfo.candidateVersion !=null ? 
+                        infoStackBridge.candidateVersion ?
                         i18nd("lliurex-up","Not available")
-                    }
-                }
-                color:{
-                    if (infoStackBridge.candidateVersion==""){
-                        "red"
-                    }else{
-                        "black"
-                    }
-                }
-                Layout.maximumWidth:390
-                font.family: "Quattrocento Sans Bold"
+                color: infoStackBridge.candidateVersion != null ? "black" : "red"
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
 
             Text{
-                id:numberPackagesText
-                visible:mainStackBridge.updateRequired
-                Layout.bottomMargin:10
+                id: numberPackagesText
+                visible: mainStackBridge.updateRequired
                 Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Number of packages:")
-                font.family: "Quattrocento Sans Bold"
+                text: i18nd("lliurex-up","Number of packages:")
                 font.pointSize: 10
             }
 
             Text{
-                id:numberPackagesValue
-                visible:mainStackBridge.updateRequired
-                text:infoStackBridge.packagesToUpdate+" ( "+infoStackBridge.newPackagesToUpdate+ " "+i18nd("lliurex-up","news")+" )"
-                font.family: "Quattrocento Sans Bold"
+                id: numberPackagesValue
+                visible: mainStackBridge.updateRequired
+                text: infoStackBridge.updateInfo.totalPackages+" ( "+infoStackBridge.updateInfo.newPackages + " " + i18nd("lliurex-up","news") + " )"
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
 
             Text{
-                id:sizeText
-                visible:mainStackBridge.updateRequired
-                Layout.bottomMargin:10
+                id: sizeText
+                visible: mainStackBridge.updateRequired
                 Layout.alignment:Qt.AlignRight
-                text:i18nd("lliurex-up","Size of update (aprox):")
-                font.family: "Quattrocento Sans Bold"
+                text: i18nd("lliurex-up","Size of update (aprox):")
                 font.pointSize: 10
             }
 
             Text{
-                id:sizeValue
-                text:infoStackBridge.updateSize
-                visible:mainStackBridge.updateRequired
-                font.family: "Quattrocento Sans Bold"
+                id: sizeValue
+                text: infoStackBridge.updateInfo.upgradeSize
+                visible: mainStackBridge.updateRequired
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
            
             Text{
-                id:sourceText
-                text:i18nd("lliurex-up","Update source:")
-                font.family: "Quattrocento Sans Bold"
+                id: sourceText
+                text: i18nd("lliurex-up","Update source:")
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignRight
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignRight
             }
 
             Text{
-                id:sourceTextValue
-                text:{
-                    if (infoStackBridge.updateSource!=""){
-                        infoStackBridge.updateSource
-                    }else{
+                id: sourceTextValue
+                text: infoStackBridge.updateInfo.updateSource != "" ?
+                        infoStackBridge.updateSource :
                         i18nd("lliurex-up","Not available")
-                    }
-                }
-               color:{
-                    if (infoStackBridge.updateSource==""){
-                        "red"
-                    }else{
-                        "black"
-                    }
-                }
-                font.family: "Quattrocento Sans Bold"
+                
+                color: infoStackBridge.updateInfo.updateSource != "" ? "black" : "red"
                 font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
+                Layout.alignment: Qt.AlignLeft
             }
 	    
 	        Text{
-                id:flatpakText
-                text:i18nd("lliurex-up","Flatpak update info:")
-                font.family: "Quattrocento Sans Bold"
+                id: flatpakText
+                text: i18nd("lliurex-up","Flatpak update info:")
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignRight
-                Layout.bottomMargin:10
-		        visible:{
-                    if (infoStackBridge.flatpakInfo[0]>0){
-                        true
-                    }else{
-                        false
-                    }
-                }
+		        visible: infoStackBridge.flatpakInfo.totalFlatpak > 0 ? true : false
             }
 	    
 	        Text{
-                id:flatpakValue
-                text:i18nd("lliurex-up","Number of flapak:")+"  "+infoStackBridge.flatpakInfo[0]+" - "+i18nd("lliurex-up","Size:")+ " < "+infoStackBridge.flatpakInfo[1]
-                font.family: "Quattrocento Sans Bold"
+                id: flatpakValue
+                text: i18nd("lliurex-up","Number of flapak:")+"  "+infoStackBridge.flatpakInfo.totalFlatpak+" - "+i18nd("lliurex-up","Size:")+ " < "+infoStackBridge.flatpakInfo.size
                 font.pointSize: 10
                 Layout.alignment:Qt.AlignRight
-                Layout.bottomMargin:10
-                visible:{
-                    if (infoStackBridge.flatpakInfo[0]>0){
-                        true
-                    }else{
-                        false
-                    }
-                }
+                visible: infoStackBridge.flatpakInfo.totalFlatpa > 0 ? true : false
             }
-
-            Text{
-                id:dateToUpdateText
-                text:i18nd("lliurex-up","Auto update paused until:")
-                visible:{
-                    if (settingStackBridge.isAutoUpgradeEnabled && settingStackBridge.isWeekPauseActive){
-                        true
-                    }else{
-                        false
-                    }
-                }
-                font.family: "Quattrocento Sans Bold"
-                font.pointSize: 10
-                Layout.alignment:Qt.AlignRight
-                Layout.bottomMargin:10
-            }
-
-            Text{
-                id:dateToUpdateValue
-                text:settingStackBridge.dateToUpdate
-                visible:{
-                    if (settingStackBridge.isAutoUpgradeEnabled && settingStackBridge.isWeekPauseActive){
-                        true
-                    }else{
-                        false
-                    }
-                }
-                font.pointSize: 10
-                Layout.alignment:Qt.AlignLeft
-                Layout.bottomMargin:10
-
-            }
-      
+                
         }
     }
    

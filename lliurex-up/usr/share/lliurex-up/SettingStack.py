@@ -144,7 +144,7 @@ class Bridge(QObject):
 	@Slot()
 	def applyChanges(self):
 		
-		self.core.mainStack.closePopUp = False
+		self.core.mainStack.showPopUp = True
 		self.core.mainStack.closeGui = False
 		self.showSettingsMsg = {"show":False,"msgCode":"","type":""}
 
@@ -167,7 +167,7 @@ class Bridge(QObject):
 
 		self.getSettingsInfo()
 		self.changesInSettings = False
-		self.core.mainStack.closePopUp = True
+		self.core.mainStack.showPopUp = False
 
 		self.showSettingsMsg = {"show":True,"msgCode": ret.get("code"), "type": ret.get("type")}
 
@@ -185,7 +185,7 @@ class Bridge(QObject):
 	@Slot()
 	def discardChanges(self):
 
-		self.core.mainStack.closePopUp = False
+		self.core.mainStack.showPopUp = True
 		self.core.mainStack.closeGui = False
 		self.showSettingsMsg = {"show":False,"msgCode":"","type":""}
 		self._discardChangesRet()
@@ -195,7 +195,7 @@ class Bridge(QObject):
 	def _discardChangesRet(self):
 
 		self.getSettingsInfo()
-		self.core.mainStack.closePopUp = True
+		self.core.mainStack.showPopUp = False
 		self.changesInSettings = False
 		self.core.mainStack.closeGui = True
 		if self.core.mainStack.moveToStack != "":

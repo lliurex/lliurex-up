@@ -31,7 +31,7 @@ class Bridge(QObject):
 	progressPkgChanged = Signal()
 	closeGuiChanged = Signal()
 	showPendingChangesDialogChanged = Signal()
-	closePopUpChanged = Signal()
+	showPopUpChanged = Signal()
 
 	def __init__(self):
 
@@ -57,7 +57,7 @@ class Bridge(QObject):
 		self._closeGui = False
 		self.moveToStack = ""
 		self._showPendingChangesDialog = False
-		self._closePopUp = True
+		self._showPopUp = False
 
 	#def __init__
 
@@ -333,21 +333,21 @@ class Bridge(QObject):
 
 	#def showPendingChangesDialog
 
-	@Property(bool, notify = closePopUpChanged)
-	def closePopUp(self):
+	@Property(bool, notify = showPopUpChanged)
+	def showPopUp(self):
 
-		return self._closePopUp
+		return self._showPopUp
 
-	#def closePopUp
+	#def showPopUp
 
-	@closePopUp.setter
-	def closePopUp(self,closePopUp):
+	@showPopUp.setter
+	def showPopUp(self,showPopUp):
 
-		if self._closePopUp != closePopUp:
-			self._closePopUp = closePopUp
-			self.closePopUpChanged.emit()
+		if self._showPopUp != showPopUp:
+			self._showPopUp = showPopUp
+			self.showPopUpChanged.emit()
 
-	#def closePopUp	
+	#def showPopUp	
 
 	@Property(int, constant = True)
 	def totalUpdateSteps(self):

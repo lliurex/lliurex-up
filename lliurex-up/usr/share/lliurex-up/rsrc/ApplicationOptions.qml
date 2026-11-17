@@ -4,100 +4,81 @@ import QtQuick.Layouts
 import org.kde.plasma.components as PC
 import org.kde.kirigami as Kirigami
 
-GridLayout{
+RowLayout{
     id: optionsGrid
-    columns: 2
-    flow: GridLayout.LeftToRight
-    columnSpacing:10
+    spacing: 10
 
     Rectangle{
         width:180
-        Layout.minimumHeight:460
-        Layout.preferredHeight:460
-        Layout.fillHeight:true
-        border.color: "#d3d3d3"
+        Layout.fillHeight: true
+        border.color: palette.mid
 
-        GridLayout{
+        ColumnLayout{
             id: menuGrid
-            rows:5 
-            flow: GridLayout.TopToBottom
-            rowSpacing:0
+            Layout.fillWidth:true
+            Layout.fillHeight:true
+            spacing:0
 
             MenuOptionBtn {
                 id:infoOption
                 optionText:i18nd("lliurex-up","Information")
-                optionIcon:"/usr/share/icons/breeze/status/22/update-low.svg"
+                optionIcon:"update-low"
                 visible:true
-                Connections{
-                    function onMenuOptionClicked(){
-                        mainStackBridge.manageTransitions(0)
-                    }
-                }
+                onMenuOptionClicked:mainStackBridge.manageTransitions(0)
             }
 
             MenuOptionBtn {
                 id:pkgOption
                 optionText:i18nd("lliurex-up","Packages list")
-                optionIcon:"/usr/share/icons/breeze/actions/22/view-list-details.svg"
+                optionIcon:"view-list-details"
                 visible:mainStackBridge.updateRequired
-                Connections{
-                    function onMenuOptionClicked(){
-                        mainStackBridge.manageTransitions(1)
-                    }
-                }
+                onMenuOptionClicked:mainStackBridge.manageTransitions(1)
             }
 
             MenuOptionBtn {
                 id:konsoleOption
                 optionText:i18nd("lliurex-up","Update process")
-                optionIcon:"/usr/share/icons/breeze/apps/22/utilities-terminal.svg"
+                optionIcon:"utilities-terminal"
                 visible:mainStackBridge.enableKonsole
                 enabled:true
-                Connections{
-                    function onMenuOptionClicked(){
-                        mainStackBridge.manageTransitions(2)
-                    }
-                }
+                onMenuOptionClicked:mainStackBridge.manageTransitions(2)
             }
 
             MenuOptionBtn {
                 id:settingsOption
                 optionText:i18nd("lliurex-up","Settings")
-                optionIcon:"/usr/share/icons/breeze/actions/22/configure.svg"
+                optionIcon:"configure"
                 visible:settingStackBridge.showSettingsPanel
                 enabled:mainStackBridge.endProcess
-                Connections{
-                    function onMenuOptionClicked(){
-                        mainStackBridge.manageTransitions(3)
-                    }
-                }
+                onMenuOptionClicked: mainStackBridge.manageTransitions(3)
             }
 
             MenuOptionBtn {
                 id:helpOption
                 optionText:i18nd("lliurex-up","Help")
-                optionIcon:"/usr/share/icons/breeze/actions/22/help-contents.svg"
-                Connections{
-                    function onMenuOptionClicked(){
-                        mainStackBridge.openHelp()
-                    }
-                }
+                optionIcon:"help-contents.svg"
+                onMenuOptionClicked: mainStackBridge.openHelp()
+           }
+
+            Item {
+                Layout.fillHeight:true
             }
         }
     }
 
-    GridLayout{
+    ColumnLayout{
         id: layoutGrid
-        rows:3 
-        flow: GridLayout.TopToBottom
-        rowSpacing:0
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.leftMargin:5
+        Layout.rightMargin:15
+        spacing:10
 
         StackLayout {
             id: optionsLayout
             currentIndex:mainStackBridge.currentOptionStack
             Layout.fillHeight:true
             Layout.fillWidth:true
-            Layout.alignment:Qt.AlignHCenter
 
             InfoPanel{
                 id:infoPanel
@@ -114,51 +95,45 @@ GridLayout{
             SettingsPanel{
                 id:settingsPanel
             }
-           
  
         }
 
         Kirigami.InlineMessage {
             id: messageLabel
-            visible:mainStackBridge.showFeedbackMessage[0]
+            visible:mainStackBridge.showFeedbackMessage.show
             text:getResultText()
             type:getMsgType()
-            Layout.minimumWidth:555
             Layout.fillWidth:true
-            Layout.rightMargin:10
-            onVisibleChanged:{
-                if (messageLabel.visible && loadStackBridge.runPkexec){
-                    background.color=getMsgColor()
-                }
-            }
+      
         }
 
         RowLayout{
             id:feedbackRow
             spacing:10
-            Layout.topMargin:10
-            Layout.bottomMargin:10
+            Layout.topMargin:5
+            Layout.bottomMargin:15
             Layout.fillWidth:true
+
 
             ColumnLayout{
                 id:feedbackColumn
                 spacing:10
-                Layout.alignment:Qt.AlignHCenter
+                Layout.fiilWidth:true
+                
                 Text{
                     id:feedBackText
                     text:{
-                        if ((mainStackBridge.updateStep>1)&&(mainStackBridge.updateStep<5)){
+                        if (mainStackBridge.updateStep>1 && mainStackBridge.updateStep<5){
                             getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
                         }else{
                             getFeedBackText()
                         }
                     }
                     visible:true
-                    font.family: "Quattrocento Sans Bold"
                     font.pointSize: 10
                     horizontalAlignment:Text.AlignHCenter
-                    Layout.preferredWidth:200
                     Layout.fillWidth:true
+                    Layout.maximumWidth: 500
                     Layout.alignment:Qt.AlignHCenter
                     wrapMode: Text.WordWrap
                 }
@@ -170,7 +145,6 @@ GridLayout{
                     value:mainStackBridge.progressBarValue
                     visible:mainStackBridge.showProgressBar
                     implicitWidth:400
-                    implicitHeight:loadStackBridge.runPkexec?7:25
                     Layout.alignment:Qt.AlignHCenter
                 }
                 
@@ -178,23 +152,12 @@ GridLayout{
                
             PC.Button {
                 id:updateBtn
-                visible:{
-                    if (mainStackBridge.showUpdateBtn){
-                        if (mainStackBridge.currentOptionStack!=3){
-                            true
-                        }else{
-                            false
-                        }
-                    }else{
-                        false
-                    }
-                }
-                focus:true
+                visible:mainStackBridge.showUpdateBtn && mainStackBridge.currentOptionStack!==3
+                focus: visible
                 display:AbstractButton.TextBesideIcon
                 icon.name:"view-refresh"
                 text:i18nd("lliurex-up","Update")
                 enabled:mainStackBridge.enableUpdateBtn
-                Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
                 Keys.onReturnPressed: updateBtn.clicked()
@@ -209,52 +172,31 @@ GridLayout{
 
             PC.Button {
                 id:applyBtn
-                visible:{
-                    if (mainStackBridge.currentOptionStack==3){
-                        true
-                    }else{
-                        false
-                    }
-                }
-                focus:true
+                visible: mainStackBridge.currentOptionStack ===3
+                focus:visible
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-ok"
                 text:i18nd("lliurex-up","Apply")
                 enabled:settingStackBridge.settingsChanged
-                Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
                 Keys.onReturnPressed: applyBtn.clicked()
                 Keys.onEnterPressed: applyBtn.clicked()
-                onClicked:{
-                    applyChanges()
-                    settingStackBridge.applyChanges()
-                }
-                
+                onClicked:settingStackBridge.applyChanges()
             }
             PC.Button {
                 id:cancelBtn
-                visible:{
-                    if (mainStackBridge.currentOptionStack==3){
-                        true
-                    }else{
-                        false
-                    }
-                }
-                focus:true
+                visible: mainStackBridge.currentOptionStack===3
+                focus: false
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-cancel"
                 text:i18nd("lliurex-up","Cancel")
                 enabled:settingStackBridge.settingsChanged
-                Layout.preferredHeight:40
                 Layout.leftMargin:10
                 Layout.rightMargin:10
                 Keys.onReturnPressed: cancelBtn.clicked()
                 Keys.onEnterPressed: cancelBtn.clicked()
-                onClicked:{
-                    discardChanges()
-                    settingStackBridge.discardChanges()
-                }
+                onClicked:settingStackBridge.discardChanges()
                 
             }
         }
@@ -268,13 +210,12 @@ GridLayout{
         Connections{
             target:pendingChangesDialog
             function onDialogApplyClicked(){
-                applyChanges()
+               mainStackBridge.managePendingChangesDialog("Apply")
             }
             function onDiscardDialogClicked(){
-                discardChanges()
+               mainStackBridge.managePendingChangesDialog("Discard")
             }
             function onCancelDialogClicked(){
-                closeTimer.stop()
                 mainStackBridge.managePendingChangesDialog("Cancel")
             }
         }
@@ -285,159 +226,83 @@ GridLayout{
     }
 
     Timer{
-        id:delayTimer
-    }
-
-    function delayT(delayTime,cb){
-        delayTimer.interval=delayTime;
-        delayTimer.repeat=true;
-        delayTimer.triggered.connect(cb);
-        delayTimer.start()
-    }
-
-    Timer{
-        id:waitTimer
-    }
-
-    function wait(delayTime,cb){
-        waitTimer.interval=delayTime;
-        waitTimer.repeat=true;
-        waitTimer.triggered.connect(cb);
-        waitTimer.start()
-    }
-
-    function applyChanges(){
-        waitPopup.open()
-        waitPopup.popupMessage=i18nd("lliurex-up", "Apply changes. Wait a moment...")
-        delayTimer.stop()
-        delayT(500, function() {
-            if (mainStackBridge.closePopUp){
-                waitPopup.close(),
-                delayTimer.stop()
-            }
-        })
-   }
-
-   function discardChanges(){
-        waitPopup.open()
-        waitPopup.popupMessage=i18nd("lliurex-up", "Restoring previous values. Wait a moment...")
-        delayTimer.stop()
-        delayT(1000, function() {
-            if (mainStackBridge.closePopUp){
-                waitPopup.close(),
-                delayTimer.stop()
-            }
-        })
-   } 
-   
-    Timer{
         id:timer
-    }
-
-    function delay(delayTime,cb){
-        timer.interval=delayTime;
-        timer.repeat=true;
-        timer.triggered.connect(cb);
-        timer.start()
-    }
-   
-    function updateSystem(){
-        delay(100, function() {
+        interval:100
+        repeat:true
+        onTriggered:{
             if (mainStackBridge.endProcess){
                 timer.stop()
-                
             }else{
                 if (mainStackBridge.endCurrentCommand){
                     mainStackBridge.getNewCommand()
                     var newCommand=mainStackBridge.currentCommand
                     konsolePanel.runCommand(newCommand)
-                }
+                }  
             }
-          })
+        }
+    }
+   
+    function updateSystem(){
+        timer.restart()
     } 
 
     function getResultText(){
 
-        var msg=""
-        switch(mainStackBridge.showFeedbackMessage[1]){
+        switch(mainStackBridge.showFeedbackMessage.msgCode){
 
             case 1:
-                msg=i18nd("lliurex-up","The updated process has ended successfully.The system is now update")
-                break;
+                return i18nd("lliurex-up","The updated process has ended successfully.The system is now update")
             case 2:
-                msg=i18nd("lliurex-up","Your system is update")
-                break;
+                return i18nd("lliurex-up","Your system is update")
             case -1:
-                msg=i18nd("lliurex-up","The updated process has ended with errors")
-                break;
+                return i18nd("lliurex-up","The updated process has ended with errors")
             case -8:
-                msg=i18nd("lliurex-up","dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
-                break;
+                return i18nd("lliurex-up","dpkg --configure -a must be executed. You can use dpkg-unlocker for this")
+            default:
+                return ""
         }
-        return msg
     }
  
     function getFeedBackText(){
 
-        var msg=""
-        var headed=mainStackBridge.updateStep+" "+i18nd("lliurex-up","of")+" "+mainStackBridge.totalUpdateSteps
+        let headed = mainStackBridge.updateStep+" "+i18nd("lliurex-up","of")+" "+mainStackBridge.totalUpdateSteps
+        let msg
 
         switch(mainStackBridge.updateStep){
             case 0:
-                msg=""
-                return msg
+            default:
+                return ""
             case 1:
-                msg=i18nd("lliurex-up","Preparing system to the update...")
-                break;
+                msg = i18nd("lliurex-up","Preparing system to the update...")
             case 2:
-                msg=i18nd("lliurex-up","Downloading packages")
-                break;
+                msg = i18nd("lliurex-up","Downloading packages")
             case 3:
-                msg=i18nd("lliurex-up","Unpacking packages")
-                break;
+                msg = i18nd("lliurex-up","Unpacking packages")
             case 4:
-                msg=i18nd("lliurex-up","Configuring packages")
-                break;
+                msg = i18nd("lliurex-up","Configuring packages")
             case 5:
-                msg=i18nd("lliurex-up","Ending the update...")
-                break;
+                msg = i18nd("lliurex-up","Ending the update...")
             case 6:
-                msg=i18nd("lliurex-up","Checking metapackage...")
-                break;
+                msg = i18nd("lliurex-up","Checking metapackage...")
             case 7:
-                msg=i18nd("lliurex-up","Updating Flatpak applications...")
-                break;
+                msg = i18nd("lliurex-up","Updating Flatpak applications...")
         }
-        msg=headed+". "+msg
-        return msg
-    }
+        return headed + ". " + msg
+     }
 
     function getMsgType(){
 
-        switch(mainStackBridge.showFeedbackMessage[2]){
-            case "Ok":
-                return Kirigami.MessageType.Positive;
-            case "Error":
-                return Kirigami.MessageType.Error;
-            case "Info":
-                return Kirigami.MessageType.Information;
-            case "Warning":
+        switch(mainStackBridge.showFeedbackMessage.type){
+            case 0:
+                return Kirigami.MessageType.Positive
+            case 1:
+                return Kirigami.MessageType.Error
+            case 2:
                 return Kirigami.MessageType.Warning;
-        }
-    }
-
-    function getMsgColor(){
-
-        switch(mainStackBridge.showFeedbackMessage[2]){
-            case "Ok":
-                return "#3cb371";
-            case "Error":
-                return "#dc143c";
-            case "Info":
-                return "#00bfff";
-            case "Warning":
-                return "#ff8c00";
-        }
+            case 3:
+            default:
+                return Kirigami.MessageType.Information
+         }
     }
 }
 
