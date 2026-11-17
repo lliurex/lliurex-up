@@ -390,23 +390,6 @@ class LliurexUpConnect():
 			
 	#def getPackagesToUpdate
 	
-	def convertSize(self,sizeBytes):
-
-		try:
-			sizeBytes = float(sizeBytes)
-		except (ValueError,TypeError):
-			return "0 B"
-
-		if sizeBytes <= 0:
-			return "0 B"
-
-		sizeName = ("B", "KB", "MB", "GB" , "TB")
-		i = min(int(math.floor(math.log(sizeBytes, 1024))),len(sizeName) -1)
-		p = math.pow(1024, i)
-		s = round(sizeBytes/p, 1) if i >= 2 else int(round(sizeBytes / p))
-
-		return f"{s} {sizeName[i]}"
-
 	def getPackagesData(self,packages):
 
 		self.newPackages = 0
@@ -544,12 +527,13 @@ class LliurexUpConnect():
 					if not line.starswith("Get:")
 				]
 
-				cleanText = "\n".join(cleanLines).replace("\n","\n")
+				changelog = "\n".join(cleanLines).replace("\n","\n")
 
+				'''
 				self.llxUpCore.changelogsPath.mkdir(parents=True,exists_ok=True)
 				changelogFile.write_text(cleanText,encodiing="utf-8")
-
-				return cleanText
+				'''
+				return changelog
 
 			except Exception as e:
 				return changelog

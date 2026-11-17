@@ -240,7 +240,7 @@ class Bridge(QObject):
 		self.unlockProcessWorker = UnlockProcess(self.llxUpConnnect)
 		self.unlockProcessWorker.moveToThread(self.unlockProcessThread)
 
-		self.unlockProcessWorker.started.connect(self.unlockProcessThread.run)
+		self.unlockProcessThread.started.connect(self.unlockProcessWorker.run)
 		self.unlockProcessWorker.finished.connect(self._unlockProcessRet)
 		self.unlockProcessWorker.finished.connect(self.unlockProcessThread.quit)
 		self.unlockProcessWorker.finished.connect(self.unlockProcessWorker.deleteLater)

@@ -235,8 +235,6 @@ class Bridge(QObject):
 	INCORRECT_METAPACKAGE_ERROR = -7
 	DPKG_CONFIGURE_ERROR = -8
 
-	KIRIGAMI_MSG_ERROR = 1 
-
 	loadStepChanged=Signal()
 	showProgressBarChanged=Signal()
 	progressValueChanged=Signal()
@@ -361,17 +359,17 @@ class Bridge(QObject):
 		self.loadStep = 1
 		self.progressValue = self._getProgress()
 		
-		checkSystemThread = QThread()
+		self.checkSystemThread = QThread()
 		self.checkSystemWorker = CheckSystem(self.llxUpConnect)
-		self.checkSystemWorker.moveToThread(checkSystemThread)
+		self.checkSystemWorker.moveToThread(self.checkSystemThread)
 
-		self.checkSystemWorker.started.connect(checkSystemThread.run)
-		self.checkSystemWorker.finished.connect(self._checkMirrorRet)
-		self.checkSystemWorker.finished.connect(checkSystemThread.quit)
+		self.checkSystemThread.started.connect(self.checkSystemWorker.run)
+		self.checkSystemWorker.finished.connect(self._checkSystemRet)
+		self.checkSystemWorker.finished.connect(self.checkSystemThread.quit)
 		self.checkSystemWorker.finished.connect(self.checkSystemWorker.deleteLater)
-		checkSystemThread.finished.connect(checkSystemThread.deleteLater)
+		self.checkSystemThread.finished.connect(self.checkSystemThread.deleteLater)
 
-		checkSystemThread.star()
+		self.checkSystemThread.star()
 
 	#def checkSystem
 
@@ -386,14 +384,14 @@ class Bridge(QObject):
 		
 		if not freeSpace.get("enoughSpace"):
 			print(f"  [Lliurex-Up]: Not enough space on disk ( {self.freeSpaceAvailable} GB)")
-			self.core.mainStack.showErrorMessage = {"msgCode": FREESPACE_ERROR,"type":KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": FREESPACE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.endProcess = True
 			self.core.mainStack.currentStack = 1
 			return	
 
 		if not canConnect:
 			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
-			self.core.mainStack.showErrorMessage = {"msgCode": INTERNET_CONNECTION_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": INTERNET_CONNECTION_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.endProcess = True
 			self.core.mainStack.currentStack = 1
 			return
@@ -408,17 +406,17 @@ class Bridge(QObject):
 		self.loadStep = 2
 		self.progressValue = self._getProgress()
 		
-		launchInitActionsThread = QThread()
+		self.launchInitActionsThread = QThread()
 		self.launchInitActionsWorker = LaunchInitActions(self.llxUpConnect)
-		self.launchInitActionsWorker.moveToThread(launchInitActionsThread)
+		self.launchInitActionsWorker.moveToThread(self.launchInitActionsThread)
 
-		self.launchInitActionsWorker.started.connect(launchInitActionsThread.run)
+		self.launchInitActionsThread.started.connect(self.launchInitActionsWorker.run)
 		self.launchInitActionsThread.finished.connect(self._checkLliurexUp)
-		self.launchInitActionsWorker.finished.connect(launchInitActionsThread.quit)
+		self.launchInitActionsWorker.finished.connect(self.launchInitActionsThread.quit)
 		self.launchInitActionsWorker.finished.connect(self.launchInitActionsWorker.deleteLater)
-		launchInitActionsThread.finished.connect(launchInitActionsThread.deleteLater)
+		self.launchInitActionsThread.finished.connect(self.launchInitActionsThread.deleteLater)
 
-		launchInitActionsThread.start()
+		self.launchInitActionsThread.start()
 
 	#def _launchInitActions
 
@@ -431,17 +429,17 @@ class Bridge(QObject):
 		self.loadStep = 3
 		self.progressValue = self._getProgress()
 
-		checkLliurexUpThread = QThread()
+		self.checkLliurexUpThread = QThread()
 		self.checkLliurexUpWorker = CheckLliurexUp(self.llxUpConnect)
-		self.checkSystemWorker.moveToThread(checkLliurexUpThread)
-		self.checkLliurexUpWorker.started.connect(checkLliurexUpThread.run)
+		self.checkSystemWorker.moveToThread(self.checkLliurexUpThread)
+		self.checkLliurexUpThread.started.connect(self.checkLliurexUpWorker.run)
 
 		self.checkLliurexUpWorker.finished.connect(self._checkLliurexUpRet)
-		self.checkLliurexUpWorker.finished.connect(checkLliurexUpThread.quit)
+		self.checkLliurexUpWorker.finished.connect(self.checkLliurexUpThread.quit)
 		self.checkLliurexUpWorker.finished.connect(self.checkLliurexUpWorker.deleteLater)
-		checkLliurexUpThread.finished.connect(checkLliurexUpThread.deleteLater)
+		self.checkLliurexUpThread.finished.connect(self.checkLliurexUpThread.deleteLater)
 
-		checkLliurexUpThread.start()
+		self.checkLliurexUpThread.start()
 
 	#def _checkLliurexUp
 
@@ -464,7 +462,7 @@ class Bridge(QObject):
 		self.updateLliurexUpThread = QThread()
 		self.updateLliurexUpWorker = UpdateLliurexUp(self.llxUpConnect)
 		self.updateLliurexUpWorker.moveToThread(self.updateLliurexUpThread)
-		self.updateLliurexUpWorker.started.connect(self.updateLliurexUpThread.run)
+		self.updateLliurexUpThread.started.connect(self.updateLliurexUpWorker.run)
 
 		self.updateLliurexUpWorker.finished.connect(self._updateLliurexUpRet)
 		self.updateLliurexUpWorker.finished.connect(self.updateLliurexUpThread.quit)
@@ -482,7 +480,7 @@ class Bridge(QObject):
 
 		if not ret.get("status"):
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
-			self.core.mainStack.showErrorMessage = {"msgCode": UPDATE_LLIUREXUP_ERROR,"type": KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
+			self.core.mainStack.showErrorMessage = {"msgCode": UPDATE_LLIUREXUP_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
 			self.core.mainStack.currentStack=1
 			return
 
@@ -515,17 +513,17 @@ class Bridge(QObject):
 		self.loadStep = 6
 		self.progressValue = self._getProgress()
 		
-		getCurrentVersionThread = QThread()
+		self.getCurrentVersionThread = QThread()
 		self.getCurrentVersionWorker = GetCurrentVersion(self.llxUpConnect)
-		self.getCurrentVersionWorker.moveToThread(getCurrentVersionThread)
-		self.getCurrentVersionWorker.started.connect(getCurrentVersionWorker.run)
+		self.getCurrentVersionWorker.moveToThread(self.getCurrentVersionThread)
+		self.getCurrentVersionThread.started.connect(self,getCurrentVersionThread.run)
 
 		self.getCurrentVersionWorker.finished.connect(self._getAvailableVersion)
-		self.getCurrentVersionWorker.finished.connect(getCurrentVersionThread.quit)
+		self.getCurrentVersionWorker.finished.connect(self.getCurrentVersionThread.quit)
 		self.getCurrentVersionWorker.finished.connect(self.getCurrentVersionWorker.deleteLater)
-		getCurrentVersionThread.finished.connect(getCurrentVersionThread.deleteLater)
+		self.getCurrentVersionThread.finished.connect(self.getCurrentVersionThread.deleteLater)
 
-		getCurrentVersionThread.start()
+		self.getCurrentVersionThread.start()
 
 	#def _getCurrentVersion
 
@@ -538,17 +536,17 @@ class Bridge(QObject):
 		self.loadStep = 7
 		self.progressValue=self._getProgress()
 
-		getAvailableVersionThread = QThread()
+		self.getAvailableVersionThread = QThread()
 		self.getAvailableVersionWorker = GetAvailableVersion(self.llxUpConnect)
-		self.getAvailableVersionWorker.moveToThread(getAvailableVersionThread)
-		self.getAvailableVersionWorker.started.connect(getAvailableVersionThread.run)
+		self.getAvailableVersionWorker.moveToThread(self.getAvailableVersionThread)
+		self.getAvailableVersionThread.started.connect(self.getAvailableVersionWorker.run)
 
 		self.getAvailableVersionWorker.finished.connect(self._checkInitialFlavourToInstall)
-		self.getAvailableVersionWorker.finished.connect(getAvailableVersionThread.quit)
+		self.getAvailableVersionWorker.finished.connect(self.getAvailableVersionThread.quit)
 		self.getAvailableVersionWorker.finished.connect(self.getAvailableVersionWorker.deleteLater)
-		getAvailableVersionThread.finished.connect(getAvailableVersionThread.deleteLater)
+		self.getAvailableVersionThread.finished.connect(self.getAvailableVersionThread.deleteLater)
 
-		getAvailableVersionThread.start()
+		self.getAvailableVersionThread.start()
 
 	#def _getAvailableVersion
 
@@ -561,17 +559,17 @@ class Bridge(QObject):
 		self.loadStep = 8
 		self.progressValue = self._getProgress()
 
-		checkInitialFlavourToInstallThread = QThread()
+		self.checkInitialFlavourToInstallThread = QThread()
 		self.checkInitialFlavourToInstallWorker = CheckInitialFlavourToInstall(self.llxUpConnect)
-		self.checkInitialFlavourToInstallWorker.moveToThread(checkInitialFlavourToInstallThread)
-		self.checkInitialFlavourToInstallWorker.started.connect(checkInitialFlavourToInstallThread.run)
+		self.checkInitialFlavourToInstallWorker.moveToThread(self.checkInitialFlavourToInstallThread)
+		self.checkInitialFlavourToInstallThread.started.connect(self,checkInitialFlavourToInstallWorker.run)
 
 		self.checkInitialFlavourToInstallWorker.finished.connect(self._gatherPackages)
-		self.checkInitialFlavourToInstallWorker.finished.connect(checkInitialFlavourToInstallThread.quit)
+		self.checkInitialFlavourToInstallWorker.finished.connect(self.checkInitialFlavourToInstallThread.quit)
 		self.checkInitialFlavourToInstallWorker.finished.connect(self.checkInitialFlavourToInstallWorker.deleteLater)
-		checkInitialFlavourToInstallThread.finished.connect(checkInitialFlavourToInstallThread.deleteLater)
+		self.checkInitialFlavourToInstallThread.finished.connect(self.checkInitialFlavourToInstallThread.deleteLater)
 
-		checkInitialFlavourToInstallThread.start()
+		self.checkInitialFlavourToInstallThread.start()
 
 
 	#def _checkInitialFlavourToInstall
@@ -585,17 +583,17 @@ class Bridge(QObject):
 		self.loadStep = 9
 		self.progressValue = self._getProgress()
 
-		gatherPackagesThread = QThread()
+		self.gatherPackagesThread = QThread()
 		self.gatherPackagesWorker = GatherPackages(self.llxUpConnect)
-		self.gatherPackagesWorker.moveToThread(gatherPackagesThread)
-		self.gatherPackagesWorker.started.connect(gatherPackagesThread.run)
+		self.gatherPackagesWorker.moveToThread(self.gatherPackagesThread)
+		self.gatherPackagesThread.started.connect(self,gatherPackagesWorker.run)
 
 		self.gatherPackagesWorker.finished.connect(self._gatherPackagesRet)
-		self.gatherPackagesWorker.finished.connect(gatherPackagesThread.quit)
+		self.gatherPackagesWorker.finished.connect(self.gatherPackagesThread.quit)
 		self.gatherPackagesWorker.finished.connect(self.gatherPackagesWorker.deleteLater)
-		gatherPackagesThread.finished.connect(gatherPackagesThread.deleteLater)
+		self.gatherPackagesThread.finished.connect(self.gatherPackagesThread.deleteLater)
 
-		gatherPackagesThread.start()
+		self.gatherPackagesThread.start()
 
 
 	#def _gatherPackages
@@ -605,16 +603,16 @@ class Bridge(QObject):
 
 		self.core.mainStack.endProcess = True
 		error = ""
-		packagesInfo = ret.get("packagesInfo")
-		incorrectFlavours = ret.get("incorrectFlavours")
-		flatpakInfo = ret.get("flatpakInfo")
+		self.packagesInfo = ret.get("packagesInfo",{})
+		incorrectFlavours = ret.get("incorrectFlavours",{})
+		self.flatpackInfo = ret.get("flatpakInfo",{})
 		
-		if packagesInfo.get("totalPackages") == 0:
+		if self.packagesInfo.get("totalPackages") == 0:
 			self.core.mainStack.updateRequired = False
 
 			if self.isFlavourInstalled.get("status") != 0:
 				self.core.mainStack.updateRequired=True
-				error = self.isFlavourInstalled.get("data")
+				error = self.isFlavourInstalled.get("data","")
 			else:	
 				if self.currentVersion.get("candidate") is not None:
 					if self.currentVersion.get("installed") != self.currentVersion.get("candidate"):
@@ -624,10 +622,10 @@ class Bridge(QObject):
 							self.core.mainStack.updateRequired = True
 
 			if self.core.mainStack.updateRequired:
-				logMsg = "Updated abort. An error occurred in the search for updates"
+				logMsg = "Updated aborted. An error occurred in the search for updates"
 				self.llxUpConnect.log(logMsg)
 				print(f"  [Lliurex-Up]: {logMsg}")
-				self.core.mainStack.showErrorMessag = {"msgCode": SEARCH_UPDATES_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":error}
+				self.core.mainStack.showErrorMessage = {"msgCode": SEARCH_UPDATES_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":error}
 				self.core.mainStack.currentStack = 1
 				return
 			
@@ -636,22 +634,22 @@ class Bridge(QObject):
 			
 			print(f"  [Lliurex-Up]: {logMsg}")
 			if not self.initActionsResult.get("status"):
-				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode":DKG_CONFIGURE_ERROR,"type":KIRIGAMI_MSG_ERROR}
+				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode":DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 			self.core.mainStack.loadInfo()
 		
 		else:
 			if not incorrectFlavours.get("status"):
 				self.core.mainStack.updateRequired=True
-				print("  [Lliurex-Up]: System nor update")
+				print("  [Lliurex-Up]: System not update")
 				if not self.initActionsResult.get("status"):
-					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": DPKG_CONFIGURE_ERROR,"type":KIRIGAMI_MSG_ERROR}
+					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 				self.core.mainStack.loadInfo()
 				return
 
-			logMsg="Updated abort for incorrect metapackages detected in update"
+			logMsg="Updated aborted for incorrect metapackages detected in update"
 			self.llxUpConnect.log(logMsg)
 			print(f"  [Lliurex-Up]: {logMsg}")
-			self.core.mainStack.showErrorMessage = {"msgCode": INCORRECT_METAPACKAGE_ERROR,"type": KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": INCORRECT_METAPACKAGE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.currentStack=1
 
 	#def _gatherPackagesRet
