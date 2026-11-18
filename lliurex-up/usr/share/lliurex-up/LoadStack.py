@@ -180,9 +180,7 @@ class CheckInitialFlavourToInstall(QObject):
 			self.finished.emit(ret)
 		
 		print("  [Lliurex-Up]: Installation of metapackage is required: " +str(targetMetapackage))
-		isFlavourInstalled=self.manager.installInitialFlavour(targetMetapackage)
-		
-		ret = isFlavourInstalled
+		ret = self.manager.installInitialFlavour(targetMetapackage)
 		
 		self.finished.emit(ret)
 	

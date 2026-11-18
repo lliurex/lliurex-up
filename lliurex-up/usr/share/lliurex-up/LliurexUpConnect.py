@@ -443,7 +443,7 @@ class LliurexUpConnect():
 		try:
 			config = configparser.ConfigParser()
 			config.optionxform=str
-			config.read(desktopFile,encodiing="utf-8")
+			config.read(desktopFile,encoding="utf-8")
 
 			if not config.has_section("Desktop Entry"):
 				return str(defaultPkgIcon)
@@ -472,7 +472,7 @@ class LliurexUpConnect():
 			elif iconExt == "":
 				pngCandidate = systemIconDir / f"{iconPath.name}.png"
 				svgCandidate = scalablaIconDir / f"{iconPath.name}.svg"
-				candidate = pngCandidate  if pkgCandidate.exists() else svgCandidate
+				candidate = pngCandidate  if pngCandidate.exists() else svgCandidate
 			else:
 				candidate = systemIconDir / iconPath.name
 

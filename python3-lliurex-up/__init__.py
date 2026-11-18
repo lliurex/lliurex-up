@@ -38,7 +38,7 @@ class LliurexUpCore(object):
 		self.origsourcesfile = self.sourcesListPath / "sources.list"
 		self.sourcesListToUpdate = self.processPath / "lliurexup_sources.list"
 		self.targetMetapackagePath = self.processPath / "targetMetapackage"
-		self.previousflavourspath = self.processPath / "previousflavours"
+		self.previosFlavoursPath = self.processPath / "previousflavours"
 		self.errorPostactionToken = self.processPath / "errorPostactionToken"
 		self.errorFinalMetapackageToken = self.processPath / "errorFinalMetapackageToken"
 		self.errorUpgradeToken = self.processPath / "errorUpgradeToken"
@@ -136,8 +136,8 @@ class LliurexUpCore(object):
 
 	def getPreviousFlavours(self):
 		
-		if self.previousflavourspath.exists():
-			lines = self.previousflavourspath.read_text().splitlines()
+		if self.previosFlavoursPath.exists():
+			lines = self.previosFlavoursPath.read_text().splitlines()
 			self.previousFlavours.extend(line.strip() for line in lines if line.strip())
 
 	#def getPreviousFlavours		
@@ -182,10 +182,10 @@ class LliurexUpCore(object):
 			
 	def saveTargetMetapackage(self,targetMetapackage):
 
-		line = []
+		lines = []
 
-		for lines in targetMetapackage:
-			parts = lines.split("-")
+		for item in targetMetapackage:
+			parts = item.split("-")
 			if len(parts) > 2:
 				lines.append(parts[2])
 
@@ -232,7 +232,7 @@ class LliurexUpCore(object):
 				targetList.append(flavour)
 
 		if args is None and len(self.flavours) > 0:
-			self.previousflavourspath.write_text("\n".join(self.flavours)+"\n")
+			self.previosFlavoursPath.write_text("\n".join(self.flavours)+"\n")
 		
 	#def updateFlavoursList		
 
@@ -455,7 +455,7 @@ class LliurexUpCore(object):
 				
 		if args == None:
 			recoveryMeta=False
-			if 'None' in self.flavours:
+			if 'None' in self.flavours or not self.flavours:
 				recoveryMeta = True
 	
 			if recoveryMeta:
@@ -467,7 +467,7 @@ class LliurexUpCore(object):
 					text=True
 					)
 				if result.stdout:
-					history = [ x.strip().split('\t')[0].strip() for x in result.split('\n') if x.strip()]
+					history = [ x.strip().split('\t')[0].strip() for x in result.stdout.split('\n') if x.strip()]
 					history = [ x for x in history if not 'lliurex-meta-live' in x ]
 					for x in reversed(history):
 						if x.startswith('-'):
@@ -610,8 +610,10 @@ class LliurexUpCore(object):
 			"--allow-change-held-packages"
 		]
 
-		if isistance(flavourToInstall):
+		if isinstance(flavourToInstall,str):
 			command.extend(flavourToInstall.split())
+		else:
+			command.extend(flavourToInstall)
 
 		command.extend(self.optionsToUpdate.split())
 
