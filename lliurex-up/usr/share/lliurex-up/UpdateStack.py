@@ -68,7 +68,7 @@ class CheckProgressWorker(QObject):
 				})
 
 				self.manager.checkLocks()
-				self.aptRun = (self.maxRetry.isDpkgLocked() == 3)
+				self.aptRun = (self.manager.isDpkgLocked() == 3)
 
 			if not self.aptRun:
 				if not self.aptStop:
@@ -167,7 +167,7 @@ class UpdateStack(QObject):
 		self.checkProgressWorker.moveToThread(self.checkProgressThread)
 		
 		self.checkProgressThread.started.connect(self.checkProgressWorker.run)
-		self.checkProgressWorker.progressUnpacked.connect(self._onProgressUpdated)
+		self.checkProgressWorker.progressUpdated.connect(self._onProgressUpdated)
 		self.checkProgressWorker.packagesModelUpdated.connect(self.core.packageStack.updatePackagesModelInfo)
 
 		self.checkProgressWorker.finished.connect(self.checkProgressThread.quit)
@@ -177,7 +177,7 @@ class UpdateStack(QObject):
 		self.checkProgressWorker.destroyed.connect(lambda: setattr(self,"checkProgressWorker",None))
 		self.checkProgressThread.destroyed.connect(lambda: setattr(self,"checkProgressThread",None))
 
-		self.checkProgressThread,start()
+		self.checkProgressThread.start()
 
 	#def launchedUpdateProcess
 
@@ -235,7 +235,12 @@ class UpdateStack(QObject):
 			return self._checkProcessToken()
 
 		if not self.postActionsLaunched:
-			self.checkProgressT.isRunning = False
+			if getattr(self,"checkProgressWorker",None) is not None:
+			QMetaObject.invokeMethod(
+				self.checkProgressWorker,
+				"stop",
+				Qt.QueuedConnection
+			)
 			self.postActionsLaunched = True
 			print("  [Lliurex-Up]: Executing post-actions")
 			self.core.mainStack.updateStep = 5
@@ -271,13 +276,14 @@ class UpdateStack(QObject):
 		if self.updateProcessTimer and self.updateProcessTimer.isActive():
 			self.updateProcessTimer.stop()	
 		
+		'''
 		if getattr(self,"checkProgressWorker",None) is not None:
 			QMetaObject.invokeMethod(
 				self.checkProgressWorker,
 				"stop",
 				Qt.QueuedConnection
 			)
-
+		'''
 		self.llxUpConnect.updatePackagesData(True)
 		self.core.packageStack.updatePackagesModelInfo()
 		self.core.mainStack.showProgressBar = False
@@ -296,7 +302,7 @@ class UpdateStack(QObject):
 
 		for prefix, token in self.PROCESSTOKENS:
 			if getattr(self, f"{prefix}Launched") and not getattr(self, f"{prefix}Done"):
-				tmpToken=getattr(self,token)
+				tmpToken=getattr(self.llxUpConnect,token)
 				if os.path.exists(tmpToken):
 					setattr(self, f"{prefix}Done", True)
 

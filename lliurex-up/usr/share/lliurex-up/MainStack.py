@@ -154,7 +154,7 @@ class Bridge(QObject):
 
 		if self._updateStep != updateStep:
 			self._updateStep = updateStep
-			self.updateStep.emit()
+			self.updateStepChanged.emit()
 
 	#def updateStep	
 

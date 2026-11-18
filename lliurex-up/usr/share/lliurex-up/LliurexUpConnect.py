@@ -576,7 +576,7 @@ class LliurexUpConnect():
 	def preActionsScript(self):
 
 		preActionsCommand = self.llxUpCore.preActionsScript()
-		preActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.preActions} ;touch {self.preactionsToken}\n'
+		preActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {preActionsCommand} ;touch {self.preactionsToken}\n'
 		self.log("Exec Pre-Actions")
 
 		return preActionsCommand
@@ -586,7 +586,7 @@ class LliurexUpConnect():
 	def distUpgradeProcess(self):
 		
 		distupgradeCommand = self.llxUpCore.distUpgradeProcess()	
-		distupgradeCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.distupgrade} ;touch {self.upgradeToken}\n'
+		distupgradeCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {distupgradeCommand} ;touch {self.upgradeToken}\n'
 		self.log("Exec Dist-uggrade")
 
 		return distupgradeCommand
@@ -635,7 +635,7 @@ class LliurexUpConnect():
 	def installFinalFlavour(self,flavourToInstall):
 
 		installFlavourCommand = self.llxUpCore.installFinalFlavour(flavourToInstall)
-		installFlavourCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.command} 2> >(tee {self.errorFinalMetapackageToken} );touch {self.installflavourToken}\n'
+		installFlavourCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {installFlavourCommand} 2> >(tee {self.errorFinalMetapackageToken} );touch {self.installflavourToken}\n'
 		self.log("Install final metapackage")
 
 		return installFlavourCommand
@@ -645,7 +645,7 @@ class LliurexUpConnect():
 	def postActionsScript(self):
 
 		postActionsCommand = self.llxUpCore.postActionsScript()
-		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {self.postActions} 2> >(tee {self.errorPostactionToken}; touch {self.postactionsToken}\n'
+		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {postActionsCommand} 2> >(tee {self.errorPostactionToken}; touch {self.postactionsToken}\n'
 		self.log("Exec Post-Actions")
 
 		return postActionsCommand

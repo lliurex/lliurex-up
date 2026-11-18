@@ -39,7 +39,6 @@ RowLayout{
                 optionText:i18nd("lliurex-up","Update process")
                 optionIcon:"utilities-terminal"
                 visible:mainStackBridge.enableKonsole
-                enabled:true
                 onMenuOptionClicked:mainStackBridge.manageTransitions(2)
             }
 
