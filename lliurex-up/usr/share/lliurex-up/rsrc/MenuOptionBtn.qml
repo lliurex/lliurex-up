@@ -4,8 +4,8 @@ import QtQuick.Layouts
 
 Item {
     id:menuItem
-    Layout.preferredWidth: 180
-	  Layout.preferredHeight: 35
+    Layout.preferredWidth: 185
+	Layout.preferredHeight: 35
 
     property string optionIcon: ""
     property alias optionText: control.text

@@ -374,7 +374,7 @@ class Bridge(QObject):
 			self.showUpdateBtn = True
 			self.enableUpdateBtn = True
 		else:
-			self.showFeedbackMessage = {"show":True,"msgCode": UPDATE_NO_REQUIRED,"type": self.llxUpConnect.KIRIGAMI_MSG_INFO}
+			self.showFeedbackMessage = {"show":True,"msgCode": self.UPDATE_NO_REQUIRED,"type": self.llxUpConnect.KIRIGAMI_MSG_INFO}
 		
 		self.currentStack = 2
 			

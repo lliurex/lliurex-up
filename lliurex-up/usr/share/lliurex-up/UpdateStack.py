@@ -33,6 +33,7 @@ class CheckProgressWorker(QObject):
 
 	#def __init__
 
+	@Slot()
 	def run(self):
 
 		self._timer = QTimer()
@@ -41,6 +42,7 @@ class CheckProgressWorker(QObject):
 	
 	#def run
 
+	@Slot()
 	def stop(self):
 
 		if self._timer and self._timer.isActive():
@@ -86,11 +88,9 @@ class CheckProgressWorker(QObject):
 									"progressBarValue": barVal,
 									"progressPkg": self.manager.progressUnpacked
 								})
-								self.core.mainStack.progressPkg=self.manager.progressUnpacked
-								self.core.mainStack.progressBarValue=round((2+self.manager.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
 							else:
 								self.unpackedRun=False
-								self.progresUpdated.emit({
+								self.progressUpdated.emit({
 									"updateStep": 3,
 									"progressPkg": totalPkgs
 
@@ -98,7 +98,7 @@ class CheckProgressWorker(QObject):
 						else:
 							if not self.installationRun:
 								self.installationRun = True
-								self.progresUpdated.emit({
+								self.progressUpdated.emit({
 									"updateStep": 4,
 									"progressPkg": self.manager.progressInstallation
 								})

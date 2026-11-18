@@ -8,7 +8,7 @@ RowLayout{
     spacing: 10
 
     Rectangle{
-        Layout.preferredWidth:180
+        Layout.preferredWidth:185
         Layout.fillHeight: true
         border.color: palette.mid
 
@@ -23,6 +23,7 @@ RowLayout{
                 optionText:i18nd("lliurex-up","Information")
                 optionIcon:"update-low"
                 visible:true
+                Layout.fillWidth:true
                 onMenuOptionClicked:mainStackBridge.manageTransitions(0)
             }
 
@@ -31,6 +32,7 @@ RowLayout{
                 optionText:i18nd("lliurex-up","Packages list")
                 optionIcon:"view-list-details"
                 visible:mainStackBridge.updateRequired
+                Layout.fillWidth:true
                 onMenuOptionClicked:mainStackBridge.manageTransitions(1)
             }
 
@@ -39,6 +41,7 @@ RowLayout{
                 optionText:i18nd("lliurex-up","Update process")
                 optionIcon:"utilities-terminal"
                 visible:mainStackBridge.enableKonsole
+                Layout.fillWidth:true
                 onMenuOptionClicked:mainStackBridge.manageTransitions(2)
             }
 
@@ -48,6 +51,7 @@ RowLayout{
                 optionIcon:"configure"
                 visible:settingStackBridge.showSettingsPanel
                 enabled:mainStackBridge.endProcess
+                Layout.fillWidth:true
                 onMenuOptionClicked: mainStackBridge.manageTransitions(3)
             }
 
@@ -55,6 +59,7 @@ RowLayout{
                 id:helpOption
                 optionText:i18nd("lliurex-up","Help")
                 optionIcon:"help-contents.svg"
+                Layout.fillWidth:true
                 onMenuOptionClicked: mainStackBridge.openHelp()
            }
 
@@ -126,7 +131,7 @@ RowLayout{
                     id:feedBackText
                     text:{
                         if (mainStackBridge.updateStep>1 && mainStackBridge.updateStep<5){
-                            getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesToUpdate+" )..."
+                            getFeedBackText()+" "+"( " +mainStackBridge.progressPkg+" "+i18nd("lliurex-up","of")+ " "+infoStackBridge.packagesInfo.totalPackages+" )..."
                         }else{
                             getFeedBackText()
                         }
@@ -279,18 +284,25 @@ RowLayout{
                 return ""
             case 1:
                 msg = i18nd("lliurex-up","Preparing system to the update...")
+                break;
             case 2:
                 msg = i18nd("lliurex-up","Downloading packages")
+                break;
             case 3:
                 msg = i18nd("lliurex-up","Unpacking packages")
+                break;
             case 4:
                 msg = i18nd("lliurex-up","Configuring packages")
+                break;
             case 5:
                 msg = i18nd("lliurex-up","Ending the update...")
+                break;
             case 6:
                 msg = i18nd("lliurex-up","Checking metapackage...")
+                break;
             case 7:
                 msg = i18nd("lliurex-up","Updating Flatpak applications...")
+                break;
         }
         return headed + ". " + msg
      }
