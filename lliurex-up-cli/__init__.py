@@ -138,7 +138,7 @@ class LliurexUpCli(object):
 
 		print("  [Lliurex-Up]: Looking for new version of Lliurex Up...")
 
-		isLliurexUpUpdated = self.lliurexUpCore.isLliurexUpIsUpdated()
+		isLliurexUpUpdated = self.lliurexUpCore.isLliurexUpUpdated()
 		restart = False
 
 		msgLog = f"Checking Lliurex-Up. Is Lliurex-Up updated: {isLliurexUpUpdated}"
@@ -160,7 +160,7 @@ class LliurexUpCli(object):
 			restart = True
 
 		else:
-			isLliurexUpUpdated = self.lliurexUpCore.isLliurexUpIsUpdated()
+			isLliurexUpUpdated = self.lliurexUpCore.isLliurexUpUpdated()
 			if not isLliurexUpUpdated:
 				msgLog = "Unable to update Lliurex-Up"
 				self._log(msgLog)
@@ -727,7 +727,7 @@ class LliurexUpCli(object):
 
 		try:
 			cmd = self.lliurexUpCore.unlockerCommand()
-			p = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False)
+			p = subprocess.run(cmd,stdout=subprocess.PIPE,check=False)
 			resultQueue.put(p.returncode)
 		except Exception:
 			resultQueue.put(1)

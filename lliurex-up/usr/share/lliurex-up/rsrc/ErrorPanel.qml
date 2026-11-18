@@ -27,14 +27,14 @@ Rectangle{
 
         switch (mainStackBridge.showErrorMessage.msgCode){
             case -1:
-                return i18nd("lliurex-up","There's not enough space on disk to upgrade: 2 GB needed")+ " - "+loadStackBridge.freeSpaceAvailable.+" GB "+i18nd("lliurex-up","available")
+                return i18nd("lliurex-up","There's not enough space on disk to upgrade: 2 GB needed")+ " - " + loadStackBridge.freeSpaceAvailable + " GB " + i18nd("lliurex-up","available")
             case -2:
                 return i18nd("lliurex-up","Unable to connect to lliurex.gva.es")
             case -5:
-                return i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log")+ " "+mainStackBridge.showErrorMessage.data
+                return i18nd("lliurex-up","Unable to update Lliurex-Up. See /var/log/lliurex-up.log") + " " + mainStackBridge.showErrorMessage.data
                 break;
             case -6:
-                return i18nd("lliurex-up","Updated abort. An error occurred in the search for updates")+" "+mainStackBridge.showErrorMessage.data
+                return i18nd("lliurex-up","Updated abort. An error occurred in the search for updates") + " " + mainStackBridge.showErrorMessage.data
             case -7:
                 return i18nd("lliurex-up","Updated abort for incorrect metapackages detected in update")
             default:

@@ -37,12 +37,11 @@ Rectangle{
 
         Text{
             id:loadtext
+            Layout.alignment: Qt.AlignHCenter
             text:{
-                if (loadStackBridge.loadStep ===12){
-                     return getMsg()+" "+loadStackBridge.countDownValue+" "+i18nd("lliurex-up","seconds")
-                }else if (loadStackBridge.loadStep ===13){
-            		return getMsg()+loadStackBridge.mirrorPercentage+" %"
-            	}
+                if (loadStackBridge.loadStep === 5){
+                     return getMsg() + " " + loadStackBridge.countDownValue + " " + i18nd("lliurex-up","seconds")
+                }
             	return getMsg()
             }
                 
@@ -61,39 +60,40 @@ Rectangle{
 
     function getMsg(){
 
-        const headed = loadStackBridge.loadStep+" "+i18nd("lliurex-up","of")+" "+loadStackBridge.totalSteps
+        const headed = loadStackBridge.loadStep + " " + i18nd("lliurex-up","of") + " " + loadStackBridge.totalSteps
         let msg = ""
 
         switch(loadStackBridge.loadStep){
             case 1:
                 msg = i18nd("lliurex-up","Checking sytem...")
                 break;
-            case 3:
+            case 2:
                 msg = i18nd("lliurex-up","Executing init-actions...")
                 break;
-            case 4:
+            case 3:
                 msg = i18nd("lliurex-up","Looking for new version of Lliurex-Up...")
                 break;
-            case 5:
+            case 4:
                 msg = i18nd("lliurex-up","Updating Lliurex-Up...")
                 break;
-            case 7:
+            case 5:
+                return i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
+            case 6:
                 msg = i18nd("lliurex-up","Looking for new version to update...")
                 break;
-            case 8:
+            case 7:
                 msg = i18nd("lliurex-up","Looking for new version available...")
                 break;
-            case 9:
+            case 8:
                 msg = i18nd("lliurex-up","Checking if installation of metapackage is required...")
                 break;
-            case 10:
+            case 9:
                 msg = i18nd("lliurex-up","Looking for new updates...")
                 break;
-            case 12:
-                return i18nd("lliurex-up","Lliurex-Up is now updated and will be reboot in ")
-            case 13:
+              case 13:
                 return i18nd("lliurex-up","Updating mirror: ")
         }
+
         return headed + ". " + msg
     }
 }

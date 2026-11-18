@@ -2,6 +2,7 @@
 
 from PySide6.QtCore import QObject,Signal,Slot,QThread,Property,QTimer,Qt,QModelIndex
 import os
+import subprocess
 import signal
 import copy
 import time

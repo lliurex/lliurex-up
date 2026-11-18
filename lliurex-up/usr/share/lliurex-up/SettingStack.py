@@ -47,9 +47,9 @@ class Bridge(QObject):
 		self.core = Core.Core.get_core()
 		self.llxUpConnect = self.core.llxUpConnect
 		self._showSettingsPanel = False
-		self._isSystrayEnabled =False
+		self._isSystrayEnabled = False
 		self._showSettingsMsg = {"show":False,"msgCode":"","type":""}
-		self._changesInSettings=False
+		self._changesInSettings = False
 		self.initialConfig=copy.deepcopy(self.llxUpConnect.currentConfig)
 		
 	#def __init__
@@ -105,7 +105,7 @@ class Bridge(QObject):
 	@Property(bool, notify = changesInSettingsChanged)
 	def changesInSettings(self):
 
-		return self.changesInSettings
+		return self._changesInSettings
 
 	#def changesInSettings 
 
@@ -117,7 +117,6 @@ class Bridge(QObject):
 			self.changesInSettingsChanged.emit()
 
 	#def changesInSettings 
-
 
 	def getSettingsInfo(self):
 
@@ -132,7 +131,7 @@ class Bridge(QObject):
 
 		if enable != self.isSystrayEnabled:
 			self.isSystrayEnabled = enable
-			self.initialConfig["isSystrayEnabled"] = enable
+			self.initialConfig["systrayEnabled"] = enable
 
 		if self.initialConfig != self.llxUpConnect.currentConfig:
 			self.changesInSettings = True

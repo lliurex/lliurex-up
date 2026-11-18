@@ -21,7 +21,7 @@ ApplicationWindow {
         y = Screen.height / 2 - height / 2
     }
    
-   onClosing:(close)=> {
+    onClosing:(close)=> {
         close.accepted=closing;
 
         if (!closing) {

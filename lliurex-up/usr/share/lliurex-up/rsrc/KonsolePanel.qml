@@ -1,27 +1,28 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QMLTermWidget 1.0
-
+import QMLTermWidget
 
 Rectangle{
     color:"transparent"
-    Text{ 
-        text:i18nd("lliurex-up","Update process")
-        font.family: "Quattrocento Sans Bold"
-        font.pointSize: 16
-    }
 
-    RowLayout{
-        id:terminalLayout
-        anchors.left:parent.left
-        width:parent.width-10
-        height:parent.height-25
-        
+    ColumnLayout{
+        id: mainContent
+        anchors.fill: parent
+        anchors.leftMargin: 5
+        anchors.rightMargin: 15
+        anchors.bottomMargin: 15
+        spacing: 10
+
+        Text{ 
+            text: i18nd("lliurex-up","Update process")
+            font.pointSize: 16
+        }
+
         Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin:40
+            
             QMLTermWidget {
                 id: terminal
                 anchors.fill: parent

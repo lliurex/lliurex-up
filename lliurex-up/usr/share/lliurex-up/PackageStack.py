@@ -121,7 +121,7 @@ class Bridge(QObject):
 	#def showPkgChangelog
 
 	@Slot(str)
-	def _gatherPkgChangelogRet(sel,ret):
+	def _gatherPkgChangelogRet(self,ret):
 
 		self.pkgChangelog={
 			"pkgId": self.pkgId,

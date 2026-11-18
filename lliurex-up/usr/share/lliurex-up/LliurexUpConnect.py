@@ -42,10 +42,10 @@ class LliurexUpConnect():
 		self.upgradeToken = self.llxUpCore.processPath / "upgrade_token"
 		self.installflavourToken = self.llxUpCore.processPath / "installflavour_token"
 		self.postactionsToken = self.llxUpCore.processPath / "postactions_token"
-		self.errorPostactionToken = self.llxUpCore.errorpostaction_token
-		self.errorUpgradeToken = self.llxUpCore.errorupgrade_token
-		self.errorFinalMetapackageToken = self.llxUpCore.errorfinalmetapackage_token
-		self.finalUpgradeToken = self.llxUpCore.finalupgrade_token
+		self.errorPostactionToken = self.llxUpCore.errorPostactionToken
+		self.errorUpgradeToken = self.llxUpCore.errorUpgradeToken
+		self.errorFinalMetapackageToken = self.llxUpCore.errorFinalMetapackageToken
+		self.finalUpgradeToken = self.llxUpCore.finalUpgradeToken
 		self.packagesData = []
 		self.desktopsPath = Path("/usr/share/applications")
 		self.standardIconPath = Path("/usr/share/lliurex-up/rsrc")
@@ -54,10 +54,10 @@ class LliurexUpConnect():
 		self.disableSystrayPath = Path("/etc/lliurex-up-indicator")
 		self.disableSystrayToken = self.disableSystrayPath / "disableIndicator.token"
 		self.isSystrayEnabled = True
-		self.pendingDownloads = []
-		self.pendingUnpacked = []
-		self.self.pendingInstalled = []
-		self.initialNumberPackages = []
+		self.pendingDownloads = set()
+		self.pendingUnpacked = set()
+		self.pendingInstalled = set ()
+		self.initialNumberPackages = set()
 		self.packagesInstalled = set()
 		self.progressDownload = 0
 		self.progressDownloadPercentaje = 0.00
@@ -66,7 +66,7 @@ class LliurexUpConnect():
 		self.progressUnpacked = 0
 		self.progressUnpackedPercentage = 0.00
 		self.aptCachePath = Path("/var/cache/apt/archives")
-		self.currentConfig = {"systraryEnabled":self.isSystrayEnabled}
+		self.currentConfig = {"systrayEnabled":self.isSystrayEnabled}
 		self.runPkexec = True
 		self.flatpakActionsToken = self.llxUpCore.processPath / 'flatpakActions_token'
 		self._isRunPkexec()
@@ -148,7 +148,6 @@ class LliurexUpConnect():
 		try:
 			process = subprocess.run(
 				cmd,
-				shell=True,
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE,
 				text=True,
@@ -261,17 +260,17 @@ class LliurexUpConnect():
 				self.log( f"Exec Init-Actions. Error: {perror}")
 				return {"status": False, "data": perror}
 
-		 	if process.returncode != 0:
-		 		self.log(f"Exec Init-Actions. Error: (Code: {process.returncode} - Details: {perror})")
-		 		return {"status": False ,"data": perror}
+			if process.returncode != 0:
+				self.log(f"Exec Init-Actions. Error: (Code: {process.returncode} - Details: {perror})")
+				return {"status": False ,"data": perror}
 
-	 		self.log("Exec Init-Actions")
-	 		return {"status": True, "data":""}
+			self.log("Exec Init-Actions")
+			return {"status": True, "data":""}
 
 		except Exception as e:
 			errorMsg = str(e)
-		 	self.log(f"Exec Init-Actions.Error: {errorMsg}")
-		 	return {"status": False, "data":errorMsg}	
+			self.log(f"Exec Init-Actions.Error: {errorMsg}")
+			return {"status": False, "data":errorMsg}	
 
 	#def initActionsScript	
 
@@ -281,10 +280,10 @@ class LliurexUpConnect():
 
 	#def addSourcesListLliurex	
 
-	def isLliurexUpIsUpdated(self):
+	def isLliurexUpUpdated(self):
 
 		try:
-			isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated()
+			isLliurexupUpdated=self.llxUpCore.isLliurexUpUpdated()
 			self.log(f"Checking lliurex-up. Is lliurex-up updated: {isLliurexupUpdated}")
 			return isLliurexupUpdated
 		except Exception as e:
@@ -367,7 +366,7 @@ class LliurexUpConnect():
 			self.log(f"Install initial metapackage: {flavourToInstall}: Returncode: {returncode} Error: {error}")
 			return {"status":returncode,"data":error}
 		except Exception as e:
-			self.log(f"Install initial metapackage: {flavourToInstall}. Error: {error}")
+			self.log(f"Install initial metapackage: {flavourToInstall}. Error: {e}")
 			return {"status": 1, "data":str(e)}
 			
 	#def installInitialFlavour
@@ -375,7 +374,7 @@ class LliurexUpConnect():
 	def getPackagesToUpdate(self):
 		
 		try:
-			packageInfo = =self.llxUpCore.getPackagesToUpdate()
+			packageInfo = self.llxUpCore.getPackagesToUpdate()
 			packages = packageInfo.get("packagesToUpdate")
 			totalSize = packageInfo.get("totalSize")
 
@@ -396,7 +395,7 @@ class LliurexUpConnect():
 		self.packagesData = []
 		self.pendingDownloads = set()
 		self.pendingUnpacked = set()
-		self.self.pendingInstalled = set()
+		self.pendingInstalled = set()
 		self.initialNumberPackages = set()
 		self.totalPackagesCount = len(packages)
 
@@ -405,7 +404,6 @@ class LliurexUpConnect():
 			pkgSize = info.get("size", "0 B")
 			installStatus = info.get("install")
 			arch = info.get("architecture","")
-			parts = item.split(";")
 			
 			if installStatus is None or str(installStatus) == "None":
 				self.newPackages += 1
@@ -423,7 +421,7 @@ class LliurexUpConnect():
 			pkgFullId = f"{pkgId}_{pkgVersion}"
 			self.pendingDownloads.add(f"{pkgFullId}_{arch}.deb".replace(":","%3a"))
 			self.pendingUnpacked.add(pkgFullId)
-			self.self.pendingInstalled.add(pkgFullId)
+			self.pendingInstalled.add(pkgFullId)
 			self.initialNumberPackages.add(pkgFullId)
 
 	#def getPackagesData
@@ -434,7 +432,7 @@ class LliurexUpConnect():
 
 		if installed is None or str(installed) == "None":
 			newPkgIcon = self.standardIconPath / "new_package.png"
-			return str(newPkgIcon if newPkgIcon,exists() else defaultPkgIcon)
+			return str(newPkgIcon if newPkgIcon.exists() else defaultPkgIcon)
 
 
 		desktopFile=self.desktopsPath / f"{name}.desktop"
@@ -474,7 +472,7 @@ class LliurexUpConnect():
 			elif iconExt == "":
 				pngCandidate = systemIconDir / f"{iconPath.name}.png"
 				svgCandidate = scalablaIconDir / f"{iconPath.name}.svg"
-				candidate = pngCandidate  if pkgCandidate,exists() else svgCandidate
+				candidate = pngCandidate  if pkgCandidate.exists() else svgCandidate
 			else:
 				candidate = systemIconDir / iconPath.name
 
@@ -489,7 +487,7 @@ class LliurexUpConnect():
 
 		incorrectFlavours = self.llxUpCore.checkIncorrectFlavours()
 
-		if incorrectFlavours,get('status'):
+		if incorrectFlavours.get('status'):
 			self.log(f"Checking incorrect metapackages. Others metapackages detected: {incorrectFlavours.get('status')}. Detected flavours: {incorrectFlavours.get('data')}")
 		else:
 			self.log("Checking incorrect metapackages. Others metapackages not detected")
@@ -529,10 +527,6 @@ class LliurexUpConnect():
 
 				changelog = "\n".join(cleanLines).replace("\n","\n")
 
-				'''
-				self.llxUpCore.changelogsPath.mkdir(parents=True,exists_ok=True)
-				changelogFile.write_text(cleanText,encodiing="utf-8")
-				'''
 				return changelog
 
 			except Exception as e:
@@ -560,7 +554,7 @@ class LliurexUpConnect():
 		else:
 			self.isSystrayEnabled=True
 
-		self.currentConfig["systraryEnabled"] = self.isSystrayEnabled
+		self.currentConfig["systrayEnabled"] = self.isSystrayEnabled
 
 	#de isSystrayEnabled
 
@@ -570,9 +564,9 @@ class LliurexUpConnect():
 			if enable:
 				self.disableSystrayToken.unlink(missing_ok=True)
 			else:
-				self.disableSystrayToken.mkdir(parents=True,exist_ok=True)
+				self.disableSystrayPath.mkdir(parents=True,exist_ok=True)
 				self.disableSystrayToken.touch(exist_ok=True)
-		
+	
 			return True
 		except OSError as e:
 			return False
@@ -722,7 +716,7 @@ class LliurexUpConnect():
 		
 		logFile.parent.mkdir(parents=True,exist_ok=True)
 
-		with logFile.open("a",encodiing="utf-8") as fd:
+		with logFile.open("a",encoding="utf-8") as fd:
 			fd.write(f"{msg}\n")
 
 	#def log
@@ -786,7 +780,7 @@ class LliurexUpConnect():
 					unpackedOrMore.add(pkgFullId)
 
 		except Exception as e:
-			self.log("Error checkgin pkg status": {e})
+			self.log(f"Error checkgin pkg status: {e}")
 
 		return unpackedOrMore
 
@@ -833,24 +827,22 @@ class LliurexUpConnect():
 		CHANGES_APPLY_OK = 0
 		SYSTRAY_ERROR = -1
 		
+		changesInSystray = False
 		retSystray = True
 
-		if newConfig.get("systraryEnabled")!=self.currentConfig.get("systraryEnabled"):
-			retSystray = self.manageSystray(newConfigget("systraryEnabled"))
+		if newConfig.get("systrayEnabled") != self.currentConfig.get("systrayEnabled"):
+			retSystray = self.manageSystray(newConfig.get("systrayEnabled"))
 			if retSystray:
 				changesInSystray = True
 
 		if changesInSystray:
 			self.getSystrayStatus()
-		
-		if changesInAutoUpdate:
-			self.getAutoUpgradeInfo()
-		
+				
 		if retSystray:
-			return {"status":error,"code":CHANGES_APPLY_OK,"type":KIRIGAMI_MSG_OK}
+			return {"status": True,"code":CHANGES_APPLY_OK,"type": self.KIRIGAMI_MSG_OK}
 
-		elif:
-			return {"status":false,"code":SYSTRAY_ERROR,"type":KIRIGAMI_MSG_ERROR}		
+		else:
+			return {"status": False,"code":SYSTRAY_ERROR,"type": self.KIRIGAMI_MSG_ERROR}		
 	
 	#def applySettingsChanges
 

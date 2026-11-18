@@ -12,7 +12,7 @@ Rectangle{
         anchors.leftMargin: 5
         anchors.rightMargin: 15
         anchors.bottomMargin: 15
-        spacing: 5
+        spacing: 10
 
         Text{ 
             text: i18nd("lliurex-up","Update information")
@@ -36,7 +36,7 @@ Rectangle{
             Text{
                 id: currentVersionValue
                 text: infoStackBridge.versionInfo.currentVersion != null ? infoStackBridge.versionInfo.currentVersion : i18nd("lliurex-up","Not available")
-                color: infoStackBridge.versionInfo.currentVersion != null ? "red" : "black"
+                color: infoStackBridge.versionInfo.currentVersion != null ? "black" : "red"
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
             }
@@ -67,10 +67,10 @@ Rectangle{
 
             Text{
                 id: candiateVersionValue
-                text: infoStackBridge.versionInfo.candidateVersion !=null ? 
-                        infoStackBridge.candidateVersion ?
+                text: infoStackBridge.versionInfo.candidateVersion != null ? 
+                        infoStackBridge.versionInfo.candidateVersion :
                         i18nd("lliurex-up","Not available")
-                color: infoStackBridge.candidateVersion != null ? "black" : "red"
+                color: infoStackBridge.versionInfo.candidateVersion != null ? "black" : "red"
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
             }
@@ -86,7 +86,7 @@ Rectangle{
             Text{
                 id: numberPackagesValue
                 visible: mainStackBridge.updateRequired
-                text: infoStackBridge.updateInfo.totalPackages+" ( "+infoStackBridge.updateInfo.newPackages + " " + i18nd("lliurex-up","news") + " )"
+                text: infoStackBridge.packagesInfo.totalPackages+" ( "+infoStackBridge.packagesInfo.newPackages + " " + i18nd("lliurex-up","news") + " )"
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
             }
@@ -101,7 +101,7 @@ Rectangle{
 
             Text{
                 id: sizeValue
-                text: infoStackBridge.updateInfo.upgradeSize
+                text: infoStackBridge.packagesInfo.upgradeSize
                 visible: mainStackBridge.updateRequired
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
@@ -116,11 +116,11 @@ Rectangle{
 
             Text{
                 id: sourceTextValue
-                text: infoStackBridge.updateInfo.updateSource != "" ?
-                        infoStackBridge.updateSource :
+                text: infoStackBridge.packagesInfo.updateSource != "" ?
+                        infoStackBridge.packagesInfo.updateSource :
                         i18nd("lliurex-up","Not available")
                 
-                color: infoStackBridge.updateInfo.updateSource != "" ? "black" : "red"
+                color: infoStackBridge.packagesInfo.updateSource != "" ? "black" : "red"
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
             }
@@ -141,6 +141,10 @@ Rectangle{
                 visible: infoStackBridge.flatpakInfo.totalFlatpa > 0 ? true : false
             }
                 
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
    

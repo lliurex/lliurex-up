@@ -1,90 +1,95 @@
 import QtQuick
 import QtQuick.Controls
 import QtQml.Models
+import QtQuick.Layouts
 import org.kde.plasma.components as PC
 import org.kde.kirigami as Kirigami
-import QtQuick.Layouts
 
 
 Rectangle{
-    property alias packagesModel:filterModel.model
-    property alias listCount:listPkg.count
-    id: optionsGrid
-    color:"transparent"
+    id: pkgGrid
+    property alias packagesModel: filterModel.model
+    property alias listCount: listPkg.count
+    color: "transparent"
 
-    GridLayout{
-        id:mainGrid
-        rows:2
-        flow: GridLayout.TopToBottom
-        rowSpacing:10
-        anchors.left:parent.left
-        anchors.fill:parent
+    ColumnLayout {
+        anchors.fill: parent
+        spacing: 10
 
-        PC.TextField{
-            id:pkgSearchEntry
-            font.pointSize:10
-            horizontalAlignment:TextInput.AlignLeft
-            Layout.alignment:Qt.AlignRight
-            Layout.topMargin:40
-            focus:true
-            width:100
-            placeholderText:i18nd("lliurex-up","Search...")
-            onTextChanged:{
-                filterModel.update()
+        RowLayout {
+            id: filterRow
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+            spacing: 10
+            enabled: true
+
+            PC.TextField {
+                id: pkgSearchEntry
+                font.pointSize: 10
+                horizontalAlignment: TextInput.AlignLeft
+                Layout.alignment: Qt.AlignRight
+                focus: true
+                width: 100
+                placeholderText: i18nd("lliurex-up","Search...")
+                onTextChanged: filterModel.update()
             }
         }
 
         Rectangle {
-            id:pkgTable
+            id: pkgTable
             visible: true
-            color:"white"
-            Layout.fillHeight:true
-            Layout.fillWidth:true
-            Layout.topMargin:10
-     
-            border.color: "#d3d3d3"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            color: "white"
+            border.color: "#d3d3d3"     
 
-            PC.ScrollView{
-                implicitWidth:parent.width
-                implicitHeight:parent.height
-                anchors.leftMargin:10
-       
+            PC.ScrollView {
+                anchors.fill: parent
+
                 ListView{
                     id: listPkg
-                    property int totalItems
-                    anchors.fill:parent
-                    height: parent.height
-                    enabled:true
-                    currentIndex:-1
-                    clip: true
-                    focus:true
-                    boundsBehavior: Flickable.StopAtBounds
-                    highlight: Rectangle { color: "#add8e6"; opacity:0.8;border.color:"#53a1c9" }
-                    highlightMoveDuration: 0
-                    highlightResizeDuration: 0
+
+                    Timer {
+                        id: searchTimer
+                        interval: 150
+                        repeat: false
+                        onTriggered: filterModel.update()
+                    }
+
                     model:FilterDelegateModel{
-                        id:filterModel
-                        model:packagesModel
-                        role:"pkgId"
-                        search:pkgSearchEntry.text.trim()
+                        id: filterModel
+                        model: packagesModel
+                        role: "pkgId"
+                        search: pkgSearchEntry.text.trim()
+                        externalTimer: searchTimer
                         
                         delegate: ListDelegatePkgItem{
-                            width:pkgTable.width
-                            pkgId:model.pkgId
-                            pkgVersion:model.pkgVersion
-                            pkgSize:model.pkgSize
-                            pkgIcon:model.pkgIcon
-                            pkgStatus:model.pkgStatus
-                            showStatus:model.showStatus
+                            width: pkgTable.width -18
+                            pkgId: model.pkgId
+                            pkgVersion: model.pkgVersion
+                            pkgSize: model.pkgSize
+                            pkgIcon: model.pkgIcon
+                            pkgStatus: model.pkgStatus
+                            showStatus: model.showStatus
                          }
                     }
+
+                    currentIndex: -1
+                    enabled: true
+                    clip: true
+                    focus: true
+                    boundsBehavior: Flickable.StopAtBounds
+                    highlightFollowsCurrentItem: true
+                    highlightMoveDuration: 0
+                    highlightResizeDuration: 0            
 
                     Kirigami.PlaceholderMessage { 
                         id: emptyHint
                         anchors.centerIn: parent
                         width: parent.width - (Kirigami.Units.largeSpacing * 4)
-                        visible: listPkg.count==0?true:false
+                        visible: listPkg.count === 0 ? true : false
                         text: i18nd("lliurex-up","Packages not found")
+                        icon.name: "lliurex-up"
                     }
 
                  } 

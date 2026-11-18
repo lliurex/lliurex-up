@@ -27,7 +27,7 @@ Popup {
     contentItem: Rectangle {
         id:container
         color: "#ebeced"
-        implicitWidth: customDialog.dialogWidth
+        implicitWidth: 400
         implicitHeight: 140
 
         RowLayout {
@@ -39,12 +39,14 @@ Popup {
 
             Kirigami.Icon {
                 id: iconInternal
+                source:"dialog-warning"
                 Layout.preferredWidth: Kirigami.Units.iconSizes.huge
                 Layout.preferredHeight: Kirigami.Units.iconSizes.huge
             }
             
             Text {
                 id: dialogText
+                text: i18nd("lliurex-up","There are pending changes to apply. Do you want apply or discard the changes")
                 font.pointSize: 10
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
@@ -61,18 +63,21 @@ Popup {
 
             Button {
                 id: dialogApplyBtn
+                text: i18nd("lliurex-up","Apply")
                 icon.name: "dialog-ok"
                 onClicked: dialogApplyClicked()
             }
 
             Button {
                 id: dialogDiscardBtn
+                text: i18nd("lliurex-up","Discard")
                 icon.name: "delete"
                 onClicked: discardDialogClicked()
             }
 
             Button {
                 id: dialogCancelBtn
+                text: i18nd("lliurex-up","Cancel")
                 icon.name: "dialog-cancel"
                 onClicked: rejectDialogClicked()
             }

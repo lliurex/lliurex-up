@@ -49,7 +49,7 @@ Popup {
 
         Text {
             id: popupText
-            text:  text:i18nd("lliurex-up","Apply changes. Wait a moment...")
+            text: i18nd("lliurex-up","Apply changes. Wait a moment...")
             font.pointSize: 10
             color: palette.windowText
             Layout.alignment: Qt.AlignHCenter

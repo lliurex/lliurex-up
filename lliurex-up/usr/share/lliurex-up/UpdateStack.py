@@ -86,8 +86,8 @@ class CheckProgressWorker(QObject):
 									"progressBarValue": barVal,
 									"progressPkg": self.manager.progressUnpacked
 								})
-									self.core.mainStack.progressPkg=self.llxUpConnect.progressUnpacked
-									self.core.mainStack.progressBarValue=round((2+self.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
+								self.core.mainStack.progressPkg=self.llxUpConnect.progressUnpacked
+								self.core.mainStack.progressBarValue=round((2+self.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
 							else:
 								self.unpackedRun=False
 								self.progresUpdated.emit({
@@ -104,14 +104,16 @@ class CheckProgressWorker(QObject):
 								})
 							
 							self.manager.checkProgressInstallation()
+							
 							if self.manager.progressInstallation != totalPkgs:
-								barVal = =round((3+self.manager.progressInstallationPercentage) / totalSteps,2)
+								barVal = round((3+self.manager.progressInstallationPercentage) / totalSteps,2)
 								self.progressUpdated.emit({
 									"updateStep": 4,
 									"progressBarValue": barVal,
 									"progressPkg": self.manager.progressInstallation
 
 								})
+							
 							else:
 								self.progressUpdated.emit({
 									"progressPkg": totalPkgs
@@ -141,8 +143,8 @@ class UpdateStack(QObject):
 		("preActions", "preactionsToken"),
 		("update", "upgradeToken"),
 		("postActions", "postactionsToken"),
-		("checkFinalFlavour","installflavourToken")
-		("flatpakActions","flatpakActionsToken")
+		("checkFinalFlavour","installflavourToken"),
+		("flatpakActions","flatpakActionsToken"),
 	]	
 
 	def __init__(self):

@@ -58,6 +58,7 @@ class LaunchInitActions(QObject):
 	def __init__(self,manager):
 
 		super().__init__()
+		self.manager = manager
 
 	#def __init__
 
@@ -84,8 +85,7 @@ class CheckLliurexUp(QObject):
 
 	def run (self,*args):
 		
-		ret = self.manager.isLliurexUpIsUpdated()
-
+		ret = self.manager.isLliurexUpUpdated()
 		self.finished.emit(ret)
 
 	#def run
@@ -99,8 +99,7 @@ class UpdateLliurexUp(QObject):
 	def __init__(self,manager):
 
 		super().__init__()
-
-		self,manager = manager
+		self.manager = manager
 
 	#def __init__
 
@@ -120,7 +119,7 @@ class GetCurrentVersion(QObject):
 
 	def __init__(self,manager):
 
-		super()__init__()
+		super().__init__()
 		self.manager = manager
 
 	#def __init__
@@ -137,11 +136,11 @@ class GetCurrentVersion(QObject):
 
 class GetAvailableVersion(QObject):
 
-	finished = Signal(QObject)
+	finished = Signal(object)
 
 	def __init__(self,manager):
 
-		super()__init__()
+		super().__init__()
 		self.manager = manager
 	
 	#def __init__
@@ -162,7 +161,7 @@ class CheckInitialFlavourToInstall(QObject):
 
 	def __init__(self, manager):
 
-		super().__init()__
+		super().__init__()
 		self.manager = manager
 
 	#def __init__
@@ -174,14 +173,14 @@ class CheckInitialFlavourToInstall(QObject):
 			"data": ""
 		}
 
-		targetMetapackage = self.llxUpConnect.targetMetapackage
+		targetMetapackage = self.manager.targetMetapackage
 
 		if targetMetapackage:
 			print("  [Lliurex-Up]: Installation of metapackage is not required")
 			self.finished.emit(ret)
 		
 		print("  [Lliurex-Up]: Installation of metapackage is required: " +str(targetMetapackage))
-		isFlavourInstalled=self.llxUpConnect.installInitialFlavour(targetMetapackage)
+		isFlavourInstalled=self.manager.installInitialFlavour(targetMetapackage)
 		
 		ret = isFlavourInstalled
 		
@@ -197,10 +196,9 @@ class GatherPackages(QObject):
 
 	def __init__(self,manager):
 
-		super().__init()
-		self.manager = manager
+		super().__init__()
 
-		QThread.__init__(self)
+		self.manager = manager
 		self.packages=0
 		self.updateSize=""
 		self.incorrectFlavours=[]
@@ -209,10 +207,10 @@ class GatherPackages(QObject):
 
 	def run (self,*args):
 
-		packagesInfo = self.llxUpConnect.getPackagesToUpdate()
-		incorrectFlavours = self.llxUpConnect.checkIncorrectFlavours()
-		self.llxUpConnect.getSystrayStatus()
-		flatpakInfo = self.llxUpConnect.getFlapakUpdateInfo()
+		packagesInfo = self.manager.getPackagesToUpdate()
+		incorrectFlavours = self.manager.checkIncorrectFlavours()
+		self.manager.getSystrayStatus()
+		flatpakInfo = self.manager.getFlapakUpdateInfo()
 
 		ret ={
 			"packagesInfo": packagesInfo,
@@ -290,7 +288,7 @@ class Bridge(QObject):
 
 	#def showProgressBar
 
-	Property(float, notify = progressValueChanged)
+	@Property(float, notify = progressValueChanged)
 	def progressValue(self):
 
 		return self._progressValue
@@ -369,7 +367,7 @@ class Bridge(QObject):
 		self.checkSystemWorker.finished.connect(self.checkSystemWorker.deleteLater)
 		self.checkSystemThread.finished.connect(self.checkSystemThread.deleteLater)
 
-		self.checkSystemThread.star()
+		self.checkSystemThread.start()
 
 	#def checkSystem
 
@@ -411,7 +409,7 @@ class Bridge(QObject):
 		self.launchInitActionsWorker.moveToThread(self.launchInitActionsThread)
 
 		self.launchInitActionsThread.started.connect(self.launchInitActionsWorker.run)
-		self.launchInitActionsThread.finished.connect(self._checkLliurexUp)
+		self.launchInitActionsWorker.finished.connect(self._checkLliurexUp)
 		self.launchInitActionsWorker.finished.connect(self.launchInitActionsThread.quit)
 		self.launchInitActionsWorker.finished.connect(self.launchInitActionsWorker.deleteLater)
 		self.launchInitActionsThread.finished.connect(self.launchInitActionsThread.deleteLater)
@@ -431,7 +429,7 @@ class Bridge(QObject):
 
 		self.checkLliurexUpThread = QThread()
 		self.checkLliurexUpWorker = CheckLliurexUp(self.llxUpConnect)
-		self.checkSystemWorker.moveToThread(self.checkLliurexUpThread)
+		self.checkLliurexUpWorker.moveToThread(self.checkLliurexUpThread)
 		self.checkLliurexUpThread.started.connect(self.checkLliurexUpWorker.run)
 
 		self.checkLliurexUpWorker.finished.connect(self._checkLliurexUpRet)
@@ -516,7 +514,7 @@ class Bridge(QObject):
 		self.getCurrentVersionThread = QThread()
 		self.getCurrentVersionWorker = GetCurrentVersion(self.llxUpConnect)
 		self.getCurrentVersionWorker.moveToThread(self.getCurrentVersionThread)
-		self.getCurrentVersionThread.started.connect(self,getCurrentVersionThread.run)
+		self.getCurrentVersionThread.started.connect(self.getCurrentVersionWorker.run)
 
 		self.getCurrentVersionWorker.finished.connect(self._getAvailableVersion)
 		self.getCurrentVersionWorker.finished.connect(self.getCurrentVersionThread.quit)
@@ -550,7 +548,7 @@ class Bridge(QObject):
 
 	#def _getAvailableVersion
 
-	@Slot(QObject)
+	@Slot(object)
 	def _checkInitialFlavourToInstall(self,ret):
 
 		self.availableVersion = ret
@@ -562,7 +560,7 @@ class Bridge(QObject):
 		self.checkInitialFlavourToInstallThread = QThread()
 		self.checkInitialFlavourToInstallWorker = CheckInitialFlavourToInstall(self.llxUpConnect)
 		self.checkInitialFlavourToInstallWorker.moveToThread(self.checkInitialFlavourToInstallThread)
-		self.checkInitialFlavourToInstallThread.started.connect(self,checkInitialFlavourToInstallWorker.run)
+		self.checkInitialFlavourToInstallThread.started.connect(self.checkInitialFlavourToInstallWorker.run)
 
 		self.checkInitialFlavourToInstallWorker.finished.connect(self._gatherPackages)
 		self.checkInitialFlavourToInstallWorker.finished.connect(self.checkInitialFlavourToInstallThread.quit)
@@ -586,7 +584,7 @@ class Bridge(QObject):
 		self.gatherPackagesThread = QThread()
 		self.gatherPackagesWorker = GatherPackages(self.llxUpConnect)
 		self.gatherPackagesWorker.moveToThread(self.gatherPackagesThread)
-		self.gatherPackagesThread.started.connect(self,gatherPackagesWorker.run)
+		self.gatherPackagesThread.started.connect(self.gatherPackagesWorker.run)
 
 		self.gatherPackagesWorker.finished.connect(self._gatherPackagesRet)
 		self.gatherPackagesWorker.finished.connect(self.gatherPackagesThread.quit)
@@ -605,7 +603,7 @@ class Bridge(QObject):
 		error = ""
 		self.packagesInfo = ret.get("packagesInfo",{})
 		incorrectFlavours = ret.get("incorrectFlavours",{})
-		self.flatpackInfo = ret.get("flatpakInfo",{})
+		self.flatpakInfo = ret.get("flatpakInfo",{})
 		
 		if self.packagesInfo.get("totalPackages") == 0:
 			self.core.mainStack.updateRequired = False

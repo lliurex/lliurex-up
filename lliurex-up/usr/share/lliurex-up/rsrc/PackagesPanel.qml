@@ -1,39 +1,34 @@
-import org.kde.plasma.core as PlasmaCore
-import org.kde.kirigami as Kirigami
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-
 Rectangle{
-    color:"transparent"
-    Text{ 
-        text:i18nd("lliurex-up","List of packages to update/install")
-        font.family: "Quattrocento Sans Bold"
-        font.pointSize: 16
-    }
+    id: rectLayout
+    color: "transparent"
 
-    GridLayout{
-        id:generalPackagesLayout
-        rows:1
-        flow: GridLayout.TopToBottom
-        rowSpacing:10
-        anchors.left:parent.left
-        width:parent.width-10
-        height:parent.height-22
-        enabled:true
+    ColumnLayout{
+        id: mainContent
+        anchors.fill: parent
+        anchors.leftMargin: 5
+        anchors.rightMargin: 15
+        anchors.bottomMargin: 15
+        spacing: 10
+
+        Text{ 
+            text: i18nd("lliurex-up","List of packages to update/install")
+            font.pointSize: 16
+        }
 
         PackagesList{
-            id:packagesList
-            Layout.fillHeight:true
-            Layout.fillWidth:true
-            packagesModel:packageStackBridge.packagesModel
+            id: packagesList
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            packagesModel: packageStackBridge.packagesModel
         }
     
     }
 
     ChangelogPopUp{
-        id:changelogPopUp
+        id: changelogPopUp
     }
-
 } 

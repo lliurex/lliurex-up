@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+from PySide6 import QtCore
+
 class PackagesModel(QtCore.QAbstractListModel):
 
 	PkgIdRole = QtCore.Qt.UserRole + 1000

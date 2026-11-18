@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import QtQml.Models
-import org.kde.plasma.components as PC
+import org.kde.kirigami as Kirigami
 
 
-PC.ItemDelegate{
+ItemDelegate{
     id: listPkgItem
     property string pkgId
     property string pkgVersion
@@ -16,132 +17,117 @@ PC.ItemDelegate{
     enabled:true
     height:65
 
-    Item{
-       id: menuItem
-       height:visible?60:0
-       width:parent.width-25
+    width: listPkgItem.ListView.view ? listPkgItem.ListView.view.width-10 : 0
+    hoverEnabled:true
+    leftPadding:15
+    rightPadding:10
 
-       MouseArea {
-           id: mouseAreaOption
-           anchors.fill: parent
-           hoverEnabled:true
-           propagateComposedEvents:true
+    onHoveredChanged:{
+        if (listPkgItem.ListView.view){
+            if (hovered){
+                listPkgItem.ListView.view.currentIndex=index
+            }
+        }else if (!hovered && listPkgItem.ListView.view.currentIndex === index){
+            listPkgItem.ListView.view.currentIndex = -1
+        }
+    }
 
-           onEntered: {
-               listPkg.currentIndex=filterModel.visibleElements.indexOf(index)
-           }
-       }
+    background: Rectangle {
+        x: 5
+        y: 5
+        width :parent.width-5
+        height: parent.height-5
 
-       Image {
-            id:packageIcon
-            source:pkgIcon
-            sourceSize.width:35
-            sourceSize.height:35
-            anchors.left:parent.left
-            anchors.verticalCenter:parent.verticalCenter
-            anchors.leftMargin:10
-            cache:false
+        color: {
+            if (listPkgItem.hovered) {
+                   Qt.alpha(Kirigami.Theme.highlightColor,0.15)
+            }else{
+                "transparent"
+            }
+        }
+
+        radius: 6
+        border.width: 1
+        border.color:{
+            if (listPkgItem.hovered) {
+                Kirigami.Theme.highlightColor
+            }else{            
+                "transparent"
+            }
+        }
+    }
+
+    contentItem: RowLayout {
+        id: pkgItem
+        spacing: 20
+
+        Image {
+            id: packageIcon
+            source: pkgIcon
+            Layout.preferredWidth: 35
+            Layout.preferredHeight: 35
+            fillMode:Image.PreserveAspectFit
 
         } 
-        Column{
-            id:pkgDescription
-            anchors.verticalCenter:parent.verticalCenter
-            anchors.leftMargin:15
-            anchors.left:packageIcon.right
-            spacing:10
-            width:parent.width-(packageSize.width-statusImg.width)
 
+        ColumnLayout {
+            id: pkgDescription
+            spacing:10
+            Layout.fillWidth:true
+            Layout.alignment:Qt.AlignVCenter
+            Layout.preferredWidth: 0
+            
             Text{
-                id:pkgName
-                text:pkgId
-                width: parent.width
+                id: pkgName
+                text: pkgId
                 elide:Text.ElideMiddle
-                font.family: "Quattrocento Sans Bold"
                 font.pointSize: 11
                 horizontalAlignment:Text.AlignLeft
-            } 
+                Layout.fillWidth:true
+            }
+
             Text{
-                id:packageVersion
-                text:pkgVersion
-                width: parent.width
+                id: packageVersion
+                text: pkgVersion
                 elide:Text.ElideMiddle
-                font.family: "Quattrocento Sans Bold"
                 font.pointSize: 10
                 horizontalAlignment:Text.AlignLeft
+                Layout.fillWidth:true
             }
         }
+
         Text{
-            id:packageSize
-            text:pkgSize
-            anchors.verticalCenter:parent.verticalCenter
-            anchors.right:{
-                if (showStatus){
-                    statusImg.left
-                }else{
-                    if (showChangelogBtn.visible){
-                        showChangelogBtn.left
-                    }else{
-                        parent.right
-                    }
-                }
-            }
-            anchors.rightMargin:{
-                if (showStatus || showChangelogBtn.visible){
-                    15
-                }else{
-                    10
-                }
-            }
-
+            id: packageSize
+            text: pkgSize
+            Layout.alignment: Qt.AlingRight | Qt.AlignVCenter
         }
-        Image {
+
+        Kirigami.Icon {
             id: statusImg
-            source:{
-                if (pkgStatus==0){
-                    "/usr/share/icons/breeze/status/24/data-success.svg"
-                }else{
-                    "/usr/share/icons/breeze/status/24/data-error.svg"
-                                 
-                }
-            }
-            visible:showStatus?true:false
-            sourceSize.width:32
-            sourceSize.height:32
-            anchors.leftMargin:10
-            anchors.rightMargin:10
-            anchors.right:showChangelogBtn.visible?showChangelogBtn.left:parent.right
-            anchors.verticalCenter:parent.verticalCenter
+            source: listPkgItem.pkgStatus === 0 ? "data-success" : "data-error"
+            visible: listPkgItem.showStatus ? true : false
+            Layout.preferredWidth: 32
+            Layout.preferredHeight: 32
+            Layout.alignment: Qt.AlignVCenter
         }
 
-        PC.Button{
-            id:showChangelogBtn
-            display:AbstractButton.IconOnly
-            icon.name:"help-about"
-            anchors.rightMargin:10
-            anchors.right:parent.right
-            anchors.verticalCenter:parent.verticalCenter
-            visible:{
-                if (listPkgItem.ListView.isCurrentItem){
-                    if (mainStackBridge.endProcess){
-                        true
-                    }else{
-                        false
-                    }
-                }else{
-                    false
-                }
-
-            }
+        Button{
+            id: showChangelogBtn
+            display: AbstractButton.IconOnly
+            icon.name: "help-about"
+            Layout.alignment: Qt.AlignVCenter
+            Layout.preferredWidth: visible ? implicitWidth : 0
+            visible: listPkgItem.hovered  && mainStackBridge.endProcess ? true:false
             ToolTip{
-                id:showChangelogToolTip
-                delay:1000
-                timeout:3000
-                visible:showChangelogBtn.hovered
-                text:i18nd("lliurex-up","Press to view pkg changelog")
-                background:Rectangle{
-                    color:"#ffffff"
-                    border.color:"#b8b9ba"
-                    radius:5.0
+                id: showChangelogToolTip
+                delay: 1000
+                timeout: 3000
+                visible: showChangelogBtn.hovered
+                text: i18nd("lliurex-up","Press to view pkg changelog")
+                background: Rectangle{
+                    color: "#ffffff"
+                    border.color: "#b8b9ba"
+                    radius: 5.0
                 }
             }
             onClicked:{

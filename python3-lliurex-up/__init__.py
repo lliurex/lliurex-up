@@ -41,8 +41,8 @@ class LliurexUpCore(object):
 		self.previousflavourspath = self.processPath / "previousflavours"
 		self.errorPostactionToken = self.processPath / "errorPostactionToken"
 		self.errorFinalMetapackageToken = self.processPath / "errorFinalMetapackageToken"
-		self.errorupgrade_token = self.processPath / "errorupgrade_token"
-		self.finalupgrade_token = self.processPath / "finalupgrade_token"
+		self.errorUpgradeToken = self.processPath / "errorUpgradeToken"
+		self.finalUpgradeToken = self.processPath / "finalUpgradeToken"
 
 		self.initActionsPath = Path("/usr/share/lliurex-up/initActions")
 		self.preActionsPath = Path("/usr/share/lliurex-up/preActions")
@@ -123,7 +123,7 @@ class LliurexUpCore(object):
 
 	def unlockerCommand(self):
 
-		return "/usr/sbin/dpkg-unlocker-cli unlock -u"
+		return ["/usr/sbin/dpkg-unlocker-cli", "unlock", "-u"]
 
 	#def unlockeCommand				
 
@@ -376,7 +376,7 @@ class LliurexUpCore(object):
 
 	#def getPackageVersionAvailable	
 
-	def isLliurexUpIsUpdated(self,args=None):
+	def isLliurexUpUpdated(self,args=None):
 		"""
 			return Boolean 
 		"""
@@ -394,7 +394,7 @@ class LliurexUpCore(object):
 		
 		return True
 
-	#def isLliurexUpIsUpdated	
+	#def isLliurexUpUpdated	
 
 	def installLliurexUp(self):
 		"""
@@ -866,7 +866,7 @@ class LliurexUpCore(object):
 				]
 
 				if unconfiguredPkgs:
-					self.errorupgrade_token.write_text("\n".join(unconfiguredPkgs) + "\n")
+					self.errorUpgradeToken.write_text("\n".join(unconfiguredPkgs) + "\n")
 					error = True
 					errorDetails=f"There are packages that have not been configured correctly. Details: {unconfiguredPkgs}"
 						
@@ -887,7 +887,7 @@ class LliurexUpCore(object):
 					)
 
 					if result.stdout:
-						self.finalupgrade_token.write_text(result.stdout)
+						self.finalUpgradeToken.write_text(result.stdout)
 
 					for line in result.stdout.splitlines():
 						if 'Ins' in line:

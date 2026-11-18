@@ -15,7 +15,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 class Bridge(QObject):
 
 	versionInfoChanged = Signal()
-	updateInfoChanged = Signal()
+	packagesInfoChanged = Signal()
 	flatpakInfoChanged = Signal()
 
 	def __init__(self):
@@ -24,7 +24,7 @@ class Bridge(QObject):
 		self.core = Core.Core.get_core()
 		self.llxUpConnect = self.core.llxUpConnect
 		self._versionInfo = {"currentVersion": None, "availableVersion": None, "candidateVersion": None}
-		self._updateInfo = {"totalPackages": 0, "upgradeSize": "", "newPackages": "", "updateSource": ""}
+		self._packagesInfo = {"totalPackages": 0, "upgradeSize": "", "newPackages": "", "updateSource": ""}
 		self._flatpakInfo = {"totalFlatpak": 0, "size": ""}
 
 	#def __init__
@@ -45,21 +45,21 @@ class Bridge(QObject):
 
 	#def versionInfo
 
-	@Property(dict, notify = updateInfoChanged)		
-	def updateInfo(self):
+	@Property(dict, notify = packagesInfoChanged)		
+	def packagesInfo(self):
 
-		return self._updateInfo
+		return self._packagesInfo
 
-	#def updateInfo
+	#def packagesInfo
 
-	@updateInfo.setter
-	def updateInfo(self,updateInfo):
+	@packagesInfo.setter
+	def packagesInfo(self,packagesInfo):
 
-		if self._updateInfo != updateInfo:
-			self._updateInfo = updateInfo
-			self.updateInfoChanged.emit()
+		if self._packagesInfo != packagesInfo:
+			self._packagesInfo = packagesInfo
+			self.packagesInfoChanged.emit()
 
-	#def updateInfo
+	#def packagesInfo
 
 	@Property(dict, notify = flatpakInfoChanged)
 	def flatpakInfo(self):
@@ -84,11 +84,11 @@ class Bridge(QObject):
 		self.versionInfo={
 			"currentVersion": currentVersionInfo.get("installed"),
 			"availableVersion":  self.core.loadStack.availableVersion,
-			"candidateVersion": currentVersionInfo.ge("candidate")
+			"candidateVersion": currentVersionInfo.get("candidate")
 		}
 
-		updateSource=self.core.loadStack.getCurrentVersionT.currentVersion["updateSource"]
-		packagesInfo = self.core.loadStack.packages
+		updateSource=self.core.loadStack.currentVersion["updateSource"]
+		packagesInfo = self.core.loadStack.packagesInfo
 
 		self.packagesInfo = {
 			"totalPackages": packagesInfo.get("totalPackages"),
@@ -96,8 +96,7 @@ class Bridge(QObject):
 			"newPackages": self.llxUpConnect.newPackages,
 			"updateSource" : currentVersionInfo.get("updateSource")
 		}
-
-		self.flatpakInfo=self.core.loadStack..flatpakInfo
+		self.flatpakInfo = self.core.loadStack.flatpakInfo
 
 	#def getUpdateInfo
 		

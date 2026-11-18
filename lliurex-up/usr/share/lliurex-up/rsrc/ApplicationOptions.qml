@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.plasma.components as PC
 import org.kde.kirigami as Kirigami
 
 RowLayout{
@@ -9,7 +8,7 @@ RowLayout{
     spacing: 10
 
     Rectangle{
-        width:180
+        Layout.preferredWidth:180
         Layout.fillHeight: true
         border.color: palette.mid
 
@@ -114,11 +113,15 @@ RowLayout{
             Layout.bottomMargin:15
             Layout.fillWidth:true
 
+            Item {
+                Layout.fillWidth: true
+
+            }
 
             ColumnLayout{
                 id:feedbackColumn
                 spacing:10
-                Layout.fiilWidth:true
+                Layout.fillWidth:true
                 
                 Text{
                     id:feedBackText
@@ -150,16 +153,17 @@ RowLayout{
                 
             }
                
-            PC.Button {
-                id:updateBtn
-                visible:mainStackBridge.showUpdateBtn && mainStackBridge.currentOptionStack!==3
+            Button {
+                id: updateBtn
+                visible: mainStackBridge.showUpdateBtn && mainStackBridge.currentOptionStack !== 3
                 focus: visible
-                display:AbstractButton.TextBesideIcon
-                icon.name:"view-refresh"
-                text:i18nd("lliurex-up","Update")
-                enabled:mainStackBridge.enableUpdateBtn
-                Layout.leftMargin:10
-                Layout.rightMargin:10
+                display: AbstractButton.TextBesideIcon
+                icon.name: "view-refresh"
+                text: i18nd("lliurex-up","Update")
+                enabled :mainStackBridge.enableUpdateBtn
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                Layout.alignment:Qt.AlignRight | Qt.AlignVCenter
                 Keys.onReturnPressed: updateBtn.clicked()
                 Keys.onEnterPressed: updateBtn.clicked()
                 onClicked:{
@@ -170,34 +174,36 @@ RowLayout{
                 
             }
 
-            PC.Button {
+            Button {
                 id:applyBtn
-                visible: mainStackBridge.currentOptionStack ===3
+                visible: mainStackBridge.currentOptionStack === 3
                 focus:visible
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-ok"
                 text:i18nd("lliurex-up","Apply")
-                enabled:settingStackBridge.settingsChanged
+                enabled:settingStackBridge.changesInSettings
                 Layout.leftMargin:10
                 Layout.rightMargin:10
+                Layout.alignment:Qt.AlignRight | Qt.AlignVCenter
                 Keys.onReturnPressed: applyBtn.clicked()
                 Keys.onEnterPressed: applyBtn.clicked()
                 onClicked:settingStackBridge.applyChanges()
             }
-            PC.Button {
+            
+            Button {
                 id:cancelBtn
-                visible: mainStackBridge.currentOptionStack===3
+                visible: mainStackBridge.currentOptionStack === 3
                 focus: false
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-cancel"
                 text:i18nd("lliurex-up","Cancel")
-                enabled:settingStackBridge.settingsChanged
+                enabled:settingStackBridge.changesInSettings
                 Layout.leftMargin:10
                 Layout.rightMargin:10
+                Layout.alignment:Qt.AlignRight | Qt.AlignVCenter
                 Keys.onReturnPressed: cancelBtn.clicked()
                 Keys.onEnterPressed: cancelBtn.clicked()
                 onClicked:settingStackBridge.discardChanges()
-                
             }
         }
     }
@@ -215,7 +221,7 @@ RowLayout{
             function onDiscardDialogClicked(){
                mainStackBridge.managePendingChangesDialog("Discard")
             }
-            function onCancelDialogClicked(){
+            function onRejectDialogClicked(){
                 mainStackBridge.managePendingChangesDialog("Cancel")
             }
         }

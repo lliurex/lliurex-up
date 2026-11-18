@@ -66,11 +66,11 @@ class Bridge(QObject):
 	#def __init__
 
 	@Property(bool,notify = isProgressBarVisibleChanged)
-	def _isProgressBarVisible(self):
+	def isProgressBarVisible(self):
 
 		return self._isProgressBarVisible
 
-	#def _isProgressBarVisible
+	#def isProgressBarVisible
 
 	@isProgressBarVisible.setter
 	def isProgressBarVisible(self,isProgressBarVisible):
@@ -81,7 +81,7 @@ class Bridge(QObject):
 
 	#def isProgressBarVisible
 
-	@Property(int,,notify = dialogTextCodeChanged)
+	@Property(int,notify = dialogTextCodeChanged)
 	def dialogTextCode(self):
 
 		return self._dialogTextCode
@@ -256,7 +256,6 @@ class Bridge(QObject):
 		self.isProgressBarVisible = False
 
 		if ret == 0:
-			self.unlockProcessThread.wait()
 			os.execl(sys.executable, sys.executable, *sys.argv) 
 		else:
 			self.abortProcess = True
