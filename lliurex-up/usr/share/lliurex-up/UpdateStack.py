@@ -236,11 +236,11 @@ class UpdateStack(QObject):
 
 		if not self.postActionsLaunched:
 			if getattr(self,"checkProgressWorker",None) is not None:
-			QMetaObject.invokeMethod(
-				self.checkProgressWorker,
-				"stop",
-				Qt.QueuedConnection
-			)
+				QMetaObject.invokeMethod(
+					self.checkProgressWorker,
+					"stop",
+					Qt.QueuedConnection
+				)
 			self.postActionsLaunched = True
 			print("  [Lliurex-Up]: Executing post-actions")
 			self.core.mainStack.updateStep = 5
