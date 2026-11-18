@@ -10,7 +10,7 @@ Rectangle{
         id: loadRoot
         anchors.centerIn: parent
         width: parent.width * 0.9
-        spacing: 15
+        spacing: 10
 
         Image{
             id:spinnerImage

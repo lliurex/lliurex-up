@@ -15,7 +15,7 @@ ItemDelegate{
     property bool showStatus
   
     enabled:true
-    height:65
+    height:60
 
     width: listPkgItem.ListView.view ? listPkgItem.ListView.view.width-10 : 0
     hoverEnabled:true
