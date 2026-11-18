@@ -86,8 +86,8 @@ class CheckProgressWorker(QObject):
 									"progressBarValue": barVal,
 									"progressPkg": self.manager.progressUnpacked
 								})
-								self.core.mainStack.progressPkg=self.llxUpConnect.progressUnpacked
-								self.core.mainStack.progressBarValue=round((2+self.llxUpConnect.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
+								self.core.mainStack.progressPkg=self.manager.progressUnpacked
+								self.core.mainStack.progressBarValue=round((2+self.manager.progressUnpackedPercentage)/self.core.mainStack._totalUpdateSteps,2)
 							else:
 								self.unpackedRun=False
 								self.progresUpdated.emit({
