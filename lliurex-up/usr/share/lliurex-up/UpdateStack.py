@@ -151,6 +151,7 @@ class UpdateStack(QObject):
 
 	def launchUpdateProcess(self):
 
+		self.core.mainStack.updateStep = 1
 		self._initUpdateProcess()
 		self.updateProcessTimer = QTimer(None)
 		self.updateProcessTimer.timeout.connect(self._updateProcessRet)
@@ -209,7 +210,6 @@ class UpdateStack(QObject):
 		if not self.preActionsLaunched:
 			self.preActionsLaunched = True
 			print("  [Lliurex-Up]: Executing pre-actions")
-			self.core.mainStack.updateStep = 1
 			self.core.mainStack.setProgress()
 			self.core.mainStack.currentCommand = self.llxUpConnect.preActionsScript()
 			self.core.mainStack.endCurrentCommand = True
@@ -269,15 +269,7 @@ class UpdateStack(QObject):
 						
 		if self.updateProcessTimer and self.updateProcessTimer.isActive():
 			self.updateProcessTimer.stop()	
-		
-		'''
-		if getattr(self,"checkProgressWorker",None) is not None:
-			QMetaObject.invokeMethod(
-				self.checkProgressWorker,
-				"stop",
-				Qt.QueuedConnection
-			)
-		'''
+	
 		self.llxUpConnect.updatePackagesData(True)
 		self.core.packageStack.updatePackagesModelInfo()
 		self.core.mainStack.showProgressBar = False
@@ -285,8 +277,8 @@ class UpdateStack(QObject):
 		self.core.mainStack.updateStep = 0
 
 		resultProcess = self.llxUpConnect.checkErrorDistUpgrade()
-		msgCode = self.UPDATE_PROCESS_OK if not result else self.UPDATE_PROCESS_ERROR
-		msgType = self.llxUpConnect.KIRIGAMI_MSG_OK if not result else self.llxUpConnect.KIRIGAMI_MSG_ERROR
+		msgCode = self.UPDATE_PROCESS_OK if not resultProcess else self.UPDATE_PROCESS_ERROR
+		msgType = self.llxUpConnect.KIRIGAMI_MSG_OK if not resultProcess else self.llxUpConnect.KIRIGAMI_MSG_ERROR
 
 		self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": msgCode, "type": msgType}
 	
