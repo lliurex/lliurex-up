@@ -152,6 +152,8 @@ class UpdateStack(QObject):
 	def launchUpdateProcess(self):
 
 		self.core.mainStack.updateStep = 1
+		self.core.mainStack.setProgress()
+
 		self._initUpdateProcess()
 		self.updateProcessTimer = QTimer(None)
 		self.updateProcessTimer.timeout.connect(self._updateProcessRet)
@@ -250,7 +252,7 @@ class UpdateStack(QObject):
 			print("  [Lliurex-Up]: Checking Final metapackage")
 			self.core.mainStack.updateStep = 6
 			self.core.mainStack.setProgress()
-			self.core.mainStack.currentCommand=self._checkFinalFlavour()
+			self.core.mainStack.currentCommand = self._checkFinalFlavour()
 			self.core.mainStack.endCurrentCommand = True
 
 		if not self.checkFinalFlavourDone:
@@ -288,7 +290,7 @@ class UpdateStack(QObject):
 
 		for prefix, token in self.PROCESSTOKENS:
 			if getattr(self, f"{prefix}Launched") and not getattr(self, f"{prefix}Done"):
-				tmpToken=getattr(self.llxUpConnect,token)
+				tmpToken = getattr(self.llxUpConnect,token)
 				if os.path.exists(tmpToken):
 					setattr(self, f"{prefix}Done", True)
 
