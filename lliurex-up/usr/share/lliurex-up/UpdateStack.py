@@ -34,7 +34,7 @@ class CheckProgressWorker(QObject):
 	@Slot()
 	def run(self):
 
-		self._timer = QTimer()
+		self._timer = QTimer(self)
 		self._timer.timeout.connect(self._checkProgressRet)
 		self._timer.start(200)
 	
@@ -76,54 +76,52 @@ class CheckProgressWorker(QObject):
 					self.unpackedRun = True
 					self._timer.setInterval(1800)
 				
-					if self.unpackedRun:
-						self.manager.checkProgressUnpacked()
-						if self.manager.progressUnpacked != totalPkgs:
-							barVal = round((2+self.manager.progressUnpackedPercentage) / totalSteps,2)
-							self.progressUpdated.emit({
-								"updateStep": 3,
-								"progressBarValue": barVal,
-								"progressPkg": self.manager.progressUnpacked
-							})
-						else:
-							self.unpackedRun=False
-							self.progressUpdated.emit({
-								"updateStep": 3,
-								"progressPkg": totalPkgs
-
-							})
+				if self.unpackedRun:
+					self.manager.checkProgressUnpacked()
+					if self.manager.progressUnpacked != totalPkgs:
+						barVal = round((2+self.manager.progressUnpackedPercentage) / totalSteps,2)
+						self.progressUpdated.emit({
+							"updateStep": 3,
+							"progressBarValue": barVal,
+							"progressPkg": self.manager.progressUnpacked
+						})
 					else:
-						if not self.installationRun:
-							self.installationRun = True
-							self.progressUpdated.emit({
-								"updateStep": 4,
-								"progressPkg": self.manager.progressInstallation
-							})
+						self.unpackedRun=False
+						self.progressUpdated.emit({
+							"updateStep": 3,
+							"progressPkg": totalPkgs
+						})
+				else:
+					if not self.installationRun:
+						self.installationRun = True
+						self.progressUpdated.emit({
+							"updateStep": 4,
+							"progressPkg": self.manager.progressInstallation
+						})
 						
-						self.manager.checkProgressInstallation()
+					self.manager.checkProgressInstallation()
 						
-						if self.manager.progressInstallation != totalPkgs:
-							barVal = round((3+self.manager.progressInstallationPercentage) / totalSteps,2)
-							self.progressUpdated.emit({
-								"updateStep": 4,
-								"progressBarValue": barVal,
-								"progressPkg": self.manager.progressInstallation
+					if self.manager.progressInstallation != totalPkgs:
+						barVal = round((3+self.manager.progressInstallationPercentage) / totalSteps,2)
+						self.progressUpdated.emit({
+							"updateStep": 4,
+							"progressBarValue": barVal,
+							"progressPkg": self.manager.progressInstallation
+						})
+					
+					else:
+						self.progressUpdated.emit({
+							"progressPkg": totalPkgs
+						})
 
-							})
-						
-						else:
-							self.progressUpdated.emit({
-								"progressPkg": totalPkgs
-							})
+						self.stop()
 
-							self.stop()
-
-						self.manager.updatePackagesData()
-						self.packagesModelUpdated.emit()
+					self.manager.updatePackagesData()
+					self.packagesModelUpdated.emit()
 			
 							
 		except Exception as e:
-			print(str(e))
+			print(f"Error checking process: {e}")
 			self.stop()
 
 	#def _checkProgressRet

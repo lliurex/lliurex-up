@@ -379,14 +379,14 @@ class Bridge(QObject):
 		
 		if not freeSpace.get("enoughSpace"):
 			print(f"  [Lliurex-Up]: Not enough space on disk ( {self.freeSpaceAvailable} GB)")
-			self.core.mainStack.showErrorMessage = {"msgCode": FREESPACE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": self.FREESPACE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.endProcess = True
 			self.core.mainStack.currentStack = 1
 			return	
 
 		if not canConnect:
 			print("  [Lliurex-Up]: Unable to connect to lliurex.gva.es")
-			self.core.mainStack.showErrorMessage = {"msgCode": INTERNET_CONNECTION_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": self.INTERNET_CONNECTION_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.endProcess = True
 			self.core.mainStack.currentStack = 1
 			return
@@ -475,7 +475,7 @@ class Bridge(QObject):
 
 		if not ret.get("status"):
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
-			self.core.mainStack.showErrorMessage = {"msgCode": UPDATE_LLIUREXUP_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
+			self.core.mainStack.showErrorMessage = {"msgCode": self.UPDATE_LLIUREXUP_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
 			self.core.mainStack.currentStack=1
 			return
 
@@ -620,7 +620,7 @@ class Bridge(QObject):
 				logMsg = "Updated aborted. An error occurred in the search for updates"
 				self.llxUpConnect.log(logMsg)
 				print(f"  [Lliurex-Up]: {logMsg}")
-				self.core.mainStack.showErrorMessage = {"msgCode": SEARCH_UPDATES_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":error}
+				self.core.mainStack.showErrorMessage = {"msgCode": self.SEARCH_UPDATES_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":error}
 				self.core.mainStack.currentStack = 1
 				return
 			
@@ -629,7 +629,7 @@ class Bridge(QObject):
 			
 			print(f"  [Lliurex-Up]: {logMsg}")
 			if not self.initActionsResult.get("status"):
-				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode":DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
+				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode": self.DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 			self.core.mainStack.loadInfo()
 		
 		else:
@@ -637,14 +637,14 @@ class Bridge(QObject):
 				self.core.mainStack.updateRequired=True
 				print("  [Lliurex-Up]: System not update")
 				if not self.initActionsResult.get("status"):
-					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
+					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": self.DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 				self.core.mainStack.loadInfo()
 				return
 
 			logMsg="Updated aborted for incorrect metapackages detected in update"
 			self.llxUpConnect.log(logMsg)
 			print(f"  [Lliurex-Up]: {logMsg}")
-			self.core.mainStack.showErrorMessage = {"msgCode": INCORRECT_METAPACKAGE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
+			self.core.mainStack.showErrorMessage = {"msgCode": self.INCORRECT_METAPACKAGE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
 			self.core.mainStack.currentStack=1
 
 	#def _gatherPackagesRet

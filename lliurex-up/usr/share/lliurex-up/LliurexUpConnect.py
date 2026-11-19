@@ -759,7 +759,7 @@ class LliurexUpConnect():
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE,
 				text=True,
-				error="replace",
+				errors="replace",
 				check=False
 			)
 
