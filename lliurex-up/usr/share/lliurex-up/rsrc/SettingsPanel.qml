@@ -13,7 +13,6 @@ Rectangle{
         id:generalLayout
         anchors.fill: parent
         anchors.leftMargin:5
-        anchors.rightMargin:15
         anchors.bottomMargin:15
         spacing: 10
 

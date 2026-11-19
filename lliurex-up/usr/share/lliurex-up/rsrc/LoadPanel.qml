@@ -2,60 +2,58 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Rectangle{
+Rectangle {
     visible: true
-    color:"transparent"
+    color: "transparent"
 
-    ColumnLayout{
+    ColumnLayout {
         id: loadRoot
         anchors.centerIn: parent
         width: parent.width * 0.9
         spacing: 10
 
-        Image{
-            id:spinnerImage
+        Image {
+            id: spinnerImage
             source: "loading.png"
             Layout.preferredWidth: 24
             Layout.preferredHeight: 24
             Layout.alignment: Qt.AlignHCenter
             fillMode: Image.PreserveAspectFit
-            smooth:false
-            antialiasing:false
-            rotation:0
+            smooth: false
+            antialiasing: false
+            rotation: 0
         }
-            
+
         Timer{
-            id:rotationTimer
-            running:(spinnerImage!==null && loadRoot!==null) && spinnerImage.visible && loadRoot.visible
-            repeat:true
-            interval:100
+            id: rotationTimer
+            running: (spinnerImage !== null && loadRoot !== null) && spinnerImage.visible && loadRoot.visible
+            repeat: true
+            interval: 100
 
-            onTriggered:{
-                spinnerImage.rotation=(spinnerImage.rotation+330)%360
+            onTriggered: {
+                spinnerImage.rotation= (spinnerImage.rotation + 330) % 360
             }
         }
 
-        Text{
-            id:loadtext
+        Text {
+            id: loadtext
             Layout.alignment: Qt.AlignHCenter
-            text:{
+            text: {
                 if (loadStackBridge.loadStep === 5){
-                     return getMsg() + " " + loadStackBridge.countDownValue + " " + i18nd("lliurex-up","seconds")
+                    return getMsg() + " " + loadStackBridge.countDownValue + " " + i18nd("lliurex-up","seconds")
                 }
-            	return getMsg()
+                return getMsg()
             }
-                
         }
 
-        ProgressBar{
-            id:loadBar
-            from:0.0
-            to:1.0
-            value:loadStackBridge.progressValue
-            Layout.alignment:Qt.AlignHCenter
-            implicitWidth:500
+        ProgressBar {
+            id: loadBar
+            from: 0.0
+            to: 1.0
+            value: loadStackBridge.progressValue
+            Layout.alignment: Qt.AlignHCenter
+            implicitWidth: 500
         }
-
     }
 
     function getMsg(){
@@ -90,10 +88,7 @@ Rectangle{
             case 9:
                 msg = i18nd("lliurex-up","Looking for new updates...")
                 break;
-              case 13:
-                return i18nd("lliurex-up","Updating mirror: ")
         }
-
         return headed + ". " + msg
     }
 }

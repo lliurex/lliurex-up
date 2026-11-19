@@ -44,8 +44,8 @@ Popup {
                 readonly property bool isSearching: packageStackBridge.pkgChangelog.changelog === ""
 
                 text: isSearching
-                      ? i18nd("lliurex-up", "Searching changelog. Wait a moment...")
-                      : packageStackBridge.pkgChangelog.changelog
+                        ? i18nd("lliurex-up", "Searching changelog. Wait a moment...")
+                        : packageStackBridge.pkgChangelog.changelog
 
                 font.pointSize: 11
                 horizontalAlignment: isSearching ? Text.AlignHCenter : Text.AlignLeft

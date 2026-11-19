@@ -2,11 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQml.Models
 import QtQuick.Layouts
-import org.kde.plasma.components as PC
 import org.kde.kirigami as Kirigami
 
-
-Rectangle{
+Rectangle {
     id: pkgGrid
     property alias packagesModel: filterModel.model
     property alias listCount: listPkg.count
@@ -23,7 +21,7 @@ Rectangle{
             spacing: 10
             enabled: true
 
-            PC.TextField {
+            TextField {
                 id: pkgSearchEntry
                 font.pointSize: 10
                 horizontalAlignment: TextInput.AlignLeft
@@ -41,12 +39,12 @@ Rectangle{
             Layout.fillHeight: true
             Layout.fillWidth: true
             color: "white"
-            border.color: "#d3d3d3"     
+            border.color: "#d3d3d3"
 
-            PC.ScrollView {
+            ScrollView {
                 anchors.fill: parent
 
-                ListView{
+                ListView {
                     id: listPkg
 
                     Timer {
@@ -56,14 +54,14 @@ Rectangle{
                         onTriggered: filterModel.update()
                     }
 
-                    model:FilterDelegateModel{
+                    model: FilterDelegateModel {
                         id: filterModel
                         model: packagesModel
                         role: "pkgId"
                         search: pkgSearchEntry.text.trim()
                         externalTimer: searchTimer
-                        
-                        delegate: ListDelegatePkgItem{
+
+                        delegate: ListDelegatePkgItem {
                             width: pkgTable.width -18
                             pkgId: model.pkgId
                             pkgVersion: model.pkgVersion
@@ -71,7 +69,7 @@ Rectangle{
                             pkgIcon: model.pkgIcon
                             pkgStatus: model.pkgStatus
                             showStatus: model.showStatus
-                         }
+                        }
                     }
 
                     currentIndex: -1
@@ -81,9 +79,9 @@ Rectangle{
                     boundsBehavior: Flickable.StopAtBounds
                     highlightFollowsCurrentItem: true
                     highlightMoveDuration: 0
-                    highlightResizeDuration: 0            
+                    highlightResizeDuration: 0
 
-                    Kirigami.PlaceholderMessage { 
+                    Kirigami.PlaceholderMessage {
                         id: emptyHint
                         anchors.centerIn: parent
                         width: parent.width - (Kirigami.Units.largeSpacing * 4)
@@ -91,12 +89,8 @@ Rectangle{
                         text: i18nd("lliurex-up","Packages not found")
                         icon.name: "lliurex-up"
                     }
-
-                 } 
+                }
             }
         }
-          
     }
-
 }
-

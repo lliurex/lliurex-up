@@ -4,13 +4,14 @@ import QtQuick.Layouts
 import QtQuick.Window
 
 ApplicationWindow {
+    id: mainWindow
 
     property bool closing: false
-    id:mainWindow
+    property int margin: 1
+
     visible: true
     title: "LliureX-Up"
-    color:"#eff0f1"
-    property int margin: 1
+    color: "#eff0f1"
     width: mainLayout.implicitWidth + 2 * margin
     height: mainLayout.implicitHeight + 2 * margin
     minimumWidth: 850 + 2 * margin
@@ -20,15 +21,15 @@ ApplicationWindow {
         x = Screen.width / 2 - width / 2
         y = Screen.height / 2 - height / 2
     }
-   
+
     onClosing:(close)=> {
+
         close.accepted=closing;
 
         if (!closing) {
             mainStackBridge.closeApplication();
             closeTimer.start();
         }
-        
     }
 
     Timer {
@@ -44,17 +45,17 @@ ApplicationWindow {
         }
     }
 
-    
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
 
-        Rectangle{
+        Rectangle {
             color: "#0049aa"
-            Layout.fillWidth:true
+            Layout.fillWidth: true
             Layout.preferredHeight: 120
-            Image{
-                id:banner
+
+            Image {
+                id: banner
                 source: "lliurex-up-banner.png"
                 anchors.centerIn: parent
                 fillMode: Image.PreserveAspectFit  
@@ -63,17 +64,16 @@ ApplicationWindow {
 
         StackView {
             id: mainView
-            Layout.fillWidth:true
+            Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.preferredHeight:460
+            Layout.preferredHeight: 460
 
-            property int currentView:mainStackBridge.currentStack
-            
+            property int currentView: mainStackBridge.currentStack
 
-            initialItem:loadView
+            initialItem: loadView
 
-            onCurrentViewChanged:{
-                switch(currentView){
+            onCurrentViewChanged: {
+                switch(currentView) {
                     case 0:
                         mainView.replace(loadView)
                         break;
@@ -94,7 +94,7 @@ ApplicationWindow {
                     duration: 60
                 }
             }
-            
+
             replaceExit: Transition {
                 NumberAnimation { 
                     property: "opacity"
@@ -105,27 +105,25 @@ ApplicationWindow {
             }
         }
 
-        Component{
-            id:loadView
-            LoadPanel{
-                id:loadPanel
+        Component {
+            id: loadView
+            LoadPanel {
+                id: loadPanel
             }
         }
 
-        Component{
-            id:errorView
-            ErrorPanel{
-                id:errorPanel
+        Component {
+            id: errorView
+            ErrorPanel {
+                id: errorPanel
             }
         }
 
-        Component{
-            id:applicationOptionsView
-            ApplicationOptions{
-                id:applicationOptions
+        Component {
+            id: applicationOptionsView
+            ApplicationOptions {
+                id: applicationOptions
             }
         }
-
     }
 }
-

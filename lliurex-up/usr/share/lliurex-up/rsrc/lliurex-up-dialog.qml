@@ -43,7 +43,7 @@ ApplicationWindow {
 
             Kirigami.Icon {
                 id: iconInternal
-                source:"dialog-warning"
+                source: "dialog-warning"
                 Layout.preferredWidth: Kirigami.Units.iconSizes.huge
                 Layout.preferredHeight: Kirigami.Units.iconSizes.huge
             }
@@ -99,7 +99,7 @@ ApplicationWindow {
                     text: launchStackBridge.showApplyBtn ? i18nd("lliurex-up", "No") : i18nd("lliurex-up", "Close")
                     Keys.onReturnPressed: cancelBtn.clicked()
                     Keys.onEnterPressed: cancelBtn.clicked()
-                    onClicked:  window.close()
+                    onClicked: window.close()
                 }
             }
         }
@@ -123,6 +123,5 @@ ApplicationWindow {
             default:
                 return ""
         }
-
     }
 }

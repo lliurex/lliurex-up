@@ -2,33 +2,31 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Rectangle{
+Rectangle {
     id: rectLayout
     color: "transparent"
 
-    ColumnLayout{
+    ColumnLayout {
         id: mainContent
         anchors.fill: parent
         anchors.leftMargin: 5
-        anchors.rightMargin: 15
         anchors.bottomMargin: 15
         spacing: 10
 
-        Text{ 
+        Text { 
             text: i18nd("lliurex-up","List of packages to update/install")
             font.pointSize: 16
         }
 
-        PackagesList{
+        PackagesList {
             id: packagesList
             Layout.fillHeight: true
             Layout.fillWidth: true
             packagesModel: packageStackBridge.packagesModel
         }
-    
     }
 
-    ChangelogPopUp{
+    ChangelogPopUp {
         id: changelogPopUp
     }
 } 

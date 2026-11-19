@@ -121,21 +121,22 @@ class LliurexUpConnect():
 
 	#def isAptLocked 	
 
-	def isDpkgLocked(self):
+	def isDpkgLocked(self, writeChangelog = True):
 
 		code = self.llxUpCore.isDpkgLocked()
 
 		if code == 0:
 			return code
 
-		if code == 1:
-			msgLog = "Dpkg is running"
-		elif code == 2:
-			msgLog = "Dpkg is locked"
-		elif code == 3:
-			msgLog = "Apt is running"	
+		if writeChangelog:
+			if code == 1:
+				msgLog = "Dpkg is running"
+			elif code == 2:
+				msgLog = "Dpkg is locked"
+			elif code == 3:
+				msgLog = "Apt is running"	
 
-		self.log(msgLog)
+			self.log(msgLog)
 	
 		return 	code	
 

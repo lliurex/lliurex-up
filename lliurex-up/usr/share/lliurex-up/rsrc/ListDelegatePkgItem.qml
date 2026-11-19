@@ -4,8 +4,7 @@ import QtQuick.Layouts
 import QtQml.Models
 import org.kde.kirigami as Kirigami
 
-
-ItemDelegate{
+ItemDelegate {
     id: listPkgItem
     property string pkgId
     property string pkgVersion
@@ -13,16 +12,16 @@ ItemDelegate{
     property string pkgIcon
     property int pkgStatus
     property bool showStatus
-  
-    enabled:true
-    height:60
+
+    enabled: true
+    height: 60
 
     width: listPkgItem.ListView.view ? listPkgItem.ListView.view.width-10 : 0
-    hoverEnabled:true
-    leftPadding:15
-    rightPadding:10
+    hoverEnabled: true
+    leftPadding: 15
+    rightPadding: 10
 
-    onHoveredChanged:{
+    onHoveredChanged: {
         if (listPkgItem.ListView.view){
             if (hovered){
                 listPkgItem.ListView.view.currentIndex=index
@@ -35,26 +34,14 @@ ItemDelegate{
     background: Rectangle {
         x: 5
         y: 5
-        width :parent.width-5
-        height: parent.height-5
+        width: parent.width - 5
+        height: parent.height - 5
 
-        color: {
-            if (listPkgItem.hovered) {
-                   Qt.alpha(Kirigami.Theme.highlightColor,0.15)
-            }else{
-                "transparent"
-            }
-        }
-
+        color: listPkgItem.hovered ? Qt.alpha(Kirigami.Theme.highlightColor,0.15) : "transparent"
+    
         radius: 6
         border.width: 1
-        border.color:{
-            if (listPkgItem.hovered) {
-                Kirigami.Theme.highlightColor
-            }else{            
-                "transparent"
-            }
-        }
+        border.color: listPkgItem.hovered ? Kirigami.Theme.highlightColor : "transparent"
     }
 
     contentItem: RowLayout {
@@ -67,36 +54,35 @@ ItemDelegate{
             Layout.preferredWidth: 35
             Layout.preferredHeight: 35
             fillMode:Image.PreserveAspectFit
-
         } 
 
         ColumnLayout {
             id: pkgDescription
             spacing:10
-            Layout.fillWidth:true
-            Layout.alignment:Qt.AlignVCenter
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
             Layout.preferredWidth: 0
-            
-            Text{
+
+            Text {
                 id: pkgName
                 text: pkgId
                 elide:Text.ElideMiddle
                 font.pointSize: 11
-                horizontalAlignment:Text.AlignLeft
-                Layout.fillWidth:true
+                horizontalAlignment: Text.AlignLeft
+                Layout.fillWidth: true
             }
 
-            Text{
+            Text {
                 id: packageVersion
                 text: pkgVersion
-                elide:Text.ElideMiddle
+                elide: Text.ElideMiddle
                 font.pointSize: 10
-                horizontalAlignment:Text.AlignLeft
-                Layout.fillWidth:true
+                horizontalAlignment: Text.AlignLeft
+                Layout.fillWidth: true
             }
         }
 
-        Text{
+        Text {
             id: packageSize
             text: pkgSize
             Layout.alignment: Qt.AlingRight | Qt.AlignVCenter
@@ -118,24 +104,23 @@ ItemDelegate{
             Layout.alignment: Qt.AlignVCenter
             Layout.preferredWidth: visible ? implicitWidth : 0
             visible: listPkgItem.hovered  && mainStackBridge.endProcess ? true:false
-            ToolTip{
+
+            ToolTip {
                 id: showChangelogToolTip
                 delay: 1000
                 timeout: 3000
                 visible: showChangelogBtn.hovered
                 text: i18nd("lliurex-up","Press to view pkg changelog")
-                background: Rectangle{
+                background: Rectangle {
                     color: "#ffffff"
                     border.color: "#b8b9ba"
                     radius: 5.0
                 }
             }
-            onClicked:{
+            onClicked: {
                 packageStackBridge.showPkgChangelog(pkgId)
                 changelogPopUp.open()
             }
         }
-     
     }
-
 }

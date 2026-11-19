@@ -68,7 +68,7 @@ class CheckProgressWorker(QObject):
 				})
 
 				self.manager.checkLocks()
-				self.aptRun = (self.manager.isDpkgLocked() == 3)
+				self.aptRun = (self.manager.isDpkgLocked(False) == 3)
 
 			if not self.aptRun:
 				if not self.aptStop:

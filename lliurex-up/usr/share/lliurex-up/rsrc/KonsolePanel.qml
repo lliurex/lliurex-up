@@ -3,14 +3,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QMLTermWidget
 
-Rectangle{
+Rectangle {
     color:"transparent"
 
-    ColumnLayout{
+    ColumnLayout {
         id: mainContent
         anchors.fill: parent
         anchors.leftMargin: 5
-        anchors.rightMargin: 15
         anchors.bottomMargin: 15
         spacing: 10
 
@@ -22,14 +21,14 @@ Rectangle{
         Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            
+
             QMLTermWidget {
                 id: terminal
                 anchors.fill: parent
                 font.family: "Monospace"
                 font.pointSize: 9
                 colorScheme: "cool-retro-term"
-                session: QMLTermSession{
+                session: QMLTermSession {
                     id: mainsession
                     initialWorkingDirectory: "$HOME"
                 }
@@ -37,7 +36,6 @@ Rectangle{
                     mainsession.startShellProgram();
                     mainsession.sendText('setterm -cursor off;stty -echo;PS1="";history -c;clear;\n');
                 }
-
             }
 
             QMLTermScrollbar {
@@ -50,14 +48,13 @@ Rectangle{
                     anchors.fill: parent
                 }
             }
-        
         }
     }
-    
-    function runCommand(command){
+
+    function runCommand(command) {
+
         mainsession.sendText('\n')
         mainsession.sendText(command)
 
-    } 
-
-} 
+    }
+}
