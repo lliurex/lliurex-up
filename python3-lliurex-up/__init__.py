@@ -1027,7 +1027,7 @@ class LliurexUpCore(object):
 
 	def flatpakActionsScript(self):
 		
-		return f'run-parts --arg="flatpakActions" {flatpakActionsPath}'
+		return f'run-parts --arg="flatpakActions" {self.flatpakActionsPath}'
 
 		
 	#def flatpakActionsScript

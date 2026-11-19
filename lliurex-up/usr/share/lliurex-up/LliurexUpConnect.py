@@ -645,7 +645,7 @@ class LliurexUpConnect():
 	def postActionsScript(self):
 
 		postActionsCommand = self.llxUpCore.postActionsScript()
-		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {postActionsCommand} 2> >(tee {self.errorPostactionToken}; touch {self.postactionsToken}\n'
+		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {postActionsCommand} 2> >(tee {self.errorPostactionToken} ); touch {self.postactionsToken}\n'
 		self.log("Exec Post-Actions")
 
 		return postActionsCommand

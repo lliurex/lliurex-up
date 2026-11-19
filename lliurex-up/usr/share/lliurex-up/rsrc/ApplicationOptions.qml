@@ -8,7 +8,7 @@ RowLayout{
     spacing: 10
 
     Rectangle{
-        Layout.preferredWidth:185
+        Layout.preferredWidth: 195
         Layout.fillHeight: true
         border.color: palette.mid
 
@@ -126,6 +126,7 @@ RowLayout{
                 id:feedbackColumn
                 spacing:10
                 Layout.fillWidth:true
+                Layout.alignment:Qt.AlignHCenter
                 
                 Text{
                     id:feedBackText
