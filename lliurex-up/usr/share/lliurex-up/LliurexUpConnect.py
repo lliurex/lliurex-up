@@ -670,7 +670,7 @@ class LliurexUpConnect():
 			if item["showStatus"] and not finalUpdate:
 				continue
 
-			tmpName = f"{item["pkgId"]}_{item["Version"]}"
+			tmpName = f"{item["pkgId"]}_{item["pkgVersion"]}"
 
 			if tmpName in self.packagesInstalled:
 				item["showStatus"] = True
