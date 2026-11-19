@@ -664,7 +664,7 @@ class LliurexUpConnect():
 	def updatePackagesData(self,finalUpdate=False):
 
 		if finalUpdate:
-			_,self.packagesInstalled = self._getDpkgState()
+			_ = self._getDpkgState()
 
 		for item in self.packagesData:
 			if item["showStatus"] and not finalUpdate:
@@ -752,7 +752,7 @@ class LliurexUpConnect():
 			pkgNames = [p["pkgId"] for p in self.packagesData]
 
 			if not pkgNames:
-				return unpackedOrMore,installed
+				return unpackedOrMore
 
 			result = subprocess.run(
 				["dpkg-query", "-W", "-f=${db:Status-Abbrev}\t${Package}\t${Version}\n"] + pkgNames,
@@ -810,7 +810,7 @@ class LliurexUpConnect():
 		if self.totalPackagesCount == 0:
 			return
 
-		self._getDpkgState()
+		_ = self._getDpkgState()
 
 		self.pendingInstalled -= self.packagesInstalled
 

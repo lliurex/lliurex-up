@@ -125,7 +125,6 @@ RowLayout{
             ColumnLayout{
                 id:feedbackColumn
                 spacing:10
-                Layout.fillWidth:true
                 Layout.alignment:Qt.AlignHCenter
                 
                 Text{
@@ -140,7 +139,6 @@ RowLayout{
                     visible:true
                     font.pointSize: 10
                     horizontalAlignment:Text.AlignHCenter
-                    Layout.fillWidth:true
                     Layout.maximumWidth: 500
                     Layout.alignment:Qt.AlignHCenter
                     wrapMode: Text.WordWrap
@@ -156,6 +154,11 @@ RowLayout{
                     Layout.alignment:Qt.AlignHCenter
                 }
                 
+            }
+
+            Item {
+                Layout.fillWidth: true
+
             }
                
             Button {
