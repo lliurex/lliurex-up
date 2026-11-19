@@ -798,7 +798,7 @@ class LliurexUpCore(object):
 				for item in self.incorrectFlavours:
 					if len(self.targetMetapackage) > 0:
 						if item not in self.targetMetapackage:
-							count +=1
+							count += 1
 							otherFlavours.append(item)
 
 					else:
@@ -812,12 +812,12 @@ class LliurexUpCore(object):
 
 						if 'None' in self.previousFlavours:
 							if meta not  in self.metapackageRef:
-								count +=1
+								count += 1
 								otherFlavours.append(meta)
 
 						else:		
 							if meta not  in self.previousFlavours:
-								count +=1
+								count += 1
 								otherFlavours.append(meta)
 
 		return {"status":count > 0,"data":otherFlavours}
@@ -843,17 +843,17 @@ class LliurexUpCore(object):
 			lines = self.errorPostactionToken.read_text().splitlines()
 			for x in lines:
 				if 'E' in x:
-					countPostaction +=1
+					countPostaction += 1
 
-		if countPostaction==0:
+		if countPostaction == 0:
 
 			if self.errorFinalMetapackageToken.exists():
 				lines = self.errorFinalMetapackageToken.read_text().splitlines()
 				for x in lines:
 					if 'E' in x:
-						countMetapackage+=1
+						countMetapackage += 1
 
-			if countMetapackage==0:
+			if countMetapackage == 0:
 
 				result = subprocess.run(
 					["dpkg","-l"],
@@ -924,13 +924,13 @@ class LliurexUpCore(object):
 
 		commandParts.extend(self.optionsToUpdate)
 
-		return " ".join(command_parts)
+		return " ".join(commandParts)
 		
 	#def installFinalFlavour
 
 	def getProcessList(self):
 		
-		self.processList=[]
+		self.processList = []
 
 		result = subprocess.run(
 			["ps","aux"],
@@ -981,7 +981,7 @@ class LliurexUpCore(object):
 				retList.append(process)
 				
 				
-		if len(retList)>0:
+		if len(retList) > 0:
 			return retList
 		else:
 			return None
@@ -990,7 +990,7 @@ class LliurexUpCore(object):
 
 	def searchMeta(self,meta):
 
-		metaList=list(set(
+		metaList = list(set(
 			self.targetMetapackage + 
 			self.previousFlavours + 
 			self.metapackageRef +
@@ -1003,7 +1003,7 @@ class LliurexUpCore(object):
 
 	def isUserAdmin(self):
 		
-		isAdmin=False
+		isAdmin = False
 
 		try:
 			pkexec_uid = os.environ["PKEXEC_UID"]
@@ -1073,7 +1073,7 @@ class LliurexUpCore(object):
 				 				sizeItem = tmpSize
 
 				 			sizeToUpdate += sizeItem
-				 			totalFlatpak +=1
+				 			totalFlatpak += 1
 				 			break
 
 				 		except ValueError:

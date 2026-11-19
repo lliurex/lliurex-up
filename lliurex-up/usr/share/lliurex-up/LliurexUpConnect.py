@@ -182,7 +182,7 @@ class LliurexUpConnect():
 
 		try:
 			usage = psutil.disk_usage("/")
-			freeSpace=round(usage.free / (1024**3),2)
+			freeSpace = round(usage.free / (1024**3),2)
 		except Exception as e:
 			self.log(f"Error checking disk space on /: {e}")
 			return {"enoughSpace": False,"freeSpace": 0.0}
@@ -235,7 +235,7 @@ class LliurexUpConnect():
 	def initActionsScript(self):
 
 		token = "dpkg --configure -a"
-		arg="initActions"
+		arg = "initActions"
 
 		command = self.llxUpCore.initActionsScript(arg)
 
@@ -283,7 +283,7 @@ class LliurexUpConnect():
 	def isLliurexUpUpdated(self):
 
 		try:
-			isLliurexupUpdated=self.llxUpCore.isLliurexUpUpdated()
+			isLliurexupUpdated = self.llxUpCore.isLliurexUpUpdated()
 			self.log(f"Checking lliurex-up. Is lliurex-up updated: {isLliurexupUpdated}")
 			return isLliurexupUpdated
 		except Exception as e:
@@ -329,10 +329,11 @@ class LliurexUpConnect():
 			
 			self.lliurexVersionLocal = self.llxUpCore.getLliurexVersionLocal()
 
-			logLines=[
+			logLines = [
 				f"Get LliurexVersion installed: {self.lliurexVersionLocal.get("installed")}",
 				f"Get LliurexVersion candidate from local repository: {self.lliurexVersionLocal.get("candidate")}",
-				f"Get Update source:{self.lliurexVersionLocal.get("updateSource")}"]
+				f"Get Update source:{self.lliurexVersionLocal.get("updateSource")}"
+			]
 
 			self.log("\n".join(logLines))
 
@@ -498,8 +499,8 @@ class LliurexUpConnect():
 
 	def getPackageChangelog(self,package):
 
-		changelogFile= self.llxUpCore.changelogsPath / package
-		changelog="Changelog not found"
+		changelogFile = self.llxUpCore.changelogsPath / package
+		changelog = "Changelog not found"
 
 		if not changelogFile.is_file():
 			customEnv = os.environ.copy()
@@ -550,9 +551,9 @@ class LliurexUpConnect():
 	def getSystrayStatus(self):
 
 		if self.disableSystrayToken.exists():
-			self.isSystrayEnabled=False
+			self.isSystrayEnabled = False
 		else:
-			self.isSystrayEnabled=True
+			self.isSystrayEnabled = True
 
 		self.currentConfig["systrayEnabled"] = self.isSystrayEnabled
 
@@ -622,7 +623,7 @@ class LliurexUpConnect():
 
 		try:
 			flavourToInstall = self.llxUpCore.checkFlavour(True)
-			self.log(f"Final check metapackage. Metapackage to install: %{flavourToInstall}")
+			self.log(f"Final check metapackage. Metapackage to install: {flavourToInstall}")
 
 		except Exception as e:
 			self.errorCheckFlavour = True
