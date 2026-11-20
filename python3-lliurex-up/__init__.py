@@ -47,7 +47,7 @@ class LliurexUpCore(object):
 		self.initActionsPath = Path("/usr/share/lliurex-up/initActions")
 		self.preActionsPath = Path("/usr/share/lliurex-up/preActions")
 		self.postActionsPath = Path("/usr/share/lliurex-up/postActions")
-		self.optionsLlxUp =""
+		self.optionsLlxUp = ""
 		self.dpkgUnlocker = DpkgUnlockerManager.DpkgUnlockerManager()
 		context=ssl._create_unverified_context()
 		self.n4d = n4dclient.ServerProxy('https://localhost:9779',context=context,allow_none=True)
@@ -81,7 +81,7 @@ class LliurexUpCore(object):
 
 	def checkLocks(self):
 
-		self.locks_info=self.dpkgUnlocker.checkingLocks()
+		self.locks_info = self.dpkgUnlocker.checkingLocks()
 
 	#def checkLocks
 	
@@ -180,7 +180,7 @@ class LliurexUpCore(object):
 
 	#def getTargetMetapackage
 			
-	def saveTargetMetapackage(self,targetMetapackage):
+	def saveTargetMetapackage(self, targetMetapackage):
 
 		lines = []
 
@@ -195,7 +195,7 @@ class LliurexUpCore(object):
 
 	#def saveTargetMetapackage	
 
-	def checkInitialFlavour(self,args=None):
+	def checkInitialFlavour(self, args = None):
 
 		self.targetMetapackage = self.checkFlavour()
 		
@@ -211,7 +211,7 @@ class LliurexUpCore(object):
 
 	#def checkInitialFlavour	
 		
-	def updateFlavoursList(self,args=None):
+	def updateFlavoursList(self, args = None):
 
 		result = subprocess.run(
 			["lliurex-version", "-v" ],
@@ -242,12 +242,12 @@ class LliurexUpCore(object):
 
 		"""
 		self.cleanEnvironment()
-		self.processPath.mkdir(parents=True,exist_ok=True)
-		self.changelogsPath.mkdir(parents=True,exist_ok=True)
+		self.processPath.mkdir(parents = True, exist_ok = True)
+		self.changelogsPath.mkdir(parents = True,exist_ok = True)
 
 	#def prepareEnvironment	
 
-	def addSourcesListLliurex(self,args=None):
+	def addSourcesListLliurex(self, args = None):
 		
 		newsourcesfile = ""
 		extrasources = []
@@ -288,11 +288,11 @@ class LliurexUpCore(object):
 	def cleanLliurexUpLock(self):
 
 		if self.lockTokenPath.exists():
-			self.lockTokenPath.unlink(missing_ok=True)
+			self.lockTokenPath.unlink(missing_ok = True)
 
 	#def cleanLliurexUpLock		
 
-	def updateCacheApt(self,options=""):
+	def updateCacheApt(self, options = ""):
 
 		envVar = os.environ.copy()
 
@@ -313,7 +313,7 @@ class LliurexUpCore(object):
 
 	#def updateCacheApt	
 
-	def getPackageVersionAvailable(self,package,options="",checkRepo=False):
+	def getPackageVersionAvailable(self, package, options = "", checkRepo = False):
 		
 		"""
 			Args :
@@ -376,7 +376,7 @@ class LliurexUpCore(object):
 
 	#def getPackageVersionAvailable	
 
-	def isLliurexUpUpdated(self,args=None):
+	def isLliurexUpUpdated(self, args = None):
 		"""
 			return Boolean 
 		"""
@@ -427,7 +427,7 @@ class LliurexUpCore(object):
 
 		command.extend(self.optionsLlxUp.split())
 
-		result=subprocess.run(
+		result = subprocess.run(
 			command,
 			env=envVar,
 			stdout=None,
@@ -443,7 +443,7 @@ class LliurexUpCore(object):
 
 	#def installLliurexUp	
 	
-	def checkFlavour(self,args=None):
+	def checkFlavour(self, args = None):
 		"""
 			return None|String
 			If metapackages has been uninstalled, this function return 
@@ -561,7 +561,7 @@ class LliurexUpCore(object):
 
 	#def getLliurexVersionLocal
 
-	def initActionsScript(self,arg):
+	def initActionsScript(self, arg):
 		
 		return ["run-parts", f'--arg={arg}', self.initActionsPath]
 
@@ -579,7 +579,7 @@ class LliurexUpCore(object):
 		
 	#def postActionsScript
 
-	def installInitialFlavour(self,flavourToInstall):
+	def installInitialFlavour(self, flavourToInstall):
 		
 		"""
 			Args :
@@ -692,7 +692,7 @@ class LliurexUpCore(object):
 			check=False
 		)
 
-		if result.returncode !=0:
+		if result.returncode != 0:
 			raise RuntimeError(f"Error executing getPackagesToUpdate: {result.stderr.strip()}")
 
 		for line in result.stdout.splitlines():
@@ -759,7 +759,7 @@ class LliurexUpCore(object):
 
 	#def _populatePackagesSize
 
-	def _convertSize(self,sizeBytes):
+	def _convertSize(self, sizeBytes):
 
 		try:
 			sizeBytes = float(sizeBytes)
@@ -820,7 +820,7 @@ class LliurexUpCore(object):
 								count += 1
 								otherFlavours.append(meta)
 
-		return {"status":count > 0,"data":otherFlavours}
+		return {"status": count > 0, "data": otherFlavours}
 
 	#def checkIncorrectFlavours
 
@@ -905,11 +905,11 @@ class LliurexUpCore(object):
 			error = True
 			errorDetails = f"Error when running Postactions.Details: {lines}"
 
-		return {"status":error,"data":errorDetails}
+		return {"status": error, "data": errorDetails}
 
 	#def checkErrorDistUpgrade	
 
-	def installFinalFlavour(self,flavourToInstall):
+	def installFinalFlavour(self, flavourToInstall):
 
 		commandParts = [
 			"apt-get","install",
@@ -970,7 +970,7 @@ class LliurexUpCore(object):
 
 	#def getProcessList			
 
-	def findProcess(self,processFilter):
+	def findProcess(self, processFilter):
 		
 		self.getProcessList()
 
@@ -988,7 +988,7 @@ class LliurexUpCore(object):
 
 	#def findProcess	
 
-	def searchMeta(self,meta):
+	def searchMeta(self, meta):
 
 		metaList = list(set(
 			self.targetMetapackage + 
@@ -1036,7 +1036,7 @@ class LliurexUpCore(object):
 		
 		totalFlatpak = 0
 		totalSize = "0"
-		command=["flatpak","update"]
+		command = ["flatpak","update"]
 
 		result = subprocess.run(
 			command,

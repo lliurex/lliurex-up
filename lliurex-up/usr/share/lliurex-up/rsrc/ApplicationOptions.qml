@@ -4,11 +4,11 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore 
 
-RowLayout{
+RowLayout {
     id: optionsGrid
     spacing: 10
 
-    Rectangle{
+    Rectangle {
         Layout.preferredWidth: 195
         Layout.fillHeight: true
         border.color: palette.mid
@@ -31,7 +31,7 @@ RowLayout{
             MenuOptionBtn {
                 id: pkgOption
                 optionText: i18nd("lliurex-up","Packages list")
-                optionIcon:"view-list-details"
+                optionIcon: "view-list-details"
                 visible: mainStackBridge.updateRequired
                 Layout.fillWidth: true
                 onMenuOptionClicked: mainStackBridge.manageTransitions(1)

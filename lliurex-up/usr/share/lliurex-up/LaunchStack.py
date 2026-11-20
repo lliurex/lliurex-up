@@ -47,8 +47,8 @@ class Bridge(QObject):
 
 	isProgressBarVisibleChanged = Signal()
 	dialogTextCodeChanged = Signal()
-	showApplyBtnChanged=Signal()
-	lockedServiceChanged=Signal()
+	showApplyBtnChanged = Signal()
+	lockedServiceChanged = Signal()
 
 	def __init__(self):
 
@@ -61,7 +61,6 @@ class Bridge(QObject):
 		self.abortProcess = False
 		self.lockedProcess = False
 		self.closeGui = True
-		self._runPkexec = self.llxUpConnnect.runPkexec
 
 	#def __init__
 
@@ -73,7 +72,7 @@ class Bridge(QObject):
 	#def isProgressBarVisible
 
 	@isProgressBarVisible.setter
-	def isProgressBarVisible(self,isProgressBarVisible):
+	def isProgressBarVisible(self, isProgressBarVisible):
 
 		if self._isProgressBarVisible != isProgressBarVisible:
 			self._isProgressBarVisible = isProgressBarVisible
@@ -81,7 +80,7 @@ class Bridge(QObject):
 
 	#def isProgressBarVisible
 
-	@Property(int,notify = dialogTextCodeChanged)
+	@Property(int, notify = dialogTextCodeChanged)
 	def dialogTextCode(self):
 
 		return self._dialogTextCode
@@ -89,7 +88,7 @@ class Bridge(QObject):
 	#def dialogTextCode
 
 	@dialogTextCode.setter
-	def dialogTextCode(self,dialogTextCode):
+	def dialogTextCode(self, dialogTextCode):
 
 		if self._dialogTextCode != dialogTextCode:
 			self._dialogTextCode = dialogTextCode
@@ -97,7 +96,7 @@ class Bridge(QObject):
 
 	#def dialogTextCode
 
-	@Property(bool,notify = showApplyBtnChanged)
+	@Property(bool, notify = showApplyBtnChanged)
 	def showApplyBtn(self):
 
 		return self._showApplyBtn
@@ -105,7 +104,7 @@ class Bridge(QObject):
 	#def showApplyBtn
 
 	@showApplyBtn.setter
-	def showApplyBtn(self,showApplyBtn):
+	def showApplyBtn(self, showApplyBtn):
 
 		if self._showApplyBtn != showApplyBtn:
 			self._showApplyBtn = showApplyBtn
@@ -113,7 +112,7 @@ class Bridge(QObject):
 
 	#def showApplyBtn
 
-	@Property(str,notify = lockedServiceChanged)
+	@Property(str, notify = lockedServiceChanged)
 	def lockedService(self):
 
 		return self._lockedService
@@ -121,7 +120,7 @@ class Bridge(QObject):
 	#def lockedService
 
 	@lockedService.setter
-	def lockedService(self,lockedService):
+	def lockedService(self, lockedService):
 
 		if self._lockedService != lockedService:
 			self._lockedService = lockedService
@@ -129,7 +128,7 @@ class Bridge(QObject):
 
 	#def lockedService
 
-	@Property(bool,constant=True)
+	@Property(bool, constant = True)
 	def runPkexec(self):
 
 		return self._runPkexec
@@ -173,7 +172,7 @@ class Bridge(QObject):
 		if code == 0:
 			return self._isAptLocked()
 		
-		self.lockedService="LliureX-Up"	
+		self.lockedService = "LliureX-Up"	
 		if code == 1:
 			self.dialogTextCode = Bridge.SERVICE_RUNNING
 			self.abortProcess = True

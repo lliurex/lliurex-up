@@ -69,17 +69,9 @@ class LliurexUpConnect():
 		self.currentConfig = {"systrayEnabled":self.isSystrayEnabled}
 		self.runPkexec = True
 		self.flatpakActionsToken = self.llxUpCore.processPath / 'flatpakActions_token'
-		self._isRunPkexec()
 		self._clearCache()
 
 	#def __init__
-
-	def _isRunPkexec(self):
-
-		if 'PKEXEC_UID' not in os.environ:
-			self.runPkexec=False
-
-	#def _isRunPkexec
 
 	def checkLocks(self):
 
@@ -186,13 +178,13 @@ class LliurexUpConnect():
 			freeSpace = round(usage.free / (1024**3),2)
 		except Exception as e:
 			self.log(f"Error checking disk space on /: {e}")
-			return {"enoughSpace": False,"freeSpace": 0.0}
+			return {"enoughSpace": False, "freeSpace": 0.0}
 
 		if freeSpace < 2: 
 			self.log(f"Not enough space on disk to upgrade (2 GB needed): {freeSpace} GB available")
-			return {"enoughSpace": False,"freeSpace": freeSpace}
+			return {"enoughSpace": False, "freeSpace": freeSpace}
 
-		return {"enoughSpace": True,"freeSpace": freeSpace}
+		return {"enoughSpace": True, "freeSpace": freeSpace}
 	
 	#def freeSpaceCheck		
 
@@ -302,12 +294,12 @@ class LliurexUpConnect():
 			self.log(f"Installing lliurex-up. Returncode: {returncode}. Error: {error}")
 
 			if returncode == 0:
-				return {"status": True,"data": ""}
+				return {"status": True, "data": ""}
 
 			
 			isLliurexupUpdated = self.llxUpCore.isLliurexUpIsUpdated()
 			if isLliurexupUpdated:
-				return {"status": True,"data": ""}
+				return {"status": True, "data": ""}
 
 			return {"status": False, "data":error}
 			
@@ -320,7 +312,7 @@ class LliurexUpConnect():
 
 	def getLliurexVersionLocal(self):
 		
-		defaultVersion={
+		defaultVersion = {
 			"installed": None,
 			"candidate": None,
 			"updataSouce": None
@@ -359,17 +351,18 @@ class LliurexUpConnect():
 
 	#def getLliurexVersionNet
 	
-	def installInitialFlavour(self,flavourToInstall):
+	def installInitialFlavour(self, flavourToInstall):
 
 		try:
 			isFlavourInstalled = self.llxUpCore.installInitialFlavour(flavourToInstall)
 			returncode = isFlavourInstalled.get('returncode')
+			status = 0 if returncode == 0 else False
 			error = isFlavourInstalled.get('stderrs')
 			self.log(f"Install initial metapackage: {flavourToInstall}: Returncode: {returncode} Error: {error}")
-			return {"status":returncode,"data":error}
+			return {"status":status,"data":error}
 		except Exception as e:
 			self.log(f"Install initial metapackage: {flavourToInstall}. Error: {e}")
-			return {"status": 1, "data":str(e)}
+			return {"status": False, "data":str(e)}
 			
 	#def installInitialFlavour
 
@@ -428,7 +421,7 @@ class LliurexUpConnect():
 
 	#def getPackagesData
 
-	def _parseDesktop(self,installed,name):
+	def _parseDesktop(self, installed ,name):
 
 		defaultPkgIcon = self.standardIconPath / "package.png"
 
@@ -498,7 +491,7 @@ class LliurexUpConnect():
 
 	#def checkIncorrectFlavours	
 
-	def getPackageChangelog(self,package):
+	def getPackageChangelog(self, package):
 
 		changelogFile = self.llxUpCore.changelogsPath / package
 		changelog = "Changelog not found"
@@ -560,7 +553,7 @@ class LliurexUpConnect():
 
 	#de isSystrayEnabled
 
-	def manageSystray(self,enable):
+	def manageSystray(self, enable):
 
 		try:
 			if enable:
@@ -634,7 +627,7 @@ class LliurexUpConnect():
 	
 	#def checkFinalFlavour
 	
-	def installFinalFlavour(self,flavourToInstall):
+	def installFinalFlavour(self, flavourToInstall):
 
 		installFlavourCommand = self.llxUpCore.installFinalFlavour(flavourToInstall)
 		installFlavourCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {installFlavourCommand} 2> >(tee {self.errorFinalMetapackageToken} );touch {self.installflavourToken}\n'
@@ -663,16 +656,16 @@ class LliurexUpConnect():
 
 	#def checkFinalN4dStatus
 
-	def updatePackagesData(self,finalUpdate=False):
+	def updatePackagesData(self, finalUpdate = False):
 
 		if finalUpdate:
 			_ = self._getDpkgState()
 
 		for item in self.packagesData:
-			if item["showStatus"] and not finalUpdate:
+			if item.get("showStatus") and not finalUpdate:
 				continue
 
-			tmpName = f"{item["pkgId"]}_{item["pkgVersion"]}"
+			tmpName = f"{item.get("pkgId")}_{item.get("pkgVersion")}"
 
 			if tmpName in self.packagesInstalled:
 				item["showStatus"] = True
@@ -701,7 +694,7 @@ class LliurexUpConnect():
 	
 	#def cleanLliurexUpLock		
 
-	def searchMeta(self,meta):
+	def searchMeta(self, meta):
 		
 		match = False
 		try:
@@ -751,7 +744,7 @@ class LliurexUpConnect():
 		self.packagesInstalled = set()
 
 		try:
-			pkgNames = [p["pkgId"] for p in self.packagesData]
+			pkgNames = [p.get("pkgId") for p in self.packagesData]
 
 			if not pkgNames:
 				return unpackedOrMore
@@ -841,10 +834,10 @@ class LliurexUpConnect():
 			self.getSystrayStatus()
 				
 		if retSystray:
-			return {"status": True,"code":CHANGES_APPLY_OK,"type": self.KIRIGAMI_MSG_OK}
+			return {"status": True, "code": CHANGES_APPLY_OK, "type": self.KIRIGAMI_MSG_OK}
 
 		else:
-			return {"status": False,"code":SYSTRAY_ERROR,"type": self.KIRIGAMI_MSG_ERROR}		
+			return {"status": False,"code": SYSTRAY_ERROR, "type": self.KIRIGAMI_MSG_ERROR}		
 	
 	#def applySettingsChanges
 
@@ -875,17 +868,17 @@ class LliurexUpConnect():
 		clear = False
 		installedVersion = self._getPackageVersion()
 
-		versionFile="/root/.lliurex-up.conf"
-		cachePath="/root/.cache/lliurex-up"
+		versionFile = "/root/.lliurex-up.conf"
+		cachePath = "/root/.cache/lliurex-up"
 	
 		try:
 			if not os.path.exists(versionFile):
 				clear = True
 			else:
 				with open(versionFile,'r') as fd:
-					fileVersion=fd.readline().strip()
+					fileVersion = fd.readline().strip()
 
-				if fileVersion!=installedVersion:
+				if fileVersion != installedVersion:
 					clear = True
 
 			if clear:

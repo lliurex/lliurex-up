@@ -12,10 +12,10 @@ import LaunchStack
 launchStack = LaunchStack.Bridge()
 ret = launchStack.canRunUpdate()
 
-if os.geteuid()==0:
+if os.geteuid() == 0:
 		os.environ["XDG_CURRENT_DESKTOP"]="KDE"
 
-icons_paths=["/usr/share/icons","/usr/local/share/icons"]
+icons_paths = ["/usr/share/icons","/usr/local/share/icons"]
 QIcon.setThemeName("breeze")
 
 if not ret:

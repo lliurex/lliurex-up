@@ -137,8 +137,8 @@ class UpdateStack(QObject):
 		("preActions", "preactionsToken"),
 		("update", "upgradeToken"),
 		("postActions", "postactionsToken"),
-		("checkFinalFlavour","installflavourToken"),
-		("flatpakActions","flatpakActionsToken"),
+		("checkFinalFlavour", "installflavourToken"),
+		("flatpakActions", "flatpakActionsToken"),
 	]	
 
 	def __init__(self):
@@ -231,7 +231,7 @@ class UpdateStack(QObject):
 			return self._checkProcessToken()
 
 		if not self.postActionsLaunched:
-			if getattr(self,"checkProgressWorker",None) is not None:
+			if getattr(self,"checkProgressWorker" ,None) is not None:
 				QMetaObject.invokeMethod(
 					self.checkProgressWorker,
 					"stop",
@@ -259,7 +259,7 @@ class UpdateStack(QObject):
 			return self._checkProcessToken()
 
 		if not self.flatpakActionsLaunched:
-			self.flatpakActionsLaunched=True
+			self.flatpakActionsLaunched = True
 			print("  [Lliurex-Up]: Updating Flatpak applications")
 			self.core.mainStack.updateStep = 7
 			self.core.mainStack.setProgress()
@@ -282,7 +282,7 @@ class UpdateStack(QObject):
 		msgCode = self.UPDATE_PROCESS_OK if not resultProcess else self.UPDATE_PROCESS_ERROR
 		msgType = self.llxUpConnect.KIRIGAMI_MSG_OK if not resultProcess else self.llxUpConnect.KIRIGAMI_MSG_ERROR
 
-		self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": msgCode, "type": msgType}
+		self.core.mainStack.showFeedbackMessage = {"show": True, "msgCode": msgCode, "type": msgType}
 	
 	#def _updateProcessRet
 

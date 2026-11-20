@@ -27,6 +27,8 @@ class CheckSystem(QObject):
 
 	def run (self,*args):
 
+		time.sleep(1)
+
 		ret = {
 			"freeSpace":{"enoughSpace": False,"freeSpace": 0.0},
 			"n4dStatus": False,
@@ -36,9 +38,9 @@ class CheckSystem(QObject):
 		freeSpace = self.manager.freeSpaceCheck()
 
 		if freeSpace.get("enoughSpace"):
-			n4dStatus=self.manager.checkInitialN4dStatus()
+			n4dStatus = self.manager.checkInitialN4dStatus()
 			self.manager.checkInitialFlavour()
-			canConnect=self.manager.canConnectToLliurexNet()
+			canConnect = self.manager.canConnectToLliurexNet()
 			ret = {
 				"freeSpace": freeSpace,
 				"n4dStatus": n4dStatus,
@@ -169,7 +171,7 @@ class CheckInitialFlavourToInstall(QObject):
 	def run (self,*args):
 
 		ret = {
-			"status": 0,
+			"status": True,
 			"data": ""
 		}
 
@@ -196,9 +198,6 @@ class GatherPackages(QObject):
 		super().__init__()
 
 		self.manager = manager
-		self.packages=0
-		self.updateSize=""
-		self.incorrectFlavours=[]
 
 	#def __init__
 
@@ -225,16 +224,16 @@ class Bridge(QObject):
 
 	FREESPACE_ERROR = -1
 	INTERNET_CONNECTION_ERROR = -2
-	UPDATE_LLIUREXUP_ERROR = -5
-	SEARCH_UPDATES_ERROR = -6
-	INCORRECT_METAPACKAGE_ERROR = -7
-	DPKG_CONFIGURE_ERROR = -8
+	UPDATE_LLIUREXUP_ERROR = -3
+	SEARCH_UPDATES_ERROR = -4
+	INCORRECT_METAPACKAGE_ERROR = -5
+	DPKG_CONFIGURE_ERROR = -6
 
-	loadStepChanged=Signal()
-	showProgressBarChanged=Signal()
-	progressValueChanged=Signal()
-	countDownValueChanged=Signal()
-	freeSpaceAvailableChanged=Signal()
+	loadStepChanged = Signal()
+	showProgressBarChanged = Signal()
+	progressValueChanged = Signal()
+	countDownValueChanged = Signal()
+	freeSpaceAvailableChanged = Signal()
 
 	def __init__(self):
 
@@ -246,10 +245,15 @@ class Bridge(QObject):
 		self._showProgressBar = False
 		self._progressValue = 0.0
 		self._countDownValue = 5
+		self._freeSpaceAvailable = 0.00
 		self.maxSeconds = 5.0
 		self.currentSecond = 0.0
-		self._freeSpaceAvailable = 0.00
-		self._runPkexec=self.llxUpConnect.runPkexec
+		self.currentVersion = {"installed": None, "candidate": None, "updataSouce": None}
+		self.initActionsResult = {"status": True, "data": ""}
+		self.availableVersion = None
+		self.isFlavourInstalled = {"status": True, "data": ""}
+		self.packagesInfo = {}
+		self.flatpakInfo = {}
 
 	#def __init__
 
@@ -261,7 +265,7 @@ class Bridge(QObject):
 	#def loadStep
 
 	@loadStep.setter
-	def loadStep(self,loadStep):
+	def loadStep(self, loadStep):
 
 		if self._loadStep != loadStep:
 			self._loadStep = loadStep
@@ -277,7 +281,7 @@ class Bridge(QObject):
 	#def _showProgressBar
 
 	@showProgressBar.setter
-	def showProgressBar(self,showProgressBar):
+	def showProgressBar(self, showProgressBar):
 
 		if self._showProgressBar != showProgressBar:
 			self._showProgressBar = showProgressBar
@@ -293,7 +297,7 @@ class Bridge(QObject):
 	#def progressValue
 
 	@progressValue.setter
-	def progressValue(self,progressValue):
+	def progressValue(self, progressValue):
 
 		if self._progressValue != progressValue:
 			self._progressValue = progressValue
@@ -309,7 +313,7 @@ class Bridge(QObject):
 	#def countDownValue
 
 	@countDownValue.setter
-	def countDownValue(self,countDownValue):
+	def countDownValue(self, countDownValue):
 
 		if self._countDownValue != countDownValue:
 			self._countDownValue = countDownValue
@@ -325,7 +329,7 @@ class Bridge(QObject):
 	#def freeSpaceAvailable
 
 	@freeSpaceAvailable.setter
-	def freeSpaceAvailable(self,freeSpaceAvailable):
+	def freeSpaceAvailable(self, freeSpaceAvailable):
 
 		if self._freeSpaceAvailable != freeSpaceAvailable:
 			self._freeSpaceAvailable = freeSpaceAvailable
@@ -333,14 +337,14 @@ class Bridge(QObject):
 
 	#def freeSpaceAvailable
 
-	@Property(int, constant=True)
+	@Property(int, constant = True)
 	def totalSteps(self):
 
 		return self._totalSteps
 
 	#def totalSteps
 
-	@Property(bool,constant=True)
+	@Property(bool, constant = True)
 	def runPkexec(self):
 
 		return self._runPkexec
@@ -369,7 +373,7 @@ class Bridge(QObject):
 	#def checkSystem
 
 	@Slot(dict)
-	def _checkSystemRet(self,ret):
+	def _checkSystemRet(self, ret):
 
 		freeSpace = ret.get("freeSpace")
 		n4dStatus = ret.get("n4dStatus")
@@ -416,7 +420,7 @@ class Bridge(QObject):
 	#def _launchInitActions
 
 	@Slot(dict)
-	def _checkLliurexUp(self,ret):
+	def _checkLliurexUp(self, ret):
 
 		self.initActionsResult = ret
 
@@ -439,7 +443,7 @@ class Bridge(QObject):
 	#def _checkLliurexUp
 
 	@Slot(bool)
-	def _checkLliurexUpRet(self,ret):
+	def _checkLliurexUpRet(self, ret):
 
 		if ret:
 			self._getCurrentVersion()
@@ -471,12 +475,12 @@ class Bridge(QObject):
 	@Slot(dict)
 	def _updateLliurexUpRet(self):
 
-		self.core.mainStack.endProcess=True
+		self.core.mainStack.endProcess = True
 
 		if not ret.get("status"):
 			print("  [Lliurex-Up]: Unable to update Lliurex-Up")
 			self.core.mainStack.showErrorMessage = {"msgCode": self.UPDATE_LLIUREXUP_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": ret.get("data")}
-			self.core.mainStack.currentStack=1
+			self.core.mainStack.currentStack = 1
 			return
 
 		print("  [Lliurex-Up]: Reboot Lliurex-Up")
@@ -529,7 +533,7 @@ class Bridge(QObject):
 
 		print("  [Lliurex-Up]: Looking for LliurexVersion from Lliurex net")
 		self.loadStep = 7
-		self.progressValue=self._getProgress()
+		self.progressValue = self._getProgress()
 
 		self.getAvailableVersionThread = QThread()
 		self.getAvailableVersionWorker = GetAvailableVersion(self.llxUpConnect)
@@ -605,7 +609,7 @@ class Bridge(QObject):
 		if self.packagesInfo.get("totalPackages") == 0:
 			self.core.mainStack.updateRequired = False
 
-			if self.isFlavourInstalled.get("status") != 0:
+			if not self.isFlavourInstalled.get("status"):
 				self.core.mainStack.updateRequired=True
 				error = self.isFlavourInstalled.get("data","")
 			else:	
@@ -620,16 +624,16 @@ class Bridge(QObject):
 				logMsg = "Updated aborted. An error occurred in the search for updates"
 				self.llxUpConnect.log(logMsg)
 				print(f"  [Lliurex-Up]: {logMsg}")
-				self.core.mainStack.showErrorMessage = {"msgCode": self.SEARCH_UPDATES_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":error}
+				self.core.mainStack.showErrorMessage = {"msgCode": self.SEARCH_UPDATES_ERROR, "type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": error}
 				self.core.mainStack.currentStack = 1
 				return
 			
-			logMsg="System update. Nothing to do"
+			logMsg = "System update. Nothing to do"
 			self.llxUpConnect.log(logMsg)
 			
 			print(f"  [Lliurex-Up]: {logMsg}")
 			if not self.initActionsResult.get("status"):
-				self.core.mainStack.showFeedbackMessage={"show":True,"msgCode": self.DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
+				self.core.mainStack.showFeedbackMessage = {"show": True, "msgCode": self.DPKG_CONFIGURE_ERROR, "type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 			self.core.mainStack.loadInfo()
 		
 		else:
@@ -637,15 +641,15 @@ class Bridge(QObject):
 				self.core.mainStack.updateRequired=True
 				print("  [Lliurex-Up]: System not update")
 				if not self.initActionsResult.get("status"):
-					self.core.mainStack.showFeedbackMessage = {"show": True,"msgCode": self.DPKG_CONFIGURE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
+					self.core.mainStack.showFeedbackMessage = {"show": True, "msgCode": self.DPKG_CONFIGURE_ERROR, "type": self.llxUpConnect.KIRIGAMI_MSG_ERROR}
 				self.core.mainStack.loadInfo()
 				return
 
-			logMsg="Updated aborted for incorrect metapackages detected in update"
+			logMsg = "Updated aborted for incorrect metapackages detected in update"
 			self.llxUpConnect.log(logMsg)
 			print(f"  [Lliurex-Up]: {logMsg}")
-			self.core.mainStack.showErrorMessage = {"msgCode": self.INCORRECT_METAPACKAGE_ERROR,"type": self.llxUpConnect.KIRIGAMI_MSG_ERROR,"data":""}
-			self.core.mainStack.currentStack=1
+			self.core.mainStack.showErrorMessage = {"msgCode": self.INCORRECT_METAPACKAGE_ERROR, "type": self.llxUpConnect.KIRIGAMI_MSG_ERROR, "data": ""}
+			self.core.mainStack.currentStack = 1
 
 	#def _gatherPackagesRet
 

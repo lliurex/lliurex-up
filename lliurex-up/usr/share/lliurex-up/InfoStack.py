@@ -37,7 +37,7 @@ class Bridge(QObject):
 	#def versionInfo
 
 	@versionInfo.setter
-	def versionInfo(self,versionInfo):
+	def versionInfo(self, versionInfo):
 
 		if self._versionInfo != versionInfo:
 			self._versionInfo = versionInfo
@@ -53,7 +53,7 @@ class Bridge(QObject):
 	#def packagesInfo
 
 	@packagesInfo.setter
-	def packagesInfo(self,packagesInfo):
+	def packagesInfo(self, packagesInfo):
 
 		if self._packagesInfo != packagesInfo:
 			self._packagesInfo = packagesInfo
@@ -69,7 +69,7 @@ class Bridge(QObject):
 	#def flatpakInfo
 	
 	@flatpakInfo.setter
-	def flatpakInfo(self,flatpakInfo):
+	def flatpakInfo(self, flatpakInfo):
 		
 		if self._flatpakInfo != flatpakInfo:
 			self._flatpakInfo = flatpakInfo
@@ -81,13 +81,13 @@ class Bridge(QObject):
 
 		currentVersionInfo = self.core.loadStack.currentVersion
 
-		self.versionInfo={
+		self.versionInfo = {
 			"currentVersion": currentVersionInfo.get("installed"),
 			"availableVersion":  self.core.loadStack.availableVersion,
 			"candidateVersion": currentVersionInfo.get("candidate")
 		}
 
-		updateSource=self.core.loadStack.currentVersion["updateSource"]
+		updateSource = self.core.loadStack.currentVersion.get("updateSource")
 		packagesInfo = self.core.loadStack.packagesInfo
 
 		self.packagesInfo = {
@@ -96,6 +96,7 @@ class Bridge(QObject):
 			"newPackages": self.llxUpConnect.newPackages,
 			"updateSource" : currentVersionInfo.get("updateSource")
 		}
+		
 		self.flatpakInfo = self.core.loadStack.flatpakInfo
 
 	#def getUpdateInfo

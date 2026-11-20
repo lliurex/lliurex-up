@@ -17,7 +17,7 @@ class GatherChangelog(QObject):
 
 	finished = Signal(str)
 
-	def __init__(self,manager,pkgId):
+	def __init__(self, manager, pkgId):
 
 		super().__init__()
 		self.manager = manager
@@ -45,7 +45,7 @@ class Bridge(QObject):
 		self.core = Core.Core.get_core()
 		self.llxUpConnect = self.core.llxUpConnect
 		self._packagesModel = PackagesModel.PackagesModel()
-		self._pkgChangelog={"pkgId":"","changelog":""}
+		self._pkgChangelog = {"pkgId": "", "changelog": ""}
 
 	#def __init__
 
@@ -57,7 +57,7 @@ class Bridge(QObject):
 	#def pkgChangelog
 
 	@pkgChangelog.setter
-	def pkgChangelog(self,pkgChangelog):
+	def pkgChangelog(self, pkgChangelog):
 
 		if self._pkgChangelog != pkgChangelog:
 			self._pkgChangelog = pkgChangelog
@@ -80,20 +80,20 @@ class Bridge(QObject):
 
 	def updatePackagesModel(self):
 
-		packagesEntries = [item for item in self.llxUpConnect.packagesData if item["pkgId"] != ""]
+		packagesEntries = [item for item in self.llxUpConnect.packagesData if item.get("pkgId") != ""]
 		self._packagesModel.setEntries(packagesEntries)
 
 	#def _updatePackagesModel
 
 	def updatePackagesModelInfo(self):
 
-		updatedInfo = [item for item in self.llxUpConnect.packagesData if item["pkgId"] != ""]
+		updatedInfo = [item for item in self.llxUpConnect.packagesData if item.get("pkgId") != ""]
 
 		for row, item in enumerate(updatedInfo):
 			index = self._packagesModel.index(row)
-			valuesToUpdate ={
-				"pkgStatus": item["pkgStatus"],
-				"showStatus": item["showStatus"]
+			valuesToUpdate = {
+				"pkgStatus": item.get("pkgStatus"),
+				"showStatus": item.get("showStatus")
 			}
 
 			self._packagesModel.setData(index,valuesToUpdate)
@@ -123,7 +123,7 @@ class Bridge(QObject):
 	@Slot(str)
 	def _gatherPkgChangelogRet(self,ret):
 
-		self.pkgChangelog={
+		self.pkgChangelog = {
 			"pkgId": self.pkgId,
 			"changelog": ret
 		}

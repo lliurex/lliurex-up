@@ -25,7 +25,7 @@ class LliurexUpCli(object):
 	
 	#def __init__
 	
-	def _startLliurexUp(self,mode):
+	def _startLliurexUp(self, mode):
 
 		self.checkingBlock = False
 		self.lliurexUpCore.startLliurexUp()
@@ -392,7 +392,7 @@ class LliurexUpCli(object):
 
 	#def _postActionsScript			
 
-	def readErrorOutput(self,output):
+	def readErrorOutput(self, output):
 
 		if "E: " in output:
 			return True
@@ -476,7 +476,7 @@ class LliurexUpCli(object):
 
 	def _getFlatpakUpdateInfo(self):
 
-		flatpakInfo = {"totalFlatpak":0,"size":0}
+		flatpakInfo = {"totalFlatpak": 0, "size": 0}
 		
 		flatpakInfo = self.lliurexUpCore.getFlatpakUpdateInfo()
 		msgLog = f"Flatpak update info:{flatpakInfo}"
@@ -525,7 +525,7 @@ class LliurexUpCli(object):
 	def _checkFinalUpgrade(self):
 
 		print("  [Lliurex-Up]: Checking Dist-upgrade...")
-		errorInfo= self.lliurexUpCore.checkErrorDistUpgrade()
+		errorInfo = self.lliurexUpCore.checkErrorDistUpgrade()
 		isError = errorInfo.get("status")
 		errorDetails = errorInfo.get("errorDetails")
 
@@ -557,7 +557,7 @@ class LliurexUpCli(object):
 
 	#def _cleanEnvironment		
 
-	def _handlerSignal(self,signal,frame):
+	def _handlerSignal(self, signal, frame):
 		
 		print("\n  [Lliurex-Up]: Cancel process with Ctrl+C signal")
 		msgLog = "Cancel process with Ctrl+C signal"
@@ -618,7 +618,7 @@ class LliurexUpCli(object):
 			self._log(msgLog)
 			return
 
-		if code!=1:
+		if code != 1:
 			self._log(msgLog)
 		
 		self._manageLocker(code,"Lliurex-Up")	
@@ -631,7 +631,7 @@ class LliurexUpCli(object):
 
 		code = self.lliurexUpCore.isAptLocked()
 		
-		if code !=0:
+		if code != 0:
 			self._manageLocker(code,"Apt")	
 
 	#def isAptLocked		
@@ -642,12 +642,12 @@ class LliurexUpCli(object):
 
 		code=self.lliurexUpCore.isDpkgLocked()
 
-		if code !=0:
+		if code != 0:
 			self._manageLocker(code,"Dpkg")	
 	
 	#def _isDpkgLocked
 
-	def _manageLocker(self,code,action):
+	def _manageLocker(self, code, action):
 
 		unlocker = False
 
@@ -706,24 +706,24 @@ class LliurexUpCli(object):
 		result = resultQueue.get()
 		
 		if result == 0:
-			msgLog="The unlocking process finished successfully"
+			msgLog = "The unlocking process finished successfully"
 			self._log(msgLog)
 			args = ["/usr/sbin/lliurex-upgrade"] + sys.argv[1:]
 			os.execv("/usr/sbin/lliurex-upgrade",args)
 		else:
 			if result == 1:
 				print("  [Lliurex-Up]: The unlocking process has failed")
-				msgLog="The unlocking process has failed"
+				msgLog ="The unlocking process has failed"
 			else:
 				print("  [Lliurex-Up]: Some process are running. Wait a moment and try again")
-				msgLog="Some process are running. Wait a moment and try again"
+				msgLog = "Some process are running. Wait a moment and try again"
 	
 			self._log(msgLog)
 			sys.exit(1)
 
 	#def _pulsate_unlockingProcess
 
-	def _unlockingProcess(self,resultQueue):
+	def _unlockingProcess(self, resultQueue):
 
 		try:
 			cmd = self.lliurexUpCore.unlockerCommand()
@@ -734,7 +734,7 @@ class LliurexUpCli(object):
 
 	#def _unlockingProcess
 
-	def updateAction(self,mode,extraArgs=None):
+	def updateAction(self, mode, extraArgs = None):
 
 		self.extraArgs = extraArgs
 		self._isLliurexUpLocked()
@@ -817,10 +817,10 @@ class LliurexUpCli(object):
 				return 1			
 		else:
 			if not self.checkPreviousUpgrade():
-				print(f"  [Lliurex-Up]: Current version:                 {self.versionToUpdate.get('installed')}")
+				print(f"  [Lliurex-Up]: Current version:                    {self.versionToUpdate.get('installed')}")
 				print(f"  [Lliurex-Up]: Available version (lliurex.gva.es): {self.versionAvailable.get('candidate')}")
-				print(f"  [Lliurex-Up]: Candidate version (to install):  {self.versionToUpdate.get('candidate')}")
-				print(f"  [Lliurex-Up]: Update source:                   {self.versionToUpdate.get('updateSource')}")
+				print(f"  [Lliurex-Up]: Candidate version (to install):     {self.versionToUpdate.get('candidate')}")
+				print(f"  [Lliurex-Up]: Update source:                      {self.versionToUpdate.get('updateSource')}")
 				print("  [Lliurex-Up]: Your system is updated. Nothing to do")
 				msgLog = "System updated. Nothing to do"
 				self._log(msgLog)

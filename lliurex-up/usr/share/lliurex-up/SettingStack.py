@@ -16,7 +16,7 @@ class ApplyChanges(QObject):
 
 	finished = Signal(dict)
 	
-	def __init__(self,manager,newConfig):
+	def __init__(self, manager, newConfig):
 
 		super().__init__()
 		self.manager = manager
@@ -37,7 +37,7 @@ class ApplyChanges(QObject):
 class Bridge(QObject):
 
 	showSettingsPanelChanged = Signal()
-	isSystratryEnabledChanged=Signal()
+	isSystratryEnabledChanged = Signal()
 	showSettingsMsgChanged = Signal()
 	changesInSettingsChanged = Signal()
 
@@ -62,7 +62,7 @@ class Bridge(QObject):
 	#def showSettingsPanel
 
 	@showSettingsPanel.setter
-	def showSettingsPanel(self,showSettingsPanel):
+	def showSettingsPanel(self, showSettingsPanel):
 
 		if self._showSettingsPanel != showSettingsPanel:
 			self._showSettingsPanel = showSettingsPanel
@@ -78,7 +78,7 @@ class Bridge(QObject):
 	#def isSystrayEnabled
 
 	@isSystrayEnabled.setter
-	def isSystrayEnabled(self,isSystrayEnabled):
+	def isSystrayEnabled(self, isSystrayEnabled):
 
 		if self._isSystrayEnabled != isSystrayEnabled:
 			self._isSystrayEnabled = isSystrayEnabled
@@ -94,7 +94,7 @@ class Bridge(QObject):
 	#def showSettinsMgs
 
 	@showSettingsMsg.setter
-	def showSettingsMsg(self,showSettingsMsg):
+	def showSettingsMsg(self, showSettingsMsg):
 
 		if self._showSettingsMsg != showSettingsMsg:
 			self._showSettingsMsg = showSettingsMsg
@@ -110,7 +110,7 @@ class Bridge(QObject):
 	#def changesInSettings 
 
 	@changesInSettings.setter
-	def changesInSettings(self,changesInSettings):
+	def changesInSettings(self, changesInSettings):
 
 		if self._changesInSettings != changesInSettings:
 			self._changesInSettings = changesInSettings
@@ -127,7 +127,7 @@ class Bridge(QObject):
 	#def getSettingsInfo
 
 	@Slot(bool)
-	def manageSystray(self,enable):
+	def manageSystray(self, enable):
 
 		if enable != self.isSystrayEnabled:
 			self.isSystrayEnabled = enable
@@ -145,7 +145,7 @@ class Bridge(QObject):
 		
 		self.core.mainStack.showPopUp = True
 		self.core.mainStack.closeGui = False
-		self.showSettingsMsg = {"show":False,"msgCode":"","type":""}
+		self.showSettingsMsg = {"show": False, "msgCode": "", "type": ""}
 
 		self.applyChangesThread = QThread()
 		self.applyChangesWorker = ApplyChanges(self.llxUpConnect,self.initialConfig)
@@ -162,13 +162,13 @@ class Bridge(QObject):
 	#def applyChanges
 
 	@Slot(dict)
-	def _applyChangesRet(self,ret):
+	def _applyChangesRet(self, ret):
 
 		self.getSettingsInfo()
 		self.changesInSettings = False
 		self.core.mainStack.showPopUp = False
 
-		self.showSettingsMsg = {"show":True,"msgCode": ret.get("code"), "type": ret.get("type")}
+		self.showSettingsMsg = {"show": True, "msgCode": ret.get("code"), "type": ret.get("type")}
 
 		if not ret.get("status"):
 			self.core.mainStack.moveToStack = ""
