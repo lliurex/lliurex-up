@@ -16,10 +16,10 @@ ItemDelegate {
     enabled: true
     height: 60
 
-    width: listPkgItem.ListView.view ? listPkgItem.ListView.view.width-10 : 0
+    width: listPkgItem.ListView.view ? listPkgItem.ListView.view.width-15 : 0
     hoverEnabled: true
     leftPadding: 15
-    rightPadding: 10
+    rightPadding: 15
 
     onHoveredChanged: {
         if (listPkgItem.ListView.view){
@@ -34,7 +34,7 @@ ItemDelegate {
     background: Rectangle {
         x: 5
         y: 5
-        width: parent.width - 5
+        width: parent.width - 10
         height: parent.height - 5
 
         color: listPkgItem.hovered ? Qt.alpha(Kirigami.Theme.highlightColor,0.15) : "transparent"
