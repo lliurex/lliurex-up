@@ -878,7 +878,7 @@ class LliurexUpCore(object):
 					envVar["LANGUAGE"] = "en"
 
 					command=["apt-get","dist-upgrade","-sv"]
-					command.extend(self.optionsToUpdate)
+					command.extend(self.optionsToUpdate.split())
 
 					result=subprocess.run(
 						command,
@@ -922,7 +922,7 @@ class LliurexUpCore(object):
 			"--allow-change-held-packages"
 		])
 
-		commandParts.extend(self.optionsToUpdate)
+		commandParts.extend(self.optionsToUpdate.split())
 
 		return " ".join(commandParts)
 		
