@@ -1,12 +1,19 @@
 #!/usr/bin/python3
 
+import sys
+import os
+
+if "XDG_RUNTIME_DIR" not in os.environ:
+	runtime_dir = f"/tmp/runtime-{os.getuid()}"
+	os.makedirs(runtime_dir, mode=0o700, exist_ok=True)
+	os.environ["XDG_RUNTIME_DIR"] = runtime_dir
+
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
-import sys
-import os
+
 
 import LaunchStack
 launchStack = LaunchStack.Bridge()
