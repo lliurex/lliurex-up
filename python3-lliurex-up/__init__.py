@@ -242,8 +242,8 @@ class LliurexUpCore(object):
 
 		"""
 		self.cleanEnvironment()
-		self.processPath.mkdir(parents = True, exist_ok = True)
-		self.changelogsPath.mkdir(parents = True,exist_ok = True)
+		self.processPath.mkdir(parents=True, exist_ok=True)
+		self.changelogsPath.mkdir(parents= True,exist_ok=True)
 
 	#def prepareEnvironment	
 

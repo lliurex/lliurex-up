@@ -263,7 +263,7 @@ class LliurexUpConnect():
 		except Exception as e:
 			errorMsg = str(e)
 			self.log(f"Exec Init-Actions.Error: {errorMsg}")
-			return {"status": False, "data":errorMsg}	
+			return {"status": False, "data": errorMsg}	
 
 	#def initActionsScript	
 
@@ -301,10 +301,10 @@ class LliurexUpConnect():
 			if isLliurexupUpdated:
 				return {"status": True, "data": ""}
 
-			return {"status": False, "data":error}
+			return {"status": False, "data": error}
 			
 		except Exception as e:
-			errorMsg=str(e)
+			errorMsg= str(e)
 			self.log(f"Installing lliurex-up. Error: {errorMsg}")
 			return {"status": False, "data": errorMsg}
 
@@ -359,10 +359,10 @@ class LliurexUpConnect():
 			status = 0 if returncode == 0 else False
 			error = isFlavourInstalled.get('stderrs')
 			self.log(f"Install initial metapackage: {flavourToInstall}: Returncode: {returncode} Error: {error}")
-			return {"status":status,"data":error}
+			return {"status": status, "data": error}
 		except Exception as e:
 			self.log(f"Install initial metapackage: {flavourToInstall}. Error: {e}")
-			return {"status": False, "data":str(e)}
+			return {"status": False, "data": str(e)}
 			
 	#def installInitialFlavour
 
@@ -380,7 +380,7 @@ class LliurexUpConnect():
 
 		self.getPackagesData(packages)	
 
-		return {"totalPackages":len(packages),"upgradeSize":totalSize}
+		return {"totalPackages": len(packages), "upgradeSize": totalSize}
 			
 	#def getPackagesToUpdate
 	
@@ -437,7 +437,7 @@ class LliurexUpConnect():
 
 		try:
 			config = configparser.ConfigParser()
-			config.optionxform=str
+			config.optionxform = str
 			config.read(desktopFile,encoding="utf-8")
 
 			if not config.has_section("Desktop Entry"):

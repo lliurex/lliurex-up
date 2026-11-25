@@ -56,7 +56,6 @@ Rectangle {
 
                     model: FilterDelegateModel {
                         id: filterModel
-                        model: packagesModel
                         role: "pkgId"
                         search: pkgSearchEntry.text.trim()
                         externalTimer: searchTimer

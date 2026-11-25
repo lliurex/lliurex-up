@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from PySide6 import QtCore
+import copy
 
 class PackagesModel(QtCore.QAbstractListModel):
 
@@ -73,7 +74,7 @@ class PackagesModel(QtCore.QAbstractListModel):
 	def setEntries(self,entries):
 
 		self.beginResetModel()
-		self._entries = entries
+		self._entries = copy.deepcopy(entries)
 		self.endResetModel()
 
 	#de setEntries
