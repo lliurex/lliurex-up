@@ -231,15 +231,12 @@ class UpdateStack(QObject):
 			return self._checkProcessToken()
 
 		if not self.postActionsLaunched:
-			try:
-				if getattr(self,"checkProgressWorker" ,None) is not None:
-					QMetaObject.invokeMethod(
-						self.checkProgressWorker,
-						"stop",
-						Qt.QueuedConnection
-					)
-			except Exception:
-				pass
+			if getattr(self,"checkProgressWorker" ,None) is not None:
+				QMetaObject.invokeMethod(
+					self.checkProgressWorker,
+					"stop",
+					Qt.QueuedConnection
+				)
 			self.postActionsLaunched = True
 			print("  [Lliurex-Up]: Executing post-actions")
 			self.core.mainStack.updateStep = 5

@@ -27,8 +27,8 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference = ["lliurex-meta-desktop"]
-		self.versionReference = ["desktop","None"] 
+		self.flavourReference = ("lliurex-meta-desktop")
+		self.versionReference = ("desktop","None") 
 		self.defaultVersion = "noble"
 		self.defaultUrltoCheck = "http://lliurex.gva.es/noble"
 		self.lockTokenPath=Path("/var/run/lliurexUp.lock")
@@ -780,15 +780,15 @@ class LliurexUpCore(object):
 		
 	def checkIncorrectFlavours(self):
 		
-		self.incorrectFlavours = []
-		otherFlavours = []
+		self.incorrectFlavours = set()
+		otherFlavours = set()
 		count = 0
 		stopMeta = True
 		errorFlavours = ['edu','live']
 	
 		for item in self.packageInfo:
 			if item in self.flavourReference:
-				self.incorrectFlavours.append(item)
+				self.incorrectFlavours.add(item)
 
 		if len(self.incorrectFlavours) > 0:
 			if len(self.flavours) == 1 and self.flavours[0] in errorFlavours:
@@ -799,7 +799,7 @@ class LliurexUpCore(object):
 					if len(self.targetMetapackage) > 0:
 						if item not in self.targetMetapackage:
 							count += 1
-							otherFlavours.append(item)
+							otherFlavours.add(item)
 
 					else:
 						metaSplit=item.split("-")
@@ -813,12 +813,12 @@ class LliurexUpCore(object):
 						if 'None' in self.previousFlavours:
 							if meta not  in self.metapackageRef:
 								count += 1
-								otherFlavours.append(meta)
+								otherFlavours.add(meta)
 
 						else:		
 							if meta not  in self.previousFlavours:
 								count += 1
-								otherFlavours.append(meta)
+								otherFlavours.add(meta)
 
 		return {"status": count > 0, "data": otherFlavours}
 
@@ -837,7 +837,7 @@ class LliurexUpCore(object):
 		error = False
 		errorDetails = ""
 		lines = ""
-		pkgsNotInstalled = []
+		pkgsNotInstalled = set()
 
 		if self.errorPostactionToken.exists():
 			lines = self.errorPostactionToken.read_text().splitlines()
@@ -893,7 +893,7 @@ class LliurexUpCore(object):
 
 					for line in result.stdout.splitlines():
 						if 'Ins' in line:
-							pkgsNotInstalled.append(line)
+							pkgsNotInstalled.add(line)
 
 					if len(pkgsNotInstalled) > 0:
 						error = True 
@@ -930,7 +930,7 @@ class LliurexUpCore(object):
 
 	def getProcessList(self):
 		
-		self.processList = []
+		self.processList = set()
 
 		result = subprocess.run(
 			["ps","aux"],
@@ -974,11 +974,11 @@ class LliurexUpCore(object):
 		
 		self.getProcessList()
 
-		retList = []
+		retList = set()
 		
 		for process in self.processList:
 			if processFilter in process.get("command"):
-				retList.append(process)
+				retList.add(process)
 				
 				
 		if len(retList) > 0:

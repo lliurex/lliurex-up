@@ -356,7 +356,7 @@ class LliurexUpConnect():
 		try:
 			isFlavourInstalled = self.llxUpCore.installInitialFlavour(flavourToInstall)
 			returncode = isFlavourInstalled.get('returncode')
-			status = 0 if returncode == 0 else False
+			status = True if returncode == 0 else False
 			error = isFlavourInstalled.get('stderrs')
 			self.log(f"Install initial metapackage: {flavourToInstall}: Returncode: {returncode} Error: {error}")
 			return {"status": status, "data": error}
