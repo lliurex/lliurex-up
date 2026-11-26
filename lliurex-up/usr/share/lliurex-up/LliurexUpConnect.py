@@ -69,6 +69,7 @@ class LliurexUpConnect():
 		self.currentConfig = {"systrayEnabled":self.isSystrayEnabled}
 		self.runPkexec = True
 		self.flatpakActionsToken = self.llxUpCore.processPath / 'flatpakActions_token'
+		self.changelogProc = None
 		self._clearCache()
 
 	#def __init__
@@ -491,6 +492,21 @@ class LliurexUpConnect():
 
 	#def checkIncorrectFlavours	
 
+	def cancelChangelog(self):
+
+		if self.changelogProc and self.changelogProc.poll() is None: 
+			try:
+				self.changelogProc.terminate()
+				self.changelogProc.wait(timeout=1)
+			except subprocess.TimeoutExpired:
+				self.changelogProc.kill()
+			except Exception:
+				pass
+			finally:
+				self.changelogProc = None
+
+	#def cancelChangelog
+
 	def getPackageChangelog(self, package):
 
 		changelogFile = self.llxUpCore.changelogsPath / package
@@ -502,33 +518,40 @@ class LliurexUpConnect():
 			customEnv["LANGUAGE"] = "en"
 
 			try:
-				result = subprocess.run(
+				self.changelogProc = subprocess.Popen(
 					["apt-get","changelog", package],
 					env=customEnv,
 					stdout=subprocess.PIPE,
 					stderr=subprocess.PIPE,
 					text=True,
 					errors="replace",
-					check=False
 				)
 
-				if result.returncode != 0 or not result.stdout.strip():
+				pout, perr = self.changelogProc.communicate()
+				returncode = self.changelogProc.returncode
+				self.changelogProc = None
+
+				if returncode != 0 or not pout.strip():
 					return changelog
 
 				cleanLines = [
-					line for line in result.stdout.splitlines()
-					if not line.starswith("Get:")
+					line for line in pout.splitlines()
+					if not line.startswith("Get:")
 				]
 
 				changelog = "\n".join(cleanLines).replace("\n","\n")
+				changelogFile.parent.mkdir(parents=True,exist_ok=True)
+				changelogFile.write_text(changelog,encoding="utf-8") 
 
 				return changelog
 
 			except Exception as e:
+				self.changelogProc = None
 				return changelog
 
 		try:
-			return changelogFile.read_text(encoding="utf-8",errors="replace")
+			ret = changelogFile.read_text(encoding="utf-8",errors="replace")
+			return ret
 		except Exception:
 			return changelog
 

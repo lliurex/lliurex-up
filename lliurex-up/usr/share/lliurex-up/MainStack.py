@@ -470,6 +470,7 @@ class Bridge(QObject):
 			self.closeGui = False
 			return
 
+		self.core.packageStack.stopChangelog()
 		self.llxUpConnect.cleanEnvironment()
 		self.llxUpConnect.cleanLliurexUpLock()
 		self.closeGui = True

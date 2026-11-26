@@ -27,8 +27,8 @@ class LliurexUpCore(object):
 	"""docstring for LliurexUpCore"""
 	def __init__(self):
 		super(LliurexUpCore, self).__init__()
-		self.flavourReference = ("lliurex-meta-desktop")
-		self.versionReference = ("desktop","None") 
+		self.flavourReference = {"lliurex-meta-desktop"}
+		self.versionReference = {"desktop","None"}
 		self.defaultVersion = "noble"
 		self.defaultUrltoCheck = "http://lliurex.gva.es/noble"
 		self.lockTokenPath=Path("/var/run/lliurexUp.lock")

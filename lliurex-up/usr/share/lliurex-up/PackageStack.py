@@ -15,21 +15,34 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class GatherChangelog(QObject):
 
-	finished = Signal(str)
+	resultReady = Signal(str,str)
+	finished = Signal()
 
 	def __init__(self, manager, pkgId):
 
 		super().__init__()
 		self.manager = manager
 		self.pkgId = pkgId
+		self._isCancelled = False
 
 	#def __init__
 
+	def cancel(self):
+
+		self._isCancelled = True
+		self.manager.cancelChangelog()
+
+	#def cancel
+
 	def run(self,*args):
 
-		ret = self.manager.getPackageChangelog(self.pkgId)
+		try:
+			ret = self.manager.getPackageChangelog(self.pkgId)
 
-		self.finished.emit(ret)
+			if not self._isCancelled:
+				self.resultReady.emit(ret,self.pkgId)
+		finally:
+			self.finished.emit()
 
 	#def run
 
@@ -46,6 +59,8 @@ class Bridge(QObject):
 		self.llxUpConnect = self.core.llxUpConnect
 		self._packagesModel = PackagesModel.PackagesModel()
 		self._pkgChangelog = {"pkgId": "", "changelog": ""}
+		self.gatherPkgChangelogWorker = None
+		self.gatherPkgChangelogThread = None
 
 	#def __init__
 
@@ -103,32 +118,75 @@ class Bridge(QObject):
 	@Slot(str)
 	def showPkgChangelog(self,pkgId):
 
+		self.stopChangelog()
+
 		self.pkgId = pkgId
 		self.pkgChangelog = {"pkgId": self.pkgId, "changelog": ""}
 		
-		self.gatherPkgChangelogThread = QThread()
-		self.gatherPkgChangelogWorker = GatherChangelog(self.llxUpConnect,self.pkgId)
-		self.gatherPkgChangelogWorker.moveToThread(self.gatherPkgChangelogThread)
-		self.gatherPkgChangelogThread.started.connect(self.gatherPkgChangelogWorker.run)
+		thread = QThread(self)
+		worker = GatherChangelog(self.llxUpConnect,self.pkgId)
 
-		self.gatherPkgChangelogWorker.finished.connect(self._gatherPkgChangelogRet)
-		self.gatherPkgChangelogWorker.finished.connect(self.gatherPkgChangelogThread.quit)
-		self.gatherPkgChangelogWorker.finished.connect(self.gatherPkgChangelogWorker.deleteLater)
-		self.gatherPkgChangelogThread.finished.connect(self.gatherPkgChangelogThread.deleteLater)
+		worker.moveToThread(thread)
 
-		self.gatherPkgChangelogThread.start()
+		thread.started.connect(worker.run)
+		worker.resultReady.connect(self._gatherPkgChangelogRet)
+		worker.finished.connect(thread.quit)
+		worker.finished.connect(worker.deleteLater)
+		#thread.finished.connect(thread.deleteLater)
+
+		thread.finished.connect(lambda: self._clearThreadRefs(thread,worker))
+
+		self.gatherPkgChangelogWorker = worker
+		self.gatherPkgChangelogThread = thread
+
+		thread.start()
 
 	#def showPkgChangelog
 
-	@Slot(str)
-	def _gatherPkgChangelogRet(self,ret):
+	def _clearThreadRefs(self, thread, worker):
 
-		self.pkgChangelog = {
-			"pkgId": self.pkgId,
-			"changelog": ret
-		}
+		if self.gatherPkgChangelogThread is thread:
+			self.gatherPkgChangelogThread = None
+
+		if self.gatherPkgChangelogWorker is worker:
+			self.gatherPkgChangelogWorker = None
+
+	#def _clearThreadRefs
+
+	@Slot(str,str)
+	def _gatherPkgChangelogRet(self,ret,pkgId):
+
+		if pkgId == self.pkgId:
+			self.pkgChangelog = {
+				"pkgId": pkgId,
+				"changelog": ret
+			}
+
+		self.gatherPkgChangelogWorker = None
 
 	#def _gatherPkgChangelogRet
+
+	@Slot()
+	def stopChangelog(self):
+
+		if self.gatherPkgChangelogWorker:
+			self.gatherPkgChangelogWorker.cancel()
+			try:
+				self.gatherPkgChangelogWorker.resultReady.disconnect(self._gatherPkgChangelogRet)
+			except RuntimeError:
+				pass
+
+		try:
+			if self.gatherPkgChangelogThread and self.gatherPkgChangelogThread.isRunning():
+				self.gatherPkgChangelogThread.quit()
+				self.gatherPkgChangelogThread.wait(2000)
+		except RuntimeError:
+			pass
+
+		self.gatherPkgChangelogWorker = None
+		self.gatherPkgChangelogThread = None 
+	
+	#def stopChangelog
 
 #class Bridge
 

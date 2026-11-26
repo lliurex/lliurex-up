@@ -115,10 +115,8 @@ Rectangle {
 
             Text {
                 id: sourceTextValue
-                text: infoStackBridge.packagesInfo.updateSource != ""
-                        ? infoStackBridge.packagesInfo.updateSource
-                        : i18nd("lliurex-up","Not available")
-                color: infoStackBridge.packagesInfo.updateSource != "" ? "black" : "red"
+                text: infoStackBridge.packagesInfo.updateSource || i18nd("lliurex-up","Not available")
+                color: infoStackBridge.packagesInfo.updateSource != null ? "black" : "red"
                 font.pointSize: 10
                 Layout.alignment: Qt.AlignLeft
             }

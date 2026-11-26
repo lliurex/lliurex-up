@@ -12,6 +12,10 @@ Popup {
     closePolicy: Popup.AutoClose
     padding: 15
 
+    onClosed: {
+        packageStackBridge.stopChangelog()
+    }
+
     background: Rectangle {
         color: "#ebeced"
         border.color: "#b8b9ba"
