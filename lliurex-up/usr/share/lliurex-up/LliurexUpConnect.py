@@ -287,7 +287,7 @@ class LliurexUpConnect():
 
 	#def isLliurexUpIsUpdated
 
-	def isLliurexUpIsUpdated(self):
+	def installLliurexUp(self):
 
 		try:
 			isLliurexupInstalled = self.llxUpCore.installLliurexUp()

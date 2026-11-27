@@ -473,7 +473,7 @@ class Bridge(QObject):
 	#def _updateLliureXUp
 
 	@Slot(dict)
-	def _updateLliurexUpRet(self):
+	def _updateLliurexUpRet(self,ret):
 
 		self.core.mainStack.endProcess = True
 
