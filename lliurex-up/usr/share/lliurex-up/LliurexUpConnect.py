@@ -70,6 +70,7 @@ class LliurexUpConnect():
 		self.runPkexec = True
 		self.flatpakActionsToken = self.llxUpCore.processPath / 'flatpakActions_token'
 		self.changelogProc = None
+		self._procLock = threading.Lock()
 		self._clearCache()
 
 	#def __init__
@@ -494,16 +495,18 @@ class LliurexUpConnect():
 
 	def cancelChangelog(self):
 
-		if self.changelogProc and self.changelogProc.poll() is None: 
+		with self._procLock:
+			proc = self.changelogProc
+			self.changelogProc = None
+
+		if proc and proc.poll() is None: 
 			try:
-				self.changelogProc.terminate()
-				self.changelogProc.wait(timeout=1)
+				proc.terminate()
+				proc.wait(timeout=1)
 			except subprocess.TimeoutExpired:
-				self.changelogProc.kill()
+				proc.kill()
 			except Exception:
 				pass
-			finally:
-				self.changelogProc = None
 
 	#def cancelChangelog
 
@@ -518,7 +521,7 @@ class LliurexUpConnect():
 			customEnv["LANGUAGE"] = "en"
 
 			try:
-				self.changelogProc = subprocess.Popen(
+				proc = subprocess.Popen(
 					["apt-get","changelog", package],
 					env=customEnv,
 					stdout=subprocess.PIPE,
@@ -527,9 +530,16 @@ class LliurexUpConnect():
 					errors="replace",
 				)
 
-				pout, perr = self.changelogProc.communicate()
-				returncode = self.changelogProc.returncode
-				self.changelogProc = None
+				with self._procLock:
+					self.changelogProc = proc
+
+				pout, perr = proc.communicate()
+				returncode = proc.returncode
+				
+				with self._procLock:
+					if self.changelogProc is proc:
+						self.changelogProc = None
+
 
 				if returncode != 0 or not pout.strip():
 					return changelog
@@ -546,7 +556,8 @@ class LliurexUpConnect():
 				return changelog
 
 			except Exception as e:
-				self.changelogProc = None
+				with self._procLock:
+					self.changelogProc = None
 				return changelog
 
 		try:
