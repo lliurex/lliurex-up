@@ -1,81 +1,79 @@
-import org.kde.plasma.core as PlasmaCore
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
 
 ApplicationWindow {
+    id: mainWindow
 
     property bool closing: false
-    id:mainWindow
+    property int margin: 1
+
     visible: true
     title: "LliureX-Up"
-    color:"#eff0f1"
-    property int margin: 1
+    color: "#eff0f1"
     width: mainLayout.implicitWidth + 2 * margin
     height: mainLayout.implicitHeight + 2 * margin
-    minimumWidth: mainLayout.Layout.minimumWidth + 2 * margin
-    minimumHeight: mainLayout.Layout.minimumHeight + 2 * margin
+    minimumWidth: 850 + 2 * margin
+    minimumHeight: 580 + 2 * margin
+
     Component.onCompleted: {
         x = Screen.width / 2 - width / 2
         y = Screen.height / 2 - height / 2
     }
+
     onClosing:(close)=> {
+
         close.accepted=closing;
-        mainStackBridge.closeApplication()
-        delay(100, function() {
-            if (mainStackBridge.closeGui){
-                closing=true,
-                closeTimer.stop(), 
+
+        if (!closing) {
+            mainStackBridge.closeApplication();
+            closeTimer.start();
+        }
+    }
+
+    Timer {
+        id: closeTimer
+        interval: 100
+        repeat: true
+        onTriggered: {
+            if (mainStackBridge.closeGui) {
+                stop();
+                mainWindow.closing = true;
                 mainWindow.close();
             }
-        })
-        
+        }
     }
-    
+
     ColumnLayout {
         id: mainLayout
         anchors.fill: parent
-        anchors.margins: margin
-        Layout.minimumWidth:850
-        Layout.preferredWidth:850
-        Layout.minimumHeight:580
 
-        RowLayout {
-            id: bannerBox
-            Layout.alignment:Qt.AlignTop
-            
-            Rectangle{
-                color: "#0049aa"
-                Layout.minimumWidth:mainLayout.width
-                Layout.preferredWidth:mainLayout.width
-                Layout.fillWidth:true
-                Layout.minimumHeight:120
-                Layout.maximumHeight:120
-                Image{
-                    id:banner
-                    source: "/usr/share/lliurex-up/rsrc/lliurex-up-banner.png"
-                    anchors.centerIn:parent
-                }
+        Rectangle {
+            color: "#0049aa"
+            Layout.fillWidth: true
+            Layout.preferredHeight: 120
+
+            Image {
+                id: banner
+                source: "lliurex-up-banner.png"
+                anchors.centerIn: parent
+                fillMode: Image.PreserveAspectFit  
             }
         }
 
         StackView {
             id: mainView
-            property int currentView:mainStackBridge.currentStack
-            Layout.minimumWidth:850
-            Layout.preferredWidth: 850
-            Layout.minimumHeight:460
-            Layout.preferredHeight:460
-            Layout.alignment:Qt.AlignHCenter|Qt.AlignVCenter
-            Layout.leftMargin:0
-            Layout.fillWidth:true
+            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.preferredHeight: 460
 
-            initialItem:loadView
+            property int currentView: mainStackBridge.currentStack
 
-            onCurrentViewChanged:{
-                switch(currentView){
+            initialItem: loadView
+
+            onCurrentViewChanged: {
+                switch(currentView) {
                     case 0:
                         mainView.replace(loadView)
                         break;
@@ -87,39 +85,45 @@ ApplicationWindow {
                         break;
                 }
             }
-       }
-       
-       Component{
-            id:loadView
-            LoadPanel{
-                id:loadPanel
+
+            replaceEnter: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 60
+                }
             }
-       } 
-       Component{
-            id:errorView
-            ErrorPanel{
-                id:errorPanel
+
+            replaceExit: Transition {
+                NumberAnimation { 
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 60
+                }
             }
         }
-        Component{
-            id:applicationOptionsView
-            ApplicationOptions{
-                id:applicationOptions
+
+        Component {
+            id: loadView
+            LoadPanel {
+                id: loadPanel
             }
         }
-      
-    }
 
-    Timer{
-        id:closeTimer
-    }
+        Component {
+            id: errorView
+            ErrorPanel {
+                id: errorPanel
+            }
+        }
 
-    function delay(delayTime,cb){
-        closeTimer.interval=delayTime;
-        closeTimer.repeat=true;
-        closeTimer.triggered.connect(cb);
-        closeTimer.start()
+        Component {
+            id: applicationOptionsView
+            ApplicationOptions {
+                id: applicationOptions
+            }
+        }
     }
-
 }
-

@@ -14,7 +14,7 @@ import grp
 import configparser
 import psutil
 
-#from math import pi
+from pathlib import Path
 
 import lliurex.lliurexup as LliurexUpCore
 import signal
@@ -26,69 +26,52 @@ _=gettext.gettext
 
 class LliurexUpConnect():
 
+	KIRIGAMI_MSG_OK = 0
+	KIRIGAMI_MSG_ERROR = 1 
+	KIRIGAMI_MSG_WARNING = 2
+	KIRIGAMI_MSG_INFO = 3
+
+
 	def __init__(self):
 
-		self.llxUpCore=LliurexUpCore.LliurexUpCore()
+		self.llxUpCore = LliurexUpCore.LliurexUpCore()
 
-		self.preactionsToken=os.path.join(self.llxUpCore.processPath,'preactions_token')
-		self.upgradeToken=os.path.join(self.llxUpCore.processPath,'upgrade_token')
-		self.installflavourToken=os.path.join(self.llxUpCore.processPath,'installflavour_token')
-		self.postactionsToken=os.path.join(self.llxUpCore.processPath,'postactions_token')
-		self.errorPostactionToken=self.llxUpCore.errorpostaction_token
-		self.errorUpgradeToken=self.llxUpCore.errorupgrade_token
-		self.errorFinalMetapackageToken=self.llxUpCore.errorfinalmetapackage_token
-		self.finalUpgradeToken=self.llxUpCore.finalupgrade_token
-		self.packagesData=[]
-		self.desktopsPath="/usr/share/applications"
-		self.standardIconPath="/usr/share/lliurex-up/rsrc"
-		self.systemIconPath="/usr/share/icons/hicolor/48x48/apps"
-		self.systemScalableIconPath="/usr/share/icons/hicolor/scalable"
-		self.disableSystrayPath="/etc/lliurex-up-indicator"
-		self.disableSystrayToken=os.path.join(self.disableSystrayPath,"disableIndicator.token")
-		self.isSystrayEnabled=True
-		self.numberPackagesDownloaded=[]
-		self.numberPackagesUnpacked=[]
-		self.numberPackagesInstalled=[]
-		self.initialNumberPackages=[]
-		self.packagesInstalled=[]
-		self.progressDownload=0
-		self.progressDownloadPercentaje=0.00
-		self.progressInstallation=0
-		self.progressInstallationPercentage=0.00
-		self.progressUnpacked=0
-		self.progressUnpackedPercentage=0.00
-		self.aptCachePath="/var/cache/apt/archives"
-		self.canConnectToADI=self.llxUpCore.canConnectToADI
-		self.isAutoUpgradeAvailable=False
-		self.isAutoUpgradeEnabled=False
-		self.dateToUpdate=self.llxUpCore.dateToUpdate
-		self.weeksOfPause=self.llxUpCore.weeksOfPause
-		self.isWeekPauseActive=False
-		self.canPauseUpdate=False
-		self.canExtendedPause=False
-		self.canEditWeekPause=False
-		self.extensionWeekPause=0
-		week=_("week")
-		weeks=_("weeks")
-		self.weeksOfPauseCombo=[{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
-		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0},{"name":"1 %s"%week,"value":1},{"name":"2 %s"%weeks,"value":2},{"name":"3 %s"%weeks,"value":3},{"name":"4 %s"%weeks,"value":4},{"name":"5 %s"%weeks,"value":5}]
-		self.weeksOfPauseInfo=[self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
-		self.currentConfig=[self.isSystrayEnabled,self.isAutoUpgradeEnabled,self.isWeekPauseActive,self.weeksOfPause,self.extensionWeekPause]
-		self.isDesktopInADI=False
-		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
-		self.runPkexec=True
-		self.flatpakActionsToken=os.path.join(self.llxUpCore.processPath,'flatpakActions_token')
-		self._isRunPkexec()
+		self.preactionsToken = self.llxUpCore.processPath / "preactions_token"
+		self.upgradeToken = self.llxUpCore.processPath / "upgrade_token"
+		self.installflavourToken = self.llxUpCore.processPath / "installflavour_token"
+		self.postactionsToken = self.llxUpCore.processPath / "postactions_token"
+		self.errorPostactionToken = self.llxUpCore.errorPostactionToken
+		self.errorUpgradeToken = self.llxUpCore.errorUpgradeToken
+		self.errorFinalMetapackageToken = self.llxUpCore.errorFinalMetapackageToken
+		self.finalUpgradeToken = self.llxUpCore.finalUpgradeToken
+		self.packagesData = []
+		self.desktopsPath = Path("/usr/share/applications")
+		self.standardIconPath = Path("/usr/share/lliurex-up/rsrc")
+		self.systemIconPath = Path("/usr/share/icons/hicolor/48x48/apps")
+		self.systemScalableIconPath = Path("/usr/share/icons/hicolor/scalable")
+		self.disableSystrayPath = Path("/etc/lliurex-up-indicator")
+		self.disableSystrayToken = self.disableSystrayPath / "disableIndicator.token"
+		self.isSystrayEnabled = True
+		self.pendingDownloads = set()
+		self.pendingUnpacked = set()
+		self.pendingInstalled = set ()
+		self.initialNumberPackages = set()
+		self.packagesInstalled = set()
+		self.progressDownload = 0
+		self.progressDownloadPercentaje = 0.00
+		self.progressInstallation = 0
+		self.progressInstallationPercentage = 0.00
+		self.progressUnpacked = 0
+		self.progressUnpackedPercentage = 0.00
+		self.aptCachePath = Path("/var/cache/apt/archives")
+		self.currentConfig = {"systrayEnabled":self.isSystrayEnabled}
+		self.runPkexec = True
+		self.flatpakActionsToken = self.llxUpCore.processPath / 'flatpakActions_token'
+		self.changelogProc = None
+		self._procLock = threading.Lock()
 		self._clearCache()
 
 	#def __init__
-
-	def _isRunPkexec(self):
-
-		if 'PKEXEC_UID' not in os.environ:
-			self.runPkexec=False
-
-	#def _isRunPkexec
 
 	def checkLocks(self):
 
@@ -98,15 +81,13 @@ class LliurexUpConnect():
 
 	def isLliurexUpLocked(self):
 
-		code=self.llxUpCore.isLliurexUpLocked()
-		msgLog="------------------------------------------\n"+"LLIUREX-UP-GUI STARTING AT: " + datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S") +"\n------------------------------------------"
+		code = self.llxUpCore.isLliurexUpLocked()
+		msgLog = f"------------------------------------------\nLLIUREX-UP-GUI STARTING AT: {datetime.datetime.today().strftime("%d/%m/%y %H:%M:%S")}\n------------------------------------------"
 
-		if code!=0:
-			if code ==1:
-				msgLog="Lliurex-Up is running"
-			elif code==2:
-				self.log(msgLog)
-				msgLog="Lliurex-Up is locked"
+		if code == 1:
+			msgLog = "Lliurex-Up is running"
+		elif code == 2:
+			msgLog = "Lliurex-Up is locked"
 			
 		self.log(msgLog)
 
@@ -116,33 +97,36 @@ class LliurexUpConnect():
 
 	def isAptLocked(self):
 	
-		code=self.llxUpCore.isAptLocked()
+		code = self.llxUpCore.isAptLocked()
 
+		if code == 0:
+			return code
 
-		if code !=0:
-			if code ==1:
-				msgLog="Apt is running"
-			elif code==2:
-				msgLog="Apt is locked"
+		if code == 1:
+			msgLog = "Apt is running"
+		elif code == 2:
+			msgLog = "Apt is locked"
 
-			self.log(msgLog)
+		self.log(msgLog)
 
 		return 	code
 
 	#def isAptLocked 	
 
-	def isDpkgLocked(self):
+	def isDpkgLocked(self, writeChangelog = True):
 
+		code = self.llxUpCore.isDpkgLocked()
 
-		code=self.llxUpCore.isDpkgLocked()
+		if code == 0:
+			return code
 
-		if code !=0:
-			if code ==1:
-				msgLog="Dpkg is running"
-			elif code==2:
-				msgLog="Dpkg is locked"
-			elif code==3:
-				msgLog="Apt is running"	
+		if writeChangelog:
+			if code == 1:
+				msgLog = "Dpkg is running"
+			elif code == 2:
+				msgLog = "Dpkg is locked"
+			elif code == 3:
+				msgLog = "Apt is running"	
 
 			self.log(msgLog)
 	
@@ -152,17 +136,32 @@ class LliurexUpConnect():
 
 	def unlockingProcess(self):
 
-		cmd=self.llxUpCore.unlockerCommand()
-		result=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,check=False).returncode
+		cmd = self.llxUpCore.unlockerCommand()
+		
+		try:
+			process = subprocess.run(
+				cmd,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE,
+				text=True,
+				check=False
+			)
 
-		if result!=0:
-			msgLog="The unlocking process has failed"
-		else:
-			msgLog="The unlocking process finished successfully"
+			result = process.returncode
 
+			if result != 0:
+				errorDetails = process.stderr.strip()
+				msgLog = f"The unlocking process has failed. Code: {result} - Details: {errorDetails}"
+			else:
+				msgLog = "The unlocking process finished successfully"
+
+		except Exception as e:
+			result = -1
+			msgLog = f"Unexpect error running unlocking process. Error: {e}"
+			
 		self.log(msgLog)
 
-		return result	
+		return result
 
 	#def unlockingProcess	
 
@@ -174,25 +173,27 @@ class LliurexUpConnect():
 
 	def freeSpaceCheck(self):
 
-		#freeSpace=(os.statvfs("/").f_bfree * os.statvfs("/").f_bsize) / (1024*1024*1024)
-		freeSpace=round(psutil.disk_usage("/").free/(1024**3),2)
+		try:
+			usage = psutil.disk_usage("/")
+			freeSpace = round(usage.free / (1024**3),2)
+		except Exception as e:
+			self.log(f"Error checking disk space on /: {e}")
+			return {"enoughSpace": False, "freeSpace": 0.0}
 
-		if (freeSpace) < 2: #less than 2GB available?
-			msgLog="Not enough space on disk to upgrade (2 GB needed): %s GB available"%str(freeSpace)
-			self.log(msgLog)
-			return [False,freeSpace]
-		else:
-			return [True,freeSpace]	
+		if freeSpace < 2: 
+			self.log(f"Not enough space on disk to upgrade (2 GB needed): {freeSpace} GB available")
+			return {"enoughSpace": False, "freeSpace": freeSpace}
 
+		return {"enoughSpace": True, "freeSpace": freeSpace}
+	
 	#def freeSpaceCheck		
 
 	def checkInitialN4dStatus(self):
 
-		self.statusN4d=self.llxUpCore.n4dStatus
+		self.statusN4d = self.llxUpCore.n4dStatus
 
 		if not self.statusN4d:
-			msgLog="N4d is not working"
-			self.log(msgLog)
+			self.log("N4d is not working")
 
 		return self.statusN4d	
 
@@ -200,15 +201,11 @@ class LliurexUpConnect():
 
 	def checkInitialFlavour(self):
 
-		self.targetMetapackage=self.llxUpCore.checkInitialFlavour()
-		msgLog="Initial check metapackage. Metapackage to install: %s"%str(self.targetMetapackage)
-		self.log(msgLog)
-		self.previousFlavours=self.llxUpCore.previousFlavours
-		msgLog="Get initial metapackage: " + str(self.previousFlavours)
-		self.log(msgLog)
-
-		self.isDesktopInADI=self.llxUpCore.isDesktopInADI
-		self.canConnectToADI=self.llxUpCore.canConnectToADI
+		self.targetMetapackage = self.llxUpCore.checkInitialFlavour()
+		self.log(f"Initial check metapackage. Metapackage to install: {self.targetMetapackage}")
+		
+		self.previousFlavours = self.llxUpCore.previousFlavours
+		self.log(f"Get initial metapackage: {self.previousFlavours}")
 
 		return self.targetMetapackage
 
@@ -216,84 +213,59 @@ class LliurexUpConnect():
 
 	def canConnectToLliurexNet(self):
 
-		canConnect=self.llxUpCore.canConnectToLliurexNet()
-		msgLog="Checking connection to lliurex.gva.es: %s"%canConnect
-		self.log(msgLog)
+		canConnect = self.llxUpCore.canConnectToLliurexNet()
+		self.log(f"Checking connection to lliurex.gva.es: {canConnect}")
 
-		if canConnect['status']:
-			msgLog="Can connect to lliurex.gva.es: True"
-			self.log(msgLog)
+		if canConnect.get('status'):
+			self.log("Can connect to lliurex.gva.es: True")
 			return True
-		else:
-			msgLog="Can connect to lliurex.gva.es: False"
-			self.log(msgLog)
 
-			if self.canConnectToADI:
-				if self.isMirrorInADI:
-					return True
-			return False		
+		self.log("Can connect to lliurex.gva.es: False")
+		return False		
 
 	#def canConnectToLliurexNet
 
 	def initActionsScript(self):
 
-		error=""
-		result=True
-		arg="initActions"
-		command="DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s"%self.llxUpCore.initActionsScript(arg)
-		token="dpkg --configure -a"
-		try:
-		 	p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-		 	poutput,perror=p.communicate()
-		 	if len(perror)>0:
-		 		error=perror.decode()
-		 		if token in error:
-			 		msgLog="Exec Init-Actions.Error: %s"%str(error)
-			 		result=False
-			 	else:
-			 		error=""
-			 		msgLog="Exec Init-Actions"
-		 	else:
-		 		msgLog="Exec Init-Actions"
+		token = "dpkg --configure -a"
+		arg = "initActions"
 
-		 	self.log(msgLog)
-		 	return [result,error]
+		command = self.llxUpCore.initActionsScript(arg)
+
+		customEnv = os.environ.copy()
+		customEnv["DEBIAN_FRONTEND"] = "kde"
+		customEnv["DEBIAN_PRIORITY"] = "high"
+
+		try:
+			process = subprocess.run(
+				command,
+				env=customEnv,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE,
+				text=True,
+				errors="replace",
+				check=False
+			)
+
+			perror = process.stderr.strip()
+
+			if token in perror:
+				self.log( f"Exec Init-Actions. Error: {perror}")
+				return {"status": False, "data": perror}
+
+			if process.returncode != 0:
+				self.log(f"Exec Init-Actions. Error: (Code: {process.returncode} - Details: {perror})")
+				return {"status": False ,"data": perror}
+
+			self.log("Exec Init-Actions")
+			return {"status": True, "data":""}
+
 		except Exception as e:
-		 	msgLog="Exec Init-Actions.Error: %s"%str(e)
-		 	self.log(msgLog)
-		 	return [False,error]	
+			errorMsg = str(e)
+			self.log(f"Exec Init-Actions.Error: {errorMsg}")
+			return {"status": False, "data": errorMsg}	
 
 	#def initActionsScript	
-
-	def desktopCheckingMirrorIsRunning(self):
-
-		isMirrorRunningInADI=self.llxUpCore.desktopCheckingMirrorIsRunning()
-		msgLog="Checking if mirrror in ADI is being updated. MirrorManager response: %s"%isMirrorRunningInADI['data']
-		self.log(msgLog)		
-		
-		if isMirrorRunningInADI['ismirrorrunning']==True:
-			msgLog="Mirror is being udpated in ADI. Unable to update the system"
-			self.log(msgLog)
-
-		return isMirrorRunningInADI['ismirrorrunning']
-
-	#def desktopCheckingMirrorIsRunning
-
-	def desktopCheckingMirrorExists(self):
-
-		isMirrorExistsInADI=self.llxUpCore.desktopCheckingMirrorExists()
-		msgLog="Checking if mirrror exists in ADI. MirrorManager response: %s"%isMirrorExistsInADI['data']
-		self.log(msgLog)
-	
-		if not isMirrorExistsInADI['ismirroravailable']:
-			msgLog="Mirror not detected on the ADI"
-			self.log(msgLog)
-				
-		self.isMirrorInADI=self.llxUpCore.isMirrorInADI
-		
-		return isMirrorExistsInADI['ismirroravailable']
-
-	#def desktopCheckingMirrorExists
 
 	def addSourcesListLliurex(self):
 
@@ -301,114 +273,66 @@ class LliurexUpConnect():
 
 	#def addSourcesListLliurex	
 
-	def isLliurexUpIsUpdated(self):
+	def isLliurexUpUpdated(self):
 
 		try:
-			isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated()
-			msgLog="Checking lliurex-up. Is lliurex-up updated: %s"%str(isLliurexupUpdated)
-			self.log(msgLog)
+			isLliurexupUpdated = self.llxUpCore.isLliurexUpUpdated()
+			self.log(f"Checking lliurex-up. Is lliurex-up updated: {isLliurexupUpdated}")
 			return isLliurexupUpdated
 		except Exception as e:
-			msgLog="Checking lliurex-up. Error: %s"%str(e)
-			self.log(msgLog)
+			self.log(f"Checking lliurex-up. Error: {e}")
 			return True
 
 	#def isLliurexUpIsUpdated
 
 	def installLliurexUp(self):
 
-		error=""
 		try:
-			isLliurexupInstalled=self.llxUpCore.installLliurexUp()
-			returncode=isLliurexupInstalled['returncode']
-			error=isLliurexupInstalled['stderrs']
-			msgLog="Installing lliurex-up. Returncode: %s. Error: %s"%(str(returncode),str(error))
-			self.log(msgLog)
-			if returncode==0:
-				return [True,""] 
-			else:
-				isLliurexupUpdated=self.llxUpCore.isLliurexUpIsUpdated()
-				if isLliurexupUpdated:
-					return [True,""]
-				else:
-					return [False,error]
+			isLliurexupInstalled = self.llxUpCore.installLliurexUp()
+			returncode = isLliurexupInstalled.get('returncode')
+			error = isLliurexupInstalled.get('stderrs')
+			self.log(f"Installing lliurex-up. Returncode: {returncode}. Error: {error}")
+
+			if returncode == 0:
+				return {"status": True, "data": ""}
+
+			
+			isLliurexupUpdated = self.llxUpCore.isLliurexUpIsUpdated()
+			if isLliurexupUpdated:
+				return {"status": True, "data": ""}
+
+			return {"status": False, "data": error}
 			
 		except Exception as e:
-			msgLog="Installing lliurex-up. Error: %s"%str(e)
-			self.log(msgLog)
-			return [True,error]
+			errorMsg= str(e)
+			self.log(f"Installing lliurex-up. Error: {errorMsg}")
+			return {"status": False, "data": errorMsg}
 
 	#def installLliurexUp	
 
-	def lliurexMirrorIsUpdated(self):
-
-		try:
-			isMirrorUpdated=self.llxUpCore.lliurexMirrorIsUpdated()
-			msgLog="Checking mirror: %s"%isMirrorUpdated
-			self.log(msgLog)
-			if isMirrorUpdated !=None:
-			
-				if isMirrorUpdated['action']=='update':
-					msgLog="Checking mirror. Is mirror update: False"
-					self.log(msgLog)
-					return False
-				else: 
-					msgLog="Checking mirror. Is mirror update: %s"%isMirrorUpdated['action']
-					self.log(msgLog)
-					return True
-			else:
-				msgLog="Checking mirror. Is mirror update: None"
-				self.log(msgLog)
-				return True
-		
-		except Exception as e:
-			msgLog="Checking mirror. Error: %s"%str(e)
-			self.log(msgLog)
-			return True	
-
-	#def lliurexMirrorIsUpdated		
-
-	def lliurexMirrorIsRunning(self):
-
-		try:
-			isLliurexMirrorRunning=self.llxUpCore.lliurexMirrorIsRunning()
-			return isLliurexMirrorRunning
-		except Exception as e:
-			msgLog="Updating mirror. Error: %s"%str(e)
-			self.log(msgLog)
-			return False
-
-	#def lliurexMirrorIsRunning		
-
-	def getPercentageLliurexMirror(self):
-
-		try:
-			percentageMirror=self.llxUpCore.getPercentageLliurexMirror()
-			if percentageMirror != None:
-				return percentageMirror
-			else:
-				return 0	
-		
-		except Exception as e:
-			return 0 	
-
-	#def getPercentageLliurexMirror
-
 	def getLliurexVersionLocal(self):
 		
+		defaultVersion = {
+			"installed": None,
+			"candidate": None,
+			"updataSouce": None
+		}
+		
 		try:
-			self.lliurexVersionLocal=self.llxUpCore.getLliurexVersionLocal()
-			msgLog="Get LliurexVersion installed: %s"%str(self.lliurexVersionLocal["installed"])
-			self.log(msgLog)
-			msgLog="Get LliurexVersion candidate from local repository: %s"%str(self.lliurexVersionLocal["candidate"])
-			self.log(msgLog)
-			msgLog="Get Update source: %s"%self.lliurexVersionLocal["updateSource"]
-			self.log(msgLog)
+			
+			self.lliurexVersionLocal = self.llxUpCore.getLliurexVersionLocal()
+
+			logLines = [
+				f"Get LliurexVersion installed: {self.lliurexVersionLocal.get("installed")}",
+				f"Get LliurexVersion candidate from local repository: {self.lliurexVersionLocal.get("candidate")}",
+				f"Get Update source:{self.lliurexVersionLocal.get("updateSource")}"
+			]
+
+			self.log("\n".join(logLines))
 
 		except Exception as e:
-			msgLog="Get LliurexVersion from local repository. Error: %s"%str(e)
-			self.log(msgLog)
-			self.lliurexVersionLocal={"installed":None,"candidate":None,"updateSource":None}
+			self.log(f"Get LliurexVersion from local repository. Error: {e}")
+			self.lliurexVersionLocal = defaultVersion
 
 		return self.lliurexVersionLocal
 
@@ -416,223 +340,235 @@ class LliurexUpConnect():
 	
 	def getLliurexVersionNet(self):
 		
+		self.lliurexVersionNet = None
 		try:
-			self.lliurexVersionNet=self.llxUpCore.getLliurexVersionLliurexNet()["candidate"]
-			msgLog="Get LliurexVersion candidate from lliurex.gva.es: %s"%str(self.lliurexVersionNet)
-			self.log(msgLog)
-			
+			self.lliurexVersionNet = self.llxUpCore.getLliurexVersionLliurexNet().get("candidate")
+			self.log(f"Get LliurexVersion candidate from lliurex.gva.es: {self.lliurexVersionNet}")
 		except Exception as e:
-			msgLog="Get LliurexVersion from lliurex.gva.es. Error: %s"%str(e)
-			self.log(msgLog)
-			self.lliurexVersionNet=None
+			self.log(f"Get LliurexVersion from lliurex.gva.es. Error: {e}")
 
 		return self.lliurexVersionNet	
 
 	#def getLliurexVersionNet
 	
-	def installInitialFlavour(self,flavourToInstall):
+	def installInitialFlavour(self, flavourToInstall):
 
 		try:
-			isFlavourInstalled=self.llxUpCore.installInitialFlavour(flavourToInstall)
-			returncode=isFlavourInstalled['returncode']
-			error=isFlavourInstalled['stderrs']
-			msgLog="Install initial metapackage: %s: Returncode: %s Error: %"%(str(flavourToInstall),str(returncode),str(error))
-			self.log(msgLog)
-			return [returncode,error]
+			isFlavourInstalled = self.llxUpCore.installInitialFlavour(flavourToInstall)
+			returncode = isFlavourInstalled.get('returncode')
+			status = True if returncode == 0 else False
+			error = isFlavourInstalled.get('stderrs')
+			self.log(f"Install initial metapackage: {flavourToInstall}: Returncode: {returncode} Error: {error}")
+			return {"status": status, "data": error}
 		except Exception as e:
-			print(str(e))
-			msgLog="Install initial metapackage: %s. Error: %s"%(str(flavourToInstall),str(e))
-			self.log(msgLog)
-			return 1
+			self.log(f"Install initial metapackage: {flavourToInstall}. Error: {e}")
+			return {"status": False, "data": str(e)}
 			
 	#def installInitialFlavour
 
 	def getPackagesToUpdate(self):
 		
-		packagesParsed=[]
-		self.totalSize=0
-		
 		try:
-			packages=self.llxUpCore.getPackagesToUpdate()
-			if len(packages)>0:
-				for item in packages:
-					version=packages[item]['candidate']
-					size=self.getSizePackagesToUpdate(item)
-					install=str(packages[item]['install'])
-					architecture=str(packages[item]['architecture'])
-					packagesParsed.append("%s;%s;%s;%s;%s"%(item,version,size,install,architecture))
-					
-			msgLog="Get packages to update. Number of packages: %s"%str(len(packages)) 
-			self.log(msgLog)		
+			packageInfo = self.llxUpCore.getPackagesToUpdate()
+			packages = packageInfo.get("packagesToUpdate")
+			totalSize = packageInfo.get("totalSize")
+
+			self.log(f"Get packages to update. Number of packages: {len(packages)}") 
 
 		except Exception as e:
-			msgLog="Get packages to update. Error: %s"%str(e)
-			self.log(msgLog)
+			self.log(f"Get packages to update. Error: {e}")
 
-		self.totalSize=self.convertSize(self.totalSize)
-		self.getPackagesData(packagesParsed)	
+		self.getPackagesData(packages)	
 
-		return packagesParsed,self.totalSize
+		return {"totalPackages": len(packages), "upgradeSize": totalSize}
 			
 	#def getPackagesToUpdate
 	
-	def getSizePackagesToUpdate(self,pkg):
-		
-		size=0
-		try:
-			command='apt-cache show ' + pkg + ' |grep "^Size:" |cut -d " " -f2 |head -1'
-			p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
-			size=p.stdout.readline()
-			if type(size) is bytes:
-				size=size.decode()
-			size=size.strip()
-			self.totalSize=(self.totalSize)+int(size)
-			size=self.convertSize(size)
-			return size
-
-		except Exception as e:
-			print(e)
-			return self.convertSize(size) 
-
-	#def getSizePackagesToUpdate
-
-	def convertSize(self,sizeBytes):
-
-		sizeBytes=float(sizeBytes)
-		if (sizeBytes == 0):
-			return '0B'
-
-		sizeName = ("B", "KB", "MB", "GB")
-		i = int(math.floor(math.log(sizeBytes, 1024)))
-		p = math.pow(1024, i)
-		s = round(sizeBytes/p,)
-		s=int(s)
-		return '%s %s' % (s, sizeName[i])
-
-	#def convertSize
-
 	def getPackagesData(self,packages):
 
-		self.newPackages=0
-		self.packagesData=[]
-		self.numberPackagesDownloaded=[]
-		self.numberPackagesUnpacked=[]
-		self.numberPackagesInstalled=[]
-		self.initialNumberPackages=[]
+		self.newPackages = 0
+		self.packagesData = []
+		self.pendingDownloads = set()
+		self.pendingUnpacked = set()
+		self.pendingInstalled = set()
+		self.initialNumberPackages = set()
+		self.totalPackagesCount = len(packages)
 
-		for item in packages:
-			tmp={}
-			tmpItem=item.split(";")
-			if len(tmpItem)>1:
-				if tmpItem[3]==str(None):
-					self.newPackages=int(self.newPackages)+1
-				tmp["pkgId"]=tmpItem[0]
-				tmp["pkgVersion"]=tmpItem[1]
-				tmp["pkgSize"]=tmpItem[2]
-				tmp["pkgIcon"]=self._parseDesktop(tmpItem[3],tmpItem[0])
-				tmp["pkgStatus"]=0
-				tmp["showStatus"]=False
-				self.packagesData.append(tmp)
-				self.numberPackagesDownloaded.append(tmpItem[0]+"_"+tmpItem[1]+"_"+tmpItem[4]+".deb")
-				self.numberPackagesUnpacked.append(tmpItem[0]+"_"+tmpItem[1])
-				self.numberPackagesInstalled.append(tmpItem[0]+"_"+tmpItem[1])
-				self.initialNumberPackages.append(tmpItem[0]+"_"+tmpItem[1])
+		for pkgId,info in packages.items():
+			pkgVersion = info.get("candidate","")
+			pkgSize = info.get("size", "0 B")
+			installStatus = info.get("install")
+			arch = info.get("architecture","")
+			
+			if installStatus is None or str(installStatus) == "None":
+				self.newPackages += 1
+
+			pkgInfo = {
+				"pkgId": pkgId,
+				"pkgVersion": pkgVersion,
+				"pkgSize": pkgSize,
+				"pkgIcon": self._parseDesktop(installStatus,pkgId),
+				"pkgStatus": 0,
+				"showStatus": False
+			}
+
+			self.packagesData.append(pkgInfo)
+			pkgFullId = f"{pkgId}_{pkgVersion}"
+			self.pendingDownloads.add(f"{pkgFullId}_{arch}.deb".replace(":","%3a"))
+			self.pendingUnpacked.add(pkgFullId)
+			self.pendingInstalled.add(pkgFullId)
+			self.initialNumberPackages.add(pkgFullId)
 
 	#def getPackagesData
 
-	def _parseDesktop(self,installed,name):
+	def _parseDesktop(self, installed ,name):
 
-		installedIcon=False
-		iconWithPath=False
-		desktopFile=os.path.join(self.desktopsPath,name+".desktop")
+		defaultPkgIcon = self.standardIconPath / "package.png"
+
+		if installed is None or str(installed) == "None":
+			newPkgIcon = self.standardIconPath / "new_package.png"
+			return str(newPkgIcon if newPkgIcon.exists() else defaultPkgIcon)
+
+
+		desktopFile=self.desktopsPath / f"{name}.desktop"
+
+		if not desktopFile.is_file():
+			return str(defaultPkgIcon)
 
 		try:
-			if str(installed)=='None':
-				icon=os.path.join(self.standardIconPath,"new_package.png")
-			else:	
-				config = configparser.ConfigParser()
-				config.optionxform=str
-				config.read(desktopFile)
-				
-				if config.has_section("Desktop Entry") and config.has_option("Desktop Entry","Icon") and config.get("Desktop Entry","Type").lower()!="zomando":
-					icon=config.get("Desktop Entry","Icon")
-					installedIcon=True
-					if len(icon.split("/"))>1:
-						iconWithPath=True
-					iconExtension=os.path.splitext(icon)[1]
-					if iconExtension!="":
-						if iconExtension==".xpm":
-							icon=os.path.join(self.standardIconPath,"package.png")
-							installedIcon=False
-						elif iconExtension==".png":
-							if not iconWithPath:
-								icon=os.path.join(self.systemIconPath,icon)
-						elif iconExtension==".svg":
-							if not iconWithPath:
-								icon=os.path.join(self.systemScalableIconPath,icon)
-					else:
-						if not iconWithPath:
-							icon=os.path.join(self.systemIconPath,icon+".png")	
-				else:
-					icon=os.path.join(self.standardIconPath,"package.png")
+			config = configparser.ConfigParser()
+			config.optionxform = str
+			config.read(desktopFile,encoding="utf-8")
+
+			if not config.has_section("Desktop Entry"):
+				return str(defaultPkgIcon)
+
+			entryType = config.get("Desktop Entry","Type",fallback="").lower()
+			rawIcon = config.get("Desktop Entry","Icon",fallback="").strip()
+
+			if not rawIcon or entryType == "zomando":
+				return str(defaultPkgIcon)
+
+			iconPath = Path(rawIcon)
+
+			if len(iconPath.parts) > 1 or iconPath.is_absolute():
+				return str(iconPath if iconPath.exists() else defaultPkgIcon)
+
+			iconExt = iconPath.suffix.lower()
+			systemIconDir = self.systemIconPath
+			scalablaIconDir = self.systemScalableIconPath
+
+			if iconExt ==".xpm":
+				return str(defaultPkgIcon)
+			elif iconExt == ".png":
+				candidate == systemIconDir / iconPath.name
+			elif iconExt == ".svg":
+				candidate = scalablaIconDir / iconPath.name
+			elif iconExt == "":
+				pngCandidate = systemIconDir / f"{iconPath.name}.png"
+				svgCandidate = scalablaIconDir / f"{iconPath.name}.svg"
+				candidate = pngCandidate  if pngCandidate.exists() else svgCandidate
+			else:
+				candidate = systemIconDir / iconPath.name
+
+			return str(candidate if candidate.exists() else defaultPkgIcon)
 				
 		except Exception as e:
-			icon=os.path.join(self.standardIconPath,"package.png")
-
-		if os.path.exists(icon):
-			return icon
-		else:
-			return os.path.join(self.standardIconPath,"package.png")
+			return str(defaultPkgIcon)
 
 	#def parseDesktop
 
 	def checkIncorrectFlavours(self):
 
-		incorrectFlavours=self.llxUpCore.checkIncorrectFlavours()
+		incorrectFlavours = self.llxUpCore.checkIncorrectFlavours()
 
-		if incorrectFlavours['status']:
-			msgLog="Checking incorrect metapackages. Others metapackages detected: %s. Detected flavours: %s"%(str(incorrectFlavours['status']),str(incorrectFlavours['data']))
-			self.log(msgLog)
+		if incorrectFlavours.get('status'):
+			self.log(f"Checking incorrect metapackages. Others metapackages detected: {incorrectFlavours.get('status')}. Detected flavours: {incorrectFlavours.get('data')}")
 		else:
-			msgLog="Checking incorrect metapackages. Others metapackages not detected"
-			self.log(msgLog)
+			self.log("Checking incorrect metapackages. Others metapackages not detected")
 
 		return incorrectFlavours	
 
 	#def checkIncorrectFlavours	
 
-	def getPackageChangelog(self,package):
+	def cancelChangelog(self):
 
-		changelogFile=os.path.join(self.llxUpCore.changelogsPath,package)
-		changelog="Changelog not found"
+		with self._procLock:
+			proc = self.changelogProc
+			self.changelogProc = None
 
-		if not os.path.exists(changelogFile):
-			cmd='LANG=C LANGUAGE=en apt-get changelog %s > %s'%(package,changelogFile)
-			p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-			poutput,perror=p.communicate()
+		if proc and proc.poll() is None: 
+			try:
+				proc.terminate()
+				proc.wait(timeout=1)
+			except subprocess.TimeoutExpired:
+				proc.kill()
+			except Exception:
+				pass
 
-			if len(perror)>0:
+	#def cancelChangelog
+
+	def getPackageChangelog(self, package):
+
+		changelogFile = self.llxUpCore.changelogsPath / package
+		changelog = "Changelog not found"
+
+		if not changelogFile.is_file():
+			customEnv = os.environ.copy()
+			customEnv["LANG"] = "C"
+			customEnv["LANGUAGE"] = "en"
+
+			try:
+				proc = subprocess.Popen(
+					["apt-get","changelog", package],
+					env=customEnv,
+					stdout=subprocess.PIPE,
+					stderr=subprocess.PIPE,
+					text=True,
+					errors="replace",
+				)
+
+				with self._procLock:
+					self.changelogProc = proc
+
+				pout, perr = proc.communicate()
+				returncode = proc.returncode
+				
+				with self._procLock:
+					if self.changelogProc is proc:
+						self.changelogProc = None
+
+
+				if returncode != 0 or not pout.strip():
+					return changelog
+
+				cleanLines = [
+					line for line in pout.splitlines()
+					if not line.startswith("Get:")
+				]
+
+				changelog = "\n".join(cleanLines).replace("\n","\n")
+				changelogFile.parent.mkdir(parents=True,exist_ok=True)
+				changelogFile.write_text(changelog,encoding="utf-8") 
+
 				return changelog
-			
-		try:
-			cmd="sed -i '/Get:1 http/d' %s"%str(changelogFile)
-			os.system(cmd)
-			f=open(changelogFile,"r")
-			tmpChangelog=f.readlines()
-			f.close()
-			changelog="".join(str(x) for x in tmpChangelog)
-			changelog=changelog.replace("\n ","\n")
-								
-		except Exception as e:
-			return changelog
 
-		return changelog	
+			except Exception as e:
+				with self._procLock:
+					self.changelogProc = None
+				return changelog
+
+		try:
+			ret = changelogFile.read_text(encoding="utf-8",errors="replace")
+			return ret
+		except Exception:
+			return changelog
 
 	#def getPackageChangelog
 
 	def manageSettingsOptions(self):
 
-		showSettings=True
+		showSettings = True
 		
 		return showSettings
 
@@ -640,139 +576,106 @@ class LliurexUpConnect():
 
 	def getSystrayStatus(self):
 
-		if os.path.exists(self.disableSystrayToken):
-			self.isSystrayEnabled=False
+		if self.disableSystrayToken.exists():
+			self.isSystrayEnabled = False
 		else:
-			self.isSystrayEnabled=True
+			self.isSystrayEnabled = True
 
-		self.currentConfig[0]=self.isSystrayEnabled
+		self.currentConfig["systrayEnabled"] = self.isSystrayEnabled
 
 	#de isSystrayEnabled
 
-	def manageSystray(self,enable):
+	def manageSystray(self, enable):
 
 		try:
 			if enable:
-				if os.path.exists(self.disableSystrayToken):
-					os.remove(self.disableSystrayToken)
+				self.disableSystrayToken.unlink(missing_ok=True)
 			else:
-				if not os.path.exists(self.disableSystrayToken):
-					if not os.path.exists(self.disableSystrayPath):
-						os.mkdir(self.disableSystrayPath)
-				
-					f=open(self.disableSystrayToken,'w')
-					f.close()
+				self.disableSystrayPath.mkdir(parents=True,exist_ok=True)
+				self.disableSystrayToken.touch(exist_ok=True)
+	
 			return True
-		except:
+		except OSError as e:
 			return False
 
 	#def manageSystray
 
 	def preActionsScript(self):
 
-		self.preActions=self.llxUpCore.preActionsScript()
-		self.preActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s ;touch %s\n'%(self.preActions,self.preactionsToken)
-		msgLog="Exec Pre-Actions"
-		self.log(msgLog)
-		return self.preActions
+		preActionsCommand = self.llxUpCore.preActionsScript()
+		preActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {preActionsCommand} ;touch {self.preactionsToken}\n'
+		self.log("Exec Pre-Actions")
+
+		return preActionsCommand
 
 	#def preActionsScript	
 
 	def distUpgradeProcess(self):
 		
-		self.distupgrade=self.llxUpCore.distUpgradeProcess()	
-		self.distupgrade='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s ;touch %s\n'%(self.distupgrade,self.upgradeToken)
-		msgLog="Exec Dist-uggrade"
-		self.log(msgLog)
-		return self.distupgrade
+		distupgradeCommand = self.llxUpCore.distUpgradeProcess()	
+		distupgradeCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {distupgradeCommand} ;touch {self.upgradeToken}\n'
+		self.log("Exec Dist-uggrade")
+
+		return distupgradeCommand
 
 	#def distUpgradeProcess
 	
 	def checkErrorDistUpgrade(self):
 
-		error=False
-		errorDetails=""
 		try:
-			errorDistUpgrade=self.llxUpCore.checkErrorDistUpgrade()
-			errorDetails=str(errorDistUpgrade[1])
-			
-			if errorDistUpgrade[0] or self.errorCheckFlavour:
-				error=True
-				msgLog="Dist-upgrade process ending with errors. %s"%errorDetails
-				self.log(msgLog)
+			checkDistUpgrade = self.llxUpCore.checkErrorDistUpgrade()
+			hasError = checkDistUpgrade.get("status")
+			errorDetails = checkDistUpgrade.get("data")
+
+			if hasError or self.errorCheckFlavour:
+				error = True
+				self.log(f"Dist-upgrade process ending with errors. {errorDetails}")
 			else:			
-				msgLog="Dist-upgrade process ending OK"
-				self.log(msgLog)
+				self.log("Dist-upgrade process ending OK")
+				return False
 
 		except Exception as e:
-			print(e)
-			msgLog="Error checking distupgrade. Error: %s"%str(e)
-			self.log(msgLog)
-			error=True
-
-		return error	
-
+			self.log(f"Error checking distupgrade. Error: {e}")
+			return True
+	
 	#def checkErrorDistUpgrade
 	
-	def checkInstalledStatus(self):
-
-		command='dpkg -l |grep "^i[i]"'
-		self.packagesInstalled=[]
-		try:
-			p = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
-			for line in iter(p.stdout.readline,b""):
-				if type(line) is bytes:
-					line=line.decode()
-
-				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
-				self.packagesInstalled.append(tmp)
-
-		except Exception as e:
-			print(str(e))
-			pass
-
-
-	#def checkInstalledStatus						
-
 	def checkFinalFlavour(self):
 
-		self.errorCheckFlavour=False
-		flavourToInstall=None
+		self.errorCheckFlavour = False
+		flavourToInstall = None
 		
 		self.checkFinalN4dStatus()
 
 		try:
-			flavourToInstall=self.llxUpCore.checkFlavour(True)
-			msgLog="Final check metapackage. Metapackage to install: %s"%str(flavourToInstall)
-			self.log(msgLog)
+			flavourToInstall = self.llxUpCore.checkFlavour(True)
+			self.log(f"Final check metapackage. Metapackage to install: {flavourToInstall}")
 
 		except Exception as e:
-			self.errorCheckFlavour=True
-			msgLog="Final check metapackage. Error: %s"%str(e)
-			self.log(msgLog)
+			self.errorCheckFlavour = True
+			self.log(f"Final check metapackage. Error: {e}")
 
 		return flavourToInstall	
 	
 	#def checkFinalFlavour
 	
-	def installFinalFlavour(self,flavourToInstall):
+	def installFinalFlavour(self, flavourToInstall):
 
-		self.command=self.llxUpCore.installFinalFlavour(flavourToInstall)
-		self.command='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s );touch %s\n'%(self.command,self.errorFinalMetapackageToken,self.installflavourToken)
-		msgLog="Install final metapackage"
-		self.log(msgLog)
-		return self.command
+		installFlavourCommand = self.llxUpCore.installFinalFlavour(flavourToInstall)
+		installFlavourCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {installFlavourCommand} 2> >(tee {self.errorFinalMetapackageToken} );touch {self.installflavourToken}\n'
+		self.log("Install final metapackage")
+
+		return installFlavourCommand
 
 	#def installFinalFlavour
 
 	def postActionsScript(self):
 
-		self.postActions=self.llxUpCore.postActionsScript()
-		self.postActions='DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high %s 2> >(tee %s); touch %s\n'%(self.postActions,self.errorPostactionToken,self.postactionsToken)
+		postActionsCommand = self.llxUpCore.postActionsScript()
+		postActionsCommand = f'DEBIAN_FRONTEND=kde DEBIAN_PRIORITY=high {postActionsCommand} 2> >(tee {self.errorPostactionToken} ); touch {self.postactionsToken}\n'
+		self.log("Exec Post-Actions")
 
-		msgLog="Exec Post-Actions"
-		self.log(msgLog)
-		return self.postActions
+		return postActionsCommand
 
 	#def postActionsScript
 
@@ -781,29 +684,26 @@ class LliurexUpConnect():
 		self.llxUpCore.checkN4dStatus()
 
 		if not self.llxUpCore.n4dStatus:
-			msgLog="N4d is not working"
-
-			self.log(msgLog)
+			self.log("N4d is not working")
 
 	#def checkFinalN4dStatus
 
-	def updatePackagesData(self,finalUpdate=False):
+	def updatePackagesData(self, finalUpdate = False):
 
 		if finalUpdate:
-			self.checkInstalledStatus()
+			_ = self._getDpkgState()
 
 		for item in self.packagesData:
-			pkgName=item["pkgId"]
-			pkgVersion=item["pkgVersion"]
-			tmpName=pkgName+"_"+pkgVersion
-			if finalUpdate:
-				if tmpName not in self.packagesInstalled:
-					item["pkgStatus"]=-1
+			if item.get("showStatus") and not finalUpdate:
+				continue
 
-				item["showStatus"]=True
-			else:
-				if tmpName in self.packagesInstalled:
-					item["showStatus"]=True
+			tmpName = f"{item.get("pkgId")}_{item.get("pkgVersion")}"
+
+			if tmpName in self.packagesInstalled:
+				item["showStatus"] = True
+			elif finalUpdate:
+				item["pkgStatus"] = 1
+				item["showStatus"] = True
 
 	#def updatePackagesData		
 
@@ -811,12 +711,9 @@ class LliurexUpConnect():
 		
 		try:
 			self.llxUpCore.cleanEnvironment()
-			msgLog="Clean environment: OK"
-			self.log(msgLog)
-
+			self.log("Clean environment: OK")
 		except Exception as e:
-			msgLog="Clean environment. Error: %s"%str(e)
-			self.log(msgLog)				
+			self.log(f"Clean environment. Error: {e}")
 
 	#def cleanEnvironment
 
@@ -824,17 +721,16 @@ class LliurexUpConnect():
 
 		try:
 			self.llxUpCore.cleanLliurexUpLock()
-		
 		except Exception as e:
 			print(e)
 	
 	#def cleanLliurexUpLock		
 
-	def searchMeta(self,meta):
+	def searchMeta(self, meta):
 		
-		match=False
+		match = False
 		try:
-			match=self.llxUpCore.search_meta(meta)
+			match = self.llxUpCore.search_meta(meta)
 			return match
 		except Exception as e:
 			return match
@@ -843,10 +739,12 @@ class LliurexUpConnect():
 
 	def log(self,msg):
 		
-		logFile="/var/log/lliurex-up.log"
-		f=open(logFile,"a+")
-		f.write(msg + '\n')
-		f.close()
+		logFile = Path("/var/log/lliurex-up.log")
+		
+		logFile.parent.mkdir(parents=True,exist_ok=True)
+
+		with logFile.open("a",encoding="utf-8") as fd:
+			fd.write(f"{msg}\n")
 
 	#def log
 
@@ -858,251 +756,140 @@ class LliurexUpConnect():
 
 	def checkProgressDownload(self):
 
-		for i in range(len(self.numberPackagesDownloaded)-1,-1,-1):
-			if os.path.exists(os.path.join(self.aptCachePath,self.numberPackagesDownloaded[i].replace(":","%3a"))):
-				self.numberPackagesDownloaded.pop(i)
+		if self.totalPackagesCount == 0:
+			self.progressDownload = 0
+			self.progressDownloadPercentage = 1.0
 
-		self.progressDownload=len(self.initialNumberPackages)-len(self.numberPackagesDownloaded)
-		self.progressDownloadPercentage=round(self.progressDownload/len(self.initialNumberPackages),2)
+		self.pendingDownloads = {
+			pkg for pkg in self.pendingDownloads
+			if not (self.aptCachePath / pkg).exists()
+		}
+
+		self.progressDownload = self.totalPackagesCount - len(self.pendingDownloads)
+		self.progressDownloadPercentage = round(self.progressDownload / self.totalPackagesCount,2)
 
 	#def checkProgressDownload
 
+	def _getDpkgState(self):
+
+		unpackedOrMore = set()
+		self.packagesInstalled = set()
+
+		try:
+			pkgNames = [p.get("pkgId") for p in self.packagesData]
+
+			if not pkgNames:
+				return unpackedOrMore
+
+			result = subprocess.run(
+				["dpkg-query", "-W", "-f=${db:Status-Abbrev}\t${Package}\t${Version}\n"] + pkgNames,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE,
+				text=True,
+				errors="replace",
+				check=False
+			)
+
+			for line in result.stdout.splitlines():
+				parts = line.split("\t")
+				if len(parts) != 3:
+					continue
+
+				status = parts[0].strip()
+				pkgName = parts[1].split(":")[0]
+				pkgVersion = parts[2].strip()
+				pkgFullId = f"{pkgName}_{pkgVersion}"
+
+				if status == "ii":
+					self.packagesInstalled.add(pkgFullId)
+					unpackedOrMore.add(pkgFullId)
+				elif len(status) >=2 and status[1] in ("U","F","H"):
+					unpackedOrMore.add(pkgFullId)
+
+		except Exception as e:
+			self.log(f"Error checkgin pkg status: {e}")
+
+		return unpackedOrMore
+
+	#def _getDpkgState
+
 	def checkProgressUnpacked(self):
 
-		checkInstalledPkg=False
-		tmpPackagesUnpacked=self.checkUnpackedStatus()
+		if self.totalPackagesCount == 0:
+			return
 
-		if self.progressUnpacked>=len(self.numberPackagesUnpacked):
-			self.checkProgressInstallation()
-			checkInstalledPkg=True
+		unpackedOrMore = self._getDpkgState()
+
+		self.pendingUnpacked -= unpackedOrMore
+		self.pendingInstalled -= self.packagesInstalled
+
+		self.progressUnpacked = self.totalPackagesCount - len(self.pendingUnpacked)
+		self.progressUnpackedPercentage = round(self.progressUnpacked / self.totalPackagesCount,2)
+
+		self.progressInstallation = self.totalPackagesCount - len(self.pendingInstalled)
+		self.progressInstallationPercentage = round(self.progressInstallation / self.totalPackagesCount,2)
+
 		
-		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
-			if self.numberPackagesUnpacked[i] in tmpPackagesUnpacked:
-				self.numberPackagesUnpacked.pop(i)
-			else:
-				if checkInstalledPkg:
-					if self.numberPackagesUnpacked[i] in self.packagesInstalled:
-						self.numberPackagesUnpacked.pop(i)
-
-		if checkInstalledPkg and len(self.numberPackagesUnpacked)<10:
-			if self.progressInstallation > len(self.numberPackagesUnpacked):
-				self.numberPackagesUnpacked=[]
-
-		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
-		self.progressUnpackedPercentage=round(self.progressUnpacked/len(self.initialNumberPackages),2)
-
 	#def checkProgressUnpacked
 
 	def checkProgressInstallation(self):
 
-		self.checkInstalledStatus()
-		for i in range(len(self.numberPackagesInstalled)-1,-1,-1):
-			if self.numberPackagesInstalled[i] in self.packagesInstalled:
-				self.numberPackagesInstalled.pop(i)
+		if self.totalPackagesCount == 0:
+			return
 
-		self.progressInstallation=len(self.initialNumberPackages)-len(self.numberPackagesInstalled)
-		self.progressInstallationPercentage=round(self.progressInstallation/len(self.initialNumberPackages),2)
+		_ = self._getDpkgState()
+
+		self.pendingInstalled -= self.packagesInstalled
+
+		self.progressInstallation = self.totalPackagesCount - len(self.pendingInstalled)
+		self.progressInstallationPercentage = round(self.progressInstallation / self.totalPackagesCount,2)
 
 	#def checkProgressInstallation
-	
-	def checkUnpackedStatus(self):
-		
-		cmd="dpkg -l | awk '/^.U/'"
-		tmpPackages=[]
-
-		try:
-			p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-			for line in iter(p.stdout.readline,b""):
-				if type(line) is bytes:
-					line=line.decode()
-
-				tmp=str(line.strip().split()[1].split(":")[0])+"_"+str(line.strip().split()[2])
-				tmpPackages.append(tmp)
-
-		except Exception as e:
-			print(str(e))
-			pass
-
-		return tmpPackages
-	
-	#def checkUnpackedStatus
-
-	def getAutoUpgradeInfo(self):
-
-		self.isAutoUpgradeAvailable=self.llxUpCore.isAutoUpgradeAvailable()
-			
-		if self.isAutoUpgradeAvailable:
-			self.llxUpCore.getAutoUpgradeConfig()
-			self.isAutoUpgradeEnabled=self.llxUpCore.isAutoUpgradeEnabled()
-			self.currentConfig[1]=self.isAutoUpgradeEnabled
-				
-			weeksOfPause=self.llxUpCore.weeksOfPause
-			self.dateToUpdate=self.llxUpCore.dateToUpdate
-			extensionPause=self.llxUpCore.extensionPause
-			self.weeksOfPause=0
-			self.extensionWeekPause=0
-
-			if weeksOfPause>0:
-				self.canPauseUpdate=False
-				self.isWeekPauseActive=True
-				self.canEditWeekPause=False
-											
-				for i in range(len(self.weeksOfPauseCombo)):
-					if self.weeksOfPauseCombo[i]["value"]==weeksOfPause:
-						self.weeksOfPause=i
-						break;
-						
-				if weeksOfPause<5:
-					self.canExtendedPause=True
-				else:
-					self.canExtendedPause=False
-			else:
-				self.isWeekPauseActive=False
-				self.canPauseUpdate=True
-				self.canExtendedPause=False
-				self.canEditWeekPause=True
-
-			self._getExtensionPauseCombo(extensionPause)
-			self.currentConfig[2]=self.isWeekPauseActive
-			self.currentConfig[3]=self.weeksOfPause
-			self.currentConfig[4]=self.extensionWeekPause
-
-	#def getAutoUpgradeInfo
-
-	def _getExtensionPauseCombo(self,extensionPause):
-
-		self.extensionPauseCombo=[{"name":_("Select a value"),"value":0}]
-		for item in self.weeksOfPauseCombo:
-			if item["value"]>extensionPause:
-				pass
-			else:
-				self.extensionPauseCombo.append(item)
-
-	#def _getextensionPauseCombo
 
 	def applySettingsChanges(self,newConfig):
 		
 		'''
 			-0: Systray
-			-1: AutoUpdate
-			-2: Pause
-			-3: WeeksOfPause
-			-4: ExtensionPause
 		'''
-		CHANGES_APPLY_OK=0
-		SYSTRAY_ERROR=-1
-		AUTOUPGRADE_ERROR=-2
-		AUTOUPGRADE_PAUSE_ERROR=-3
-		CHANGES_APPLY_ERROR=-4
+		CHANGES_APPLY_OK = 0
+		SYSTRAY_ERROR = -1
 		
-		retSystray=True
-		retEnableService=True
-		retPauseUpdate=True
-		changesInSystray=False
-		changesInAutoUpdate=False
-		pauseNeedUpdate=False
-		error=False
+		changesInSystray = False
+		retSystray = True
 
-		if newConfig[0]!=self.currentConfig[0]:
-			retSystray=self.manageSystray(newConfig[0])
+		if newConfig.get("systrayEnabled") != self.currentConfig.get("systrayEnabled"):
+			retSystray = self.manageSystray(newConfig.get("systrayEnabled"))
 			if retSystray:
-				changesInSystray=True
-
-		if newConfig[1]!=self.currentConfig[1]:
-			retEnableService=self.manageAutoUpgrade(newConfig[1])
-			if retEnableService:
-				changesInAutoUpdate=True
-
-		if retEnableService:
-			if newConfig[2]!=self.currentConfig[2]:
-				pauseNeedUpdate=True
-			elif newConfig[3]!=self.currentConfig[3]:
-				pauseNeedUpdate=True
-			elif newConfig[4]!=self.currentConfig[4]:
-				pauseNeedUpdate=True
-
-		if pauseNeedUpdate:
-			retPauseUpdate=self.manageUpdatePause(newConfig[2],newConfig[3],newConfig[4])
-			if retPauseUpdate:
-				changesInAutoUpdate=True
+				changesInSystray = True
 
 		if changesInSystray:
 			self.getSystrayStatus()
-		
-		if changesInAutoUpdate:
-			self.getAutoUpgradeInfo()
-		
-		if retSystray and retEnableService and retPauseUpdate:
-			return [error,CHANGES_APPLY_OK]
+				
+		if retSystray:
+			return {"status": True, "code": CHANGES_APPLY_OK, "type": self.KIRIGAMI_MSG_OK}
 
-		elif not retSystray and retEnableService and retPauseUpdate:
-			error=True
-			return [error,SYSTRAY__ERROR]
-		elif retSystray and not retEnableService and retPauseUpdate:
-			error=True
-			return [error,AUTOUPGRADE_ERROR]
-		elif retSystray and retEnableService and not retPauseUpdate:
-			error=True
-			return [error,AUTOUPGRADE_PAUSE_ERROR]
 		else:
-			error=True
-			return [error,CHANGES_APPLY_ERROR]
-
+			return {"status": False,"code": SYSTRAY_ERROR, "type": self.KIRIGAMI_MSG_ERROR}		
+	
 	#def applySettingsChanges
-
-	def manageAutoUpgrade(self,enable):
-
-		return self.llxUpCore.manageAutoUpgrade(enable)
-
-	#def manageAutoUpgrade
-	
-	def manageUpdatePause(self,enablePause,weeksOfPause,extensionWeekPause=0):
-
-		if enablePause:
-			if not self.currentConfig[2]:
-				weeksOfPause=self.weeksOfPauseCombo[weeksOfPause]["value"]
-			else:
-				weeksOfPause=extensionWeekPause
-		else:
-			weeksOfPause=0
-
-		ret=self.llxUpCore.manageUpdatePause(enablePause,weeksOfPause)
-
-		return ret
-
-	#def manageAutoUpgradePause
-	
-
-	def isAutoUpgradeRun(self):
-
-		return self.llxUpCore.isAutoUpgradeRun()
-
-	#def isAutoUpgradeRun
-
-	def stopAutoUpgrade(self):
-
-		ret=self.llxUpCore.stopAutoUpgrade()
-
-	#def stopAutoUpgrade
 
 	def flatpakActionsScript(self):
 
-		self.flatpakActions=self.llxUpCore.flatpakActionsScript()
-		self.flatpakActions='%s ;touch %s;exit\n'%(self.flatpakActions,self.flatpakActionsToken)
+		self.flatpakActions = self.llxUpCore.flatpakActionsScript()
+		self.flatpakActions = f'{self.flatpakActions} ;touch {self.flatpakActionsToken};exit\n'
 
-		msgLog="Exec Update-Flatpak"
-		self.log(msgLog)
+		self.log("Exec Update-Flatpak")
+		
 		return self.flatpakActions
 
 	#def flatpakActionsScript
 	
 	def getFlapakUpdateInfo(self):
 		
-		flatPakUpdateInfo=[0,"0"]
+		flatPakUpdateInfo = {"totalFlatpak":0,"size":"0 B"}
 
-		flatPakUpdateInfo=self.llxUpCore.getFlatpakUpdateInfo()
-		msgLog="Flatpak update info: %s"%str(flatPakUpdateInfo)
-		self.log(msgLog)
+		flatPakUpdateInfo = self.llxUpCore.getFlatpakUpdateInfo()
+		self.log(f"Flatpak update info: {flatPakUpdateInfo}")
 		
 		return flatPakUpdateInfo
 	
@@ -1110,21 +897,21 @@ class LliurexUpConnect():
 
 	def _clearCache(self):
 		
-		clear=False
-		installedVersion=self._getPackageVersion()
+		clear = False
+		installedVersion = self._getPackageVersion()
 
-		versionFile="/root/.lliurex-up.conf"
-		cachePath="/root/.cache/lliurex-up"
+		versionFile = "/root/.lliurex-up.conf"
+		cachePath = "/root/.cache/lliurex-up"
 	
 		try:
 			if not os.path.exists(versionFile):
-				clear=True
+				clear = True
 			else:
 				with open(versionFile,'r') as fd:
-					fileVersion=fd.readline().strip()
+					fileVersion = fd.readline().strip()
 
-				if fileVersion!=installedVersion:
-					clear=True
+				if fileVersion != installedVersion:
+					clear = True
 
 			if clear:
 				with open(versionFile,'w') as fd:
@@ -1139,8 +926,8 @@ class LliurexUpConnect():
 
 	def _getPackageVersion(self):
 
-		packageVersionFile="/var/lib/lliurex-up/version"
-		pkgVersion=""
+		packageVersionFile = "/var/lib/lliurex-up/version"
+		pkgVersion = ""
 
 		if os.path.exists(packageVersionFile):
 			with open(packageVersionFile,'r') as fd:

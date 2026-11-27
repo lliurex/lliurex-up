@@ -14,202 +14,93 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Bridge(QObject):
 
+	versionInfoChanged = Signal()
+	packagesInfoChanged = Signal()
+	flatpakInfoChanged = Signal()
+
 	def __init__(self):
 
 		QObject.__init__(self)
-		self.core=Core.Core.get_core()
-		Bridge.llxUpConnect=self.core.llxUpConnect
-		self._currentVersion=""
-		self._availableVersion=""
-		self._candidateVersion=""
-		self._packagesToUpdate=0
-		self._newPackagesToUpdate=0
-		self._updateSize=""
-		self._updateSource=""
-		self._flatpakInfo=[0,"0"]
+		self.core = Core.Core.get_core()
+		self.llxUpConnect = self.core.llxUpConnect
+		self._versionInfo = {"currentVersion": None, "availableVersion": None, "candidateVersion": None}
+		self._packagesInfo = {"totalPackages": 0, "upgradeSize": "", "newPackages": "", "updateSource": ""}
+		self._flatpakInfo = {"totalFlatpak": 0, "size": ""}
 
 	#def __init__
 
-	def _getCurrentVersion(self):
+	@Property(dict, notify = versionInfoChanged)
+	def versionInfo(self):
 
-		return self._currentVersion
+		return self._versionInfo
 
-	#def _getCurrentVersion
+	#def versionInfo
 
-	def _setCurrentVersion(self,currentVersion):
+	@versionInfo.setter
+	def versionInfo(self, versionInfo):
 
-		if self._currentVersion!=currentVersion:
-			self._currentVersion=currentVersion
-			self.on_currentVersion.emit()
+		if self._versionInfo != versionInfo:
+			self._versionInfo = versionInfo
+			self.versionInfoChanged.emit()
 
-	#def _setCurrentVersion
+	#def versionInfo
 
-	def _getAvailableVersion(self):
+	@Property(dict, notify = packagesInfoChanged)		
+	def packagesInfo(self):
 
-		return self._availableVersion
+		return self._packagesInfo
 
-	#def _getAvailableVersion
+	#def packagesInfo
 
-	def _setAvailableVersion(self,availableVersion):
+	@packagesInfo.setter
+	def packagesInfo(self, packagesInfo):
 
-		if self._availableVersion!=availableVersion:
-			self._availableVersion=availableVersion
-			self.on_availableVersion.emit()
+		if self._packagesInfo != packagesInfo:
+			self._packagesInfo = packagesInfo
+			self.packagesInfoChanged.emit()
 
-	#def _setAvailableVersion
+	#def packagesInfo
 
-	def _getCandidateVersion(self):
-
-		return self._candidateVersion
-
-	#def _getCandidateVersion
-
-	def _setCandidateVersion(self,candidateVersion):
-
-		if self._candidateVersion!=candidateVersion:
-			self._candidateVersion=candidateVersion
-			self.on_candiateVersion.emit()
-
-	#def _setCandidateVersion
-
-	def _getPackagesToUpdate(self):
-
-		return self._packagesToUpdate
-
-	#def _getPackagesToUpdate
-
-	def _setPackagesToUpdate(self,packagesToUpdate):
-
-		if self._packagesToUpdate!=packagesToUpdate:
-			self._packagesToUpdate=packagesToUpdate
-			self.on_packagesToUpdate.emit()
-
-	#def _setPackagesToUpdate
-
-	def _getNewPackagesToUpdate(self):
-
-		return self._newPackagesToUpdate
-
-	#def _getNewPackagesToUpdate
-
-	def _setNewPackagesToUpdate(self,newPackagesToUpdate):
-
-		if self._newPackagesToUpdate!=newPackagesToUpdate:
-			self._newPackagesToUpdate=newPackagesToUpdate
-			self.on_newPackagesToUpdate.emit()
-
-	#def _setNewPackagesToUpdate
-
-	def _getUpdateSize(self):
-
-		return self._updateSize
-
-	#def _getUpdateSize
-
-	def _setUpdateSize(self,updateSize):
-
-		if self._updateSize!=updateSize:
-			self._updateSize=updateSize
-			self.on_updateSize.emit()
-
-	#def _setUpdateSize
-
-	def _getUpdateSource(self):
-
-		return self._updateSource
-
-	#def _getUpdateSource
-
-	def _setUpdateSource(self,updateSource):
-
-		if self._updateSource!=updateSource:
-			self._updateSource=updateSource
-			self.on_updateSource.emit()
-
-	#def _setUpdateSource
-	
-	def _getFlatpakInfo(self):
+	@Property(dict, notify = flatpakInfoChanged)
+	def flatpakInfo(self):
 		
 		return self._flatpakInfo
 		
-	#def _getFlatpakInfo
+	#def flatpakInfo
 	
-	def _setFlatpakInfo(self,flatpakInfo):
+	@flatpakInfo.setter
+	def flatpakInfo(self, flatpakInfo):
 		
-		if self._flatpakInfo!=flatpakInfo:
-			self._flatpakInfo=flatpakInfo
-			self.on_flatpakInfo.emit()
+		if self._flatpakInfo != flatpakInfo:
+			self._flatpakInfo = flatpakInfo
+			self.flatpakInfoChanged.emit()
 			
 	#def _setFlatpakInfo
 
 	def getUpdateInfo(self):
 
-		currentVersion=self.core.loadStack.getCurrentVersionT.currentVersion["installed"]
+		currentVersionInfo = self.core.loadStack.currentVersion
+
+		self.versionInfo = {
+			"currentVersion": currentVersionInfo.get("installed"),
+			"availableVersion":  self.core.loadStack.availableVersion,
+			"candidateVersion": currentVersionInfo.get("candidate")
+		}
+
+		updateSource = self.core.loadStack.currentVersion.get("updateSource")
+		packagesInfo = self.core.loadStack.packagesInfo
+
+		self.packagesInfo = {
+			"totalPackages": packagesInfo.get("totalPackages"),
+			"upgradeSize" : packagesInfo.get("upgradeSize"),
+			"newPackages": self.llxUpConnect.newPackages,
+			"updateSource" : currentVersionInfo.get("updateSource")
+		}
 		
-		if currentVersion==None:
-			self.currentVersion=""
-		else:
-			self.currentVersion=currentVersion
-		
-		availableVersion=self.core.loadStack.getAvailableVersionT.availableVersion
-		
-		if availableVersion==None:
-			if Bridge.llxUpConnect.connectionWithADI:
-				self.availableVersion=="Client"
-			else:
-				self.availableVersion=="Connection"
-		else:
-			self.availableVersion=availableVersion
-
-
-		candidateVersion=self.core.loadStack.getCurrentVersionT.currentVersion["candidate"]
-
-		if candidateVersion==None:
-			self.candidateVersion=""
-		else:
-			self.candidateVersion=candidateVersion
-
-		if self.core.mainStack.updateRequired:
-			self.packagesToUpdate=len(self.core.loadStack.gatherPackagesT.packages)
-			self.newPackagesToUpdate=Bridge.llxUpConnect.newPackages
-			self.updateSize=self.core.loadStack.gatherPackagesT.updateSize
-			self.flatpakInfo=self.core.loadStack.gatherPackagesT.flatpakInfo
-
-		updateSource=self.core.loadStack.getCurrentVersionT.currentVersion["updateSource"]
-
-		if updateSource==None:
-			self.updateSource=""
-		else:
-			self.updateSource=updateSource
+		self.flatpakInfo = self.core.loadStack.flatpakInfo
 
 	#def getUpdateInfo
 		
-
-	on_currentVersion=Signal()
-	currentVersion=Property(str,_getCurrentVersion,_setCurrentVersion,notify=on_currentVersion)
-	
-	on_availableVersion=Signal()
-	availableVersion=Property(str,_getAvailableVersion,_setAvailableVersion,notify=on_availableVersion)
-
-	on_candiateVersion=Signal()
-	candidateVersion=Property(str,_getCandidateVersion,_setCandidateVersion,notify=on_candiateVersion)
-
-	on_packagesToUpdate=Signal()
-	packagesToUpdate=Property(int,_getPackagesToUpdate,_setPackagesToUpdate,notify=on_packagesToUpdate)		
-
-	on_newPackagesToUpdate=Signal()
-	newPackagesToUpdate=Property(int,_getNewPackagesToUpdate,_setNewPackagesToUpdate,notify=on_newPackagesToUpdate)
-
-	on_updateSize=Signal()
-	updateSize=Property(str,_getUpdateSize,_setUpdateSize,notify=on_updateSize)
-
-	on_updateSource=Signal()
-	updateSource=Property(str,_getUpdateSource,_setUpdateSource,notify=on_updateSource)
-
-	on_flatpakInfo=Signal()
-	flatpakInfo=Property('QVariantList',_getFlatpakInfo,_setFlatpakInfo,notify=on_flatpakInfo)
-
-
 #class Bridge
 
 import Core

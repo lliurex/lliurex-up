@@ -1,34 +1,34 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QMLTermWidget 1.0
+import QMLTermWidget
 
-
-Rectangle{
+Rectangle {
     color:"transparent"
-    Text{ 
-        text:i18nd("lliurex-up","Update process")
-        font.family: "Quattrocento Sans Bold"
-        font.pointSize: 16
-    }
 
-    RowLayout{
-        id:terminalLayout
-        anchors.left:parent.left
-        width:parent.width-10
-        height:parent.height-25
-        
+    ColumnLayout {
+        id: mainContent
+        anchors.fill: parent
+        anchors.leftMargin: 5
+        anchors.bottomMargin: 15
+        spacing: 10
+
+        Text{ 
+            text: i18nd("lliurex-up","Update process")
+            font.pointSize: 16
+        }
+
         Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin:40
+
             QMLTermWidget {
                 id: terminal
                 anchors.fill: parent
                 font.family: "Monospace"
                 font.pointSize: 9
                 colorScheme: "cool-retro-term"
-                session: QMLTermSession{
+                session: QMLTermSession {
                     id: mainsession
                     initialWorkingDirectory: "$HOME"
                 }
@@ -36,7 +36,6 @@ Rectangle{
                     mainsession.startShellProgram();
                     mainsession.sendText('setterm -cursor off;stty -echo;PS1="";history -c;clear;\n');
                 }
-
             }
 
             QMLTermScrollbar {
@@ -49,14 +48,13 @@ Rectangle{
                     anchors.fill: parent
                 }
             }
-        
         }
     }
-    
-    function runCommand(command){
+
+    function runCommand(command) {
+
         mainsession.sendText('\n')
         mainsession.sendText(command)
 
-    } 
-
-} 
+    }
+}

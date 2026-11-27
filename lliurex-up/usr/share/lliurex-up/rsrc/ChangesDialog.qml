@@ -1,110 +1,86 @@
 import QtQuick      
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.plasma.components as PC
+import org.kde.kirigami as Kirigami
 
 
 Popup {
     id: pendingChangesDialog
-    property alias dialogVisible:pendingChangesDialog.visible
-    
+    property bool dialogVisible: false
+    visible: dialogVisible
+
     signal dialogApplyClicked
     signal discardDialogClicked
-    signal cancelDialogClicked
-
-    visible:dialogVisible
+    signal rejectDialogClicked
+    
     modal:true
     closePolicy:Popup.NoAutoClose
     anchors.centerIn:Overlay.overlay
-    background:Rectangle{
-        color:"#ebeced"
-        border.color:"#b8b9ba"
-        border.width:1
-        radius:5.0
+
+    background: Rectangle {
+        color: "#ebeced"
+        border.color: "#b8b9ba"
+        border.width: 1
+        radius: 5
     }
-  
+
     contentItem: Rectangle {
+        id:container
         color: "#ebeced"
         implicitWidth: 400
-        implicitHeight: 130
-        anchors.topMargin:5
-        anchors.leftMargin:5
+        implicitHeight: 140
 
-        Image{
-            id:dialogIcon
-            source:"/usr/share/icons/breeze/status/64/dialog-warning.svg"
+        RowLayout {
+            id: contentRow
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 15
 
-        }
-        
-        Text {
-            id:dialogText
-            text:i18nd("lliurex-up","There are pending changes to apply.\nDo you want apply the changes or discard them?")
-            font.family: "Quattrocento Sans Bold"
-            font.pointSize: 10
-            anchors.left:dialogIcon.right
-            anchors.verticalCenter:dialogIcon.verticalCenter
-            anchors.leftMargin:10
-        
-        }
-
-        PC.Button {
-            id:dialogApplyBtn
-            display:AbstractButton.TextBesideIcon
-            icon.name:"dialog-ok"
-            text: i18nd("lliurex-up","Apply")
-            focus:true
-            font.family: "Quattrocento Sans Bold"
-            font.pointSize: 10
-            anchors.bottom:parent.bottom
-            anchors.right:dialogDiscardBtn.left
-            anchors.rightMargin:10
-            anchors.bottomMargin:5
-            Keys.onReturnPressed: dialogApplyBtn.clicked()
-            Keys.onEnterPressed: dialogApplyBtn.clicked()
-            onClicked:{
-                mainStackBridge.managePendingChangesDialog("Apply")
-                dialogApplyClicked()
+            Kirigami.Icon {
+                id: iconInternal
+                source:"dialog-warning"
+                Layout.preferredWidth: Kirigami.Units.iconSizes.huge
+                Layout.preferredHeight: Kirigami.Units.iconSizes.huge
+            }
+            
+            Text {
+                id: dialogText
+                text: i18nd("lliurex-up","There are pending changes to apply. Do you want apply or discard the changes")
+                font.pointSize: 10
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                verticalAlignment: Text.AlignVCenter
+                color: "#31363b"
             }
         }
+        
+        RowLayout {
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.margins: 10
+            spacing: 10
 
-        PC.Button {
-            id:dialogDiscardBtn
-            display:AbstractButton.TextBesideIcon
-            icon.name:"delete"
-            text: i18nd("lliurex-up","Discard")
-            focus:true
-            font.family: "Quattrocento Sans Bold"
-            font.pointSize: 10
-            anchors.bottom:parent.bottom
-            anchors.right:dialogCancelBtn.left
-            anchors.rightMargin:10
-            anchors.bottomMargin:5
-            Keys.onReturnPressed: dialogDiscardBtn.clicked()
-            Keys.onEnterPressed: dialogDiscardBtn.clicked()
-            onClicked:{
-                mainStackBridge.managePendingChangesDialog("Discard")
-                discardDialogClicked()
+            Button {
+                id: dialogApplyBtn
+                text: i18nd("lliurex-up","Apply")
+                icon.name: "dialog-ok"
+                onClicked: dialogApplyClicked()
             }
-        }
 
-        PC.Button {
-            id:dialogCancelBtn
-            display:AbstractButton.TextBesideIcon
-            icon.name:"dialog-cancel"
-            text: i18nd("lliurex-up","Cancel")
-            focus:true
-            font.family: "Quattrocento Sans Bold"
-            font.pointSize: 10
-            anchors.bottom:parent.bottom
-            anchors.right:parent.right
-            anchors.rightMargin:5
-            anchors.bottomMargin:5
-            Keys.onReturnPressed: dialogCancelBtn.clicked()
-            Keys.onEnterPressed: dialogCancelBtn.clicked()
-            onClicked:{
-                cancelDialogClicked()
+            Button {
+                id: dialogDiscardBtn
+                text: i18nd("lliurex-up","Discard")
+                icon.name: "delete"
+                onClicked: discardDialogClicked()
+            }
+
+            Button {
+                id: dialogCancelBtn
+                text: i18nd("lliurex-up","Cancel")
+                icon.name: "dialog-cancel"
+                onClicked: rejectDialogClicked()
             }
         }
     }
-   
- }
+} 
