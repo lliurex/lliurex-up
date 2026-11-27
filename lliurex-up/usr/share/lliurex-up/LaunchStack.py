@@ -64,7 +64,7 @@ class Bridge(QObject):
 
 	#def __init__
 
-	@Property(bool,notify = isProgressBarVisibleChanged)
+	@Property(bool, notify = isProgressBarVisibleChanged)
 	def isProgressBarVisible(self):
 
 		return self._isProgressBarVisible
@@ -249,7 +249,8 @@ class Bridge(QObject):
 
 	#def launchUnlockProcess
 
-	def _unlockProcessRet(self,ret):
+	@Slot(int)
+	def _unlockProcessRet(self, ret):
 
 		self.closeGui = True
 		self.isProgressBarVisible = False
@@ -265,7 +266,7 @@ class Bridge(QObject):
 
 	#def _unlockProcessRet
 
-	@Slot(bool,result=bool)
+	@Slot(bool, result=bool)
 	def closed(self,state):
 		
 		return self.closeGui	

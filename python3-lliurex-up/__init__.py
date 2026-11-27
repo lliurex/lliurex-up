@@ -31,9 +31,9 @@ class LliurexUpCore(object):
 		self.versionReference = {"desktop","None"}
 		self.defaultVersion = "noble"
 		self.defaultUrltoCheck = "http://lliurex.gva.es/noble"
-		self.lockTokenPath=Path("/var/run/lliurexUp.lock")
+		self.lockTokenPath = Path("/var/run/lliurexUp.lock")
 		self.processPath = Path("/var/run/lliurex-up")
-		self.sourcesListPath= Path("/etc/apt")
+		self.sourcesListPath = Path("/etc/apt")
 		self.changelogsPath = self.processPath /'changelogs'
 		self.origsourcesfile = self.sourcesListPath / "sources.list"
 		self.sourcesListToUpdate = self.processPath / "lliurexup_sources.list"
@@ -66,7 +66,7 @@ class LliurexUpCore(object):
 		
 		self.checkN4dStatus()
 		
-		self.metapackageRef=[]
+		self.metapackageRef = []
 		self.previousFlavours = []
 
 		self.getTargetMetapackage()
@@ -488,11 +488,11 @@ class LliurexUpCore(object):
 					if 'None' not in self.metapackageRef:
 						targetMetapackage = list(set(targetMetapackage+self.metapackageRef))
 				else:
-					targetMetapackage=self.flavours
+					targetMetapackage = self.flavours
 					if 'None' not in self.previousFlavours:
-						targetMetapackage=list(set(targetMetapackage+self.previousFlavours))
+						targetMetapackage = list(set(targetMetapackage+self.previousFlavours))
 					if 'None' not in self.metapackageRef:	
-						targetMetapackage=list(set(targetMetapackage+self.metapackageRef))
+						targetMetapackage = list(set(targetMetapackage+self.metapackageRef))
 			else:
 				tmp = []
 
@@ -505,9 +505,9 @@ class LliurexUpCore(object):
 					if 'None' not in self.previousFlavours:
 						tmp = list(set(tmp+self.previousFlavours))
 					if 'None' not in self.metapackageRef:
-						tmp  =list(set(tmp+self.metapackageRef))
+						tmp = list(set(tmp+self.metapackageRef))
 				
-				targetMetapackage=list(set(tmp)-set(self.lastFlavours))
+				targetMetapackage = list(set(tmp)-set(self.lastFlavours))
 			
 			tmp_list = []
 
@@ -528,7 +528,7 @@ class LliurexUpCore(object):
 		"""
 		try:
 			with urllib.request.urlopen(self.defaultUrltoCheck,timeout=15) as res:
-				statusCode=res.getcode()
+				statusCode = res.getcode()
 				return {"status":True,"data":str(statusCode)}
 		except Exception as e:
 			return {"status":False,"data":str(e)}
@@ -696,14 +696,14 @@ class LliurexUpCore(object):
 			raise RuntimeError(f"Error executing getPackagesToUpdate: {result.stderr.strip()}")
 
 		for line in result.stdout.splitlines():
-			stripedLine=line.strip()
+			stripedLine = line.strip()
 			if not stripedLine.startswith("Inst"):
 				continue
 
 			match = aptInstPattern.match(stripedLine)
 
 			if match:
-				pkgName= match.group("name")
+				pkgName = match.group("name")
 				self.packageInfo[pkgName]={
 					"install": match.group("installed"),
 					"candidate": match.group("candidate"),
@@ -747,7 +747,7 @@ class LliurexUpCore(object):
 						pkgSize = int(line.split(":" ,1)[1].strip())
 						if self.packageInfo[currentPkg]["size"] == 0:
 							self.packageInfo[currentPkg]["size"] = self._convertSize(pkgSize)
-							totalSize +=pkgSize
+							totalSize += pkgSize
 
 					except ValueError:
 						pass
@@ -870,7 +870,7 @@ class LliurexUpCore(object):
 				if unconfiguredPkgs:
 					self.errorUpgradeToken.write_text("\n".join(unconfiguredPkgs) + "\n")
 					error = True
-					errorDetails=f"There are packages that have not been configured correctly. Details: {unconfiguredPkgs}"
+					errorDetails = f"There are packages that have not been configured correctly. Details: {unconfiguredPkgs}"
 						
 				else:
 					envVar = os.environ.copy()
@@ -897,7 +897,7 @@ class LliurexUpCore(object):
 
 					if len(pkgsNotInstalled) > 0:
 						error = True 
-						errorDetails=f"There are packages that have not been updated/installed. Details: {pkgsNotInstalled}"
+						errorDetails = f"There are packages that have not been updated/installed. Details: {pkgsNotInstalled}"
 			else:
 				error = True
 				errorDetails = f"Error when installing metapackage. Details: {lines}"					

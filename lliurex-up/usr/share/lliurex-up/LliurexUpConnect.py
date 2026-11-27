@@ -16,8 +16,6 @@ import psutil
 
 from pathlib import Path
 
-#from math import pi
-
 import lliurex.lliurexup as LliurexUpCore
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
