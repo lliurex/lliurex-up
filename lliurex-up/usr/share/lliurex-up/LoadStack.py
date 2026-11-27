@@ -485,7 +485,6 @@ class Bridge(QObject):
 
 		print("  [Lliurex-Up]: Reboot Lliurex-Up")
 		self.loadStep = 5
-		self.updateLliurexUpThread.wait()
 		self.waitForRestartTimer = QTimer(None)
 		self.waitForRestartTimer.timeout.connect(self._waitForRestartT)
 		self.progressValue = 0.0
