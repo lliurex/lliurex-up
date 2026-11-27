@@ -13,14 +13,14 @@ import MainStack
 
 class Core:
 	
-	singleton=None
-	DEBUG=True
+	singleton = None
+	DEBUG = True
 	
 	@classmethod
 	def get_core(self):
 		
-		if Core.singleton==None:
-			Core.singleton=Core()
+		if Core.singleton ==None:
+			Core.singleton = Core()
 			Core.singleton.init()
 
 		return Core.singleton
@@ -34,13 +34,13 @@ class Core:
 	
 	def init(self):
 
-		self.llxUpConnect=LliurexUpConnect.LliurexUpConnect()
-		self.updateStack=UpdateStack.UpdateStack()
-		self.settingStack=SettingStack.Bridge()
-		self.packageStack=PackageStack.Bridge()
-		self.infoStack=InfoStack.Bridge()
-		self.loadStack=LoadStack.Bridge()
-		self.mainStack=MainStack.Bridge()
+		self.llxUpConnect = LliurexUpConnect.LliurexUpConnect()
+		self.updateStack = UpdateStack.UpdateStack()
+		self.settingStack = SettingStack.Bridge()
+		self.packageStack = PackageStack.Bridge()
+		self.infoStack = InfoStack.Bridge()
+		self.loadStack = LoadStack.Bridge()
+		self.mainStack = MainStack.Bridge()
 		self.mainStack.initBridge()
 		
 	#def init

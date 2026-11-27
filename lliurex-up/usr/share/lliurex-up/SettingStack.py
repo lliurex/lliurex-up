@@ -12,21 +12,23 @@ import pwd
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class ApplyChanges(QThread):
+class ApplyChanges(QObject):
 
-	def __init__(self,*args):
+	finished = Signal(dict)
+	
+	def __init__(self, manager, newConfig):
 
-		QThread.__init__(self)
-		self.core=Core.Core.get_core()
-		self.llxUpConnect=self.core.llxUpConnect
-		self.newConfig=args[0]
-		self.ret=[]
-
+		super().__init__()
+		self.manager = manager
+		self.newConfig = newConfig
+	
 	#def __init__
 
 	def run(self,*args):
 		
-		self.ret=self.llxUpConnect.applySettingsChanges(self.newConfig)
+		ret = self.manager.applySettingsChanges(self.newConfig)
+
+		self.finished.emit(ret)
 
 	#def run
 
@@ -34,416 +36,157 @@ class ApplyChanges(QThread):
 
 class Bridge(QObject):
 
+	showSettingsPanelChanged = Signal()
+	isSystratryEnabledChanged = Signal()
+	showSettingsMsgChanged = Signal()
+	changesInSettingsChanged = Signal()
+
 	def __init__(self):
 
 		QObject.__init__(self)
-		self.core=Core.Core.get_core()
-		Bridge.llxUpConnect=self.core.llxUpConnect
-		self._showSettingsPanel=False
-		self._isSystrayEnabled=False
-		self._isAutoUpgradeAvailable=False
-		self._isAutoUpgradeEnabled=False
-		self._showSettingsMsg=[False,"","Ok"]
-		self._isAutoUpgradeRun=False
-		self._canPauseUpdate=False
-		self._isWeekPauseActive=False
-		self._canExtendedPause=False
-		self._canEditWeekPause=False
-		self._weeksOfPause=Bridge.llxUpConnect.weeksOfPause
-		self._weeksOfPauseCombo=Bridge.llxUpConnect.weeksOfPauseCombo
-		self._extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-		self._settingsChanged=False
-		self._showExtensionPauseCombo=False
-		self._dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
-		self._isAdmin=Bridge.llxUpConnect.checkUser()
-		self._extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
-		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
+		self.core = Core.Core.get_core()
+		self.llxUpConnect = self.core.llxUpConnect
+		self._showSettingsPanel = False
+		self._isSystrayEnabled = False
+		self._showSettingsMsg = {"show":False,"msgCode":"","type":""}
+		self._changesInSettings = False
+		self.initialConfig=copy.deepcopy(self.llxUpConnect.currentConfig)
 		
 	#def __init__
 
-	def getSettingsInfo(self):
-
-		self.showSettingsPanel=Bridge.llxUpConnect.manageSettingsOptions()
-		self.isSystrayEnabled=Bridge.llxUpConnect.isSystrayEnabled
-		self.isAutoUpgradeAvailable=Bridge.llxUpConnect.isAutoUpgradeAvailable
-		self.isAutoUpgradeEnabled=Bridge.llxUpConnect.isAutoUpgradeEnabled
-		self.extensionWeekPause=Bridge.llxUpConnect.extensionWeekPause
-		
-		if self.isAutoUpgradeEnabled:
-			self.isAutoUpgradeRun=Bridge.llxUpConnect.isAutoUpgradeRun()
-		
-		self.canPauseUpdate=Bridge.llxUpConnect.canPauseUpdate
-		self.canEditWeekPause=Bridge.llxUpConnect.canEditWeekPause
-		self.weeksOfPause=Bridge.llxUpConnect.weeksOfPause
-		self.isWeekPauseActive=Bridge.llxUpConnect.isWeekPauseActive
-		self.canExtendedPause=Bridge.llxUpConnect.canExtendedPause
-		self.extensionPauseCombo=Bridge.llxUpConnect.extensionPauseCombo
-		self.dateToUpdate=datetime.date.fromisoformat(Bridge.llxUpConnect.dateToUpdate).strftime("%d/%m/%y")
-		
-		self.showExtensionPauseCombo=False
-		self.initialConfig=copy.deepcopy(Bridge.llxUpConnect.currentConfig)
-	
-	#def getSettingsInfo
-
-	def _getShowSettingsPanel(self):
+	@Property(bool, notify = showSettingsPanelChanged)
+	def showSettingsPanel(self):
 
 		return self._showSettingsPanel
 
-	#def _getShowSettingsPanel
+	#def showSettingsPanel
 
-	def _setShowSettingsPanel(self,showSettingsPanel):
+	@showSettingsPanel.setter
+	def showSettingsPanel(self, showSettingsPanel):
 
-		if self._showSettingsPanel!=showSettingsPanel:
-			self._showSettingsPanel=showSettingsPanel
-			self.on_showSettingsPanel.emit()
+		if self._showSettingsPanel != showSettingsPanel:
+			self._showSettingsPanel = showSettingsPanel
+			self.showSettingsPanelChanged.emit()
 
-	#def _setShowSettingsPanel
+	#def showSettingsPanel
 
-	def _getIsSystrayEnabled(self):
+	@Property(bool, notify = isSystratryEnabledChanged)
+	def isSystrayEnabled(self):
 
 		return self._isSystrayEnabled
 
-	#def _getIsSystrayEnabled
+	#def isSystrayEnabled
 
-	def _setIsSystrayEnabled(self,isSystrayEnabled):
+	@isSystrayEnabled.setter
+	def isSystrayEnabled(self, isSystrayEnabled):
 
-		if self._isSystrayEnabled!=isSystrayEnabled:
-			self._isSystrayEnabled=isSystrayEnabled
-			self.on_isSystratryEnabled.emit()
+		if self._isSystrayEnabled != isSystrayEnabled:
+			self._isSystrayEnabled = isSystrayEnabled
+			self.isSystratryEnabledChanged.emit()
 
-	#def _setIsSystrayEnabled
+	#def isSystrayEnabled
 
-	def _getIsAutoUpgradeAvailable(self):
-
-		return self._isAutoUpgradeAvailable
-
-	#def _getIsAutoUpgradeAvailable
-
-	def _setIsAutoUpgradeAvailable(self,isAutoUpgradeAvailable):
-
-		if self._isAutoUpgradeAvailable!=isAutoUpgradeAvailable:
-			self._isAutoUpgradeAvailable=isAutoUpgradeAvailable
-			self.on_isAutoUpgradeAvailable.emit()
-
-	#def _setIsAutoUpgradeAvailable
-
-	def _getIsAutoUpgradeEnabled(self):
-
-		return self._isAutoUpgradeEnabled
-
-	#def _getIsAutoUpgradeEnabled
-
-	def _setIsAutoUpgradeEnabled(self,isAutoUpgradeEnabled):
-
-		if self._isAutoUpgradeEnabled!=isAutoUpgradeEnabled:
-			self._isAutoUpgradeEnabled=isAutoUpgradeEnabled
-			self.on_isAutoUpgradeEnabled.emit()
-
-	#def _setIsAutoUpgradeEnabled
-
-	def _getCanPauseUpdate(self):
-
-		return self._canPauseUpdate
-
-	#def _getCanPauseUpdate
-
-	def _setCanPauseUpdate(self,canPauseUpdate):
-
-		if self._canPauseUpdate!=canPauseUpdate:
-			self._canPauseUpdate=canPauseUpdate
-			self.on_canPauseUpdate.emit()
-
-	#def _setIsWeekPauseActive
-
-	def _getCanEditWeekPause(self):
-
-		return self._canEditWeekPause
-
-	#def _getCanEditWeekPause
-
-	def _setCanEditWeekPause(self,canEditWeekPause):
-
-		if self._canEditWeekPause!=canEditWeekPause:
-			self._canEditWeekPause=canEditWeekPause
-			self.on_canEditWeekPause.emit()
-
-	#def _setCanEditWeekPause
-
-	def _getIsWeekPauseActive(self):
-
-		return self._isWeekPauseActive
-
-	#def _getIsWeekPauseActive
-
-	def _setIsWeekPauseActive(self,isWeekPauseActive):
-
-		if self._isWeekPauseActive!=isWeekPauseActive:
-			self._isWeekPauseActive=isWeekPauseActive
-			self.on_isWeekPauseActive.emit()
-
-	#def _setIsWeekPauseActive
-
-	def _getWeekOfPause(self):
-
-		return self._weeksOfPause
-
-	#def _getCanExtendedPause
-
-	def _setWeeksOfPause(self,weeksOfPause):
-
-		if self._weeksOfPause!=weeksOfPause:
-			self._weeksOfPause=weeksOfPause
-			self.on_weeksOfPause.emit()
-
-	#def _setWeeksOfPause
-
-	def _getCanExtendedPause(self):
-
-		return self._canExtendedPause
-
-	#def _getCanExtendedPause
-
-	def _setCanExtendedPause(self,canExtendedPause):
-
-		if self._canExtendedPause!=canExtendedPause:
-			self._canExtendedPause=canExtendedPause
-			self.on_canExtendePause.emit()
-
-	#def _setCanExtendedPause
-
-	def _getWeeksOfPauseCombo(self):
-
-		return self._weeksOfPauseCombo
-
-	#def _getWeeksOfPauseCombo
-
-	def _getExtensionPauseCombo(self):
-
-		return self._extensionPauseCombo
-
-	#def _getWeeksOfPauseCombo
-
-	def _setExtensionPauseCombo(self,extensionPauseCombo):
-
-		if self._extensionPauseCombo!=extensionPauseCombo:
-			self._extensionPauseCombo=extensionPauseCombo
-			self.on_extensionPauseCombo.emit()
-
-	#def _setExtensionPauseCombo
-
-	def _getShowExtensionPauseCombo(self):
-
-		return self._showExtensionPauseCombo
-
-	#def _getShowExtensionPauseCombo
-
-	def _setShowExtensionPauseCombo(self,showExtensionPauseCombo):
-
-		if self._showExtensionPauseCombo!=showExtensionPauseCombo:
-			self._showExtensionPauseCombo=showExtensionPauseCombo
-			self.on_showExtensionPauseCombo.emit()
-
-	#def _setShowExtensionPauseCombo
-
-	def _getExtensionWeekPause(self):
-
-		return self._extensionWeekPause
-
-	#def _getExtensionWeekPause
-
-	def _setExtensionWeekPause(self,extensionWeekPause):
-
-		if self._extensionWeekPause!=extensionWeekPause:
-			self._extensionWeekPause=extensionWeekPause
-			self.on_extensionWeekPause.emit()
-
-	#def _setExtensionWeekPause
-
-	def _getShowSettingsMsg(self):
+	@Property(dict, notify = showSettingsMsgChanged)
+	def showSettingsMsg(self):
 
 		return self._showSettingsMsg
 
-	#def _getShowSettinsMgs
+	#def showSettinsMgs
 
-	def _setShowSettingsMsg(self,showSettingsMsg):
+	@showSettingsMsg.setter
+	def showSettingsMsg(self, showSettingsMsg):
 
-		if self._showSettingsMsg!=showSettingsMsg:
-			self._showSettingsMsg=showSettingsMsg
-			self.on_showSettingsMsg.emit()
+		if self._showSettingsMsg != showSettingsMsg:
+			self._showSettingsMsg = showSettingsMsg
+			self.showSettingsMsgChanged.emit()
 
-	#def _setShowSettingsMsg
+	#def showSettingsMsg
 
-	def _getIsAutoUpgradeRun(self):
+	@Property(bool, notify = changesInSettingsChanged)
+	def changesInSettings(self):
 
-		return self._isAutoUpgradeRun
+		return self._changesInSettings
 
-	#def _getIsAutoUpgradeRun
+	#def changesInSettings 
 
-	def _setIsAutoUpgradeRun(self,isAutoUpgradeRun):
+	@changesInSettings.setter
+	def changesInSettings(self, changesInSettings):
 
-		if self._isAutoUpgradeRun!=isAutoUpgradeRun:
-			self._isAutoUpgradeRun=isAutoUpgradeRun
-			self.on_isAutoUpgradeRun.emit()
+		if self._changesInSettings != changesInSettings:
+			self._changesInSettings = changesInSettings
+			self.changesInSettingsChanged.emit()
 
-	#def _setIsAutoUpgradeRun
+	#def changesInSettings 
 
-	def _getSettingsChanged(self):
+	def getSettingsInfo(self):
 
-		return self._settingsChanged
-
-	#def _getSettingsChanged 
-
-	def _setSettingsChanged(self,settingsChanged):
-
-		if self._settingsChanged!=settingsChanged:
-			self._settingsChanged=settingsChanged
-			self.on_settingsChanged.emit()
-
-	#def _setSettingsChanged 
-
-	def _getDateToUpdate(self):
-
-		return self._dateToUpdate
-
-	#def _getDateToUpdate
-
-	def _setDateToUpdate(self,dateToUpdate):
-
-		if self._dateToUpdate!=dateToUpdate:
-			self._dateToUpdate=dateToUpdate
-			self.on_dateToUpdate.emit()
-
-	#def _setDateToUpdate
-
-	def _getIsAdmin(self):
-
-		return self._isAdmin
-
-	#def _getIsAdmin
+		self.showSettingsPanel =self.llxUpConnect.manageSettingsOptions()
+		self.isSystrayEnabled = self.llxUpConnect.isSystrayEnabled
+		self.initialConfig=copy.deepcopy(self.llxUpConnect.currentConfig)
+	
+	#def getSettingsInfo
 
 	@Slot(bool)
-	def manageSystray(self,enable):
+	def manageSystray(self, enable):
 
-		if enable!=self.isSystrayEnabled:
-			self.isSystrayEnabled=enable
-			self.initialConfig[0]=enable
+		if enable != self.isSystrayEnabled:
+			self.isSystrayEnabled = enable
+			self.initialConfig["systrayEnabled"] = enable
 
-		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsChanged=True
+		if self.initialConfig != self.llxUpConnect.currentConfig:
+			self.changesInSettings = True
 		else:
-			self.settingsChanged=False
+			self.changesInSettings = False
 
 	#def manageSystray
-
-	@Slot(bool)
-	def manageAutoUpgrade(self,value):
-		
-		self.showSettingsMsg=[False,"","Ok"]
-		
-		if value!=self.isAutoUpgradeEnabled:
-			self.isAutoUpgradeEnabled=value
-			self.initialConfig[1]=value
-		
-		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsChanged=True
-		else:
-			self.settingsChanged=False
-
-	#def manageAutoUpgtade 
-
-	@Slot(bool)
-	def manageUpdatePause(self,value):
-
-		self.showSettingsMsg=[False,"","Ok"]
-		if value!=self.isWeekPauseActive:
-			self.isWeekPauseActive=value
-			self.initialConfig[2]=value
-
-		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsChanged=True
-		else:
-			self.settingsChanged=False
-
-		self.showExtensionPauseCombo=False
-
-	#def manageUpdatePause
-
-	@Slot(int)
-	def manageWeeksOfPause(self,value):
-
-		self.showSettingsMsg=[False,"","Ok"]
-
-		if value!=self.weeksOfPause:
-			self.weeksOfPause=value
-			self.initialConfig[3]=value
-
-		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsChanged=True
-		else:
-			self.settingsChanged=False
-
-	#def manageWeeksOfPause
-
-	@Slot(bool)
-	def manageExtensionPauseBtn(self,isVisible):
-
-		if isVisible:
-			self.showExtensionPauseCombo=False
-		else:
-			self.showExtensionPauseCombo=True
-
-	#def manageExtensionPauseBtn
-
-	@Slot(int)
-	def manageExtensionPause(self,value):
-
-		if value!=self.extensionWeekPause:
-			self.extensionWeekPause=value
-			self.initialConfig[4]=value
-
-		if self.initialConfig!=Bridge.llxUpConnect.currentConfig:
-			self.settingsChanged=True
-		else:
-			self.settingsChanged=False
-
-	#def manageExtensionPause
 
 	@Slot()
 	def applyChanges(self):
 		
-		self.core.mainStack.closePopUp=False
-		self.core.mainStack.closeGui=False
-		self.showSettingsMsg=[False,"","Ok"]
-		self.applyChangesT=ApplyChanges(self.initialConfig)
-		self.applyChangesT.start()
-		self.applyChangesT.finished.connect(self._applyChangesRet)
+		self.core.mainStack.showPopUp = True
+		self.core.mainStack.closeGui = False
+		self.showSettingsMsg = {"show": False, "msgCode": "", "type": ""}
+
+		self.applyChangesThread = QThread()
+		self.applyChangesWorker = ApplyChanges(self.llxUpConnect,self.initialConfig)
+		self.applyChangesWorker.moveToThread(self.applyChangesThread)
+		self.applyChangesThread.started.connect(self.applyChangesWorker.run)
+
+		self.applyChangesWorker.finished.connect(self._applyChangesRet)
+		self.applyChangesWorker.finished.connect(self.applyChangesThread.quit)
+		self.applyChangesWorker.finished.connect(self.applyChangesWorker.deleteLater)
+		self.applyChangesThread.finished.connect(self.applyChangesThread.deleteLater)
+
+		self.applyChangesThread.start()
 
 	#def applyChanges
 
-	def _applyChangesRet(self):
+	@Slot(dict)
+	def _applyChangesRet(self, ret):
 
 		self.getSettingsInfo()
-		self.settingsChanged=False
-		self.core.mainStack.closePopUp=True
+		self.changesInSettings = False
+		self.core.mainStack.showPopUp = False
 
-		if not self.applyChangesT.ret[0]:
-			self.core.mainStack.closeGui=True
-			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Ok"]
-			if self.core.mainStack.moveToStack !="":
-				self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
-		else:
-			self.core.mainStack.moveToStack=""
-			self.showSettingsMsg=[True,self.applyChangesT.ret[1],"Error"]
+		self.showSettingsMsg = {"show": True, "msgCode": ret.get("code"), "type": ret.get("type")}
 
+		if not ret.get("status"):
+			self.core.mainStack.moveToStack = ""
+			return
+
+		self.core.mainStack.closeGui = True
+
+		if self.core.mainStack.moveToStack != "":
+			self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
 	
 	#def _applyChangesRet
 
 	@Slot()
 	def discardChanges(self):
 
-		self.core.mainStack.closePopUp=False
-		self.core.mainStack.closeGui=False
-		self.showSettingsMsg=[False,"","Ok"]
+		self.core.mainStack.showPopUp = True
+		self.core.mainStack.closeGui = False
+		self.showSettingsMsg = {"show":False,"msgCode":"","type":""}
 		self._discardChangesRet()
 
 	#def discardChanges
@@ -451,66 +194,14 @@ class Bridge(QObject):
 	def _discardChangesRet(self):
 
 		self.getSettingsInfo()
-		self.core.mainStack.closePopUp=True
-		self.settingsChanged=False
-		self.core.mainStack.closeGui=True
-		if self.core.mainStack.moveToStack !="":
+		self.core.mainStack.showPopUp = False
+		self.changesInSettings = False
+		self.core.mainStack.closeGui = True
+		if self.core.mainStack.moveToStack != "":
 			self.core.mainStack.manageTransitions(self.core.mainStack.moveToStack)
 
 	# def _discardChangesRet
 
-
-	on_showSettingsPanel=Signal()
-	showSettingsPanel=Property(bool,_getShowSettingsPanel,_setShowSettingsPanel,notify=on_showSettingsPanel)
-	
-	on_isSystratryEnabled=Signal()
-	isSystrayEnabled=Property(bool,_getIsSystrayEnabled,_setIsSystrayEnabled,notify=on_isSystratryEnabled)
-
-	on_isAutoUpgradeAvailable=Signal()
-	isAutoUpgradeAvailable=Property(bool,_getIsAutoUpgradeAvailable,_setIsAutoUpgradeAvailable,notify=on_isAutoUpgradeAvailable)
-	
-	on_isAutoUpgradeEnabled=Signal()
-	isAutoUpgradeEnabled=Property(bool,_getIsAutoUpgradeEnabled,_setIsAutoUpgradeEnabled,notify=on_isAutoUpgradeEnabled)
-
-	on_showSettingsMsg=Signal()
-	showSettingsMsg=Property('QVariantList',_getShowSettingsMsg,_setShowSettingsMsg,notify=on_showSettingsMsg)
-
-	on_isAutoUpgradeRun=Signal()
-	isAutoUpgradeRun=Property(bool,_getIsAutoUpgradeRun,_setIsAutoUpgradeRun,notify=on_isAutoUpgradeRun)
-
-	on_canPauseUpdate=Signal()
-	canPauseUpdate=Property(bool,_getCanPauseUpdate,_setCanPauseUpdate,notify=on_canPauseUpdate)
-
-	on_canEditWeekPause=Signal()
-	canEditWeekPause=Property(bool,_getCanEditWeekPause,_setCanEditWeekPause,notify=on_canEditWeekPause)
-	
-	on_isWeekPauseActive=Signal()
-	isWeekPauseActive=Property(bool,_getIsWeekPauseActive,_setIsWeekPauseActive,notify=on_isWeekPauseActive)
-
-	on_weeksOfPause=Signal()
-	weeksOfPause=Property(int,_getWeekOfPause,_setWeeksOfPause,notify=on_weeksOfPause)
-	
-	on_canExtendePause=Signal()
-	canExtendedPause=Property(int,_getCanExtendedPause,_setCanExtendedPause,notify=on_canExtendePause)	
-
-	on_extensionPauseCombo=Signal()
-	extensionPauseCombo=Property('QVariant',_getExtensionPauseCombo,_setExtensionPauseCombo,notify=on_extensionPauseCombo)
-
-	on_showExtensionPauseCombo=Signal()
-	showExtensionPauseCombo=Property(bool,_getShowExtensionPauseCombo,_setShowExtensionPauseCombo,notify=on_showExtensionPauseCombo)
-
-	on_extensionWeekPause=Signal()
-	extensionWeekPause=Property(int,_getExtensionWeekPause,_setExtensionWeekPause,notify=on_extensionWeekPause)
-	
-	on_settingsChanged=Signal()
-	settingsChanged=Property(bool,_getSettingsChanged,_setSettingsChanged,notify=on_settingsChanged)
-
-	on_dateToUpdate=Signal()
-	dateToUpdate=Property(str,_getDateToUpdate,_setDateToUpdate,notify=on_dateToUpdate)
-
-	isAdmin=Property(bool,_getIsAdmin,constant=True)
-
-	weeksOfPauseCombo=Property('QVariant',_getWeeksOfPauseCombo,constant=True)
 	
 #class Bridge
 

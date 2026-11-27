@@ -2,48 +2,54 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-
 Popup {
-    id:popUpWaiting
-    width:400
-    height:80
+    id: popUpWaiting
+    width: 400
+    height: 80
     anchors.centerIn: Overlay.overlay
-    modal:true
-    focus:true
-    closePolicy:Popup.NoAutoClose
-    property alias popupMessage:popupText.text
+    modal: true
+    focus: true
+    visible: mainStackBridge.showPopUp
+    closePolicy: Popup.NoAutoClose
 
-    GridLayout{
-        id: popupGrid
-        rows: 2
-        flow: GridLayout.TopToBottom
-        anchors.centerIn:parent
+    background: Rectangle {
+        color: palette.window
+        border.color: palette.mid
+        radius: 4
+    }
 
+    ColumnLayout {
+        anchors.centerIn: parent
+        spacing: 10
 
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.alignment:Qt.AlignHCenter
-            Rectangle{
-                color:"transparent"
-                width:30
-                height:30
-                AnimatedImage{
-                    source: "/usr/share/lliurex-up/rsrc/loading.gif"
-                    transform: Scale {xScale:0.45;yScale:0.45}
-                }
+        Image{
+            id: spinnerImage
+            source: "loading.png"
+            Layout.preferredWidth: 24
+            Layout.preferredHeight: 24
+            Layout.alignment: Qt.AlignHCenter
+            fillMode: Image.PreserveAspectFit
+            smooth: false
+            antialiasing: false
+            rotation: 0
+        }
+
+        Timer{
+            id: rotationTimer
+            running: (spinnerImage !== null && popUpWaiting !== null) && spinnerImage.visible && popUpWaiting.visible
+            repeat: true
+            interval: 100
+            onTriggered: {
+                spinnerImage.rotation = (spinnerImage.rotation + 330) % 360
             }
         }
 
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.alignment:Qt.AlignHCenter
-
-            Text{
-                id:popupText
-                text:i18nd("lliurex-up","Apply changes. Wait a moment...")
-                font.pointSize: 10
-                Layout.alignment:Qt.AlignHCenter
-            }
+        Text {
+            id: popupText
+            text: i18nd("lliurex-up","Apply changes. Wait a moment...")
+            font.pointSize: 10
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 }
