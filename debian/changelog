@@ -1,3 +1,9 @@
+lliurex-up (25.05.42.1) noble; urgency=medium
+
+  * Test
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 27 Nov 2026 11:29:04 +0100
+
 lliurex-up (25.05.42) noble; urgency=medium
 
   * Changed lliurex.net by lliurex.gva.es in default sourceslit and others files
